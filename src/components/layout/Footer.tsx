@@ -28,7 +28,7 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="bg-[#07151D] text-white/80 border-t border-[#162F3F] pt-12 pb-8">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div data-reveal="fade" className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-10">
           {/* Brand & Mission Column */}

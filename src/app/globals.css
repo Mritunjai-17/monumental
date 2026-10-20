@@ -111,7 +111,93 @@
   border-radius: 2px;
 }
 
-/* Animations */
+/* Motion
+ * All entrance/reveal states are scoped to html.motion-ok, which is only set
+ * (before first paint) when the user has not requested reduced motion.
+ * Entrance keyframes use fill-mode "backwards" so they release the element
+ * afterwards and existing hover transforms keep working.
+ */
+:root {
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--rise, 18px), 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes settle-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-bg-settle {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
+}
+
+@keyframes glow-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-28px, 18px, 0); }
+}
+
+/* Hero entrance (page load) */
+.motion-ok .hero-eyebrow { animation: fade-in 0.5s var(--ease-out-soft) backwards; }
+.motion-ok .hero-word {
+  --rise: 0.45em;
+  animation: rise-in 0.8s var(--ease-out-soft) backwards;
+}
+.motion-ok .hero-copy { animation: rise-in 0.6s var(--ease-out-soft) 0.65s backwards; }
+.motion-ok .hero-cta-1 { animation: rise-in 0.45s var(--ease-out-soft) 0.9s backwards; }
+.motion-ok .hero-cta-2 { animation: rise-in 0.45s var(--ease-out-soft) 0.98s backwards; }
+.motion-ok .hero-map { animation: settle-in 0.9s var(--ease-out-soft) 0.3s backwards; }
+.motion-ok .hero-stats { animation: rise-in 0.7s var(--ease-out-soft) 0.55s backwards; }
+
+/* Background scale and glow drift: desktop only, to keep mobile light */
+@media (min-width: 1024px) {
+  .motion-ok .hero-bg { animation: hero-bg-settle 2.4s var(--ease-out-soft) backwards; }
+  .motion-ok .hero-glow { animation: glow-drift 14s ease-in-out 1s infinite alternate; }
+}
+
+/* Scroll reveal (see components/layout/RevealObserver.tsx) */
+.motion-ok [data-reveal] {
+  transition:
+    opacity 0.7s var(--ease-out-soft),
+    transform 0.7s var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.motion-ok [data-reveal='fast'] {
+  transition-duration: 0.5s;
+}
+.motion-ok [data-reveal]:not([data-revealed]) {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+}
+.motion-ok [data-reveal='fast']:not([data-revealed]) {
+  transform: translate3d(0, 14px, 0);
+}
+.motion-ok [data-reveal='fade']:not([data-revealed]) {
+  transform: none;
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

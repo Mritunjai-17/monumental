@@ -58,13 +58,17 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   );
 
   if (!action) {
-    return <div className={cn('mb-12 sm:mb-16', className)}>{heading}</div>;
+    return (
+      <div data-reveal className={cn('mb-12 sm:mb-16', className)}>
+        {heading}
+      </div>
+    );
   }
 
   // Heading and "View all" share one row at every breakpoint; the link
   // aligns to the heading's last line.
   return (
-    <div className={cn('mb-12 sm:mb-16 flex flex-row items-end justify-between gap-4', className)}>
+    <div data-reveal className={cn('mb-12 sm:mb-16 flex flex-row items-end justify-between gap-4', className)}>
       {heading}
       <Link
         href={action.href}

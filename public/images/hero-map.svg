@@ -13,6 +13,30 @@
     <pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse">
       <circle cx="2" cy="2" r="1" fill="#1F6F78" fill-opacity="0.35" />
     </pattern>
+    <!-- Reveals the dashed route progressively without changing its dash pattern -->
+    <mask id="route-reveal" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="480">
+      <path class="route-draw" d="M106 288 C 220 150, 380 120, 508 214" fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" pathLength="1" />
+    </mask>
+    <style>
+      /* Entrance sequence; skipped entirely when reduced motion is preferred. */
+      @media (prefers-reduced-motion: no-preference) {
+        .route-draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.3s cubic-bezier(0.65, 0, 0.35, 1) 1.2s forwards; }
+        .pin { transform-box: fill-box; transform-origin: center; animation: pin-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+        .pin-nz { animation-delay: 0.9s; }
+        .pin-cl { animation-delay: 2.35s; }
+        .pulse { transform-box: fill-box; transform-origin: center; opacity: 0; animation: pulse 1.4s ease-out forwards; }
+        .pulse-nz { animation-delay: 1.15s; }
+        .pulse-cl { animation-delay: 2.6s; }
+        .label { animation: label-in 0.5s ease-out both; }
+        .label-nz { animation-delay: 1.2s; }
+        .label-cl { animation-delay: 2.65s; }
+      }
+      .pulse { opacity: 0; }
+      @keyframes draw { to { stroke-dashoffset: 0; } }
+      @keyframes pin-in { from { opacity: 0; transform: translateY(-6px) scale(0.6); } to { opacity: 1; transform: none; } }
+      @keyframes pulse { 0% { opacity: 0.7; transform: scale(1); } 100% { opacity: 0; transform: scale(2.4); } }
+      @keyframes label-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    </style>
   </defs>
 
   <!-- Base -->
@@ -38,15 +62,18 @@
         fill="#16364A" stroke="#27485F" stroke-width="1.5" />
 
   <!-- Connector line -->
-  <path d="M106 288 C 220 150, 380 120, 508 214" fill="none" stroke="url(#route)" stroke-width="2.5" stroke-dasharray="7 7" stroke-linecap="round" />
+  <path d="M106 288 C 220 150, 380 120, 508 214" mask="url(#route-reveal)" fill="none" stroke="url(#route)" stroke-width="2.5" stroke-dasharray="7 7" stroke-linecap="round" />
 
   <!-- Pin: Taranaki Basin -->
   <g transform="translate(106 288)">
-    <circle r="18" fill="#1F6F78" fill-opacity="0.2" />
-    <path d="M0 -2 C -8 -2 -12 -9 -12 -14 A 12 12 0 1 1 12 -14 C 12 -9 8 -2 0 -2 Z" transform="translate(0 2)" fill="#1F6F78" stroke="#FFFFFF" stroke-width="1.5" />
-    <circle cy="-12" r="4" fill="#FFFFFF" />
+    <circle class="pulse pulse-nz" r="14" fill="none" stroke="#1F6F78" stroke-width="2" />
+    <g class="pin pin-nz">
+      <circle r="18" fill="#1F6F78" fill-opacity="0.2" />
+      <path d="M0 -2 C -8 -2 -12 -9 -12 -14 A 12 12 0 1 1 12 -14 C 12 -9 8 -2 0 -2 Z" transform="translate(0 2)" fill="#1F6F78" stroke="#FFFFFF" stroke-width="1.5" />
+      <circle cy="-12" r="4" fill="#FFFFFF" />
+    </g>
   </g>
-  <g font-family="Space Grotesk, Segoe UI, Arial, sans-serif">
+  <g class="label label-nz" font-family="Space Grotesk, Segoe UI, Arial, sans-serif">
     <rect x="140" y="330" width="186" height="52" rx="10" fill="#0B1F2A" stroke="#1D3B4C" />
     <text x="154" y="352" font-size="14" font-weight="700" fill="#FFFFFF">Taranaki Basin, NZ</text>
     <text x="154" y="370" font-size="11" letter-spacing="1.2" fill="#94A3B8">OIL &amp; GAS</text>
@@ -54,11 +81,14 @@
 
   <!-- Pin: Salar de Turi -->
   <g transform="translate(508 214)">
-    <circle r="18" fill="#B7E34A" fill-opacity="0.2" />
-    <path d="M0 -2 C -8 -2 -12 -9 -12 -14 A 12 12 0 1 1 12 -14 C 12 -9 8 -2 0 -2 Z" transform="translate(0 2)" fill="#B7E34A" stroke="#0B1F2A" stroke-width="1.5" />
-    <circle cy="-12" r="4" fill="#0B1F2A" />
+    <circle class="pulse pulse-cl" r="14" fill="none" stroke="#B7E34A" stroke-width="2" />
+    <g class="pin pin-cl">
+      <circle r="18" fill="#B7E34A" fill-opacity="0.2" />
+      <path d="M0 -2 C -8 -2 -12 -9 -12 -14 A 12 12 0 1 1 12 -14 C 12 -9 8 -2 0 -2 Z" transform="translate(0 2)" fill="#B7E34A" stroke="#0B1F2A" stroke-width="1.5" />
+      <circle cy="-12" r="4" fill="#0B1F2A" />
+    </g>
   </g>
-  <g font-family="Space Grotesk, Segoe UI, Arial, sans-serif">
+  <g class="label label-cl" font-family="Space Grotesk, Segoe UI, Arial, sans-serif">
     <rect x="350" y="246" width="186" height="52" rx="10" fill="#0B1F2A" stroke="#1D3B4C" />
     <text x="364" y="268" font-size="14" font-weight="700" fill="#FFFFFF">Salar de Turi, Chile</text>
     <text x="364" y="286" font-size="11" letter-spacing="1.2" fill="#B7E34A">LITHIUM ROYALTY</text>

@@ -18,40 +18,56 @@ export const StrategyVideo: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column */}
           <div className="lg:col-span-6">
-            <span className="eyebrow text-[#B7E34A] block mb-3 font-heading tracking-[0.12em] uppercase font-semibold text-xs sm:text-sm">
-              Corporate Strategy
-            </span>
+            <div data-reveal>
+              <span className="eyebrow text-[#B7E34A] block mb-3 font-heading tracking-[0.12em] uppercase font-semibold text-xs sm:text-sm">
+                Corporate Strategy
+              </span>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold font-heading text-white tracking-[-0.02em] leading-[1.18] mb-6">
-              Better energy for the future and today.
-            </h2>
+              <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold font-heading text-white tracking-[-0.02em] leading-[1.18] mb-6">
+                Better energy for the future and today.
+              </h2>
 
-            <p className="text-base sm:text-lg text-[#DDE3E3]/90 leading-relaxed mb-6 font-normal">
-              Global energy demand requires a pragmatic transition strategy. Monumental Energy addresses immediate energy supply through conventional oil and gas production in New Zealand, while holding strategic Net Smelter Return (NSR) royalty exposure to lithium exploration in Chile.
-            </p>
+              <p className="text-base sm:text-lg text-[#DDE3E3]/90 leading-relaxed mb-6 font-normal">
+                Global energy demand requires a pragmatic transition strategy. Monumental Energy addresses immediate energy supply through conventional oil and gas production in New Zealand, while holding strategic Net Smelter Return (NSR) royalty exposure to lithium exploration in Chile.
+              </p>
+            </div>
 
             <div className="space-y-3 mb-8">
-              <div className="flex items-center gap-3 text-sm text-[#DDE3E3]">
+              <div
+                data-reveal="fast"
+                style={{ '--reveal-delay': '150ms' } as React.CSSProperties}
+                className="flex items-center gap-3 text-sm text-[#DDE3E3]"
+              >
                 <CheckCircle2 className="w-5 h-5 text-[#B7E34A] shrink-0" />
                 <span>Low capital intensity with established processing tie-ins</span>
               </div>
-              <div className="flex items-center gap-3 text-sm text-[#DDE3E3]">
+              <div
+                data-reveal="fast"
+                style={{ '--reveal-delay': '240ms' } as React.CSSProperties}
+                className="flex items-center gap-3 text-sm text-[#DDE3E3]"
+              >
                 <CheckCircle2 className="w-5 h-5 text-[#B7E34A] shrink-0" />
                 <span>2% Net Smelter Return (NSR) royalty with zero exploration capital call liabilities</span>
               </div>
-              <div className="flex items-center gap-3 text-sm text-[#DDE3E3]">
+              <div
+                data-reveal="fast"
+                style={{ '--reveal-delay': '330ms' } as React.CSSProperties}
+                className="flex items-center gap-3 text-sm text-[#DDE3E3]"
+              >
                 <CheckCircle2 className="w-5 h-5 text-[#B7E34A] shrink-0" />
                 <span>Operating within established, transparent resource jurisdictions</span>
               </div>
             </div>
 
-            <Button href="/about" variant="secondary-dark" size="md">
-              Learn More About Our Strategy
-            </Button>
+            <div data-reveal="fast" style={{ '--reveal-delay': '420ms' } as React.CSSProperties}>
+              <Button href="/about" variant="secondary-dark" size="md">
+                Learn More About Our Strategy
+              </Button>
+            </div>
           </div>
 
           {/* Right Video Column: Poster Image with Lime Play Button (No fake metadata) */}
-          <div className="lg:col-span-6">
+          <div className="lg:col-span-6" data-reveal style={{ '--reveal-delay': '150ms' } as React.CSSProperties}>
             <div className="relative aspect-video rounded-[16px] overflow-hidden border border-[#1D3B4C] bg-[#07151D] shadow-2xl">
               {isPlaying ? (
                 <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#07151D] p-6 text-center">

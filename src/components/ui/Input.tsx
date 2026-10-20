@@ -25,8 +25,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           id={inputId}
           className={cn(
-            'w-full px-4 py-3 rounded-[10px] border bg-white text-[#16232B] text-base placeholder-[#5B6B73]/60 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#1F6F78] focus:border-[#1F6F78]',
-            error ? 'border-red-500 focus:ring-red-500' : 'border-[#DDE3E3]',
+            'w-full px-4 py-3 rounded-[10px] border bg-white text-[#16232B] text-base placeholder-[#5B6B73]/60 transition-[border-color,box-shadow] duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-[#1F6F78] focus:border-[#1F6F78]',
+            error ? 'border-red-500 focus:ring-red-500' : 'border-[#DDE3E3] hover:border-[#1F6F78]/50',
             className
           )}
           {...props}
@@ -66,8 +66,8 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           ref={ref}
           id={selectId}
           className={cn(
-            'w-full px-4 py-3 rounded-[10px] border bg-white text-[#16232B] text-base transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#1F6F78] focus:border-[#1F6F78]',
-            error ? 'border-red-500 focus:ring-red-500' : 'border-[#DDE3E3]',
+            'w-full px-4 py-3 rounded-[10px] border bg-white text-[#16232B] text-base transition-[border-color,box-shadow] duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-[#1F6F78] focus:border-[#1F6F78]',
+            error ? 'border-red-500 focus:ring-red-500' : 'border-[#DDE3E3] hover:border-[#1F6F78]/50',
             className
           )}
           {...props}
@@ -110,8 +110,8 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           id={textareaId}
           rows={4}
           className={cn(
-            'w-full px-4 py-3 rounded-[10px] border bg-white text-[#16232B] text-base placeholder-[#5B6B73]/60 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#1F6F78] focus:border-[#1F6F78] resize-y',
-            error ? 'border-red-500 focus:ring-red-500' : 'border-[#DDE3E3]',
+            'w-full px-4 py-3 rounded-[10px] border bg-white text-[#16232B] text-base placeholder-[#5B6B73]/60 transition-[border-color,box-shadow] duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-[#1F6F78] focus:border-[#1F6F78] resize-y',
+            error ? 'border-red-500 focus:ring-red-500' : 'border-[#DDE3E3] hover:border-[#1F6F78]/50',
             className
           )}
           {...props}

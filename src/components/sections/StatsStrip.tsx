@@ -8,7 +8,7 @@ export const StatsStrip: React.FC = () => {
     // Overlaps the hero's bottom edge by exactly 60px.
     <div className="relative z-20 -mt-[60px]">
       <Container>
-        <div className="bg-white rounded-[16px] border border-[#DDE3E3] shadow-[0_16px_40px_-6px_rgba(11,31,42,0.12)]">
+        <div className="hero-stats bg-white rounded-[16px] border border-[#DDE3E3] shadow-[0_16px_40px_-6px_rgba(11,31,42,0.12)]">
           {/* Equal columns: 1 / 2x2 / 4. Dividers are per-cell so they stay correct when the grid wraps. */}
           <dl className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
             {statsData.map((stat, idx) => (

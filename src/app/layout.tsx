@@ -3,8 +3,10 @@ import { Space_Grotesk, Inter } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { RevealObserver } from '@/components/layout/RevealObserver';
 import { siteConfig } from '@/data/site';
 import { defaultOgImage, robotsMeta } from '@/lib/seo';
+import { heroLineIndexScript, motionOkScript } from '@/lib/motion';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -45,11 +47,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
+    // suppressHydrationWarning: the head script below adds a class (and the hero
+    // adds line-index CSS variables) to <html> before React hydrates.
+    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Enable entrance/scroll motion before first paint, unless reduced motion is preferred. */}
+        <script dangerouslySetInnerHTML={{ __html: motionOkScript }} />
+      </head>
       <body className="min-h-screen flex flex-col bg-[#F5F6F1] text-[#16232B] font-body selection:bg-[#B7E34A] selection:text-[#0B1F2A]">
         <Header />
         <main className="flex-grow">{children}</main>
         <Footer />
+        <RevealObserver />
+        <script dangerouslySetInnerHTML={{ __html: heroLineIndexScript }} />
       </body>
     </html>
   );
