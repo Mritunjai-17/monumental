@@ -61,10 +61,10 @@ export const InvestorHub: React.FC = () => {
 
         {/* Equal-height cards: flex column with the link row pinned via mt-auto */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {tiles.map((tile, idx) => {
+          {tiles.map((tile) => {
             const Icon = tile.icon;
             return (
-              <div key={tile.id} data-reveal="fast" className="h-full" style={{ '--reveal-delay': `${idx * 70}ms` } as React.CSSProperties}>
+              <div key={tile.id} data-reveal="card" className="h-full">
                 <div
                   className="bg-white rounded-[16px] border border-[#DDE3E3] p-7 flex flex-col h-full shadow-[0_4px_20px_-2px_rgba(11,31,42,0.05)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_-4px_rgba(11,31,42,0.1)] hover:border-[#1F6F78]/40 focus-within:border-[#1F6F78] focus-within:shadow-[0_12px_28px_-4px_rgba(11,31,42,0.1)] group"
                 >

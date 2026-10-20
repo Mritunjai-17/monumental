@@ -10,6 +10,7 @@ export const newsArticles: NewsItem[] = [
     title: 'Monumental Energy and NZEC Advance Phase 1 Recompletion Program in Taranaki Basin',
     date: 'February 12, 2026',
     category: 'Corporate Update',
+    image: '/images/news-taranaki-workover.jpg',
     excerpt: 'Field crews mobilized to initiate pressure testing and high-potential zone workovers targeting near-term production milestones.',
     content: [
       'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) is pleased to provide an operational update regarding its investment and joint-venture partnership with New Zealand Energy Corp. (NZEC) in the Taranaki Basin.',
@@ -26,6 +27,7 @@ export const newsArticles: NewsItem[] = [
     title: 'Monumental Energy Outlines Strategic Upside of 2% NSR Royalty at Salar de Turi, Chile',
     date: 'January 28, 2026',
     category: 'Lithium & Royalty',
+    image: '/images/news-lithium-survey.jpg',
     excerpt: 'Technical briefing details the strategic value of Monumental’s 8,500-hectare concession royalty amidst rising energy storage demand.',
     content: [
       'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) has published a briefing detailing the upside leverage offered by its 2.0% Net Smelter Return (NSR) royalty on the Salar de Turi lithium project in Antofagasta, Chile.',
@@ -42,6 +44,7 @@ export const newsArticles: NewsItem[] = [
     title: 'Monumental Energy Releases Updated 2026 Corporate Investor Presentation',
     date: 'January 14, 2026',
     category: 'Investor Relations',
+    image: '/images/news-investor-deck.jpg',
     excerpt: 'Updated deck articulates the dual-pillar strategy: near-term conventional energy production combined with critical minerals royalty exposure.',
     content: [
       'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) announces the publication of its updated 2026 Corporate Investor Presentation, now available for download on the company’s official investor portal.',
@@ -57,6 +60,7 @@ export const newsArticles: NewsItem[] = [
     title: 'Monumental Energy Announces Date for Annual General and Special Meeting',
     date: 'December 18, 2025',
     category: 'Corporate Governance',
+    image: '/images/news-corporate-agm.jpg',
     excerpt: 'Notice of meeting and management information circular to be distributed to shareholders of record.',
     content: [
       'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) announces that its Annual General and Special Meeting of Shareholders (AGM) will be held at its Vancouver corporate office.',

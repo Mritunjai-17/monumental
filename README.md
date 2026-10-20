@@ -130,7 +130,7 @@ The files below are **generated placeholders** at the exact delivery size (each 
 | `office.jpg` | 1000×1200 | About page |
 | `og-image.png` | 1200×630 | Open Graph / Twitter share image |
 
-`hero-map.svg` is a hand-drawn, stylised (not to scale) map with two labelled pins.
+`hero-map.svg` is a hand-drawn, stylised (not to scale) map with two labelled pins. The hero renders an inline copy of it (`src/components/sections/HeroMap.tsx`) so the markers can respond to hover, click and keyboard input. Edit both if the map changes.
 News items accept an optional 16:9 `image`. Without one, the card shows a category-coloured fallback panel.
 
 ### Unverified content

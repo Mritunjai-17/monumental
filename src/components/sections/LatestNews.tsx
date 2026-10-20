@@ -34,8 +34,8 @@ export const LatestNews: React.FC = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {recentNews.map((news, idx) => (
-              <div key={news.id} data-reveal="fast" className="h-full" style={{ '--reveal-delay': `${idx * 80}ms` } as React.CSSProperties}>
+            {recentNews.map((news) => (
+              <div key={news.id} data-reveal="card" className="h-full">
                 <article
                   className="bg-[#F5F6F1] rounded-[16px] border border-[#DDE3E3] overflow-hidden flex flex-col h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_-4px_rgba(11,31,42,0.08)] hover:border-[#1F6F78]/40 group"
                 >
@@ -45,7 +45,7 @@ export const LatestNews: React.FC = () => {
                   />
 
                   <div className="p-6 sm:p-7 flex flex-col flex-1">
-                    <div className="flex items-center justify-between gap-3 text-xs text-[#5B6B73] mb-3">
+                    <div data-stagger style={{ '--s': 0 } as React.CSSProperties} className="flex items-center justify-between gap-3 text-xs text-[#5B6B73] mb-3">
                       <span className="flex items-center gap-1.5 font-medium">
                         <Calendar className="w-3.5 h-3.5 text-[#1F6F78]" />
                         {news.date}
@@ -55,15 +55,17 @@ export const LatestNews: React.FC = () => {
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.18] mb-3 group-hover:text-[#1F6F78] transition-colors">
-                      <Link href={`/news/${news.slug}`}>{news.title}</Link>
-                    </h3>
+                    <div data-stagger style={{ '--s': 1 } as React.CSSProperties}>
+                      <h3 className="text-xl font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.18] mb-3 group-hover:text-[#1F6F78] transition-colors">
+                        <Link href={`/news/${news.slug}`}>{news.title}</Link>
+                      </h3>
+                    </div>
 
-                    <p className="text-sm text-[#5B6B73] leading-relaxed line-clamp-3 mb-6">
+                    <p data-stagger style={{ '--s': 2 } as React.CSSProperties} className="text-sm text-[#5B6B73] leading-relaxed line-clamp-3 mb-6">
                       {news.excerpt}
                     </p>
 
-                    <div className="mt-auto pt-3 border-t border-[#DDE3E3]/60">
+                    <div data-stagger style={{ '--s': 3 } as React.CSSProperties} className="mt-auto pt-3 border-t border-[#DDE3E3]/60">
                       <Link
                         href={`/news/${news.slug}`}
                         className="text-link text-sm font-semibold inline-flex items-center gap-1 text-[#1F6F78]"

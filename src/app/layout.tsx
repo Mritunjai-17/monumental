@@ -4,6 +4,8 @@ import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { RevealObserver } from '@/components/layout/RevealObserver';
+import { ScrollProgress } from '@/components/layout/ScrollProgress';
+import { ParallaxController } from '@/components/layout/ParallaxController';
 import { siteConfig } from '@/data/site';
 import { defaultOgImage, robotsMeta } from '@/lib/seo';
 import { heroLineIndexScript, motionOkScript } from '@/lib/motion';
@@ -55,10 +57,12 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: motionOkScript }} />
       </head>
       <body className="min-h-screen flex flex-col bg-[#F5F6F1] text-[#16232B] font-body selection:bg-[#B7E34A] selection:text-[#0B1F2A]">
+        <ScrollProgress />
         <Header />
         <main className="flex-grow">{children}</main>
         <Footer />
         <RevealObserver />
+        <ParallaxController />
         <script dangerouslySetInnerHTML={{ __html: heroLineIndexScript }} />
       </body>
     </html>

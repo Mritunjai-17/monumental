@@ -36,15 +36,15 @@ export const Header: React.FC = () => {
         className={cn(
           'sticky top-0 z-40 w-full transition-all duration-300 bg-[#0B1F2A]',
           isScrolled
-            ? 'bg-[#0B1F2A]/90 backdrop-blur-md shadow-lg shadow-[#0B1F2A]/20 border-b border-[#1D3B4C]/80 py-3.5'
-            : 'border-b border-transparent py-5'
+            ? 'bg-[#0B1F2A]/90 backdrop-blur-md shadow-lg shadow-[#0B1F2A]/20 border-b border-[#1D3B4C]/80 py-3'
+            : 'border-b border-transparent py-4 sm:py-5'
         )}
       >
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A] rounded-lg p-1"
+            className="flex items-center shrink-0 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A] rounded-lg"
           >
             <Image
               src="/images/logo.png"
@@ -74,7 +74,7 @@ export const Header: React.FC = () => {
                   >
                     <button
                       className={cn(
-                        'flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]',
+                        'h-9 inline-flex items-center gap-1.5 px-3 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]',
                         isActive
                           ? 'text-[#B7E34A] font-semibold'
                           : 'text-white/90 hover:text-white hover:bg-white/5'
@@ -84,7 +84,7 @@ export const Header: React.FC = () => {
                       <span>{item.label}</span>
                       <ChevronDown
                         className={cn(
-                          'w-4 h-4 transition-transform duration-200',
+                          'w-3.5 h-3.5 shrink-0 transition-transform duration-200 mt-px',
                           openDropdown === item.label && 'rotate-180'
                         )}
                       />
@@ -132,7 +132,7 @@ export const Header: React.FC = () => {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'px-3.5 py-2 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]',
+                    'h-9 inline-flex items-center justify-center px-3 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]',
                     isActive
                       ? 'text-[#B7E34A] font-semibold'
                       : 'text-white/90 hover:text-white hover:bg-white/5'
@@ -145,24 +145,24 @@ export const Header: React.FC = () => {
           </nav>
 
           {/* Right Header Actions */}
-          <div className="hidden sm:flex items-center gap-3 sm:gap-4">
+          <div className="hidden sm:flex items-center gap-3">
             <TickerChip className="hidden md:inline-flex" />
             <Button
               href="/contact"
               variant="primary"
               size="sm"
-              className="text-xs sm:text-sm font-semibold"
+              className="h-9 px-4 text-xs sm:text-sm font-semibold rounded-[8px] inline-flex items-center justify-center shrink-0"
             >
               Investor Contact
             </Button>
           </div>
 
           {/* Mobile Hamburger Button */}
-          <div className="flex items-center gap-2 lg:hidden">
+          <div className="flex items-center lg:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open mobile navigation menu"
-              className="p-2 rounded-lg text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
+              className="w-9 h-9 flex items-center justify-center rounded-lg text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
             >
               <Menu className="w-6 h-6" />
             </button>

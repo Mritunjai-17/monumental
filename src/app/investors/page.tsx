@@ -40,7 +40,7 @@ export default function InvestorsPage() {
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-14">
             {/* Left 8 Cols: Market Listing & Stats */}
-            <div className="lg:col-span-8 bg-white rounded-[16px] border border-[#DDE3E3] p-8 shadow-sm">
+            <div data-reveal="card" className="lg:col-span-8 bg-white rounded-[16px] border border-[#DDE3E3] p-8 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-[#DDE3E3]">
                 <div>
                   <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-1">Stock Listing</span>
@@ -62,8 +62,12 @@ export default function InvestorsPage() {
 
               {/* Stat grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-sm">
-                {statsData.map((stat) => (
-                  <div key={stat.id}>
+                {statsData.map((stat, idx) => (
+                  <div
+                    key={stat.id}
+                    data-reveal="fast"
+                    style={{ '--reveal-delay': `${idx * 80}ms` } as React.CSSProperties}
+                  >
                     <span className="text-xs text-[#5B6B73] block mb-1">{stat.label}</span>
                     <span className="font-heading font-bold text-xl text-[#0B1F2A] block leading-tight">
                       {stat.value}
@@ -82,7 +86,7 @@ export default function InvestorsPage() {
             </div>
 
             {/* Right 4 Cols: Quick Actions */}
-            <div className="lg:col-span-4 bg-[#0B1F2A] rounded-[16px] p-8 text-white border border-[#1D3B4C] flex flex-col justify-between">
+            <div data-reveal="card" className="lg:col-span-4 bg-[#0B1F2A] rounded-[16px] p-8 text-white border border-[#1D3B4C] flex flex-col justify-between">
               <div>
                 <span className="eyebrow text-[#B7E34A] text-xs font-semibold block mb-2">Key Materials</span>
                 <h3 className="text-xl font-bold font-heading text-white mb-3">
@@ -101,7 +105,7 @@ export default function InvestorsPage() {
 
           {/* Quick Access Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="p-7 bg-white">
+            <Card data-reveal="card" className="p-7 bg-white">
               <div className="w-10 h-10 rounded-lg bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-4">
                 <FileText className="w-5 h-5" />
               </div>
@@ -117,7 +121,7 @@ export default function InvestorsPage() {
               </Link>
             </Card>
 
-            <Card className="p-7 bg-white">
+            <Card data-reveal="card" className="p-7 bg-white">
               <div className="w-10 h-10 rounded-lg bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-4">
                 <Users className="w-5 h-5" />
               </div>
@@ -133,7 +137,7 @@ export default function InvestorsPage() {
               </Link>
             </Card>
 
-            <Card className="p-7 bg-white">
+            <Card data-reveal="card" className="p-7 bg-white">
               <div className="w-10 h-10 rounded-lg bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-4">
                 <BarChart3 className="w-5 h-5" />
               </div>

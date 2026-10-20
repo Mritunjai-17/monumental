@@ -25,7 +25,7 @@ export default function EsgPage() {
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <div className="bg-white rounded-[16px] border border-[#DDE3E3] p-8 shadow-sm">
+            <div data-reveal="card" className="bg-white rounded-[16px] border border-[#DDE3E3] p-8 shadow-sm">
               <div className="w-12 h-12 rounded-[12px] bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-6">
                 <Leaf className="w-6 h-6" />
               </div>
@@ -51,7 +51,7 @@ export default function EsgPage() {
               </ul>
             </div>
 
-            <div className="bg-white rounded-[16px] border border-[#DDE3E3] p-8 shadow-sm">
+            <div data-reveal="card" className="bg-white rounded-[16px] border border-[#DDE3E3] p-8 shadow-sm">
               <div className="w-12 h-12 rounded-[12px] bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-6">
                 <Users className="w-6 h-6" />
               </div>
@@ -77,7 +77,7 @@ export default function EsgPage() {
               </ul>
             </div>
 
-            <div className="bg-white rounded-[16px] border border-[#DDE3E3] p-8 shadow-sm">
+            <div data-reveal="card" className="bg-white rounded-[16px] border border-[#DDE3E3] p-8 shadow-sm">
               <div className="w-12 h-12 rounded-[12px] bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-6">
                 <Shield className="w-6 h-6" />
               </div>

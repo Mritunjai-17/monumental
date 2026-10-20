@@ -2,6 +2,7 @@ import React from 'react';
 import { Container } from '@/components/ui/Container';
 import { InvestorContactForm } from '@/components/forms/InvestorContactForm';
 import { ContactDetails } from '@/components/sections/ContactDetails';
+import { KineticHeading } from '@/components/ui/KineticHeading';
 
 export const ContactCTA: React.FC = () => {
   return (
@@ -17,9 +18,10 @@ export const ContactCTA: React.FC = () => {
               Get In Touch
             </span>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-[44px] font-bold font-heading text-white tracking-[-0.02em] leading-[1.18] mb-6">
-              Connect With Investor Relations
-            </h2>
+            <KineticHeading
+              text="Connect With Investor Relations"
+              className="text-3xl sm:text-4xl lg:text-[44px] font-bold font-heading text-white tracking-[-0.02em] leading-[1.18] mb-6"
+            />
 
             <p className="text-base sm:text-lg text-[#DDE3E3]/90 leading-relaxed mb-8 font-normal">
               Monumental Energy values transparent, accessible communication with shareholders, prospective institutional partners, and financial analysts. Reach out to request private management briefings or additional data room materials.

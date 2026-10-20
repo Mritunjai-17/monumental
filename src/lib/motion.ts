@@ -1,8 +1,12 @@
 // Inline scripts for motion that must run before first paint.
 
-/** Adds html.motion-ok unless the user prefers reduced motion. Runs in <head>. */
+/**
+ * Adds html.motion-ok unless the user prefers reduced motion. Runs in <head>.
+ * If the reveal script (RevealObserver) has not started within 4s, e.g. the JS
+ * bundle failed, the class is removed again so no content stays hidden.
+ */
 export const motionOkScript =
-  "if(!window.matchMedia||!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('motion-ok')";
+  "if(!window.matchMedia||!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('motion-ok');setTimeout(function(){if(!window.__revealReady)document.documentElement.classList.remove('motion-ok')},4000)}";
 
 /**
  * Groups the hero headline's word spans into rendered lines and exposes each

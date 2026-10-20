@@ -7,6 +7,7 @@ import { Container } from '@/components/ui/Container';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { MediaReveal } from '@/components/ui/MediaReveal';
 import {
   FileText,
   Download,
@@ -43,13 +44,15 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
         <Container>
           {/* Project banner (3:2 photo slot, cropped wide) */}
           <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-[16px] overflow-hidden border border-[#DDE3E3] shadow-md mb-10 lg:mb-14 bg-[#0B1F2A]">
-            <Image
-              src={project.heroImage}
-              alt={`${project.name}, ${project.location}`}
-              fill
-              sizes="(min-width: 1200px) 1136px, 100vw"
-              className="object-cover object-center"
-            />
+            <MediaReveal parallax={0.1}>
+              <Image
+                src={project.heroImage}
+                alt={`${project.name}, ${project.location}`}
+                fill
+                sizes="(min-width: 1200px) 1136px, 100vw"
+                className="object-cover object-center"
+              />
+            </MediaReveal>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
@@ -74,6 +77,7 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
                 {project.highlights.map((highlight, idx) => (
                   <div
                     key={idx}
+                    data-reveal="card"
                     className="p-4 rounded-xl bg-white border border-[#DDE3E3] flex items-start gap-3"
                   >
                     <CheckCircle2 className="w-5 h-5 text-[#1F6F78] shrink-0 mt-0.5" />
@@ -87,7 +91,7 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
 
             {/* Right 5 Cols: Key Facts Table & Summary Card */}
             <div className="lg:col-span-5 space-y-6">
-              <Card className="p-6 sm:p-7 bg-white">
+              <Card data-reveal="card" className="p-6 sm:p-7 bg-white">
                 <div className="flex items-center gap-2 pb-4 mb-4 border-b border-[#DDE3E3]">
                   <Layers className="w-5 h-5 text-[#1F6F78]" />
                   <h3 className="text-lg font-bold font-heading text-[#0B1F2A]">
@@ -108,7 +112,7 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
               </Card>
 
               {/* Ownership Structure Card */}
-              <div className="p-6 rounded-[16px] bg-[#0B1F2A] text-white border border-[#1D3B4C]">
+              <div data-reveal="card" className="p-6 rounded-[16px] bg-[#0B1F2A] text-white border border-[#1D3B4C]">
                 <div className="flex items-center gap-2 text-xs uppercase font-heading font-semibold text-[#B7E34A] tracking-wider mb-2">
                   <ShieldCheck className="w-4 h-4" />
                   <span>Structure &amp; Governance</span>
@@ -189,6 +193,7 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
             {project.timeline.map((step, idx) => (
               <div
                 key={step.title}
+                data-reveal="card"
                 className="bg-white rounded-[16px] border border-[#DDE3E3] p-6 sm:p-7 flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6 shadow-sm"
               >
                 <div className="flex sm:flex-col items-center sm:items-start gap-2 sm:gap-1 shrink-0 w-32">
@@ -226,29 +231,30 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {project.documents.map((doc) => (
-              <a
-                key={doc.title}
-                href={doc.url}
-                download
-                className="p-6 rounded-[16px] border border-[#DDE3E3] bg-[#F5F6F1] hover:bg-white hover:border-[#1F6F78] hover:shadow-md transition-all duration-200 flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="w-10 h-10 rounded-lg bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-4 group-hover:bg-[#1F6F78] group-hover:text-white transition-colors">
-                    <FileText className="w-5 h-5" />
+              <div key={doc.title} data-reveal="card" className="h-full">
+                <a
+                  href={doc.url}
+                  download
+                  className="h-full p-6 rounded-[16px] border border-[#DDE3E3] bg-[#F5F6F1] hover:bg-white hover:border-[#1F6F78] hover:shadow-md transition-all duration-200 flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="w-10 h-10 rounded-lg bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-4 group-hover:bg-[#1F6F78] group-hover:text-white transition-colors">
+                      <FileText className="w-5 h-5" />
+                    </div>
+                    <h3 className="font-heading font-semibold text-base text-[#0B1F2A] mb-1 group-hover:text-[#1F6F78] transition-colors leading-[1.18]">
+                      {doc.title}
+                    </h3>
+                    <span className="text-xs text-[#5B6B73] uppercase font-medium">
+                      {doc.type} • {doc.size}
+                    </span>
                   </div>
-                  <h3 className="font-heading font-semibold text-base text-[#0B1F2A] mb-1 group-hover:text-[#1F6F78] transition-colors leading-[1.18]">
-                    {doc.title}
-                  </h3>
-                  <span className="text-xs text-[#5B6B73] uppercase font-medium">
-                    {doc.type} • {doc.size}
-                  </span>
-                </div>
 
-                <div className="mt-6 pt-3 border-t border-[#DDE3E3]/60 flex items-center justify-between text-xs font-semibold text-[#1F6F78]">
-                  <span>Download file</span>
-                  <Download className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
-                </div>
-              </a>
+                  <div className="mt-6 pt-3 border-t border-[#DDE3E3]/60 flex items-center justify-between text-xs font-semibold text-[#1F6F78]">
+                    <span>Download file</span>
+                    <Download className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
+                  </div>
+                </a>
+              </div>
             ))}
           </div>
         </Container>

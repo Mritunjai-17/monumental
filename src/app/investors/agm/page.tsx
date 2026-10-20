@@ -59,46 +59,52 @@ export default function AgmPage() {
                 </h3>
 
                 <div className="space-y-3">
-                  <div className="p-4 rounded-xl border border-[#DDE3E3] flex items-center justify-between hover:border-[#1F6F78] transition-colors">
-                    <div className="flex items-center gap-3">
-                      <FileText className="w-5 h-5 text-[#1F6F78]" />
-                      <div>
-                        <span className="font-semibold text-sm text-[#0B1F2A] block">Notice of Meeting and Management Information Circular</span>
-                        <span className="text-xs text-[#5B6B73]">PDF Document • [CIRCULAR_SIZE_PLACEHOLDER]</span>
+                  <div data-reveal="card">
+                    <div className="p-4 rounded-xl border border-[#DDE3E3] flex items-center justify-between hover:border-[#1F6F78] transition-colors">
+                      <div className="flex items-center gap-3">
+                        <FileText className="w-5 h-5 text-[#1F6F78]" />
+                        <div>
+                          <span className="font-semibold text-sm text-[#0B1F2A] block">Notice of Meeting and Management Information Circular</span>
+                          <span className="text-xs text-[#5B6B73]">PDF Document • [CIRCULAR_SIZE_PLACEHOLDER]</span>
+                        </div>
                       </div>
+                      <a href="/documents/investor-presentation.pdf" download className="text-link text-xs font-semibold">
+                        <span>Download</span>
+                        <Download className="w-4 h-4 ml-1" />
+                      </a>
                     </div>
-                    <a href="/documents/investor-presentation.pdf" download className="text-link text-xs font-semibold">
-                      <span>Download</span>
-                      <Download className="w-4 h-4 ml-1" />
-                    </a>
                   </div>
 
-                  <div className="p-4 rounded-xl border border-[#DDE3E3] flex items-center justify-between hover:border-[#1F6F78] transition-colors">
-                    <div className="flex items-center gap-3">
-                      <FileText className="w-5 h-5 text-[#1F6F78]" />
-                      <div>
-                        <span className="font-semibold text-sm text-[#0B1F2A] block">Form of Proxy (Registered Shareholders)</span>
-                        <span className="text-xs text-[#5B6B73]">PDF Document • [PROXY_SIZE_PLACEHOLDER]</span>
+                  <div data-reveal="card">
+                    <div className="p-4 rounded-xl border border-[#DDE3E3] flex items-center justify-between hover:border-[#1F6F78] transition-colors">
+                      <div className="flex items-center gap-3">
+                        <FileText className="w-5 h-5 text-[#1F6F78]" />
+                        <div>
+                          <span className="font-semibold text-sm text-[#0B1F2A] block">Form of Proxy (Registered Shareholders)</span>
+                          <span className="text-xs text-[#5B6B73]">PDF Document • [PROXY_SIZE_PLACEHOLDER]</span>
+                        </div>
                       </div>
+                      <a href="/documents/investor-presentation.pdf" download className="text-link text-xs font-semibold">
+                        <span>Download</span>
+                        <Download className="w-4 h-4 ml-1" />
+                      </a>
                     </div>
-                    <a href="/documents/investor-presentation.pdf" download className="text-link text-xs font-semibold">
-                      <span>Download</span>
-                      <Download className="w-4 h-4 ml-1" />
-                    </a>
                   </div>
 
-                  <div className="p-4 rounded-xl border border-[#DDE3E3] flex items-center justify-between hover:border-[#1F6F78] transition-colors">
-                    <div className="flex items-center gap-3">
-                      <FileText className="w-5 h-5 text-[#1F6F78]" />
-                      <div>
-                        <span className="font-semibold text-sm text-[#0B1F2A] block">Voting Instruction Form (VIF for Beneficial Shareholders)</span>
-                        <span className="text-xs text-[#5B6B73]">PDF Document • [VIF_SIZE_PLACEHOLDER]</span>
+                  <div data-reveal="card">
+                    <div className="p-4 rounded-xl border border-[#DDE3E3] flex items-center justify-between hover:border-[#1F6F78] transition-colors">
+                      <div className="flex items-center gap-3">
+                        <FileText className="w-5 h-5 text-[#1F6F78]" />
+                        <div>
+                          <span className="font-semibold text-sm text-[#0B1F2A] block">Voting Instruction Form (VIF for Beneficial Shareholders)</span>
+                          <span className="text-xs text-[#5B6B73]">PDF Document • [VIF_SIZE_PLACEHOLDER]</span>
+                        </div>
                       </div>
+                      <a href="/documents/investor-presentation.pdf" download className="text-link text-xs font-semibold">
+                        <span>Download</span>
+                        <Download className="w-4 h-4 ml-1" />
+                      </a>
                     </div>
-                    <a href="/documents/investor-presentation.pdf" download className="text-link text-xs font-semibold">
-                      <span>Download</span>
-                      <Download className="w-4 h-4 ml-1" />
-                    </a>
                   </div>
                 </div>
               </div>

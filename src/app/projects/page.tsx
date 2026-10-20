@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { PageHero } from '@/components/layout/PageHero';
 import { Container } from '@/components/ui/Container';
 import { Badge } from '@/components/ui/Badge';
+import { MediaReveal } from '@/components/ui/MediaReveal';
 import { Button } from '@/components/ui/Button';
 import { projectsData } from '@/data/projects';
 import { constructMetadata } from '@/lib/seo';
@@ -29,7 +30,7 @@ export default function ProjectsPage() {
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <div className="p-8 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex flex-col items-start">
+            <div data-reveal="card" className="p-8 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex flex-col items-start">
               <div className="w-12 h-12 rounded-[12px] bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-6">
                 <Zap className="w-6 h-6" />
               </div>
@@ -55,7 +56,7 @@ export default function ProjectsPage() {
               </Button>
             </div>
 
-            <div className="p-8 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex flex-col items-start">
+            <div data-reveal="card" className="p-8 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex flex-col items-start">
               <div className="w-12 h-12 rounded-[12px] bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-6">
                 <ShieldCheck className="w-6 h-6" />
               </div>
@@ -87,16 +88,19 @@ export default function ProjectsPage() {
             {projectsData.map((project, idx) => (
               <div
                 key={project.id}
+                data-reveal="card"
                 className="bg-white rounded-[16px] border border-[#DDE3E3] overflow-hidden shadow-md grid grid-cols-1 lg:grid-cols-12 gap-0"
               >
-                <div className={`lg:col-span-5 relative min-h-[300px] lg:min-h-full bg-[#0B1F2A] ${idx % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <Image
-                    src={project.heroImage}
-                    alt={`${project.name}, ${project.location}`}
-                    fill
-                    sizes="(min-width: 1024px) 470px, 100vw"
-                    className="object-cover object-center"
-                  />
+                <div className={`lg:col-span-5 relative min-h-[300px] lg:min-h-full overflow-hidden bg-[#0B1F2A] group ${idx % 2 === 1 ? 'lg:order-2' : ''}`}>
+                  <MediaReveal parallax={0.08}>
+                    <Image
+                      src={project.heroImage}
+                      alt={`${project.name}, ${project.location}`}
+                      fill
+                      sizes="(min-width: 1024px) 470px, 100vw"
+                      className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                    />
+                  </MediaReveal>
                   <div className="absolute top-4 left-4">
                     <Badge
                     variant={project.category === 'Oil & Gas' ? 'lime' : 'teal'}

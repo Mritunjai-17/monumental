@@ -27,7 +27,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      'inline-flex items-center justify-center font-medium font-body transition-all duration-200 select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2';
+      'group inline-flex items-center justify-center font-medium font-body transition-all duration-200 select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]';
 
     const sizeStyles = {
       sm: 'text-sm px-4 py-2 rounded-[8px] gap-1.5',
@@ -40,15 +40,15 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     if (variant === 'primary') {
       // Lime background, navy text, 600 weight, radius 10px, subtle lift + color change on hover, visible focus ring
       variantStyles =
-        'bg-[#B7E34A] text-[#0B1F2A] font-semibold hover:bg-[#A3CF36] hover:-translate-y-0.5 hover:shadow-lg focus-visible:ring-[#B7E34A] active:translate-y-0 active:scale-[0.98] active:shadow-sm disabled:opacity-70 disabled:pointer-events-none border border-transparent';
+        'bg-[#B7E34A] text-[#0B1F2A] font-semibold hover:bg-[#A3CF36] hover:-translate-y-0.5 hover:shadow-lg focus-visible:ring-[#B7E34A] active:translate-y-0 active:shadow-sm disabled:opacity-70 disabled:pointer-events-none border border-transparent';
     } else if (variant === 'secondary') {
       // Transparent with a 1.5px teal border, fills with teal on hover
       variantStyles =
-        'bg-transparent text-[#1F6F78] border-[1.5px] border-[#1F6F78] hover:bg-[#1F6F78] hover:text-white hover:-translate-y-0.5 focus-visible:ring-[#1F6F78]';
+        'bg-transparent text-[#1F6F78] border-[1.5px] border-[#1F6F78] hover:bg-[#1F6F78] hover:text-white hover:-translate-y-0.5 active:translate-y-0 focus-visible:ring-[#1F6F78]';
     } else if (variant === 'secondary-dark') {
       // White border on dark sections, fills with teal on hover
       variantStyles =
-        'bg-transparent text-white border-[1.5px] border-white/80 hover:bg-[#1F6F78] hover:border-[#1F6F78] hover:text-white hover:-translate-y-0.5 focus-visible:ring-white';
+        'bg-transparent text-white border-[1.5px] border-white/80 hover:bg-[#1F6F78] hover:border-[#1F6F78] hover:text-white hover:-translate-y-0.5 active:translate-y-0 focus-visible:ring-white focus-visible:ring-offset-[#0B1F2A]';
     } else if (variant === 'link') {
       return (
         <Link

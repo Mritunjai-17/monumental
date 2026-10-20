@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { KineticHeading } from '@/components/ui/KineticHeading';
 import { ArrowRight } from 'lucide-react';
 
 interface SectionHeadingProps {
@@ -35,15 +36,14 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
           {eyebrow}
         </span>
       )}
-      <h2
+      <KineticHeading
+        text={title}
         className={cn(
           'text-3xl sm:text-4xl lg:text-[44px] font-bold font-heading tracking-[-0.02em] leading-[1.18]',
           description && 'mb-4',
           dark ? 'text-white' : 'text-[#0B1F2A]'
         )}
-      >
-        {title}
-      </h2>
+      />
       {description && (
         <p
           className={cn(
@@ -59,7 +59,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
 
   if (!action) {
     return (
-      <div data-reveal className={cn('mb-12 sm:mb-16', className)}>
+      <div data-reveal="fade" className={cn('mb-12 sm:mb-16', className)}>
         {heading}
       </div>
     );
@@ -68,7 +68,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   // Heading and "View all" share one row at every breakpoint; the link
   // aligns to the heading's last line.
   return (
-    <div data-reveal className={cn('mb-12 sm:mb-16 flex flex-row items-end justify-between gap-4', className)}>
+    <div data-reveal="fade" className={cn('mb-12 sm:mb-16 flex flex-row items-end justify-between gap-4', className)}>
       {heading}
       <Link
         href={action.href}

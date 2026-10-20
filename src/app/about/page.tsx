@@ -67,7 +67,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 lg:mt-16">
-            <Card className="p-6 bg-white h-full">
+            <Card data-reveal="card" className="p-6 bg-white h-full">
               <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
                 <Target className="w-5 h-5 text-[#1F6F78]" />
                 <span>Pragmatic Value Creation</span>
@@ -77,7 +77,7 @@ export default function AboutPage() {
               </p>
             </Card>
 
-            <Card className="p-6 bg-white h-full">
+            <Card data-reveal="card" className="p-6 bg-white h-full">
               <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-[#1F6F78]" />
                 <span>Capital Protection</span>
@@ -87,7 +87,7 @@ export default function AboutPage() {
               </p>
             </Card>
 
-            <Card className="p-6 bg-white h-full">
+            <Card data-reveal="card" className="p-6 bg-white h-full">
               <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
                 <Compass className="w-5 h-5 text-[#1F6F78]" />
                 <span>Jurisdictional Integrity</span>
@@ -114,7 +114,7 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3]">
+            <div data-reveal="card" className="p-6 rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3]">
               <div className="w-12 h-12 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-lg mb-4">
                 CEO
               </div>
@@ -129,7 +129,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3]">
+            <div data-reveal="card" className="p-6 rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3]">
               <div className="w-12 h-12 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-lg mb-4">
                 CFO
               </div>
@@ -144,7 +144,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3]">
+            <div data-reveal="card" className="p-6 rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3]">
               <div className="w-12 h-12 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-lg mb-4">
                 BOD
               </div>
