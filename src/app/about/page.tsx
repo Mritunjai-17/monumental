@@ -23,6 +23,7 @@ export default function AboutPage() {
         eyebrow="Corporate Profile"
         description="Headquartered in Vancouver, BC, Monumental Energy is engineered for the modern energy transition with a disciplined, low-capex approach to resource development."
         breadcrumbs={[{ label: 'About Us' }]}
+        backgroundImage="/images/about-hero.jpg"
       />
 
       {/* Corporate Philosophy (Off-white) */}
@@ -56,7 +57,7 @@ export default function AboutPage() {
             <div className="lg:col-span-5">
               <div className="relative w-full aspect-[5/6] rounded-[16px] overflow-hidden border border-[#DDE3E3] shadow-md bg-[#0B1F2A]">
                 <Image
-                  src="/images/office.jpg"
+                  src="/images/corporate-office.jpg"
                   alt="Monumental Energy corporate office in Vancouver, BC"
                   fill
                   sizes="(min-width: 1024px) 460px, 100vw"
@@ -67,34 +68,76 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 lg:mt-16">
-            <Card data-reveal="card" className="p-6 bg-white h-full">
-              <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
-                <Target className="w-5 h-5 text-[#1F6F78]" />
-                <span>Pragmatic Value Creation</span>
-              </h3>
-              <p className="text-xs text-[#5B6B73] leading-relaxed">
-                Focusing on low-entry-cost assets with existing infrastructure to maximize cash flow deliverability per share.
-              </p>
+            <Card data-reveal="card" hoverEffect className="bg-white h-full flex flex-col">
+              <div className="relative w-full aspect-[16/9] bg-[#0B1F2A] overflow-hidden">
+                <Image
+                  src="/images/about-value-creation.jpg"
+                  alt="Taranaki Basin production wellhead infrastructure and Mount Taranaki"
+                  fill
+                  sizes="(min-width: 768px) 380px, 100vw"
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-3 left-3 bg-[#0B1F2A]/85 backdrop-blur-md px-2.5 py-1 rounded-[6px] border border-white/10 text-[11px] font-semibold text-[#B7E34A]">
+                  Taranaki Basin, NZ
+                </div>
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
+                  <Target className="w-5 h-5 text-[#1F6F78] shrink-0" />
+                  <span>Pragmatic Value Creation</span>
+                </h3>
+                <p className="text-xs text-[#5B6B73] leading-relaxed">
+                  Focusing on low-entry-cost assets with existing infrastructure to maximize cash flow deliverability per share.
+                </p>
+              </div>
             </Card>
 
-            <Card data-reveal="card" className="p-6 bg-white h-full">
-              <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-[#1F6F78]" />
-                <span>Capital Protection</span>
-              </h3>
-              <p className="text-xs text-[#5B6B73] leading-relaxed">
-                Structuring critical mineral holdings into a 2% Net Smelter Return (NSR) royalty that eliminates ongoing cash call liabilities.
-              </p>
+            <Card data-reveal="card" hoverEffect className="bg-white h-full flex flex-col">
+              <div className="relative w-full aspect-[16/9] bg-[#0B1F2A] overflow-hidden">
+                <Image
+                  src="/images/project-salar-de-turi.jpg"
+                  alt="Salar de Turi lithium brine flats and volcanic ridges in Chile"
+                  fill
+                  sizes="(min-width: 768px) 380px, 100vw"
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-3 left-3 bg-[#0B1F2A]/85 backdrop-blur-md px-2.5 py-1 rounded-[6px] border border-white/10 text-[11px] font-semibold text-[#B7E34A]">
+                  Atacama Region, Chile
+                </div>
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-[#1F6F78] shrink-0" />
+                  <span>Capital Protection</span>
+                </h3>
+                <p className="text-xs text-[#5B6B73] leading-relaxed">
+                  Structuring critical mineral holdings into a 2% Net Smelter Return (NSR) royalty that eliminates ongoing cash call liabilities.
+                </p>
+              </div>
             </Card>
 
-            <Card data-reveal="card" className="p-6 bg-white h-full">
-              <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
-                <Compass className="w-5 h-5 text-[#1F6F78]" />
-                <span>Jurisdictional Integrity</span>
-              </h3>
-              <p className="text-xs text-[#5B6B73] leading-relaxed">
-                All holdings situated in premier, established mining and resource frameworks in New Zealand and Chile.
-              </p>
+            <Card data-reveal="card" hoverEffect className="bg-white h-full flex flex-col">
+              <div className="relative w-full aspect-[16/9] bg-[#0B1F2A] overflow-hidden">
+                <Image
+                  src="/images/news-lithium-survey.jpg"
+                  alt="Technical geological survey team in premier mining jurisdictions"
+                  fill
+                  sizes="(min-width: 768px) 380px, 100vw"
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-3 left-3 bg-[#0B1F2A]/85 backdrop-blur-md px-2.5 py-1 rounded-[6px] border border-white/10 text-[11px] font-semibold text-[#B7E34A]">
+                  Tier-1 Jurisdictions
+                </div>
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
+                  <Compass className="w-5 h-5 text-[#1F6F78] shrink-0" />
+                  <span>Jurisdictional Integrity</span>
+                </h3>
+                <p className="text-xs text-[#5B6B73] leading-relaxed">
+                  All holdings situated in premier, established mining and resource frameworks in New Zealand and Chile.
+                </p>
+              </div>
             </Card>
           </div>
         </Container>
@@ -114,49 +157,91 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div data-reveal="card" className="p-6 rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3]">
-              <div className="w-12 h-12 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-lg mb-4">
-                CEO
+            <div data-reveal="card" className="rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3] overflow-hidden flex flex-col">
+              <div className="relative w-full aspect-[16/9] bg-[#0B1F2A]">
+                <Image
+                  src="/images/investor-deck-preview.jpg"
+                  alt="Executive leadership briefing materials and corporate deck"
+                  fill
+                  sizes="(min-width: 768px) 380px, 100vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute top-3 left-3 bg-[#0B1F2A]/85 backdrop-blur-md px-2.5 py-1 rounded-[6px] border border-white/10 text-[11px] font-semibold text-[#B7E34A]">
+                  Executive Office
+                </div>
               </div>
-              <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-1">
-                Executive Leadership
-              </h3>
-              <span className="text-xs font-semibold text-[#1F6F78] uppercase tracking-wider block mb-3">
-                Chief Executive Officer &amp; Director
-              </span>
-              <p className="text-xs text-[#5B6B73] leading-relaxed">
-                Extensive resource capital market experience leading corporate strategy, M&amp;A, joint venture structuring, and public company operations.
-              </p>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="w-10 h-10 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-sm mb-3">
+                  CEO
+                </div>
+                <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-1">
+                  Executive Leadership
+                </h3>
+                <span className="text-xs font-semibold text-[#1F6F78] uppercase tracking-wider block mb-3">
+                  Chief Executive Officer &amp; Director
+                </span>
+                <p className="text-xs text-[#5B6B73] leading-relaxed">
+                  Extensive resource capital market experience leading corporate strategy, M&amp;A, joint venture structuring, and public company operations.
+                </p>
+              </div>
             </div>
 
-            <div data-reveal="card" className="p-6 rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3]">
-              <div className="w-12 h-12 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-lg mb-4">
-                CFO
+            <div data-reveal="card" className="rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3] overflow-hidden flex flex-col">
+              <div className="relative w-full aspect-[16/9] bg-[#0B1F2A]">
+                <Image
+                  src="/images/news-corporate-agm.jpg"
+                  alt="Financial governance, audit, and capital markets compliance"
+                  fill
+                  sizes="(min-width: 768px) 380px, 100vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute top-3 left-3 bg-[#0B1F2A]/85 backdrop-blur-md px-2.5 py-1 rounded-[6px] border border-white/10 text-[11px] font-semibold text-[#B7E34A]">
+                  Fiscal Oversight
+                </div>
               </div>
-              <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-1">
-                Financial Governance
-              </h3>
-              <span className="text-xs font-semibold text-[#1F6F78] uppercase tracking-wider block mb-3">
-                Chief Financial Officer
-              </span>
-              <p className="text-xs text-[#5B6B73] leading-relaxed">
-                Chartered professional accountant with oversight of financial reporting, TSX Venture compliance, fiscal auditing, and internal controls.
-              </p>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="w-10 h-10 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-sm mb-3">
+                  CFO
+                </div>
+                <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-1">
+                  Financial Governance
+                </h3>
+                <span className="text-xs font-semibold text-[#1F6F78] uppercase tracking-wider block mb-3">
+                  Chief Financial Officer
+                </span>
+                <p className="text-xs text-[#5B6B73] leading-relaxed">
+                  Chartered professional accountant with oversight of financial reporting, TSX Venture compliance, fiscal auditing, and internal controls.
+                </p>
+              </div>
             </div>
 
-            <div data-reveal="card" className="p-6 rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3]">
-              <div className="w-12 h-12 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-lg mb-4">
-                BOD
+            <div data-reveal="card" className="rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3] overflow-hidden flex flex-col">
+              <div className="relative w-full aspect-[16/9] bg-[#0B1F2A]">
+                <Image
+                  src="/images/agm-hall.jpg"
+                  alt="Vancouver corporate boardroom and independent governance advisory"
+                  fill
+                  sizes="(min-width: 768px) 380px, 100vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute top-3 left-3 bg-[#0B1F2A]/85 backdrop-blur-md px-2.5 py-1 rounded-[6px] border border-white/10 text-[11px] font-semibold text-[#B7E34A]">
+                  Boardroom
+                </div>
               </div>
-              <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-1">
-                Independent Board
-              </h3>
-              <span className="text-xs font-semibold text-[#1F6F78] uppercase tracking-wider block mb-3">
-                Board of Directors
-              </span>
-              <p className="text-xs text-[#5B6B73] leading-relaxed">
-                Independent directors with specialized backgrounds spanning petroleum engineering, South American mineral titles, and TSX-V compliance.
-              </p>
+              <div className="p-6 flex-1 flex flex-col">
+                <div className="w-10 h-10 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-sm mb-3">
+                  BOD
+                </div>
+                <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-1">
+                  Independent Board
+                </h3>
+                <span className="text-xs font-semibold text-[#1F6F78] uppercase tracking-wider block mb-3">
+                  Board of Directors
+                </span>
+                <p className="text-xs text-[#5B6B73] leading-relaxed">
+                  Independent directors with specialized backgrounds spanning petroleum engineering, South American mineral titles, and TSX-V compliance.
+                </p>
+              </div>
             </div>
           </div>
         </Container>

@@ -24,6 +24,7 @@ export default function ProjectsPage() {
         eyebrow="Dual-Pillar Strategy"
         description="Balancing low-capex conventional energy production in New Zealand with high-upside critical mineral royalty participation in Chile."
         breadcrumbs={[{ label: 'Projects' }]}
+        backgroundImage="/images/project-new-zealand.jpg"
       />
 
       {/* Strategic Portfolio Framework (Off-white) */}

@@ -25,6 +25,7 @@ export default function NewsPage() {
         eyebrow="Market Releases"
         description="Official press announcements, operational milestones, and regulatory filings filed in accordance with TSX Venture Exchange policies."
         breadcrumbs={[{ label: 'News' }]}
+        backgroundImage="/images/news-lithium-survey.jpg"
       />
 
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">

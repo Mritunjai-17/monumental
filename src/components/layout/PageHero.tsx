@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { ChevronRight } from 'lucide-react';
 
@@ -14,6 +15,7 @@ interface PageHeroProps {
   description?: string;
   breadcrumbs: BreadcrumbItem[];
   badge?: React.ReactNode;
+  backgroundImage?: string;
 }
 
 export const PageHero: React.FC<PageHeroProps> = ({
@@ -22,9 +24,26 @@ export const PageHero: React.FC<PageHeroProps> = ({
   description,
   breadcrumbs,
   badge,
+  backgroundImage,
 }) => {
   return (
     <section className="bg-[#0B1F2A] text-white pt-12 sm:pt-16 pb-16 sm:pb-20 border-b border-[#1D3B4C] relative overflow-hidden">
+      {/* Background image if provided */}
+      {backgroundImage && (
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={backgroundImage}
+            alt={title}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1F2A]/95 via-[#0B1F2A]/85 to-[#0B1F2A]/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F2A] via-transparent to-[#0B1F2A]/40" />
+        </div>
+      )}
+
       {/* Background glow */}
       <div className="absolute top-0 right-1/4 w-80 h-80 bg-[#1F6F78]/15 rounded-full blur-3xl pointer-events-none" />
 

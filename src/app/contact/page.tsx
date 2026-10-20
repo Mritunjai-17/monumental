@@ -22,6 +22,7 @@ export default function ContactPage() {
         eyebrow="Corporate & Investor Relations"
         description="We welcome inquiries from shareholders, institutional analysts, brokers, and media. Connect with our Vancouver corporate team directly."
         breadcrumbs={[{ label: 'Contact' }]}
+        backgroundImage="/images/about-hero.jpg"
       />
 
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">
@@ -32,7 +33,7 @@ export default function ContactPage() {
               <div className="bg-white rounded-[16px] border border-[#DDE3E3] overflow-hidden shadow-sm">
                 <div className="relative w-full aspect-[16/9] bg-[#0B1F2A]">
                   <Image
-                    src="/images/office.jpg"
+                    src="/images/corporate-office.jpg"
                     alt="Monumental Energy corporate office in Vancouver, BC"
                     fill
                     sizes="(min-width: 1024px) 560px, 100vw"

@@ -17,6 +17,7 @@ export default function PrivacyPolicyPage() {
         eyebrow="Legal & Regulatory"
         description="How Monumental Energy Corp. collects, safeguards, and utilizes personal and corporate information provided through this website."
         breadcrumbs={[{ label: 'Privacy Policy' }]}
+        backgroundImage="/images/office.jpg"
       />
 
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">

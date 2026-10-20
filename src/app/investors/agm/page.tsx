@@ -24,6 +24,7 @@ export default function AgmPage() {
           { label: 'Investors', href: '/investors' },
           { label: 'AGM' },
         ]}
+        backgroundImage="/images/agm-hall.jpg"
       />
 
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">

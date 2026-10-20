@@ -20,6 +20,7 @@ export default function EsgPage() {
         eyebrow="Sustainability"
         description="Integrating environmental stewardship, local community respect, and transparent public market governance into every operational decision."
         breadcrumbs={[{ label: 'ESG' }]}
+        backgroundImage="/images/esg-stewardship.jpg"
       />
 
       {/* 3 Pillars (Off-white) */}

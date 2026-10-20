@@ -34,6 +34,7 @@ export default function InvestorsPage() {
         eyebrow="Shareholder Hub"
         description="Transparent financial reporting, corporate governance, presentation materials, and regulatory disclosure archive."
         breadcrumbs={[{ label: 'Investors' }]}
+        backgroundImage="/images/agm-hall.jpg"
       />
 
       {/* Market Snapshot & Capital Structure (Off-white) */}

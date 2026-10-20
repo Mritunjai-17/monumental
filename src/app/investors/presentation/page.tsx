@@ -24,6 +24,7 @@ export default function PresentationPage() {
           { label: 'Investors', href: '/investors' },
           { label: 'Presentation' },
         ]}
+        backgroundImage="/images/investor-deck-preview.jpg"
       />
 
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">

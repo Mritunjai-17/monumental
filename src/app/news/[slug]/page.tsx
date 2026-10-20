@@ -50,6 +50,7 @@ export default function NewsArticlePage({ params }: NewsDetailProps) {
           { label: 'News', href: '/news' },
           { label: 'Press Release' },
         ]}
+        backgroundImage={article.image || '/images/news-lithium-survey.jpg'}
       />
 
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">
