@@ -10,6 +10,7 @@ export interface Project {
   shortSummary: string;
   description: string;
   heroImage: string;
+  bannerImage?: string;
   /** Short metric shown in the project card footer. */
   cardMetric: string;
   keyFacts: { label: string; value: string }[];

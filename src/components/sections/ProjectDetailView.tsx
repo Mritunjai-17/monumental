@@ -23,7 +23,7 @@ import {
 export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) => {
   return (
     <>
-      {/* 1. Consistent Navy Hero with Breadcrumbs */}
+      {/* 1. Consistent Navy Hero with Breadcrumbs & Contextual Background Image */}
       <PageHero
         title={project.name}
         eyebrow={`${project.category} Portfolio Asset`}
@@ -37,6 +37,7 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
             {project.statusBadge}
           </Badge>
         }
+        backgroundImage={project.heroImage}
       />
 
       {/* 2. Overview & Key Facts Table (Off-white) */}
@@ -46,9 +47,10 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
           <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-[16px] overflow-hidden border border-[#DDE3E3] shadow-md mb-10 lg:mb-14 bg-[#0B1F2A]">
             <MediaReveal parallax={0.1}>
               <Image
-                src={project.heroImage}
+                src={project.bannerImage || project.heroImage}
                 alt={`${project.name}, ${project.location}`}
                 fill
+                priority
                 sizes="(min-width: 1200px) 1136px, 100vw"
                 className="object-cover object-center"
               />
