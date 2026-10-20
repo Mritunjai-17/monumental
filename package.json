@@ -1,0 +1,29 @@
+{
+  "name": "monumental-energy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Monumental Energy Corp. (TSX-V: MNRG) - Modern, credible, investor-focused website",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.6.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.60.0",
+    "next": "^14.2.15",
+    "postcss": "^8.5.31",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^3.4.19"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

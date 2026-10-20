@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="turi-sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0A1D2B" />
+      <stop offset="50%" stop-color="#133649" />
+      <stop offset="100%" stop-color="#1B5566" />
+    </linearGradient>
+    <linearGradient id="andes" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3A3845" />
+      <stop offset="100%" stop-color="#1E242B" />
+    </linearGradient>
+    <linearGradient id="brine-pool" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1F6F78" />
+      <stop offset="40%" stop-color="#14B8A6" />
+      <stop offset="100%" stop-color="#B7E34A" />
+    </linearGradient>
+  </defs>
+
+  <!-- Clear Altiplano Sky -->
+  <rect width="1200" height="800" fill="url(#turi-sky)" />
+
+  <!-- Andes Mountain Range Silhouette -->
+  <polygon points="0,520 180,410 320,470 540,320 620,380 780,290 920,400 1080,310 1200,430 1200,800 0,800" fill="url(#andes)" />
+
+  <!-- Salar Salt Crust Flat Plain -->
+  <path d="M 0,550 L 1200,550 L 1200,800 L 0,800 Z" fill="#E2E8F0" opacity="0.9" />
+
+  <!-- Brine Evaporation & Extraction Geometry Pattern -->
+  <polygon points="120,580 480,570 440,680 60,700" fill="url(#brine-pool)" opacity="0.85" stroke="#FFFFFF" stroke-width="2" />
+  <polygon points="500,570 900,560 860,670 460,680" fill="url(#brine-pool)" opacity="0.75" stroke="#FFFFFF" stroke-width="2" />
+  <polygon points="920,560 1180,555 1160,650 880,665" fill="url(#brine-pool)" opacity="0.65" stroke="#FFFFFF" stroke-width="2" />
+
+  <!-- Hexagonal Salt Crystal Grid Effect -->
+  <g stroke="#94A3B8" stroke-width="1" fill="none" opacity="0.4">
+    <path d="M 100,720 L 160,700 L 220,720 L 220,770 L 160,790 L 100,770 Z" />
+    <path d="M 240,720 L 300,700 L 360,720 L 360,770 L 300,790 L 240,770 Z" />
+    <path d="M 380,720 L 440,700 L 500,720 L 500,770 L 440,790 L 380,770 Z" />
+  </g>
+
+</svg>

@@ -1,0 +1,120 @@
+import React from 'react';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { PageHero } from '@/components/layout/PageHero';
+import { Container } from '@/components/ui/Container';
+import { Button } from '@/components/ui/Button';
+import { newsArticles } from '@/data/news';
+import { constructMetadata } from '@/lib/seo';
+import { Calendar, Tag, ArrowLeft, Share2, Printer } from 'lucide-react';
+
+interface NewsDetailProps {
+  params: {
+    slug: string;
+  };
+}
+
+export function generateStaticParams() {
+  return newsArticles.map((article) => ({
+    slug: article.slug,
+  }));
+}
+
+export function generateMetadata({ params }: NewsDetailProps) {
+  const article = newsArticles.find((a) => a.slug === params.slug);
+  if (!article) return { title: 'News Not Found' };
+
+  return constructMetadata({
+    title: article.title,
+    description: article.excerpt,
+    path: `/news/${article.slug}`,
+    type: 'article',
+  });
+}
+
+export default function NewsArticlePage({ params }: NewsDetailProps) {
+  const article = newsArticles.find((a) => a.slug === params.slug);
+
+  if (!article) {
+    notFound();
+  }
+
+  return (
+    <>
+      <PageHero
+        title={article.title}
+        eyebrow="Market Disclosure"
+        breadcrumbs={[
+          { label: 'News', href: '/news' },
+          { label: 'Press Release' },
+        ]}
+      />
+
+      <section className="py-14 lg:py-24 bg-[#F5F6F1]">
+        <Container size="narrow">
+          <div className="bg-white rounded-[16px] border border-[#DDE3E3] p-6 sm:p-10 lg:p-12 shadow-sm">
+            {/* Meta bar */}
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-8 border-b border-[#DDE3E3] text-xs text-[#5B6B73]">
+              <div className="flex items-center gap-3">
+                <span className="flex items-center gap-1.5 font-medium">
+                  <Calendar className="w-4 h-4 text-[#1F6F78]" />
+                  {article.date}
+                </span>
+                <span>•</span>
+                <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-[#1F6F78] bg-[#1F6F78]/10 px-2.5 py-0.5 rounded-full">
+                  <Tag className="w-3 h-3" />
+                  {article.category}
+                </span>
+                <span>•</span>
+                <span>{article.readTime}</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Link
+                  href="/news"
+                  className="inline-flex items-center gap-1.5 text-xs text-[#1F6F78] hover:text-[#0B1F2A] transition-colors"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Back to News</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Content paragraphs */}
+            <div className="space-y-6 text-base text-[#16232B] leading-relaxed">
+              {article.content.map((paragraph, idx) => (
+                <p key={idx} className={idx === 0 ? 'font-medium text-lg text-[#0B1F2A]' : ''}>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            {/* Corporate boilerplate */}
+            <div className="mt-12 pt-8 border-t border-[#DDE3E3] text-xs text-[#5B6B73] leading-relaxed space-y-3">
+              <h4 className="font-heading font-bold text-xs uppercase tracking-wider text-[#0B1F2A]">
+                About Monumental Energy Corp.
+              </h4>
+              <p>
+                Monumental Energy (TSX-V: MNRG) is an energy and resource development company focused on conventional cashflow operations in New Zealand and strategic lithium exploration royalty ownership in Chile.
+              </p>
+              <p className="pt-2">
+                <strong>Investor Contact:</strong> info@monumental.energy | +1-604-367-8117
+              </p>
+            </div>
+
+            {/* Back action */}
+            <div className="mt-8 pt-6 border-t border-[#DDE3E3] flex justify-between items-center">
+              <Button href="/news" variant="secondary" size="sm">
+                <ArrowLeft className="w-4 h-4 mr-1.5" />
+                <span>All Press Releases</span>
+              </Button>
+              <Button href="/contact" variant="primary" size="sm">
+                Inquire With IR
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </section>
+    </>
+  );
+}
