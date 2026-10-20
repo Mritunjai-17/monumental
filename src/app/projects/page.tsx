@@ -29,7 +29,7 @@ export default function ProjectsPage() {
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <div className="p-8 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm">
+            <div className="p-8 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex flex-col items-start">
               <div className="w-12 h-12 rounded-[12px] bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-6">
                 <Zap className="w-6 h-6" />
               </div>
@@ -50,12 +50,12 @@ export default function ProjectsPage() {
                   <span>Low-cost workover program targeting near-term production</span>
                 </li>
               </ul>
-              <Button href="/projects/new-zealand" variant="secondary" size="sm">
+              <Button href="/projects/new-zealand" variant="secondary" size="sm" className="mt-auto">
                 Explore NZ Assets
               </Button>
             </div>
 
-            <div className="p-8 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm">
+            <div className="p-8 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex flex-col items-start">
               <div className="w-12 h-12 rounded-[12px] bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-6">
                 <ShieldCheck className="w-6 h-6" />
               </div>
@@ -76,7 +76,7 @@ export default function ProjectsPage() {
                   <span>Direct exposure to battery mineral macro trends</span>
                 </li>
               </ul>
-              <Button href="/projects/salar-de-turi" variant="secondary" size="sm">
+              <Button href="/projects/salar-de-turi" variant="secondary" size="sm" className="mt-auto">
                 Explore Chile Royalty
               </Button>
             </div>
@@ -92,25 +92,29 @@ export default function ProjectsPage() {
                 <div className={`lg:col-span-5 relative min-h-[300px] lg:min-h-full bg-[#0B1F2A] ${idx % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <Image
                     src={project.heroImage}
-                    alt={project.name}
+                    alt={`${project.name}, ${project.location}`}
                     fill
+                    sizes="(min-width: 1024px) 470px, 100vw"
                     className="object-cover object-center"
                   />
                   <div className="absolute top-4 left-4">
-                    <Badge variant={project.category === 'Oil & Gas' ? 'lime' : 'teal'}>
+                    <Badge
+                    variant={project.category === 'Oil & Gas' ? 'lime' : 'teal'}
+                    className={project.category === 'Oil & Gas' ? undefined : 'bg-white border-white'}
+                  >
                       {project.statusBadge}
                     </Badge>
                   </div>
                 </div>
 
-                <div className="lg:col-span-7 p-8 sm:p-10 flex flex-col justify-between">
+                <div className="lg:col-span-7 p-8 sm:p-10 flex flex-col">
                   <div>
                     <div className="flex items-center gap-2 text-xs uppercase font-heading font-semibold text-[#1F6F78] tracking-wider mb-2">
                       <MapPin className="w-3.5 h-3.5" />
                       <span>{project.location}</span>
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-bold font-heading text-[#0B1F2A] mb-3">
+                    <h3 className="text-2xl sm:text-3xl font-bold font-heading text-[#0B1F2A] leading-[1.18] mb-3">
                       {project.name}
                     </h3>
 
@@ -128,7 +132,7 @@ export default function ProjectsPage() {
                     </div>
                   </div>
 
-                  <div>
+                  <div className="mt-auto">
                     <Button href={`/projects/${project.slug}`} variant="primary" size="md">
                       View Project Specifications
                     </Button>

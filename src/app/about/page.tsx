@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { PageHero } from '@/components/layout/PageHero';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
@@ -52,37 +53,49 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="lg:col-span-5 space-y-4">
-              <Card className="p-6 bg-white">
-                <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
-                  <Target className="w-5 h-5 text-[#1F6F78]" />
-                  <span>Pragmatic Value Creation</span>
-                </h3>
-                <p className="text-xs text-[#5B6B73] leading-relaxed">
-                  Focusing on low-entry-cost assets with existing infrastructure to maximize cash flow deliverability per share.
-                </p>
-              </Card>
-
-              <Card className="p-6 bg-white">
-                <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
-                  <ShieldCheck className="w-5 h-5 text-[#1F6F78]" />
-                  <span>Capital Protection</span>
-                </h3>
-                <p className="text-xs text-[#5B6B73] leading-relaxed">
-                  Structuring critical mineral holdings into a 2% Net Smelter Return (NSR) royalty that eliminates ongoing cash call liabilities.
-                </p>
-              </Card>
-
-              <Card className="p-6 bg-white">
-                <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
-                  <Compass className="w-5 h-5 text-[#1F6F78]" />
-                  <span>Jurisdictional Integrity</span>
-                </h3>
-                <p className="text-xs text-[#5B6B73] leading-relaxed">
-                  All holdings situated in premier, established mining and resource frameworks in New Zealand and Chile.
-                </p>
-              </Card>
+            <div className="lg:col-span-5">
+              <div className="relative w-full aspect-[5/6] rounded-[16px] overflow-hidden border border-[#DDE3E3] shadow-md bg-[#0B1F2A]">
+                <Image
+                  src="/images/office.jpg"
+                  alt="Monumental Energy corporate office in Vancouver, BC"
+                  fill
+                  sizes="(min-width: 1024px) 460px, 100vw"
+                  className="object-cover object-center"
+                />
+              </div>
             </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 lg:mt-16">
+            <Card className="p-6 bg-white h-full">
+              <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
+                <Target className="w-5 h-5 text-[#1F6F78]" />
+                <span>Pragmatic Value Creation</span>
+              </h3>
+              <p className="text-xs text-[#5B6B73] leading-relaxed">
+                Focusing on low-entry-cost assets with existing infrastructure to maximize cash flow deliverability per share.
+              </p>
+            </Card>
+
+            <Card className="p-6 bg-white h-full">
+              <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-[#1F6F78]" />
+                <span>Capital Protection</span>
+              </h3>
+              <p className="text-xs text-[#5B6B73] leading-relaxed">
+                Structuring critical mineral holdings into a 2% Net Smelter Return (NSR) royalty that eliminates ongoing cash call liabilities.
+              </p>
+            </Card>
+
+            <Card className="p-6 bg-white h-full">
+              <h3 className="font-heading font-bold text-lg text-[#0B1F2A] mb-2 flex items-center gap-2">
+                <Compass className="w-5 h-5 text-[#1F6F78]" />
+                <span>Jurisdictional Integrity</span>
+              </h3>
+              <p className="text-xs text-[#5B6B73] leading-relaxed">
+                All holdings situated in premier, established mining and resource frameworks in New Zealand and Chile.
+              </p>
+            </Card>
           </div>
         </Container>
       </section>

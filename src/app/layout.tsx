@@ -4,6 +4,7 @@ import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { siteConfig } from '@/data/site';
+import { defaultOgImage, robotsMeta } from '@/lib/seo';
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -33,7 +34,9 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     type: 'website',
     locale: 'en_CA',
+    images: [{ url: defaultOgImage, width: 1200, height: 630, alt: siteConfig.name }],
   },
+  robots: robotsMeta,
 };
 
 export default function RootLayout({

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { PageHero } from '@/components/layout/PageHero';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import { newsArticles } from '@/data/news';
 import { constructMetadata } from '@/lib/seo';
 import { Calendar, Tag, ArrowLeft, Share2, Printer } from 'lucide-react';
@@ -79,6 +80,15 @@ export default function NewsArticlePage({ params }: NewsDetailProps) {
                 </Link>
               </div>
             </div>
+
+            {!article.verified && (
+              <div className="mb-8 p-4 rounded-xl bg-amber-50 border border-amber-300 text-sm text-amber-900 flex items-start gap-3">
+                <Badge variant="unverified" className="shrink-0">Unverified</Badge>
+                <span>
+                  This release has not yet been confirmed against the official filing or newswire distribution. Do not rely on it until verified.
+                </span>
+              </div>
+            )}
 
             {/* Content paragraphs */}
             <div className="space-y-6 text-base text-[#16232B] leading-relaxed">

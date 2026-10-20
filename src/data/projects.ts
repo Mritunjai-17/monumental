@@ -12,7 +12,8 @@ export const projectsData: Project[] = [
     statusBadge: 'Near-Term Production',
     shortSummary: 'Strategic holding in New Zealand Energy Corp. and associated joint-venture assets targeting low-risk recompletion and near-term energy production.',
     description: 'Monumental Energy holds a strategic interest in New Zealand Energy Corp. (NZEC) and aligned joint-venture opportunities in the Taranaki Basin of New Zealand. This asset provides exposure to conventional cash flow, proven infrastructure, and rapid-turnaround development wells in an established regulatory jurisdiction.',
-    heroImage: '/images/project-new-zealand.svg',
+    heroImage: '/images/project-new-zealand.jpg',
+    cardMetric: 'Recompletion targets',
     keyFacts: [
       { label: 'Jurisdiction', value: 'Taranaki Basin, New Zealand' },
       { label: 'Asset Structure', value: 'Equity holding in NZEC & JV participation' },
@@ -76,7 +77,8 @@ export const projectsData: Project[] = [
     statusBadge: '2% NSR Royalty',
     shortSummary: '2% Net Smelter Return (NSR) royalty across 8,500 hectares of claims located in the South American Lithium Triangle.',
     description: 'The Salar de Turi Lithium Project spans approximately 8,500 hectares within the Lithium Triangle in northern Chile. Monumental Energy retains a 2.0% Net Smelter Return (NSR) royalty over the concession package, positioning shareholders to benefit from long-term lithium demand without direct operational capital expenditure requirements.',
-    heroImage: '/images/project-salar-de-turi.svg',
+    heroImage: '/images/project-salar-de-turi.jpg',
+    cardMetric: '8,500 hectares',
     keyFacts: [
       { label: 'Concession Area', value: '8,500 Hectares (approx. 21,000 acres)' },
       { label: 'Location', value: 'Antofagasta Region, Chile' },

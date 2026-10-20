@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Play, Pause, CheckCircle2 } from 'lucide-react';
@@ -72,15 +73,16 @@ export const StrategyVideo: React.FC = () => {
                   </button>
                 </div>
               ) : (
-                <div className="relative w-full h-full flex items-center justify-center bg-gradient-to-tr from-[#07151D] via-[#0E2836] to-[#16364A]">
-                  {/* Subtle clean grid texture */}
-                  <div
-                    className="absolute inset-0 opacity-15"
-                    style={{
-                      backgroundImage: 'radial-gradient(#1F6F78 1px, transparent 1px)',
-                      backgroundSize: '24px 24px',
-                    }}
+                <div className="relative w-full h-full flex items-center justify-center bg-[#07151D]">
+                  {/* 16:9 poster photo slot (lazy-loaded) */}
+                  <Image
+                    src="/images/video-poster.jpg"
+                    alt="Monumental Energy corporate strategy video poster"
+                    fill
+                    sizes="(min-width: 1024px) 560px, 100vw"
+                    className="object-cover object-center"
                   />
+                  <div className="absolute inset-0 bg-[#0B1F2A]/40" />
 
                   {/* Lime Play Button */}
                   <button

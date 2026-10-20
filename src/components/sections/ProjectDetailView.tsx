@@ -39,31 +39,32 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
       />
 
       {/* 2. Overview & Key Facts Table (Off-white) */}
-      <section className="py-14 lg:py-20 bg-[#F5F6F1]">
+      <section className="py-14 lg:py-24 bg-[#F5F6F1]">
         <Container>
+          {/* Project banner (3:2 photo slot, cropped wide) */}
+          <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-[16px] overflow-hidden border border-[#DDE3E3] shadow-md mb-10 lg:mb-14 bg-[#0B1F2A]">
+            <Image
+              src={project.heroImage}
+              alt={`${project.name}, ${project.location}`}
+              fill
+              sizes="(min-width: 1200px) 1136px, 100vw"
+              className="object-cover object-center"
+            />
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             {/* Left 7 Cols: Overview & Highlights */}
             <div className="lg:col-span-7">
               <span className="eyebrow text-[#1F6F78] block mb-2 font-heading tracking-[0.12em] uppercase font-semibold text-xs sm:text-sm">
                 Project Overview
               </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] mb-6">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.18] mb-6">
                 Operational Context &amp; Strategic Thesis
               </h2>
 
               <p className="text-base sm:text-lg text-[#5B6B73] leading-relaxed mb-8">
                 {project.description}
               </p>
-
-              {/* Asset Hero Image / Visual */}
-              <div className="relative w-full h-80 rounded-[16px] overflow-hidden border border-[#DDE3E3] shadow-md mb-8 bg-[#0B1F2A]">
-                <Image
-                  src={project.heroImage}
-                  alt={`${project.name} site diagram`}
-                  fill
-                  className="object-cover object-center"
-                />
-              </div>
 
               {/* Core Strategic Highlights */}
               <h3 className="text-xl font-bold font-heading text-[#0B1F2A] mb-4">

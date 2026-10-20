@@ -1,5 +1,7 @@
 import React from 'react';
+import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { ArrowRight } from 'lucide-react';
 
 interface SectionHeadingProps {
   eyebrow?: string;
@@ -8,6 +10,8 @@ interface SectionHeadingProps {
   align?: 'left' | 'center';
   dark?: boolean;
   className?: string;
+  /** "View all" style link rendered on the same row as the heading. */
+  action?: { label: string; shortLabel?: string; href: string };
 }
 
 export const SectionHeading: React.FC<SectionHeadingProps> = ({
@@ -17,15 +21,10 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   align = 'left',
   dark = false,
   className,
+  action,
 }) => {
-  return (
-    <div
-      className={cn(
-        'mb-12 sm:mb-16',
-        align === 'center' ? 'text-center mx-auto max-w-3xl' : 'max-w-3xl',
-        className
-      )}
-    >
+  const heading = (
+    <div className={cn(align === 'center' && !action ? 'text-center mx-auto max-w-3xl' : 'max-w-3xl')}>
       {eyebrow && (
         <span
           className={cn(
@@ -38,7 +37,8 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
       )}
       <h2
         className={cn(
-          'text-3xl sm:text-4xl lg:text-[44px] font-bold font-heading tracking-[-0.02em] leading-[1.18] mb-4',
+          'text-3xl sm:text-4xl lg:text-[44px] font-bold font-heading tracking-[-0.02em] leading-[1.18]',
+          description && 'mb-4',
           dark ? 'text-white' : 'text-[#0B1F2A]'
         )}
       >
@@ -54,6 +54,26 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
           {description}
         </p>
       )}
+    </div>
+  );
+
+  if (!action) {
+    return <div className={cn('mb-12 sm:mb-16', className)}>{heading}</div>;
+  }
+
+  // Heading and "View all" share one row at every breakpoint; the link
+  // aligns to the heading's last line.
+  return (
+    <div className={cn('mb-12 sm:mb-16 flex flex-row items-end justify-between gap-4', className)}>
+      {heading}
+      <Link
+        href={action.href}
+        className="text-link text-sm font-semibold shrink-0 inline-flex items-center gap-1.5 pb-1.5"
+      >
+        <span className={action.shortLabel ? 'hidden sm:inline' : undefined}>{action.label}</span>
+        {action.shortLabel && <span className="sm:hidden">{action.shortLabel}</span>}
+        <ArrowRight className="w-4 h-4" />
+      </Link>
     </div>
   );
 };

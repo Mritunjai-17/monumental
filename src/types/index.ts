@@ -10,6 +10,8 @@ export interface Project {
   shortSummary: string;
   description: string;
   heroImage: string;
+  /** Short metric shown in the project card footer. */
+  cardMetric: string;
   keyFacts: { label: string; value: string }[];
   highlights: string[];
   timeline: { date: string; title: string; description: string }[];
@@ -25,6 +27,10 @@ export interface NewsItem {
   excerpt: string;
   content: string[];
   readTime: string;
+  /** Optional 16:9 thumbnail; cards fall back to a category-coloured panel. */
+  image?: string;
+  /** false until the release is confirmed against the official filing / newswire. */
+  verified: boolean;
 }
 
 export interface StatItem {
@@ -52,12 +58,16 @@ export interface SiteConfig {
     address: string;
     email: string;
     phone: string;
+    hours: string;
+    hoursVerified: boolean;
   };
-  socials: {
-    linkedin: string;
-    x: string;
-    youtube: string;
-    instagram: string;
-    facebook: string;
-  };
+  socials: SocialLink[];
+}
+
+export interface SocialLink {
+  platform: 'linkedin' | 'x' | 'youtube' | 'instagram' | 'facebook';
+  label: string;
+  url: string;
+  /** Unverified links are not rendered. Confirm the handle with the client first. */
+  verified: boolean;
 }

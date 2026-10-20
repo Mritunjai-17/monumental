@@ -76,7 +76,7 @@ $$\text{Navy} \longrightarrow \text{Off-White} \longrightarrow \text{White} \lon
 monumental-energy/
 ├── public/
 │   ├── documents/         # investor-presentation.pdf
-│   ├── images/            # hero-bg.svg, project-new-zealand.svg, project-salar-de-turi.svg, og-image.svg
+│   ├── images/            # photo slots (see "Image slots" below), hero-map.svg, logo.png
 │   ├── videos/            # Strategy video files and posters
 │   └── favicon.ico
 ├── src/
@@ -102,8 +102,8 @@ monumental-energy/
 │   ├── components/
 │   │   ├── forms/         # InvestorContactForm.tsx, NewsletterForm.tsx
 │   │   ├── layout/        # Header.tsx, Footer.tsx, MobileMenu.tsx, TickerChip.tsx, PageHero.tsx
-│   │   ├── sections/      # Hero, StatsStrip, ProjectsGrid, StrategyVideo, LatestNews, InvestorHub, ContactCTA, ProjectDetailView
-│   │   └── ui/            # Button, Card, Badge, SectionHeading, Container, Input
+│   │   ├── sections/      # Hero, StatsStrip, ProjectsGrid, StrategyVideo, LatestNews, InvestorHub, ContactCTA, ContactDetails, ProjectDetailView
+│   │   └── ui/            # Button, Card, Badge, SectionHeading, Container, Input, NewsThumbnail
 │   ├── data/              # site.ts, navigation.ts, projects.ts, news.ts, stats.ts
 │   ├── lib/               # utils.ts, seo.ts
 │   ├── styles/            # tokens.css
@@ -116,6 +116,31 @@ monumental-energy/
 ```
 
 All textual copy, dates, project specifications, and numbers reside exclusively in `/src/data` so they can be maintained without modifying components.
+
+### Image slots
+
+The files below are **generated placeholders** at the exact delivery size (each carries a small "PHOTO SLOT" caption). Replace them with licensed photography using the same file name and dimensions. All are rendered through `next/image`, which serves WebP; only the hero images load eagerly, everything else lazy-loads.
+
+| File | Size | Used in |
+|---|---|---|
+| `hero-bg.jpg` | 2400×1200 | Home hero background (navy gradient overlay applied in code) |
+| `project-new-zealand.jpg` | 1200×800 (3:2) | Project cards, projects page, NZ project banner |
+| `project-salar-de-turi.jpg` | 1200×800 (3:2) | Project cards, projects page, Salar de Turi banner |
+| `video-poster.jpg` | 1280×720 | Strategy video poster |
+| `office.jpg` | 1000×1200 | About page |
+| `og-image.png` | 1200×630 | Open Graph / Twitter share image |
+
+`hero-map.svg` is a hand-drawn, stylised (not to scale) map with two labelled pins.
+News items accept an optional 16:9 `image`. Without one, the card shows a category-coloured fallback panel.
+
+### Unverified content
+
+Items that have not been confirmed with the client carry `verified: false` in `/src/data`:
+- **News** (`news.ts`): each release shows an amber "Unverified" marker on its card and a warning on its article page.
+- **Social links** (`site.ts`): unverified URLs are **not rendered**. The footer shows "Social profiles pending verification" instead.
+- **Office hours** (`site.ts` → `contact.hoursVerified`): shown with an "Unverified" badge.
+
+Set `verified: true` only once an item has been checked against an official source.
 
 ---
 
@@ -145,6 +170,9 @@ npm run start
 ---
 
 ## 5. Deployment
+
+### Search indexing (staging vs production)
+Every build is **noindex by default**. It sends a `robots` meta tag and an `X-Robots-Tag: noindex, nofollow` header, which also covers PDFs and images. Only set `SITE_ENV=production` on the live monumental.energy deployment. Never set it on staging.
 
 ### Vercel (Recommended)
 1. Push repository to GitHub or GitLab.

@@ -73,7 +73,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           target={external ? '_blank' : undefined}
           rel={external ? 'noopener noreferrer' : undefined}
         >
-          <span>{children}</span>
+          <span className="inline-flex items-center gap-2">{children}</span>
           {icon && <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />}
         </Link>
       );
@@ -81,7 +81,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button ref={ref} className={combinedClasses} {...props}>
-        <span>{children}</span>
+        <span className="inline-flex items-center gap-2">{children}</span>
         {icon && <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />}
       </button>
     );

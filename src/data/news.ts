@@ -1,5 +1,8 @@
 import { NewsItem } from '@/types';
 
+// UNVERIFIED: these releases were drafted for the prototype and have not been
+// matched to official filings. Each renders with an "Unverified" marker until
+// verified is set to true.
 export const newsArticles: NewsItem[] = [
   {
     id: 'news-1',
@@ -15,6 +18,7 @@ export const newsArticles: NewsItem[] = [
       '"This workover campaign represents a low-capex approach to monetizing existing, proven hydrocarbons in an established regulatory jurisdiction," stated management. Further updates will be issued upon flow test completion.',
     ],
     readTime: '3 min read',
+    verified: false,
   },
   {
     id: 'news-2',
@@ -30,6 +34,7 @@ export const newsArticles: NewsItem[] = [
       'Monumental continues to engage with regional operating partners and technical groups evaluating development pathways across the Antofagasta lithium belt.',
     ],
     readTime: '4 min read',
+    verified: false,
   },
   {
     id: 'news-3',
@@ -44,6 +49,7 @@ export const newsArticles: NewsItem[] = [
       'Investors and analysts are encouraged to review the updated materials on the company website or contact the investor relations team directly for briefing calls.',
     ],
     readTime: '2 min read',
+    verified: false,
   },
   {
     id: 'news-4',
@@ -58,5 +64,6 @@ export const newsArticles: NewsItem[] = [
       'Materials and electronic proxy instructions will be accessible via SEDAR+ and the company’s dedicated AGM web portal.',
     ],
     readTime: '2 min read',
+    verified: false,
   },
 ];

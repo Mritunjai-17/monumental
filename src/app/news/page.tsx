@@ -7,6 +7,7 @@ import { newsArticles } from '@/data/news';
 import { constructMetadata } from '@/lib/seo';
 import { Calendar, Tag, ArrowRight, Bell } from 'lucide-react';
 import { NewsletterForm } from '@/components/forms/NewsletterForm';
+import { NewsThumbnail } from '@/components/ui/NewsThumbnail';
 
 export const metadata = constructMetadata({
   title: 'News & Regulatory Disclosures',
@@ -47,39 +48,46 @@ export default function NewsPage() {
                 newsArticles.map((article) => (
                   <article
                     key={article.id}
-                    className="bg-white rounded-[16px] border border-[#DDE3E3] p-6 sm:p-8 transition-all duration-200 hover:shadow-md hover:border-[#1F6F78]/50 group"
+                    className="bg-white rounded-[16px] border border-[#DDE3E3] p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-[240px_1fr] gap-6 transition-all duration-200 hover:shadow-md hover:border-[#1F6F78]/50 group"
                   >
-                    <div className="flex items-center gap-3 text-xs text-[#5B6B73] mb-3">
-                      <span className="flex items-center gap-1.5 font-medium">
-                        <Calendar className="w-3.5 h-3.5 text-[#1F6F78]" />
-                        {article.date}
-                      </span>
-                      <span>•</span>
-                      <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-[#1F6F78] bg-[#1F6F78]/10 px-2.5 py-0.5 rounded-full">
-                        <Tag className="w-3 h-3" />
-                        {article.category}
-                      </span>
-                      <span>•</span>
-                      <span className="text-[#5B6B73]">{article.readTime}</span>
-                    </div>
+                    <NewsThumbnail
+                      article={article}
+                      sizes="(min-width: 640px) 240px, 100vw"
+                      className="rounded-xl sm:self-start"
+                    />
+                    <div className="flex flex-col min-w-0">
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-[#5B6B73] mb-3">
+                        <span className="flex items-center gap-1.5 font-medium">
+                          <Calendar className="w-3.5 h-3.5 text-[#1F6F78]" />
+                          {article.date}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-[#1F6F78] bg-[#1F6F78]/10 px-2.5 py-0.5 rounded-full">
+                          <Tag className="w-3 h-3" />
+                          {article.category}
+                        </span>
+                        <span>•</span>
+                        <span className="text-[#5B6B73]">{article.readTime}</span>
+                      </div>
 
-                    <h2 className="text-xl sm:text-2xl font-bold font-heading text-[#0B1F2A] mb-3 leading-[1.18] group-hover:text-[#1F6F78] transition-colors">
-                      <Link href={`/news/${article.slug}`}>
-                        {article.title}
+                      <h2 className="text-xl sm:text-2xl font-bold font-heading text-[#0B1F2A] mb-3 leading-[1.18] group-hover:text-[#1F6F78] transition-colors">
+                        <Link href={`/news/${article.slug}`}>
+                          {article.title}
+                        </Link>
+                      </h2>
+
+                      <p className="text-sm sm:text-base text-[#5B6B73] leading-relaxed mb-6">
+                        {article.excerpt}
+                      </p>
+
+                      <Link
+                        href={`/news/${article.slug}`}
+                        className="mt-auto text-link text-sm font-semibold inline-flex items-center gap-1 text-[#1F6F78] self-start"
+                      >
+                        <span>Read complete press release</span>
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                       </Link>
-                    </h2>
-
-                    <p className="text-sm sm:text-base text-[#5B6B73] leading-relaxed mb-6">
-                      {article.excerpt}
-                    </p>
-
-                    <Link
-                      href={`/news/${article.slug}`}
-                      className="text-link text-sm font-semibold inline-flex items-center gap-1 text-[#1F6F78]"
-                    >
-                      <span>Read complete press release</span>
-                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
+                    </div>
                   </article>
                 ))
               )}
