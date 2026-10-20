@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { PageHero } from '@/components/layout/PageHero';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
@@ -86,76 +87,129 @@ export default function InvestorsPage() {
             </div>
 
             {/* Right 4 Cols: Quick Actions */}
-            <div data-reveal="card" className="lg:col-span-4 bg-[#0B1F2A] rounded-[16px] p-8 text-white border border-[#1D3B4C] flex flex-col justify-between">
-              <div>
-                <span className="eyebrow text-[#B7E34A] text-xs font-semibold block mb-2">Key Materials</span>
-                <h3 className="text-xl font-bold font-heading text-white mb-3">
-                  Investor Presentation
-                </h3>
-                <p className="text-xs text-[#94A3B8] leading-relaxed mb-6">
-                  Get full corporate and technical insight into the Taranaki Basin workovers and Chile lithium royalty.
-                </p>
+            <div data-reveal="card" className="lg:col-span-4 bg-[#0B1F2A] rounded-[16px] overflow-hidden text-white border border-[#1D3B4C] flex flex-col justify-between shadow-sm">
+              <div className="relative w-full aspect-[16/10] bg-[#07151D]">
+                <Image
+                  src="/images/investor-deck-preview.jpg"
+                  alt="Monumental Energy 2026 Corporate Presentation cover preview"
+                  fill
+                  sizes="(min-width: 1024px) 380px, 100vw"
+                  className="object-cover object-center"
+                />
               </div>
+              <div className="p-7 flex flex-col flex-1 justify-between">
+                <div>
+                  <span className="eyebrow text-[#B7E34A] text-xs font-semibold block mb-2">Key Materials</span>
+                  <h3 className="text-xl font-bold font-heading text-white mb-2 leading-[1.18]">
+                    Investor Presentation
+                  </h3>
+                  <p className="text-xs text-[#94A3B8] leading-relaxed mb-6 font-normal">
+                    Get full corporate and technical insight into the Taranaki Basin workovers and Chile lithium royalty.
+                  </p>
+                </div>
 
-              <Button href="/investors/presentation" variant="primary" size="md" className="w-full">
-                Download 2026 Deck
-              </Button>
+                <Button href="/investors/presentation" variant="primary" size="md" className="w-full">
+                  Download 2026 Deck
+                </Button>
+              </div>
             </div>
           </div>
 
           {/* Quick Access Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card data-reveal="card" className="p-7 bg-white">
-              <div className="w-10 h-10 rounded-lg bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-4">
-                <FileText className="w-5 h-5" />
+            <Card data-reveal="card" className="overflow-hidden bg-white p-0 flex flex-col">
+              <div className="relative w-full aspect-[16/10] bg-[#0B1F2A]">
+                <Image
+                  src="/images/investor-deck-preview.jpg"
+                  alt="Corporate Presentation booklet"
+                  fill
+                  sizes="(min-width: 1024px) 380px, 100vw"
+                  className="object-cover object-center"
+                />
               </div>
-              <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-2">
-                Corporate Presentation
-              </h3>
-              <p className="text-sm text-[#5B6B73] mb-6">
-                Current corporate overview, financial breakdown, reserve upside, and operational calendar.
-              </p>
-              <Link href="/investors/presentation" className="text-link text-sm font-semibold">
-                <span>View presentation page</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+              <div className="p-6 sm:p-7 flex flex-col flex-1">
+                <div className="flex items-center gap-2 mb-3 text-xs uppercase font-heading font-semibold text-[#1F6F78] tracking-wider">
+                  <FileText className="w-4 h-4" />
+                  <span>Technical Deck</span>
+                </div>
+                <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-2 leading-[1.18]">
+                  Corporate Presentation
+                </h3>
+                <p className="text-sm text-[#5B6B73] mb-6 font-normal leading-relaxed">
+                  Current corporate overview, financial breakdown, reserve upside, and operational calendar.
+                </p>
+                <div className="mt-auto pt-3 border-t border-[#DDE3E3]/60">
+                  <Link href="/investors/presentation" className="text-link text-sm font-semibold">
+                    <span>View presentation page</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
             </Card>
 
-            <Card data-reveal="card" className="p-7 bg-white">
-              <div className="w-10 h-10 rounded-lg bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-4">
-                <Users className="w-5 h-5" />
+            <Card data-reveal="card" className="overflow-hidden bg-white p-0 flex flex-col">
+              <div className="relative w-full aspect-[16/10] bg-[#0B1F2A]">
+                <Image
+                  src="/images/agm-hall.jpg"
+                  alt="Annual General Meeting boardroom setting in Vancouver"
+                  fill
+                  sizes="(min-width: 1024px) 380px, 100vw"
+                  className="object-cover object-center"
+                />
               </div>
-              <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-2">
-                Annual General Meeting
-              </h3>
-              <p className="text-sm text-[#5B6B73] mb-6">
-                Access formal notice of meeting, management information circular, and proxy voting instructions.
-              </p>
-              <Link href="/investors/agm" className="text-link text-sm font-semibold">
-                <span>Access AGM materials</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+              <div className="p-6 sm:p-7 flex flex-col flex-1">
+                <div className="flex items-center gap-2 mb-3 text-xs uppercase font-heading font-semibold text-[#1F6F78] tracking-wider">
+                  <Users className="w-4 h-4" />
+                  <span>Governance</span>
+                </div>
+                <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-2 leading-[1.18]">
+                  Annual General Meeting
+                </h3>
+                <p className="text-sm text-[#5B6B73] mb-6 font-normal leading-relaxed">
+                  Access formal notice of meeting, management information circular, and proxy voting instructions.
+                </p>
+                <div className="mt-auto pt-3 border-t border-[#DDE3E3]/60">
+                  <Link href="/investors/agm" className="text-link text-sm font-semibold">
+                    <span>Access AGM materials</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
             </Card>
 
-            <Card data-reveal="card" className="p-7 bg-white">
-              <div className="w-10 h-10 rounded-lg bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-4">
-                <BarChart3 className="w-5 h-5" />
+            <Card data-reveal="card" className="overflow-hidden bg-white p-0 flex flex-col">
+              <div className="relative w-full aspect-[16/10] bg-[#0B1F2A]">
+                <Image
+                  src="/images/news-investor-deck.jpg"
+                  alt="Regulatory filings and market disclosures overview"
+                  fill
+                  sizes="(min-width: 1024px) 380px, 100vw"
+                  className="object-cover object-center"
+                />
               </div>
-              <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-2">
-                Regulatory Filings (SEDAR+)
-              </h3>
-              <p className="text-sm text-[#5B6B73] mb-6">
-                Official regulatory depository for quarterly financial statements, MD&amp;As, and technical reports.
-              </p>
-              <a
-                href="https://www.sedarplus.ca"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-link text-sm font-semibold"
-              >
-                <span>Visit SEDAR+ Portal</span>
-                <ExternalLink className="w-4 h-4" />
-              </a>
+              <div className="p-6 sm:p-7 flex flex-col flex-1">
+                <div className="flex items-center gap-2 mb-3 text-xs uppercase font-heading font-semibold text-[#1F6F78] tracking-wider">
+                  <BarChart3 className="w-4 h-4" />
+                  <span>Regulatory Disclosures</span>
+                </div>
+                <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-2 leading-[1.18]">
+                  Regulatory Filings (SEDAR+)
+                </h3>
+                <p className="text-sm text-[#5B6B73] mb-6 font-normal leading-relaxed">
+                  Official regulatory depository for quarterly financial statements, MD&amp;As, and technical reports.
+                </p>
+                <div className="mt-auto pt-3 border-t border-[#DDE3E3]/60">
+                  <a
+                    href="https://www.sedarplus.ca"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-link text-sm font-semibold"
+                  >
+                    <span>Visit SEDAR+ Portal</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
             </Card>
           </div>
         </Container>

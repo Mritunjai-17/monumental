@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { PageHero } from '@/components/layout/PageHero';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
@@ -30,11 +31,23 @@ export default function AgmPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left 8 Cols: Meeting Details & Materials */}
             <div className="lg:col-span-8 space-y-6">
-              <div className="bg-white rounded-[16px] border border-[#DDE3E3] p-8 shadow-sm">
-                <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Notice of Meeting</span>
-                <h2 className="text-2xl font-bold font-heading text-[#0B1F2A] mb-4 leading-[1.18]">
-                  2026 Annual General and Special Meeting
-                </h2>
+              <div className="bg-white rounded-[16px] border border-[#DDE3E3] overflow-hidden shadow-sm">
+                <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] bg-[#0B1F2A]">
+                  <Image
+                    src="/images/agm-hall.jpg"
+                    alt="Corporate Annual General Meeting boardroom in Vancouver"
+                    fill
+                    sizes="(min-width: 1024px) 780px, 100vw"
+                    className="object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F2A]/60 via-transparent to-transparent" />
+                </div>
+
+                <div className="p-8">
+                  <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Notice of Meeting</span>
+                  <h2 className="text-2xl font-bold font-heading text-[#0B1F2A] mb-4 leading-[1.18]">
+                    2026 Annual General and Special Meeting
+                  </h2>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-5 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3] mb-6 text-sm">
                   <div className="flex items-start gap-3">
@@ -108,6 +121,7 @@ export default function AgmPage() {
                   </div>
                 </div>
               </div>
+            </div>
             </div>
 
             {/* Right 4 Cols: Voting Guidelines */}

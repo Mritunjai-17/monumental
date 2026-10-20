@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { PageHero } from '@/components/layout/PageHero';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
@@ -27,20 +28,28 @@ export default function PresentationPage() {
 
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">
         <Container size="narrow">
-          <div className="bg-white rounded-[16px] border border-[#DDE3E3] p-8 sm:p-12 shadow-sm text-center">
-            {/* Visual Document Icon Box */}
-            <div className="w-20 h-20 rounded-2xl bg-[#1F6F78]/10 text-[#1F6F78] mx-auto flex items-center justify-center mb-6">
-              <FileText className="w-10 h-10" />
+          <div className="bg-white rounded-[16px] border border-[#DDE3E3] overflow-hidden shadow-sm text-center">
+            {/* Visual Document Photo Slot */}
+            <div className="relative w-full aspect-[16/9] sm:aspect-[2/1] bg-[#0B1F2A]">
+              <Image
+                src="/images/investor-deck-preview.jpg"
+                alt="Monumental Energy 2026 Corporate Investor Presentation deck"
+                fill
+                sizes="(min-width: 800px) 768px, 100vw"
+                className="object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F2A]/60 via-transparent to-transparent" />
             </div>
 
-            <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Updated Q1 2026</span>
-            <h2 className="text-3xl font-bold font-heading text-[#0B1F2A] mb-4 leading-[1.18]">
-              Monumental Energy Corporate Deck
-            </h2>
+            <div className="p-8 sm:p-12">
+              <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Updated Q1 2026</span>
+              <h2 className="text-3xl font-bold font-heading text-[#0B1F2A] mb-4 leading-[1.18]">
+                Monumental Energy Corporate Deck
+              </h2>
 
-            <p className="text-sm sm:text-base text-[#5B6B73] max-w-lg mx-auto mb-8 leading-relaxed">
-              &quot;Better energy for the future and today.&quot; Includes technical cross-sections, Taranaki recompletion economics, and Chilean lithium concessions overview.
-            </p>
+              <p className="text-sm sm:text-base text-[#5B6B73] max-w-lg mx-auto mb-8 leading-relaxed">
+                &quot;Better energy for the future and today.&quot; Includes technical cross-sections, Taranaki recompletion economics, and Chilean lithium concessions overview.
+              </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
               <a
@@ -79,7 +88,8 @@ export default function PresentationPage() {
               </div>
             </div>
           </div>
-        </Container>
+        </div>
+      </Container>
       </section>
     </>
   );

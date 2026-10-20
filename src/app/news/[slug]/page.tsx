@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { PageHero } from '@/components/layout/PageHero';
 import { Container } from '@/components/ui/Container';
@@ -80,6 +81,19 @@ export default function NewsArticlePage({ params }: NewsDetailProps) {
                 </Link>
               </div>
             </div>
+
+            {article.image && (
+              <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden mb-8 bg-[#0B1F2A]">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  priority
+                  sizes="(min-width: 800px) 768px, 100vw"
+                  className="object-cover object-center"
+                />
+              </div>
+            )}
 
             {!article.verified && (
               <div className="mb-8 p-4 rounded-xl bg-amber-50 border border-amber-300 text-sm text-amber-900 flex items-start gap-3">

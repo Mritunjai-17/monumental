@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -16,6 +16,10 @@ export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
+
+  const handleCloseMobileMenu = useCallback(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +48,7 @@ export const Header: React.FC = () => {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center shrink-0 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A] rounded-lg"
+            className="flex items-center h-10 shrink-0 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A] rounded-lg"
           >
             <Image
               src="/images/logo.png"
@@ -162,7 +166,7 @@ export const Header: React.FC = () => {
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open mobile navigation menu"
-              className="w-9 h-9 flex items-center justify-center rounded-lg text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
+              className="w-10 h-10 flex items-center justify-center rounded-lg text-white hover:bg-white/10 active:bg-white/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
             >
               <Menu className="w-6 h-6" />
             </button>
@@ -173,7 +177,7 @@ export const Header: React.FC = () => {
       {/* Full-screen Mobile Menu */}
       <MobileMenu
         isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
+        onClose={handleCloseMobileMenu}
       />
     </>
   );

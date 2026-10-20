@@ -30,56 +30,74 @@ export default function ProjectsPage() {
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <div data-reveal="card" className="p-8 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex flex-col items-start">
-              <div className="w-12 h-12 rounded-[12px] bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-6">
-                <Zap className="w-6 h-6" />
+            <div data-reveal="card" className="rounded-[16px] bg-white border border-[#DDE3E3] overflow-hidden shadow-sm flex flex-col items-start">
+              <div className="relative w-full aspect-[16/9] bg-[#0B1F2A]">
+                <Image
+                  src="/images/project-new-zealand.jpg"
+                  alt="New Zealand Taranaki onshore wellhead facility"
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F2A]/60 via-transparent to-transparent" />
               </div>
-              <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Pillar 1: Cash Flow Today</span>
-              <h2 className="text-2xl font-bold font-heading text-[#0B1F2A] mb-3 leading-[1.18]">
-                Near-Term Production in New Zealand
-              </h2>
-              <p className="text-sm text-[#5B6B73] leading-relaxed mb-6">
-                Direct investment in New Zealand Energy Corp. (NZEC) and aligned joint-venture opportunities targeting high-deliverability uphole zones with existing processing facilities.
-              </p>
-              <ul className="space-y-2 text-xs text-[#16232B] font-medium mb-6">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
-                  <span>Immediate pipeline tie-in and processing capacity</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
-                  <span>Low-cost workover program targeting near-term production</span>
-                </li>
-              </ul>
-              <Button href="/projects/new-zealand" variant="secondary" size="sm" className="mt-auto">
-                Explore NZ Assets
-              </Button>
+              <div className="p-8 flex flex-col flex-1 items-start w-full">
+                <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Pillar 1: Cash Flow Today</span>
+                <h2 className="text-2xl font-bold font-heading text-[#0B1F2A] mb-3 leading-[1.18]">
+                  Near-Term Production in New Zealand
+                </h2>
+                <p className="text-sm text-[#5B6B73] leading-relaxed mb-6 font-normal">
+                  Direct investment in New Zealand Energy Corp. (NZEC) and aligned joint-venture opportunities targeting high-deliverability uphole zones with existing processing facilities.
+                </p>
+                <ul className="space-y-2 text-xs text-[#16232B] font-medium mb-6">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
+                    <span>Immediate pipeline tie-in and processing capacity</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
+                    <span>Low-cost workover program targeting near-term production</span>
+                  </li>
+                </ul>
+                <Button href="/projects/new-zealand" variant="secondary" size="sm" className="mt-auto">
+                  Explore NZ Assets
+                </Button>
+              </div>
             </div>
 
-            <div data-reveal="card" className="p-8 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex flex-col items-start">
-              <div className="w-12 h-12 rounded-[12px] bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-6">
-                <ShieldCheck className="w-6 h-6" />
+            <div data-reveal="card" className="rounded-[16px] bg-white border border-[#DDE3E3] overflow-hidden shadow-sm flex flex-col items-start">
+              <div className="relative w-full aspect-[16/9] bg-[#0B1F2A]">
+                <Image
+                  src="/images/project-salar-de-turi.jpg"
+                  alt="Salar de Turi lithium brine salar in Antofagasta, Chile"
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F2A]/60 via-transparent to-transparent" />
               </div>
-              <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Pillar 2: Transition Metals</span>
-              <h2 className="text-2xl font-bold font-heading text-[#0B1F2A] mb-3 leading-[1.18]">
-                2% Net Smelter Return (NSR) Royalty in Chile
-              </h2>
-              <p className="text-sm text-[#5B6B73] leading-relaxed mb-6">
-                8,500 hectares of exploration concessions inside the prolific Lithium Triangle, structured as an unencumbered 2% Net Smelter Return (NSR) royalty with zero recurring exploration cash call liabilities.
-              </p>
-              <ul className="space-y-2 text-xs text-[#16232B] font-medium mb-6">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
-                  <span>Zero ongoing capex or exploration cash calls</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
-                  <span>Direct exposure to battery mineral macro trends</span>
-                </li>
-              </ul>
-              <Button href="/projects/salar-de-turi" variant="secondary" size="sm" className="mt-auto">
-                Explore Chile Royalty
-              </Button>
+              <div className="p-8 flex flex-col flex-1 items-start w-full">
+                <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Pillar 2: Transition Metals</span>
+                <h2 className="text-2xl font-bold font-heading text-[#0B1F2A] mb-3 leading-[1.18]">
+                  2% Net Smelter Return (NSR) Royalty in Chile
+                </h2>
+                <p className="text-sm text-[#5B6B73] leading-relaxed mb-6 font-normal">
+                  8,500 hectares of exploration concessions inside the prolific Lithium Triangle, structured as an unencumbered 2% Net Smelter Return (NSR) royalty with zero recurring exploration cash call liabilities.
+                </p>
+                <ul className="space-y-2 text-xs text-[#16232B] font-medium mb-6">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
+                    <span>Zero ongoing capex or exploration cash calls</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
+                    <span>Direct exposure to battery mineral macro trends</span>
+                  </li>
+                </ul>
+                <Button href="/projects/salar-de-turi" variant="secondary" size="sm" className="mt-auto">
+                  Explore Chile Royalty
+                </Button>
+              </div>
             </div>
           </div>
 
