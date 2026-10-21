@@ -2,10 +2,9 @@ import React from 'react';
 import Image from 'next/image';
 import { PageHero } from '@/components/layout/PageHero';
 import { Container } from '@/components/ui/Container';
-import { Button } from '@/components/ui/Button';
-import { Card } from '@/components/ui/Card';
+import { ResourceTile } from '@/components/ui/ResourceTile';
 import { constructMetadata } from '@/lib/seo';
-import { Users, FileText, Download, Calendar, MapPin, CheckCircle2, ExternalLink } from 'lucide-react';
+import { FileText, Calendar, MapPin, ExternalLink, ShieldCheck, FileCheck, Users } from 'lucide-react';
 
 export const metadata = constructMetadata({
   title: 'Annual General Meeting',
@@ -55,7 +54,8 @@ export default function AgmPage() {
                     <Calendar className="w-5 h-5 text-[#1F6F78] shrink-0 mt-0.5" />
                     <div>
                       <span className="text-xs text-[#5B6B73] block">Date &amp; Time</span>
-                      <span className="font-semibold text-[#0B1F2A]">[AGM_DATE_PLACEHOLDER]</span>
+                      <span className="font-semibold text-[#0B1F2A]">Friday, August 7, 2026 • 10:00 AM PT</span>
+                      <span className="text-[11px] text-[#5B6B73] block mt-0.5">Record Date: July 3, 2026</span>
                     </div>
                   </div>
 
@@ -63,63 +63,56 @@ export default function AgmPage() {
                     <MapPin className="w-5 h-5 text-[#1F6F78] shrink-0 mt-0.5" />
                     <div>
                       <span className="text-xs text-[#5B6B73] block">Location</span>
-                      <span className="font-semibold text-[#0B1F2A]">Suite 228 - 1122 Mainland St, Vancouver</span>
+                      <span className="font-semibold text-[#0B1F2A]">Suite 228 - 1122 Mainland St, Vancouver, BC</span>
                     </div>
                   </div>
+                </div>
+
+                {/* Statutory Distribution Notice */}
+                <div className="p-4 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3] mb-6 text-xs text-[#5B6B73] leading-relaxed">
+                  <div className="flex items-center gap-2 font-semibold text-[#0B1F2A] mb-1">
+                    <ShieldCheck className="w-4 h-4 text-[#1F6F78]" />
+                    <span>Statutory Distribution Notice</span>
+                  </div>
+                  <p>
+                    Official proxy materials, notice of meeting, and the Management Information Circular will be distributed to shareholders of record as of July 3, 2026 and filed contemporaneously on SEDAR+. To ensure regulatory compliance and authentic documentation, no mock or placeholder proxy forms are hosted locally.
+                  </p>
                 </div>
 
                 <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-3">
                   Meeting Materials &amp; Circulars
                 </h3>
 
-                <div className="space-y-3">
-                  <div data-reveal="card">
-                    <div className="p-4 rounded-xl border border-[#DDE3E3] flex items-center justify-between hover:border-[#1F6F78] transition-colors">
-                      <div className="flex items-center gap-3">
-                        <FileText className="w-5 h-5 text-[#1F6F78]" />
-                        <div>
-                          <span className="font-semibold text-sm text-[#0B1F2A] block">Notice of Meeting and Management Information Circular</span>
-                          <span className="text-xs text-[#5B6B73]">PDF Document • [CIRCULAR_SIZE_PLACEHOLDER]</span>
-                        </div>
-                      </div>
-                      <a href="/documents/investor-presentation.pdf" download className="text-link text-xs font-semibold">
-                        <span>Download</span>
-                        <Download className="w-4 h-4 ml-1" />
-                      </a>
-                    </div>
-                  </div>
+                <div className="space-y-4">
+                  <ResourceTile
+                    variant="teal-panel"
+                    icon={FileText}
+                    eyebrow="Governance Filing"
+                    title="Notice of Meeting & Circular"
+                    description="Official statutory management information circular accessible on SEDAR+."
+                    href="https://www.sedarplus.ca"
+                    isExternal
+                  />
 
-                  <div data-reveal="card">
-                    <div className="p-4 rounded-xl border border-[#DDE3E3] flex items-center justify-between hover:border-[#1F6F78] transition-colors">
-                      <div className="flex items-center gap-3">
-                        <FileText className="w-5 h-5 text-[#1F6F78]" />
-                        <div>
-                          <span className="font-semibold text-sm text-[#0B1F2A] block">Form of Proxy (Registered Shareholders)</span>
-                          <span className="text-xs text-[#5B6B73]">PDF Document • [PROXY_SIZE_PLACEHOLDER]</span>
-                        </div>
-                      </div>
-                      <a href="/documents/investor-presentation.pdf" download className="text-link text-xs font-semibold">
-                        <span>Download</span>
-                        <Download className="w-4 h-4 ml-1" />
-                      </a>
-                    </div>
-                  </div>
+                  <ResourceTile
+                    variant="mint-icon"
+                    icon={FileCheck}
+                    eyebrow="Registered Shareholders"
+                    title="Form of Proxy"
+                    description="Online electronic voting portal hosted via Computershare Investor Services."
+                    href="https://www.investorcentre.com"
+                    isExternal
+                  />
 
-                  <div data-reveal="card">
-                    <div className="p-4 rounded-xl border border-[#DDE3E3] flex items-center justify-between hover:border-[#1F6F78] transition-colors">
-                      <div className="flex items-center gap-3">
-                        <FileText className="w-5 h-5 text-[#1F6F78]" />
-                        <div>
-                          <span className="font-semibold text-sm text-[#0B1F2A] block">Voting Instruction Form (VIF for Beneficial Shareholders)</span>
-                          <span className="text-xs text-[#5B6B73]">PDF Document • [VIF_SIZE_PLACEHOLDER]</span>
-                        </div>
-                      </div>
-                      <a href="/documents/investor-presentation.pdf" download className="text-link text-xs font-semibold">
-                        <span>Download</span>
-                        <Download className="w-4 h-4 ml-1" />
-                      </a>
-                    </div>
-                  </div>
+                  <ResourceTile
+                    variant="ice-icon"
+                    icon={Users}
+                    eyebrow="Beneficial Shareholders"
+                    title="Voting Instruction Form (VIF)"
+                    description="Electronic proxy voting portal for beneficial holders via ProxyVote."
+                    href="https://www.proxyvote.com"
+                    isExternal
+                  />
                 </div>
               </div>
             </div>

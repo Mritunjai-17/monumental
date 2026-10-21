@@ -6,9 +6,11 @@ import { Container } from '@/components/ui/Container';
 import { Badge } from '@/components/ui/Badge';
 import { MediaReveal } from '@/components/ui/MediaReveal';
 import { Button } from '@/components/ui/Button';
+import { KineticHeading } from '@/components/ui/KineticHeading';
 import { projectsData } from '@/data/projects';
 import { constructMetadata } from '@/lib/seo';
-import { ArrowRight, MapPin, CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
+import { StrategyComparator } from '@/components/ui/StrategyComparator';
+import { ArrowRight, MapPin, CheckCircle2, ShieldCheck, Zap, Droplets, Layers, Target, Square, BarChart3 } from 'lucide-react';
 
 export const metadata = constructMetadata({
   title: 'Project Portfolio',
@@ -30,76 +32,182 @@ export default function ProjectsPage() {
       {/* Strategic Portfolio Framework (Off-white) */}
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            <div data-reveal="card" className="rounded-[16px] bg-white border border-[#DDE3E3] overflow-hidden shadow-sm flex flex-col items-start">
-              <div className="relative w-full aspect-[16/9] bg-[#0B1F2A]">
-                <Image
-                  src="/images/project-new-zealand.jpg"
-                  alt="New Zealand Taranaki onshore wellhead facility"
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F2A]/60 via-transparent to-transparent" />
-              </div>
-              <div className="p-8 flex flex-col flex-1 items-start w-full">
-                <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Pillar 1: Cash Flow Today</span>
-                <h2 className="text-2xl font-bold font-heading text-[#0B1F2A] mb-3 leading-[1.18]">
-                  Near-Term Production in New Zealand
-                </h2>
-                <p className="text-sm text-[#5B6B73] leading-relaxed mb-6 font-normal">
-                  Direct investment in New Zealand Energy Corp. (NZEC) and aligned joint-venture opportunities targeting high-deliverability uphole zones with existing processing facilities.
-                </p>
-                <ul className="space-y-2 text-xs text-[#16232B] font-medium mb-6">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
-                    <span>Immediate pipeline tie-in and processing capacity</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
-                    <span>Low-cost workover program targeting near-term production</span>
-                  </li>
-                </ul>
-                <Button href="/projects/new-zealand" variant="secondary" size="sm" className="mt-auto">
-                  Explore NZ Assets
-                </Button>
-              </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch mb-20">
+            
+            {/* 1. New Zealand Oil & Gas (Cinematic Dark Card) */}
+            <div data-reveal="card" className="h-full">
+              <article className="group relative rounded-[20px] lg:rounded-[24px] overflow-hidden border border-[#1D3B4C] bg-[#07161F] text-white flex flex-col justify-between p-7 sm:p-9 min-h-[520px] lg:min-h-[580px] shadow-[0_16px_36px_-6px_rgba(7,22,31,0.25)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-8px_rgba(7,22,31,0.35)] hover:border-[#1F6F78] h-full">
+                {/* Full-bleed photography with rich multi-stop gradient overlay */}
+                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+                  <Image
+                    src="/images/project-new-zealand.jpg"
+                    alt="New Zealand Oil & Gas facility in Taranaki Basin"
+                    fill
+                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    className="object-cover object-right md:object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#07161F] via-[#07161F]/90 to-[#07161F]/40" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#07161F] via-transparent to-[#07161F]/60" />
+                </div>
+
+                {/* Main Content */}
+                <div className="relative z-10">
+                  {/* Large architectural index watermark */}
+                  <div className="font-heading font-light text-5xl sm:text-6xl text-white/20 tracking-wider mb-5 select-none leading-none">
+                    01
+                  </div>
+
+                  <div className="text-[#2DD4BF] text-xs uppercase font-heading font-semibold tracking-[0.14em] mb-2">
+                    Oil &amp; Gas
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-bold font-heading text-white tracking-[-0.02em] leading-[1.15] mb-3">
+                    New Zealand Oil &amp; Gas
+                  </h3>
+
+                  <div className="flex items-center gap-2 text-sm text-[#DDE3E3]/85 mb-8">
+                    <MapPin className="w-4 h-4 text-[#2DD4BF] shrink-0" />
+                    <span>Taranaki Basin, NZ</span>
+                  </div>
+
+                  {/* 3 Structured Feature Bullets */}
+                  <div className="space-y-3.5 mb-8">
+                    <div className="flex items-center gap-3.5 text-sm text-[#E2E8F0] font-medium">
+                      <span className="w-6 h-6 rounded-full border border-[#B7E34A]/40 flex items-center justify-center shrink-0 text-[#B7E34A] bg-[#B7E34A]/10">
+                        <Droplets className="w-3.5 h-3.5" />
+                      </span>
+                      <span>Near-term production focus</span>
+                    </div>
+
+                    <div className="flex items-center gap-3.5 text-sm text-[#E2E8F0] font-medium">
+                      <span className="w-6 h-6 rounded-full border border-[#B7E34A]/40 flex items-center justify-center shrink-0 text-[#B7E34A] bg-[#B7E34A]/10">
+                        <Layers className="w-3.5 h-3.5" />
+                      </span>
+                      <span>Joint-venture assets</span>
+                    </div>
+
+                    <div className="flex items-center gap-3.5 text-sm text-[#E2E8F0] font-medium">
+                      <span className="w-6 h-6 rounded-full border border-[#B7E34A]/40 flex items-center justify-center shrink-0 text-[#B7E34A] bg-[#B7E34A]/10">
+                        <Target className="w-3.5 h-3.5" />
+                      </span>
+                      <span>Recompletion opportunities</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Pinned Bottom Action Row */}
+                <div className="relative z-10 mt-auto pt-6 border-t border-white/10 flex items-center justify-between">
+                  <Link
+                    href="/projects/new-zealand"
+                    className="text-sm font-semibold text-white group-hover:text-[#B7E34A] transition-colors inline-flex items-center gap-2"
+                  >
+                    <span>Explore NZ Asset</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+
+                  <Link
+                    href="/projects/new-zealand"
+                    aria-label="View New Zealand Oil & Gas project details"
+                    className="w-11 h-11 rounded-full border border-[#B7E34A]/50 text-[#B7E34A] flex items-center justify-center transition-all duration-300 group-hover:bg-[#B7E34A] group-hover:text-[#0B1F2A] group-hover:border-[#B7E34A] group-hover:scale-105"
+                  >
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </article>
             </div>
 
-            <div data-reveal="card" className="rounded-[16px] bg-white border border-[#DDE3E3] overflow-hidden shadow-sm flex flex-col items-start">
-              <div className="relative w-full aspect-[16/9] bg-[#0B1F2A]">
-                <Image
-                  src="/images/project-salar-de-turi.jpg"
-                  alt="Salar de Turi lithium brine salar in Antofagasta, Chile"
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F2A]/60 via-transparent to-transparent" />
-              </div>
-              <div className="p-8 flex flex-col flex-1 items-start w-full">
-                <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Pillar 2: Transition Metals</span>
-                <h2 className="text-2xl font-bold font-heading text-[#0B1F2A] mb-3 leading-[1.18]">
-                  2% Net Smelter Return (NSR) Royalty in Chile
-                </h2>
-                <p className="text-sm text-[#5B6B73] leading-relaxed mb-6 font-normal">
-                  8,500 hectares of exploration concessions inside the prolific Lithium Triangle, structured as an unencumbered 2% Net Smelter Return (NSR) royalty with zero recurring exploration cash call liabilities.
-                </p>
-                <ul className="space-y-2 text-xs text-[#16232B] font-medium mb-6">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
-                    <span>Zero ongoing capex or exploration cash calls</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-[#1F6F78]" />
-                    <span>Direct exposure to battery mineral macro trends</span>
-                  </li>
-                </ul>
-                <Button href="/projects/salar-de-turi" variant="secondary" size="sm" className="mt-auto">
-                  Explore Chile Royalty
-                </Button>
-              </div>
+            {/* 2. Salar de Turi Lithium Project (Structured Light Metric Card) */}
+            <div data-reveal="card" className="h-full">
+              <article className="group relative rounded-[20px] lg:rounded-[24px] overflow-hidden border border-[#DDE3E3] bg-white text-[#0B1F2A] flex flex-col justify-between p-7 sm:p-9 min-h-[520px] lg:min-h-[580px] shadow-[0_4px_24px_-2px_rgba(11,31,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_-6px_rgba(11,31,42,0.12)] hover:border-[#1F6F78]/50 h-full">
+                {/* Top Header & Inset Section */}
+                <div>
+                  <div className="flex items-center justify-between gap-3 mb-3">
+                    <span className="text-[#1F6F78] text-xs uppercase font-heading font-semibold tracking-[0.14em]">
+                      Lithium
+                    </span>
+                    <span className="px-3 py-1 rounded-full border border-[#B7E34A] bg-[#B7E34A]/15 text-[#0B1F2A] font-heading font-bold text-xs tracking-wide">
+                      2% NSR
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl lg:text-[34px] font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.15] mb-2 group-hover:text-[#1F6F78] transition-colors">
+                    Salar de Turi Lithium Project
+                  </h3>
+
+                  <p className="text-sm text-[#5B6B73] leading-relaxed mb-6 font-normal">
+                    Royalty exposure to a large-scale lithium project in Chile.
+                  </p>
+
+                  {/* Inset Rounded Landscape Photo */}
+                  <div className="relative w-full aspect-[16/9] rounded-[16px] overflow-hidden bg-[#0B1F2A] mb-6 shadow-sm border border-[#DDE3E3]/60">
+                    <Image
+                      src="/images/project-salar-de-turi.jpg"
+                      alt="Salar de Turi Lithium brine project in Antofagasta, Chile"
+                      fill
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                      className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                    />
+                  </div>
+
+                  {/* 3-Column Metric Data Strip */}
+                  <div className="grid grid-cols-3 divide-x divide-[#DDE3E3] rounded-xl bg-[#F5F6F1] border border-[#DDE3E3] py-3.5 px-2 mb-6">
+                    <div className="text-center px-1">
+                      <div className="text-[11px] uppercase tracking-wider text-[#87969F] font-heading font-semibold mb-1 flex items-center justify-center gap-1">
+                        <Square className="w-3 h-3 text-[#1F6F78]" />
+                        <span>Area</span>
+                      </div>
+                      <div className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A]">
+                        8,500 ha
+                      </div>
+                    </div>
+
+                    <div className="text-center px-1">
+                      <div className="text-[11px] uppercase tracking-wider text-[#87969F] font-heading font-semibold mb-1 flex items-center justify-center gap-1">
+                        <BarChart3 className="w-3 h-3 text-[#1F6F78]" />
+                        <span>Royalty</span>
+                      </div>
+                      <div className="font-heading font-bold text-sm sm:text-base text-[#1F6F78]">
+                        2.0% NSR
+                      </div>
+                    </div>
+
+                    <div className="text-center px-1">
+                      <div className="text-[11px] uppercase tracking-wider text-[#87969F] font-heading font-semibold mb-1 flex items-center justify-center gap-1">
+                        <MapPin className="w-3 h-3 text-[#1F6F78]" />
+                        <span>Region</span>
+                      </div>
+                      <div className="font-heading font-bold text-xs sm:text-sm text-[#0B1F2A] truncate">
+                        Antofagasta
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Pinned Bottom Action Row */}
+                <div className="relative z-10 mt-auto pt-6 border-t border-[#DDE3E3] flex items-center justify-between">
+                  <Link
+                    href="/projects/salar-de-turi"
+                    className="text-sm font-semibold text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors inline-flex items-center gap-2"
+                  >
+                    <span>Explore Chile Royalty</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+
+                  <Link
+                    href="/projects/salar-de-turi"
+                    aria-label="View Salar de Turi Lithium project details"
+                    className="w-11 h-11 rounded-full border border-[#0B1F2A]/20 text-[#0B1F2A] flex items-center justify-center transition-all duration-300 group-hover:bg-[#0B1F2A] group-hover:text-white group-hover:border-[#0B1F2A] group-hover:scale-105"
+                  >
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </article>
             </div>
+          </div>
+
+          {/* Interactive Strategy Pillar Comparator */}
+          <div className="mb-16">
+            <StrategyComparator />
           </div>
 
           {/* Detailed Project Cards */}

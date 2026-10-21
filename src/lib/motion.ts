@@ -11,8 +11,8 @@ export const motionOkScript =
 /**
  * Groups the hero headline's word spans into rendered lines and exposes each
  * word's line index as --hw{i} on <html>, so the CSS entrance reveals the
- * headline line by line at whatever width it wraps. Runs at the end of <body>
- * (measuring mid-parse forced a partial layout and a layout shift). Without it
- * every word simply uses line 0.
+ * headline line by line with a masked slide-up effect.
  */
 export const heroLineIndexScript = `(function(){var h=document.getElementById('hero-title');if(!h)return;var w=h.querySelectorAll('.hero-word'),s=document.documentElement.style,t=null,l=-1;for(var i=0;i<w.length;i++){var o=w[i].offsetTop;if(t===null||o>t+2){l++;t=o}s.setProperty('--hw'+i,l)}})()`;
+
+

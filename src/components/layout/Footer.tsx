@@ -27,13 +27,13 @@ export const Footer: React.FC = () => {
   const verifiedSocials = siteConfig.socials.filter((social) => social.verified);
 
   return (
-    <footer className="bg-[#07151D] text-white/80 border-t border-[#162F3F] pt-12 pb-8">
+    <footer className="bg-[#07151D] text-white/80 border-t border-[#162F3F] pt-14 pb-8" aria-label="Site Footer">
       <div data-reveal="fade" className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-10">
-          {/* Brand & Mission Column */}
-          <div className="lg:col-span-2">
-            <Link href="/" className="inline-flex items-center mb-5 group">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-12">
+          {/* Brand & Strategy Column (4 cols) */}
+          <div className="lg:col-span-4">
+            <Link href="/" className="inline-flex items-center mb-4 group" aria-label="Monumental Energy Home">
               <Image
                 src="/images/logo.png"
                 alt="Monumental Energy"
@@ -44,10 +44,10 @@ export const Footer: React.FC = () => {
             </Link>
 
             <p className="text-sm text-[#94A3B8] max-w-sm mb-6 leading-relaxed">
-              {siteConfig.tagline} Monumental Energy (TSX-V: MNRG) combines near-term cashflow leverage from conventional assets with long-term critical minerals royalty upside in the global Lithium Triangle.
+              Monumental Energy Corp. (TSX-V: MNRG) combines near-term conventional energy production in New Zealand’s Taranaki Basin with an unencumbered 2% NSR lithium royalty in Chile’s Lithium Triangle.
             </p>
 
-            {/* Social links: only verified URLs from data/site.ts are rendered */}
+            {/* Social links: verified official corporate channels */}
             {verifiedSocials.length > 0 ? (
               <div className="flex items-center gap-3">
                 {verifiedSocials.map((social) => (
@@ -63,15 +63,13 @@ export const Footer: React.FC = () => {
                   </a>
                 ))}
               </div>
-            ) : (
-              <p className="text-xs text-amber-300/80">Social profiles pending verification.</p>
-            )}
+            ) : null}
           </div>
 
-          {/* Quick Links Column */}
-          <div>
-            <h3 className="font-heading font-semibold text-white text-sm uppercase tracking-wider mb-4">
-              Navigation
+          {/* Group 1: Company & Projects (2 cols) */}
+          <div className="lg:col-span-2 sm:col-span-1">
+            <h3 className="font-heading font-semibold text-white text-xs uppercase tracking-wider mb-4">
+              Company &amp; Assets
             </h3>
             <ul className="space-y-2.5 text-sm">
               <li>
@@ -81,12 +79,12 @@ export const Footer: React.FC = () => {
               </li>
               <li>
                 <Link href="/projects" className="hover:text-[#B7E34A] transition-colors">
-                  Project Portfolio
+                  Projects Overview
                 </Link>
               </li>
               <li>
                 <Link href="/projects/new-zealand" className="hover:text-[#B7E34A] transition-colors">
-                  New Zealand Oil & Gas
+                  New Zealand Oil &amp; Gas
                 </Link>
               </li>
               <li>
@@ -95,37 +93,37 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/news" className="hover:text-[#B7E34A] transition-colors">
-                  News & Disclosures
-                </Link>
-              </li>
-              <li>
                 <Link href="/esg" className="hover:text-[#B7E34A] transition-colors">
-                  ESG Commitments
+                  ESG &amp; Sustainability
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Investors Column */}
-          <div>
-            <h3 className="font-heading font-semibold text-white text-sm uppercase tracking-wider mb-4">
-              Investor Relations
+          {/* Group 2: Investors & Filings (3 cols) */}
+          <div className="lg:col-span-3 sm:col-span-1">
+            <h3 className="font-heading font-semibold text-white text-xs uppercase tracking-wider mb-4">
+              Investors &amp; Disclosures
             </h3>
             <ul className="space-y-2.5 text-sm">
               <li>
                 <Link href="/investors" className="hover:text-[#B7E34A] transition-colors">
-                  Investor Centre
+                  Investor Centre Hub
                 </Link>
               </li>
               <li>
                 <Link href="/investors/presentation" className="hover:text-[#B7E34A] transition-colors">
-                  Corporate Presentation
+                  Corporate Presentation (PDF)
                 </Link>
               </li>
               <li>
                 <Link href="/investors/agm" className="hover:text-[#B7E34A] transition-colors">
-                  Shareholder AGM
+                  Shareholder AGM Information
+                </Link>
+              </li>
+              <li>
+                <Link href="/news" className="hover:text-[#B7E34A] transition-colors">
+                  News &amp; Market Releases
                 </Link>
               </li>
               <li>
@@ -135,7 +133,7 @@ export const Footer: React.FC = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 hover:text-[#B7E34A] transition-colors"
                 >
-                  <span>SEDAR+ Filings</span>
+                  <span>SEDAR+ Filings Profile</span>
                   <ExternalLink className="w-3.5 h-3.5 text-[#1F6F78]" />
                 </a>
               </li>
@@ -146,27 +144,29 @@ export const Footer: React.FC = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 hover:text-[#B7E34A] transition-colors"
                 >
-                  <span>TSX Venture Quote</span>
+                  <span>TSX-V: MNRG Delayed Quote</span>
                   <ExternalLink className="w-3.5 h-3.5 text-[#1F6F78]" />
                 </a>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-[#B7E34A] transition-colors">
-                  IR Contact Form
-                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Corporate Office Column */}
-          <div>
-            <h3 className="font-heading font-semibold text-white text-sm uppercase tracking-wider mb-4">
-              Head Office
+          {/* Group 3: Contact & Registry (3 cols) */}
+          <div className="lg:col-span-3">
+            <h3 className="font-heading font-semibold text-white text-xs uppercase tracking-wider mb-4">
+              Registered Office
             </h3>
             <div className="space-y-3 text-sm text-[#94A3B8]">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#1F6F78] shrink-0 mt-0.5" />
-                <span>{siteConfig.contact.address}</span>
+                <a
+                  href="https://maps.google.com/?q=Suite+228+-+1122+Mainland+Street,+Vancouver+BC+V6B+5L1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#B7E34A] transition-colors leading-relaxed"
+                >
+                  {siteConfig.contact.address}
+                </a>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#1F6F78] shrink-0" />
@@ -186,17 +186,28 @@ export const Footer: React.FC = () => {
                   {siteConfig.contact.phone}
                 </a>
               </div>
+              <div className="pt-2">
+                <a
+                  href="https://www.investorcentre.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-[#87969F] hover:text-[#B7E34A] inline-flex items-center gap-1 transition-colors"
+                >
+                  <span>Transfer Agent: Computershare Investor Centre</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Forward-Looking Statements Disclaimer Component */}
+        {/* Forward-Looking Statements Disclaimer */}
         <div className="border-t border-[#162F3F] pt-6 pb-6">
-          <div className="max-w-3xl">
-            <h4 className="font-heading font-semibold text-[11px] uppercase tracking-wider text-white/70 mb-1.5">
-              Forward-Looking Statements & Regulatory Disclaimer
+          <div className="max-w-4xl">
+            <h4 className="font-heading font-semibold text-[11px] uppercase tracking-wider text-white/70 mb-2">
+              Forward-Looking Statements &amp; Regulatory Disclaimer
             </h4>
-            <p className="text-[11px] text-[#64748B] leading-relaxed">
+            <p className="text-[11px] text-[#87969F] leading-relaxed">
               This website and documents accessible herein contain certain &quot;forward-looking statements&quot; within the meaning of applicable Canadian securities legislation. Forward-looking statements relate to future events or future performance and include, without limitation, statements regarding exploration timelines, near-term production milestones, commercial resource evaluations, royalty revenue potential, and operational objectives of Monumental Energy Corp. and its joint-venture partners. These statements involve substantial known and unknown risks, uncertainties, and other factors that may cause actual results, levels of activity, performance, or achievements to be materially different from any expressed or implied statements. Neither TSX Venture Exchange nor its Regulation Services Provider accepts responsibility for the adequacy or accuracy of this content. Investors are cautioned not to place undue reliance on forward-looking statements.
             </p>
           </div>
@@ -204,15 +215,15 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Legal Bar */}
         <div className="border-t border-[#162F3F] pt-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#64748B]">
-          <p>© 2026 Monumental Energy. All rights reserved.</p>
-          <div className="flex items-center gap-6">
+          <p>© 2026 Monumental Energy Corp. All rights reserved.</p>
+          <div className="flex flex-wrap items-center gap-6">
             <Link href="/privacy-policy" className="hover:text-white transition-colors">
               Privacy Policy
             </Link>
             <Link href="/contact" className="hover:text-white transition-colors">
               Contact Us
             </Link>
-            <span>TSX-V: MNRG</span>
+            <span className="text-[#87969F]">TSX-V: MNRG • OTCQB: MNMRF • FSE: ZA6</span>
           </div>
         </div>
       </div>

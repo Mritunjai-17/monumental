@@ -5,6 +5,7 @@ import { PageHero } from '@/components/layout/PageHero';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { KineticHeading } from '@/components/ui/KineticHeading';
 import { siteConfig } from '@/data/site';
 import { constructMetadata } from '@/lib/seo';
 import { ShieldCheck, Target, Compass, Users2, ArrowRight, CheckCircle2 } from 'lucide-react';
@@ -32,9 +33,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <div className="lg:col-span-7">
               <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Our Positioning</span>
-              <h2 className="text-3xl sm:text-4xl font-bold font-heading text-[#0B1F2A] mb-6 leading-[1.18]">
-                Better energy for the future and today.
-              </h2>
+              <KineticHeading
+                as="h2"
+                text="Better energy for the future and today."
+                className="text-3xl sm:text-4xl font-bold font-heading text-[#0B1F2A] mb-6 leading-[1.18]"
+              />
               <div className="space-y-4 text-base text-[#5B6B73] leading-relaxed">
                 <p>
                   The global transition toward lower-carbon energy is a multi-decade process requiring both immediate energy security and scalable critical mineral supplies. Monumental Energy was built to operate at the exact intersection of these two realities.
@@ -148,9 +151,11 @@ export default function AboutPage() {
         <Container>
           <div className="max-w-3xl mb-12">
             <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Management</span>
-            <h2 className="text-3xl font-bold font-heading text-[#0B1F2A] leading-[1.18]">
-              Corporate Leadership &amp; Board of Directors
-            </h2>
+            <KineticHeading
+              as="h2"
+              text="Corporate Leadership & Board of Directors"
+              className="text-3xl font-bold font-heading text-[#0B1F2A] leading-[1.18]"
+            />
             <p className="text-base text-[#5B6B73] mt-2">
               Our seasoned leadership team brings extensive expertise across Canadian public markets, international resource financing, geology, and corporate governance.
             </p>

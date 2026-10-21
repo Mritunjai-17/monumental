@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { newsArticles } from '@/data/news';
 import { constructMetadata } from '@/lib/seo';
-import { Calendar, Tag, ArrowLeft, Share2, Printer } from 'lucide-react';
+import { Calendar, Tag, ArrowLeft, Share2, Printer, CheckCircle2, ExternalLink } from 'lucide-react';
 
 interface NewsDetailProps {
   params: {
@@ -58,7 +58,12 @@ export default function NewsArticlePage({ params }: NewsDetailProps) {
           <div className="bg-white rounded-[16px] border border-[#DDE3E3] p-6 sm:p-10 lg:p-12 shadow-sm">
             {/* Meta bar */}
             <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-8 border-b border-[#DDE3E3] text-xs text-[#5B6B73]">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                {article.releaseType && (
+                  <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider bg-[#0B1F2A] text-white px-2.5 py-0.5 rounded-full">
+                    {article.releaseType}
+                  </span>
+                )}
                 <span className="flex items-center gap-1.5 font-medium">
                   <Calendar className="w-4 h-4 text-[#1F6F78]" />
                   {article.date}
@@ -96,7 +101,32 @@ export default function NewsArticlePage({ params }: NewsDetailProps) {
               </div>
             )}
 
-            {!article.verified && (
+            {article.verified ? (
+              <div className="mb-8 p-4 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3] flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div className="flex items-center gap-2 text-[#1F6F78] font-medium">
+                  <CheckCircle2 className="w-4 h-4 text-[#1F6F78] shrink-0" />
+                  <span>Verified Corporate Announcement</span>
+                </div>
+                {article.source && (
+                  <div className="text-[#5B6B73] flex items-center gap-1.5">
+                    <span>Source:</span>
+                    {article.sourceUrl ? (
+                      <a
+                        href={article.sourceUrl}
+                        target={article.sourceUrl.startsWith('http') ? '_blank' : undefined}
+                        rel={article.sourceUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        className="font-semibold text-[#1F6F78] hover:underline inline-flex items-center gap-1"
+                      >
+                        <span>{article.source}</span>
+                        {article.sourceUrl.startsWith('http') && <ExternalLink className="w-3 h-3" />}
+                      </a>
+                    ) : (
+                      <span className="font-semibold text-[#0B1F2A]">{article.source}</span>
+                    )}
+                  </div>
+                )}
+              </div>
+            ) : (
               <div className="mb-8 p-4 rounded-xl bg-amber-50 border border-amber-300 text-sm text-amber-900 flex items-start gap-3">
                 <Badge variant="unverified" className="shrink-0">Unverified</Badge>
                 <span>

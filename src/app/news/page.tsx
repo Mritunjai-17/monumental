@@ -57,7 +57,12 @@ export default function NewsPage() {
                         className="rounded-xl sm:self-start"
                       />
                       <div className="flex flex-col min-w-0">
-                        <div data-stagger style={{ '--s': 0 } as React.CSSProperties} className="flex flex-wrap items-center gap-3 text-xs text-[#5B6B73] mb-3">
+                        <div data-stagger style={{ '--s': 0 } as React.CSSProperties} className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-[#5B6B73] mb-3">
+                          {article.releaseType && (
+                            <span className="inline-flex items-center text-[10px] font-bold uppercase tracking-wider bg-[#0B1F2A] text-white px-2.5 py-0.5 rounded-full">
+                              {article.releaseType}
+                            </span>
+                          )}
                           <span className="flex items-center gap-1.5 font-medium">
                             <Calendar className="w-3.5 h-3.5 text-[#1F6F78]" />
                             {article.date}
@@ -71,7 +76,7 @@ export default function NewsPage() {
                           <span className="text-[#5B6B73]">{article.readTime}</span>
                         </div>
 
-                        <div data-stagger style={{ '--s': 1 } as React.CSSProperties}>
+                        <div>
                           <h2 className="text-xl sm:text-2xl font-bold font-heading text-[#0B1F2A] mb-3 leading-[1.18] group-hover:text-[#1F6F78] transition-colors">
                             <Link href={`/news/${article.slug}`}>
                               {article.title}
@@ -79,15 +84,29 @@ export default function NewsPage() {
                           </h2>
                         </div>
 
-                        <p data-stagger style={{ '--s': 2 } as React.CSSProperties} className="text-sm sm:text-base text-[#5B6B73] leading-relaxed mb-6">
+                        <p className="text-sm sm:text-base text-[#5B6B73] leading-relaxed mb-4">
                           {article.excerpt}
                         </p>
+
+
+                        {article.source && (
+                          <div className="text-xs text-[#5B6B73] mb-4">
+                            <span className="text-[#87969F]">Source:</span>{' '}
+                            <span className="font-medium text-[#162F3F]">{article.source}</span>
+                          </div>
+                        )}
 
                         <Link
                           href={`/news/${article.slug}`}
                           className="mt-auto text-link text-sm font-semibold inline-flex items-center gap-1 text-[#1F6F78] self-start"
                         >
-                          <span>Read complete press release</span>
+                          <span>
+                            {article.releaseType === 'Official Press Release'
+                              ? 'Read official press release'
+                              : article.releaseType === 'Regulatory Notice'
+                              ? 'Read regulatory notice'
+                              : 'Read strategic briefing'}
+                          </span>
                           <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                         </Link>
                       </div>

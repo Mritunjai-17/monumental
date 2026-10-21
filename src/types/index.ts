@@ -4,6 +4,7 @@ export interface Project {
   name: string;
   category: 'Oil & Gas' | 'Lithium';
   location: string;
+  coordinates?: string;
   stage: string;
   ownership: string;
   statusBadge: string;
@@ -16,7 +17,7 @@ export interface Project {
   keyFacts: { label: string; value: string }[];
   highlights: string[];
   timeline: { date: string; title: string; description: string }[];
-  documents: { title: string; type: string; size: string; url: string }[];
+  documents: { title: string; type: string; size?: string; url: string; isExternal?: boolean }[];
 }
 
 export interface NewsItem {
@@ -32,6 +33,12 @@ export interface NewsItem {
   image?: string;
   /** false until the release is confirmed against the official filing / newswire. */
   verified: boolean;
+  /** Distinguishes official announcements from corporate briefings and regulatory notices. */
+  releaseType?: 'Official Press Release' | 'Strategic Briefing' | 'Corporate Briefing' | 'Regulatory Notice';
+  /** Original company release authority or regulatory depository source. */
+  source?: string;
+  /** Link to original filing / depository if applicable. */
+  sourceUrl?: string;
 }
 
 export interface StatItem {

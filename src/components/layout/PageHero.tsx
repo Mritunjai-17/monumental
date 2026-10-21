@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { ChevronRight } from 'lucide-react';
+import { KineticHeading } from '@/components/ui/KineticHeading';
 
 interface BreadcrumbItem {
   label: string;
@@ -75,9 +76,11 @@ export const PageHero: React.FC<PageHeroProps> = ({
           )}
 
           <div className="flex flex-wrap items-center gap-4 mb-4">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-white tracking-[-0.02em] leading-tight">
-              {title}
-            </h1>
+            <KineticHeading
+              as="h1"
+              text={title}
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-white tracking-[-0.02em] leading-tight"
+            />
             {badge && <div>{badge}</div>}
           </div>
 

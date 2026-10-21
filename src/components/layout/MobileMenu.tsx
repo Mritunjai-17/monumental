@@ -28,17 +28,26 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
     }
   }, [pathname, onClose]);
 
-  // Prevent body scroll when open
+  // Handle Escape key and prevent body scroll when open
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
     } else {
       document.body.style.overflow = 'unset';
     }
+
     return () => {
       document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -66,6 +75,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           />
         </Link>
         <button
+          type="button"
           onClick={onClose}
           aria-label="Close navigation menu"
           className="w-10 h-10 flex items-center justify-center rounded-lg text-white hover:bg-[#162F3F] active:bg-[#1F6F78]/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
@@ -76,19 +86,21 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
 
       {/* Navigation Links with Min 48px Touch Targets */}
       <div className="py-6 flex-1">
-        <nav className="flex flex-col space-y-1">
+        <nav className="flex flex-col space-y-1" aria-label="Mobile Navigation">
           {navigationItems.map((item) => {
             const hasChildren = item.children && item.children.length > 0;
             const isExpanded = expandedDropdown === item.label;
-            const isActive =
-              pathname === item.href ||
-              (hasChildren && item.children?.some((c) => pathname === c.href));
+            const isChildActive = hasChildren && item.children?.some((c) => pathname === c.href);
+            const isActive = pathname === item.href || isChildActive;
 
             if (hasChildren) {
               return (
                 <div key={item.label} className="border-b border-[#162F3F]/60 py-1">
                   <button
+                    type="button"
                     onClick={() => toggleDropdown(item.label)}
+                    aria-expanded={isExpanded}
+                    aria-controls={`mobile-sub-${item.label.toLowerCase()}`}
                     className={cn(
                       'w-full min-h-[48px] flex items-center justify-between text-left px-2 py-2 text-lg font-heading font-semibold transition-colors',
                       isActive ? 'text-[#B7E34A]' : 'text-white hover:text-[#B7E34A]'
@@ -99,15 +111,20 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                       className={`w-5 h-5 text-[#5B6B73] transition-transform duration-200 ${
                         isExpanded ? 'rotate-180 text-[#B7E34A]' : ''
                       }`}
+                      aria-hidden="true"
                     />
                   </button>
                   {isExpanded && (
-                    <div className="pl-3 pr-2 py-2 flex flex-col space-y-1 bg-[#081822] rounded-xl mt-1 mb-2 border border-[#1D3B4C]/50">
+                    <div
+                      id={`mobile-sub-${item.label.toLowerCase()}`}
+                      className="pl-3 pr-2 py-2 flex flex-col space-y-1 bg-[#081822] rounded-xl mt-1 mb-2 border border-[#1D3B4C]/50"
+                    >
                       {item.children?.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
                           onClick={onClose}
+                          aria-current={pathname === child.href ? 'page' : undefined}
                           className={cn(
                             'min-h-[44px] flex flex-col justify-center px-3 py-2 rounded-lg transition-colors',
                             pathname === child.href
@@ -116,7 +133,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                           )}
                         >
                           <span className="font-heading font-medium text-sm flex items-center gap-2">
-                            <ChevronRight className="w-3.5 h-3.5 text-[#1F6F78]" />
+                            <ChevronRight className="w-3.5 h-3.5 text-[#1F6F78]" aria-hidden="true" />
                             {child.label}
                           </span>
                           {child.description && (
@@ -135,6 +152,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                 key={item.href}
                 href={item.href}
                 onClick={onClose}
+                aria-current={pathname === item.href ? 'page' : undefined}
                 className={cn(
                   'min-h-[48px] flex items-center px-2 py-2 text-lg font-heading font-semibold border-b border-[#162F3F]/60 transition-colors',
                   isActive ? 'text-[#B7E34A]' : 'text-white hover:text-[#B7E34A]'

@@ -61,44 +61,62 @@ export const Header: React.FC = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+          <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2" aria-label="Main Navigation">
             {navigationItems.map((item) => {
               const hasChildren = item.children && item.children.length > 0;
-              const isActive =
-                pathname === item.href ||
-                (hasChildren && item.children?.some((c) => pathname === c.href));
+              const isChildActive = hasChildren && item.children?.some((c) => pathname === c.href);
+              const isActive = pathname === item.href || isChildActive;
+              const isOpen = openDropdown === item.label;
 
               if (hasChildren) {
                 return (
                   <div
                     key={item.label}
-                    className="relative group"
+                    className="relative"
                     onMouseEnter={() => setOpenDropdown(item.label)}
                     onMouseLeave={() => setOpenDropdown(null)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Escape') {
+                        setOpenDropdown(null);
+                      }
+                    }}
+                    onBlur={(e) => {
+                      if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+                        setOpenDropdown(null);
+                      }
+                    }}
                   >
                     <button
+                      type="button"
+                      onClick={() => setOpenDropdown(isOpen ? null : item.label)}
                       className={cn(
                         'h-9 inline-flex items-center gap-1.5 px-3 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]',
                         isActive
                           ? 'text-[#B7E34A] font-semibold'
                           : 'text-white/90 hover:text-white hover:bg-white/5'
                       )}
-                      aria-expanded={openDropdown === item.label}
+                      aria-haspopup="true"
+                      aria-expanded={isOpen}
+                      aria-controls={`dropdown-${item.label.toLowerCase()}`}
                     >
                       <span>{item.label}</span>
                       <ChevronDown
                         className={cn(
                           'w-3.5 h-3.5 shrink-0 transition-transform duration-200 mt-px',
-                          openDropdown === item.label && 'rotate-180'
+                          isOpen && 'rotate-180'
                         )}
+                        aria-hidden="true"
                       />
                     </button>
 
                     {/* Dropdown Menu */}
                     <div
+                      id={`dropdown-${item.label.toLowerCase()}`}
+                      role="menu"
+                      aria-label={`${item.label} submenu`}
                       className={cn(
-                        'absolute left-0 top-full pt-2 w-72 transition-all duration-200',
-                        openDropdown === item.label
+                        'absolute left-0 top-full pt-2 w-72 transition-all duration-200 z-50',
+                        isOpen
                           ? 'opacity-100 visible translate-y-0'
                           : 'opacity-0 invisible -translate-y-2 pointer-events-none'
                       )}
@@ -108,6 +126,9 @@ export const Header: React.FC = () => {
                           <Link
                             key={child.href}
                             href={child.href}
+                            role="menuitem"
+                            onClick={() => setOpenDropdown(null)}
+                            aria-current={pathname === child.href ? 'page' : undefined}
                             className={cn(
                               'px-3.5 py-2.5 rounded-lg transition-colors group/item block',
                               pathname === child.href
@@ -135,6 +156,7 @@ export const Header: React.FC = () => {
                 <Link
                   key={item.href}
                   href={item.href}
+                  aria-current={pathname === item.href ? 'page' : undefined}
                   className={cn(
                     'h-9 inline-flex items-center justify-center px-3 rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]',
                     isActive
@@ -149,13 +171,14 @@ export const Header: React.FC = () => {
           </nav>
 
           {/* Right Header Actions */}
-          <div className="hidden sm:flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <TickerChip className="hidden md:inline-flex" />
+
             <Button
               href="/contact"
               variant="primary"
               size="sm"
-              className="h-9 px-4 text-xs sm:text-sm font-semibold rounded-[8px] inline-flex items-center justify-center shrink-0"
+              className="hidden sm:inline-flex h-9 px-4 text-xs sm:text-sm font-semibold rounded-[8px] items-center justify-center shrink-0"
             >
               Investor Contact
             </Button>

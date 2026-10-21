@@ -8,6 +8,9 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { MediaReveal } from '@/components/ui/MediaReveal';
+import { KineticHeading } from '@/components/ui/KineticHeading';
+import { AssetGisMap } from '@/components/ui/AssetGisMap';
+import { ResourceTile } from '@/components/ui/ResourceTile';
 import {
   FileText,
   Download,
@@ -18,6 +21,7 @@ import {
   ArrowRight,
   ShieldCheck,
   TrendingUp,
+  ExternalLink,
 } from 'lucide-react';
 
 export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) => {
@@ -63,9 +67,11 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
               <span className="eyebrow text-[#1F6F78] block mb-2 font-heading tracking-[0.12em] uppercase font-semibold text-xs sm:text-sm">
                 Project Overview
               </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.18] mb-6">
-                Operational Context &amp; Strategic Thesis
-              </h2>
+              <KineticHeading
+                as="h2"
+                text="Operational Context & Strategic Thesis"
+                className="text-2xl sm:text-3xl lg:text-4xl font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.18] mb-6"
+              />
 
               <p className="text-base sm:text-lg text-[#5B6B73] leading-relaxed mb-8">
                 {project.description}
@@ -135,7 +141,7 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
         </Container>
       </section>
 
-      {/* 3. Location Map Placeholder (White) */}
+      {/* 3. Location & Geographic Setting */}
       <section className="py-14 lg:py-24 bg-white border-y border-[#DDE3E3]">
         <Container>
           <div className="max-w-3xl mb-8">
@@ -147,35 +153,12 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
             </h2>
           </div>
 
-          <div className="relative rounded-[16px] overflow-hidden border border-[#DDE3E3] bg-[#0E2836] p-8 sm:p-12 text-center text-white">
-            {/* Topography Map Graphic Placeholder */}
-            <div className="max-w-xl mx-auto py-8">
-              <div className="w-16 h-16 rounded-full bg-[#1F6F78]/20 text-[#B7E34A] mx-auto flex items-center justify-center mb-4 border border-[#1F6F78]/40">
-                <MapPin className="w-8 h-8" />
-              </div>
-              <h3 className="text-2xl font-bold font-heading text-white mb-2 leading-[1.18]">
-                {project.location}
-              </h3>
-              <p className="text-sm text-[#94A3B8] mb-6">
-                Interactive GIS concessions map and spatial boundaries available in the technical data room.
-              </p>
-
-              <div className="inline-grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs text-white/90">
-                <div className="p-3 rounded-lg bg-[#07151D] border border-[#1D3B4C]">
-                  <span className="text-[#94A3B8] block mb-1">Coordinates</span>
-                  <span className="text-[#B7E34A] font-medium">[LAT/LONG_PLACEHOLDER]</span>
-                </div>
-                <div className="p-3 rounded-lg bg-[#07151D] border border-[#1D3B4C]">
-                  <span className="text-[#94A3B8] block mb-1">Access</span>
-                  <span className="font-semibold">All-Season Highway</span>
-                </div>
-                <div className="p-3 rounded-lg bg-[#07151D] border border-[#1D3B4C] col-span-2 sm:col-span-1">
-                  <span className="text-[#94A3B8] block mb-1">Grid Power</span>
-                  <span className="font-semibold">High-Voltage Line Nearby</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <AssetGisMap
+            projectId={project.id}
+            projectName={project.name}
+            location={project.location}
+            coordinates={project.coordinates || '39° 20′ S, 174° 17′ E'}
+          />
         </Container>
       </section>
 
@@ -231,33 +214,31 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {project.documents.map((doc) => (
-              <div key={doc.title} data-reveal="card" className="h-full">
-                <a
-                  href={doc.url}
-                  download
-                  className="h-full p-6 rounded-[16px] border border-[#DDE3E3] bg-[#F5F6F1] hover:bg-white hover:border-[#1F6F78] hover:shadow-md transition-all duration-200 flex flex-col justify-between group"
-                >
-                  <div>
-                    <div className="w-10 h-10 rounded-lg bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center mb-4 group-hover:bg-[#1F6F78] group-hover:text-white transition-colors">
-                      <FileText className="w-5 h-5" />
-                    </div>
-                    <h3 className="font-heading font-semibold text-base text-[#0B1F2A] mb-1 group-hover:text-[#1F6F78] transition-colors leading-[1.18]">
-                      {doc.title}
-                    </h3>
-                    <span className="text-xs text-[#5B6B73] uppercase font-medium">
-                      {doc.type} • {doc.size}
-                    </span>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+            {project.documents.map((doc) => {
+              const isPdf = doc.url.endsWith('.pdf');
+              const isExternal = doc.isExternal;
+              const variant = isPdf ? 'teal-panel' : isExternal ? 'ice-icon' : 'mint-icon';
+              const eyebrow = isPdf ? 'PDF Document' : isExternal ? 'Continuous Disclosure' : 'Data Room';
+              const description = isPdf
+                ? 'Official 2026 corporate overview and asset technical roadmap.'
+                : isExternal
+                ? 'Statutory securities filings and continuous disclosures on SEDAR+.'
+                : 'Technical field reports and geological data available upon request.';
 
-                  <div className="mt-6 pt-3 border-t border-[#DDE3E3]/60 flex items-center justify-between text-xs font-semibold text-[#1F6F78]">
-                    <span>Download file</span>
-                    <Download className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
-                  </div>
-                </a>
-              </div>
-            ))}
+              return (
+                <ResourceTile
+                  key={doc.title}
+                  variant={variant}
+                  eyebrow={eyebrow}
+                  title={doc.title}
+                  description={description}
+                  href={doc.url}
+                  isExternal={isExternal}
+                  download={isPdf}
+                />
+              );
+            })}
           </div>
         </Container>
       </section>

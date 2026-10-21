@@ -35,12 +35,12 @@ export const NewsThumbnail: React.FC<NewsThumbnailProps> = ({ article, sizes, cl
           alt={article.title}
           fill
           sizes={sizes}
-          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
         />
       ) : (
         <div className="absolute inset-0 flex flex-col justify-end p-5" aria-hidden="true">
           <div
-            className="absolute inset-0 opacity-20 transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+            className="absolute inset-0 opacity-20 transition-transform duration-500 ease-out group-hover:scale-[1.03]"
             style={{
               backgroundImage: 'radial-gradient(#FFFFFF 1px, transparent 1px)',
               backgroundSize: '20px 20px',

@@ -55,4 +55,8 @@ export const navigationItems: NavItem[] = [
     label: 'ESG',
     href: '/esg',
   },
+  {
+    label: 'Contact',
+    href: '/contact',
+  },
 ];

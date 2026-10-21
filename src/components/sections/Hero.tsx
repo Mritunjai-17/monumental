@@ -9,8 +9,6 @@ import { FileText, Compass } from 'lucide-react';
 const HEADLINE = 'Two assets. One strategy for the energy transition.';
 const headlineWords = HEADLINE.split(' ');
 
-// Line grouping for the entrance is done by heroLineIndexScript (lib/motion.ts).
-
 export const Hero: React.FC = () => {
   return (
     // Bottom padding leaves room for the stats card, which overlaps by 60px.
@@ -44,12 +42,14 @@ export const Hero: React.FC = () => {
           >
             {headlineWords.map((word, i) => (
               <React.Fragment key={i}>
-                <span
-                  aria-hidden="true"
-                  className="hero-word inline-block"
-                  style={{ animationDelay: `calc(var(--hw${i}, 0) * 120ms + 100ms)` }}
-                >
-                  {word}
+                <span className="hero-word-mask inline-block overflow-hidden align-top">
+                  <span
+                    aria-hidden="true"
+                    className="hero-word inline-block"
+                    style={{ animationDelay: `calc(var(--hw${i}, 0) * 110ms + 120ms)` }}
+                  >
+                    {word}
+                  </span>
                 </span>
                 {i < headlineWords.length - 1 && ' '}
               </React.Fragment>
@@ -61,7 +61,7 @@ export const Hero: React.FC = () => {
           </p>
 
           {/* Equal-height buttons (fixed 52px), icons inline with the label */}
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="hero-cta-group flex flex-col sm:flex-row gap-4">
             <Button
               href="/investors/presentation"
               variant="primary"

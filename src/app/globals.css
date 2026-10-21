@@ -32,7 +32,13 @@
   }
 
   /* STRICT RULE: h1, h2, h3, h4, h5, h6 and every heading-styled element MUST use Space Grotesk ONLY */
-  h1, h2, h3, h4, h5, h6, .heading {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .heading {
     font-family: var(--font-heading) !important;
     letter-spacing: -0.02em;
     line-height: 1.18;
@@ -41,15 +47,18 @@
   }
 
   h1 {
-    font-size: clamp(3rem, 2.2rem + 2.5vw, 4.5rem); /* 48px to 72px */
+    font-size: clamp(3rem, 2.2rem + 2.5vw, 4.5rem);
+    /* 48px to 72px */
   }
 
   h2 {
-    font-size: clamp(2rem, 1.6rem + 1.25vw, 2.75rem); /* 32px to 44px */
+    font-size: clamp(2rem, 1.6rem + 1.25vw, 2.75rem);
+    /* 32px to 44px */
   }
 
   h3 {
-    font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem); /* 22px to 28px */
+    font-size: clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem);
+    /* 22px to 28px */
   }
 
   h4 {
@@ -57,7 +66,8 @@
   }
 
   p {
-    font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem); /* 16px to 18px */
+    font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+    /* 16px to 18px */
     line-height: 1.6;
   }
 
@@ -70,7 +80,8 @@
     font-family: var(--font-heading) !important;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    font-size: 0.8125rem; /* 13px */
+    font-size: 0.8125rem;
+    /* 13px */
     font-weight: 600;
   }
 }
@@ -84,7 +95,7 @@
   font-weight: 500;
   text-decoration: none;
   position: relative;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, opacity 0.15s ease, transform 0.15s ease;
 }
 
 .text-link::after {
@@ -97,12 +108,17 @@
   left: 0;
   background-color: var(--color-secondary);
   transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
+  transition: transform 0.25s var(--ease-out-soft);
 }
 
 .text-link:hover::after {
   transform: scaleX(1);
   transform-origin: bottom left;
+}
+
+.text-link:active {
+  opacity: 0.85;
+  transform: translateY(1px);
 }
 
 .text-link:focus-visible {
@@ -127,6 +143,7 @@
     opacity: 0;
     transform: translate3d(0, var(--rise, 18px), 0);
   }
+
   to {
     opacity: 1;
     transform: none;
@@ -134,8 +151,13 @@
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes settle-in {
@@ -143,6 +165,7 @@
     opacity: 0;
     transform: scale(0.97);
   }
+
   to {
     opacity: 1;
     transform: none;
@@ -150,31 +173,80 @@
 }
 
 @keyframes hero-bg-settle {
-  from { transform: scale(1.08); }
-  to { transform: scale(1); }
+  from {
+    transform: scale(1.04);
+  }
+
+  to {
+    transform: scale(1);
+  }
 }
 
 @keyframes glow-drift {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-28px, 18px, 0); }
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-28px, 18px, 0);
+  }
 }
 
 /* Hero entrance (page load) */
-.motion-ok .hero-eyebrow { animation: fade-in 0.5s var(--ease-out-soft) backwards; }
-.motion-ok .hero-word {
-  --rise: 0.45em;
-  animation: rise-in 0.8s var(--ease-out-soft) backwards;
+.motion-ok .hero-eyebrow {
+  animation: fade-in 0.5s var(--ease-out-soft) 0.05s backwards;
 }
-.motion-ok .hero-copy { animation: rise-in 0.6s var(--ease-out-soft) 0.65s backwards; }
-.motion-ok .hero-cta-1 { animation: rise-in 0.45s var(--ease-out-soft) 0.9s backwards; }
-.motion-ok .hero-cta-2 { animation: rise-in 0.45s var(--ease-out-soft) 0.98s backwards; }
-.motion-ok .hero-map { animation: settle-in 0.9s var(--ease-out-soft) 0.3s backwards; }
-.motion-ok .hero-stats { animation: rise-in 0.7s var(--ease-out-soft) 0.55s backwards; }
+
+.hero-word-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.motion-ok .hero-word {
+  --rise: 115%;
+  animation: rise-in 0.8s var(--ease-out-soft) backwards;
+  will-change: transform, opacity;
+}
+
+.motion-ok .hero-copy {
+  --rise: 14px;
+  animation: rise-in 0.6s var(--ease-out-soft) 0.65s backwards;
+}
+
+.motion-ok .hero-cta-group {
+  --rise: 14px;
+  animation: rise-in 0.55s var(--ease-out-soft) 0.85s backwards;
+}
+
+.motion-ok .hero-cta-1 {
+  animation: rise-in 0.55s var(--ease-out-soft) 0.85s backwards;
+}
+
+.motion-ok .hero-cta-2 {
+  animation: rise-in 0.55s var(--ease-out-soft) 0.92s backwards;
+}
+
+.motion-ok .hero-map {
+  animation: settle-in 0.9s var(--ease-out-soft) 0.3s backwards;
+}
+
+.motion-ok .hero-stats {
+  --rise: 18px;
+  animation: rise-in 0.65s var(--ease-out-soft) 0.55s backwards;
+}
 
 /* Background scale and glow drift: desktop only, to keep mobile light */
 @media (min-width: 1024px) {
-  .motion-ok .hero-bg { animation: hero-bg-settle 2.4s var(--ease-out-soft) backwards; }
-  .motion-ok .hero-glow { animation: glow-drift 14s ease-in-out 1s infinite alternate; }
+  .motion-ok .hero-bg {
+    animation: hero-bg-settle 2.4s var(--ease-out-soft) backwards;
+  }
+
+  .motion-ok .hero-glow {
+    animation: glow-drift 14s ease-in-out 1s infinite alternate;
+  }
 }
 
 /* Scroll reveal (see components/layout/RevealObserver.tsx) */
@@ -184,42 +256,62 @@
     transform 0.7s var(--ease-out-soft);
   transition-delay: var(--reveal-delay, 0ms);
 }
+
 .motion-ok [data-reveal='fast'] {
   transition-duration: 0.5s;
 }
+
 .motion-ok [data-reveal]:not([data-revealed]) {
   opacity: 0;
   transform: translate3d(0, 24px, 0);
 }
+
 .motion-ok [data-reveal='fast']:not([data-revealed]) {
   transform: translate3d(0, 14px, 0);
 }
+
+.motion-ok [data-reveal='heading'] {
+  transition:
+    opacity 0.6s var(--ease-out-soft),
+    transform 0.6s var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.motion-ok [data-reveal='heading']:not([data-revealed]) {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+}
+
 .motion-ok [data-reveal='fade']:not([data-revealed]) {
+  opacity: 0;
   transform: none;
 }
 
-/* Card reveal: cards rise 40px and fade in one after another. The stagger is
+/* Card reveal: cards rise 22px and fade in one after another. The stagger is
    computed per batch by RevealObserver (--reveal-delay). */
 .motion-ok [data-reveal='card'] {
   transition:
-    opacity 0.75s var(--ease-power3-out),
-    transform 0.75s var(--ease-power3-out);
+    opacity 0.65s var(--ease-out-soft),
+    transform 0.65s var(--ease-out-soft);
   transition-delay: var(--reveal-delay, 0ms);
 }
+
 .motion-ok [data-reveal='card']:not([data-revealed]) {
-  transform: translate3d(0, 40px, 0);
+  transform: translate3d(0, 22px, 0);
 }
 
 /* Clip-mask image reveal (components/ui/MediaReveal.tsx) */
 .motion-ok [data-reveal='clip'] {
-  transition: clip-path 1.1s var(--ease-out-soft);
-  transition-delay: calc(var(--reveal-delay, 0ms) + 80ms);
+  transition: clip-path 0.75s var(--ease-out-soft);
+  transition-delay: calc(var(--reveal-delay, 0ms) + 60ms);
 }
+
 .motion-ok [data-reveal='clip']:not([data-revealed]) {
   opacity: 1;
   transform: none;
   clip-path: inset(100% 0 0 0);
 }
+
 .motion-ok [data-reveal='clip'][data-revealed] {
   clip-path: inset(0);
 }
@@ -239,14 +331,17 @@
 .hm-pin:focus {
   outline: none;
 }
+
 .hm-pin,
 .hm-label {
   transition: opacity 0.3s ease;
 }
+
 .hm-pin.is-dimmed,
 .hm-label.is-dimmed {
   opacity: 0.5;
 }
+
 .hm-ring,
 .hm-focus {
   opacity: 0;
@@ -254,30 +349,38 @@
   transform-origin: center;
   transition: opacity 0.25s ease, transform 0.35s var(--ease-out-soft);
 }
+
 .hm-ring {
   transform: scale(0.85);
 }
+
 .hm-pin.is-active .hm-ring {
   opacity: 0.9;
   transform: none;
 }
+
 .hm-pin:focus-visible .hm-focus {
   opacity: 1;
 }
+
 .hm-pin-scale {
   transform-box: fill-box;
   transform-origin: 50% 70%;
   transition: transform 0.35s var(--ease-out-soft);
 }
+
 .hm-pin.is-active .hm-pin-scale {
   transform: scale(1.15);
 }
+
 .hm-label-box {
   transition: stroke 0.25s ease, fill 0.25s ease;
 }
+
 .hm-label.is-active .hm-label-box {
   fill: #0e2836;
 }
+
 .hm-pulse {
   opacity: 0;
 }
@@ -288,60 +391,139 @@
   stroke-dashoffset: 1;
   animation: hm-draw 1.3s cubic-bezier(0.65, 0, 0.35, 1) 1.2s forwards;
 }
+
 .motion-ok .hm-pin-enter {
   transform-box: fill-box;
   transform-origin: center;
   animation: hm-pin-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
-.motion-ok .hm-pin-enter-nz { animation-delay: 0.9s; }
-.motion-ok .hm-pin-enter-cl { animation-delay: 2.35s; }
+
+.motion-ok .hm-pin-enter-nz {
+  animation-delay: 0.9s;
+}
+
+.motion-ok .hm-pin-enter-cl {
+  animation-delay: 2.35s;
+}
+
 .motion-ok .hm-pulse {
   transform-box: fill-box;
   transform-origin: center;
   animation: hm-pulse 1.4s ease-out forwards;
 }
-.motion-ok .hm-pulse-nz { animation-delay: 1.15s; }
-.motion-ok .hm-pulse-cl { animation-delay: 2.6s; }
-.motion-ok .hm-label { animation: hm-label-in 0.5s ease-out backwards; }
-.motion-ok .hm-label-nz { animation-delay: 1.2s; }
-.motion-ok .hm-label-cl { animation-delay: 2.65s; }
+
+.motion-ok .hm-pulse-nz {
+  animation-delay: 1.15s;
+}
+
+.motion-ok .hm-pulse-cl {
+  animation-delay: 2.6s;
+}
+
+.motion-ok .hm-label {
+  animation: hm-label-in 0.5s ease-out backwards;
+}
+
+.motion-ok .hm-label-nz {
+  animation-delay: 1.2s;
+}
+
+.motion-ok .hm-label-cl {
+  animation-delay: 2.65s;
+}
 
 /* While a marker is highlighted the dashed route flows toward the other asset */
-.motion-ok .hm-route.is-flowing { animation: hm-flow 1.2s linear infinite; }
-.motion-ok .hm-route.is-flowing.is-reverse { animation-direction: reverse; }
+.motion-ok .hm-route.is-flowing {
+  animation: hm-flow 1.2s linear infinite;
+}
 
-@keyframes hm-draw { to { stroke-dashoffset: 0; } }
+.motion-ok .hm-route.is-flowing.is-reverse {
+  animation-direction: reverse;
+}
+
+@keyframes hm-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 @keyframes hm-pin-in {
-  from { opacity: 0; transform: translateY(-6px) scale(0.6); }
-  to { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.6);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
+
 @keyframes hm-pulse {
-  0% { opacity: 0.7; transform: scale(1); }
-  100% { opacity: 0; transform: scale(2.4); }
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
 }
+
 @keyframes hm-label-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
-@keyframes hm-flow { to { stroke-dashoffset: -28; } }
+
+@keyframes hm-flow {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
 
 /* Kinetic headings (components/ui/KineticHeading.tsx) */
+.kw-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
 .kw {
   display: inline-block;
+  will-change: transform, opacity;
 }
+
 .motion-ok [data-reveal='words']:not([data-revealed]) {
   opacity: 1;
   transform: none;
 }
+
 .motion-ok [data-reveal='words'] .kw {
   transition:
     opacity 0.6s var(--ease-out-soft),
     transform 0.7s var(--ease-out-soft);
   transition-delay: calc(var(--reveal-delay, 0ms) + var(--g, 0) * 70ms);
 }
+
 .motion-ok [data-reveal='words']:not([data-revealed]) .kw {
   opacity: 0;
-  transform: translate3d(0, 0.45em, 0);
+  transform: translate3d(0, 115%, 0);
+}
+
+.motion-ok [data-reveal='words'][data-revealed] .kw,
+.motion-ok [data-revealed] [data-reveal='words'] .kw {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 /* In-card stagger: children of a revealing element follow it in order */
@@ -351,19 +533,32 @@
     transform 0.5s var(--ease-out-soft);
   transition-delay: calc(var(--reveal-delay, 0ms) + 120ms + var(--s, 0) * 70ms);
 }
+
 .motion-ok [data-reveal]:not([data-revealed]) [data-stagger] {
   opacity: 0;
   transform: translate3d(0, 10px, 0);
 }
 
 /* Stats strip: cells follow the card in with a short stagger */
-.motion-ok .hero-stats dl > div {
-  animation: rise-in 0.6s var(--ease-out-soft) backwards;
+.motion-ok .hero-stats dl>div {
+  animation: rise-in 0.55s var(--ease-out-soft) backwards;
 }
-.motion-ok .hero-stats dl > div:nth-child(1) { animation-delay: 0.7s; }
-.motion-ok .hero-stats dl > div:nth-child(2) { animation-delay: 0.78s; }
-.motion-ok .hero-stats dl > div:nth-child(3) { animation-delay: 0.86s; }
-.motion-ok .hero-stats dl > div:nth-child(4) { animation-delay: 0.94s; }
+
+.motion-ok .hero-stats dl>div:nth-child(1) {
+  animation-delay: 0.62s;
+}
+
+.motion-ok .hero-stats dl>div:nth-child(2) {
+  animation-delay: 0.70s;
+}
+
+.motion-ok .hero-stats dl>div:nth-child(3) {
+  animation-delay: 0.78s;
+}
+
+.motion-ok .hero-stats dl>div:nth-child(4) {
+  animation-delay: 0.86s;
+}
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {

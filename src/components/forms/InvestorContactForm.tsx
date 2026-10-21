@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Input, Select, Textarea } from '@/components/ui/Input';
-import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 
 interface FormState {
   role: string;
@@ -26,14 +26,15 @@ export const InvestorContactForm: React.FC = () => {
 
   const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const roleOptions = [
     { value: 'Prospective Investor', label: 'Prospective Investor' },
-    { value: 'Shareholder', label: 'Current Shareholder' },
+    { value: 'Current Shareholder', label: 'Current Shareholder' },
     { value: 'Investment Advisor', label: 'Investment Advisor / Broker' },
-    { value: 'Analyst', label: 'Financial Analyst' },
-    { value: 'Service Provider', label: 'Service Provider' },
-    { value: 'Other', label: 'Other Inquiries' },
+    { value: 'Financial Analyst', label: 'Financial Analyst / Research' },
+    { value: 'Media / Press', label: 'Media / Press Inquiry' },
+    { value: 'Other Inquiry', label: 'General / Other Inquiry' },
   ];
 
   const validate = (): boolean => {
@@ -41,16 +42,21 @@ export const InvestorContactForm: React.FC = () => {
 
     if (!formData.name.trim()) {
       newErrors.name = 'Please provide your full name.';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Full name must be at least 2 characters.';
     }
 
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
     if (!formData.email.trim()) {
       newErrors.email = 'Email address is required.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Please provide a valid corporate or personal email.';
+    } else if (!emailRegex.test(formData.email.trim())) {
+      newErrors.email = 'Please provide a valid email address (e.g. name@company.com).';
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'Please include a brief message or inquiry.';
+      newErrors.message = 'Please include a message or inquiry.';
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'Message must be at least 10 characters long.';
     }
 
     setErrors(newErrors);
@@ -60,19 +66,30 @@ export const InvestorContactForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Honeypot check: if filled, quietly drop without alerting bot
-    if (formData.honeypot) {
-      setStatus('success');
-      return;
-    }
-
     if (!validate()) return;
 
     setStatus('submitting');
+    setErrorMessage('');
 
     try {
-      // Simulate API submission
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        setStatus('error');
+        setErrorMessage(
+          result.error || 'Submission could not be completed. Please try again or email info@monumental.energy.'
+        );
+        return;
+      }
+
       setStatus('success');
       setFormData({
         role: 'Prospective Investor',
@@ -82,31 +99,40 @@ export const InvestorContactForm: React.FC = () => {
         message: '',
         honeypot: '',
       });
-    } catch {
+    } catch (err) {
       setStatus('error');
+      setErrorMessage(
+        'A network connection error occurred. Please verify your connection or email info@monumental.energy.'
+      );
     }
   };
 
   if (status === 'success') {
     return (
-      <div className="bg-white rounded-[16px] p-8 border border-[#DDE3E3] shadow-[0_12px_32px_-4px_rgba(11,31,42,0.12)] text-center py-12">
+      <div
+        role="status"
+        aria-live="polite"
+        className="bg-white rounded-[16px] p-8 border border-[#DDE3E3] shadow-[0_12px_32px_-4px_rgba(11,31,42,0.12)] text-center py-12"
+      >
         <div className="w-16 h-16 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] mx-auto flex items-center justify-center mb-4">
           <CheckCircle2 className="w-8 h-8" />
         </div>
         <h3 className="text-2xl font-bold font-heading text-[#0B1F2A] mb-2">
-          Inquiry Received
+          Inquiry Successfully Sent
         </h3>
-        <p className="text-[#5B6B73] text-sm max-w-md mx-auto mb-6">
-          Thank you for reaching out to Monumental Energy Investor Relations. A member of our corporate team will follow up with your requested briefing shortly.
+        <p className="text-[#5B6B73] text-sm max-w-md mx-auto mb-4 leading-relaxed">
+          Thank you for reaching out. Your message has been routed directly to Monumental Energy Investor Relations (info@monumental.energy). A corporate representative will follow up with you promptly.
         </p>
-        <Button
-          type="button"
-          variant="secondary"
-          size="sm"
-          onClick={() => setStatus('idle')}
-        >
-          Send Another Message
-        </Button>
+        <div className="pt-2">
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            onClick={() => setStatus('idle')}
+          >
+            Send Another Message
+          </Button>
+        </div>
       </div>
     );
   }
@@ -137,7 +163,9 @@ export const InvestorContactForm: React.FC = () => {
         </div>
 
         <Select
-          label="I am a..."
+          id="contact-role"
+          name="role"
+          label="Inquiry Category / Shareholder Role"
           options={roleOptions}
           value={formData.role}
           onChange={(e) => setFormData({ ...formData, role: e.target.value })}
@@ -146,6 +174,8 @@ export const InvestorContactForm: React.FC = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input
+            id="contact-name"
+            name="name"
             label="Full Name"
             placeholder="Jane Doe"
             value={formData.name}
@@ -158,6 +188,8 @@ export const InvestorContactForm: React.FC = () => {
           />
 
           <Input
+            id="contact-email"
+            name="email"
             label="Email Address"
             type="email"
             placeholder="jane@fund.com"
@@ -172,6 +204,8 @@ export const InvestorContactForm: React.FC = () => {
         </div>
 
         <Input
+          id="contact-phone"
+          name="phone"
           label="Phone Number (Optional)"
           type="tel"
           placeholder="+1 (604) 555-0199"
@@ -180,8 +214,10 @@ export const InvestorContactForm: React.FC = () => {
         />
 
         <Textarea
+          id="contact-message"
+          name="message"
           label="Message or Question"
-          placeholder="Please share details regarding your inquiry, shareholding, or requested materials..."
+          placeholder="Please share details regarding your inquiry, shareholding, or requested briefing materials..."
           value={formData.message}
           onChange={(e) => {
             setFormData({ ...formData, message: e.target.value });
@@ -192,9 +228,14 @@ export const InvestorContactForm: React.FC = () => {
         />
 
         {status === 'error' && (
-          <div className="flex items-center gap-2 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
-            <AlertCircle className="w-5 h-5 shrink-0" />
-            <span>An error occurred while submitting. Please try again or email info@monumental.energy directly.</span>
+          <div role="alert" className="flex items-start gap-3 p-4 bg-red-50 border border-red-200 text-red-800 text-sm rounded-xl">
+            <AlertCircle className="w-5 h-5 shrink-0 text-red-600 mt-0.5" />
+            <div className="flex-1">
+              <span className="font-semibold block mb-0.5">Submission Error</span>
+              <span className="text-xs text-red-700 leading-relaxed">
+                {errorMessage || 'Unable to transmit your message. Please verify your details or email info@monumental.energy directly.'}
+              </span>
+            </div>
           </div>
         )}
 
@@ -205,8 +246,16 @@ export const InvestorContactForm: React.FC = () => {
             size="md"
             className="w-full text-base font-semibold"
             disabled={status === 'submitting'}
+            aria-busy={status === 'submitting'}
           >
-            {status === 'submitting' ? 'Submitting Inquiry...' : 'Submit Inquiry'}
+            {status === 'submitting' ? (
+              <span className="inline-flex items-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Transmitting Inquiry...</span>
+              </span>
+            ) : (
+              'Submit Investor Inquiry'
+            )}
           </Button>
           <p className="text-[11px] text-[#5B6B73] text-center mt-2.5">
             Your information is strictly protected under our Privacy Policy and will never be shared.

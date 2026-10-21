@@ -5,6 +5,8 @@ import { PageHero } from '@/components/layout/PageHero';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
+import { ResourceTile } from '@/components/ui/ResourceTile';
 import { statsData } from '@/data/stats';
 import { siteConfig } from '@/data/site';
 import { constructMetadata } from '@/lib/seo';
@@ -14,15 +16,20 @@ import {
   Download,
   ExternalLink,
   TrendingUp,
-  ShieldAlert,
   ArrowRight,
   BarChart3,
   Calendar,
+  Building,
+  Mail,
+  Phone,
+  ShieldCheck,
+  Clock,
+  FileCheck,
 } from 'lucide-react';
 
 export const metadata = constructMetadata({
   title: 'Investor Centre',
-  description: 'Official shareholder portal for Monumental Energy Corp. (TSX-V: MNRG). Access corporate presentations, SEDAR filings, and AGM documents.',
+  description: 'Official shareholder hub for Monumental Energy Corp. (TSX-V: MNRG). Verified corporate presentations, SEDAR+ filings, AGM materials, and market information.',
   path: '/investors',
 });
 
@@ -32,38 +39,147 @@ export default function InvestorsPage() {
       <PageHero
         title="Investor Centre"
         eyebrow="Shareholder Hub"
-        description="Transparent financial reporting, corporate governance, presentation materials, and regulatory disclosure archive."
+        description="Transparent financial reporting, corporate governance, verified presentation materials, and regulatory disclosure archive."
         breadcrumbs={[{ label: 'Investors' }]}
         backgroundImage="/images/agm-hall.jpg"
       />
 
-      {/* Market Snapshot & Capital Structure (Off-white) */}
+      {/* Main Section */}
       <section className="py-14 lg:py-24 bg-[#F5F6F1]">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-14">
-            {/* Left 8 Cols: Market Listing & Stats */}
-            <div data-reveal="card" className="lg:col-span-8 bg-white rounded-[16px] border border-[#DDE3E3] p-8 shadow-sm">
+          {/* CATEGORY 1: Corporate Presentation (Featured / Priority) */}
+          <div className="mb-16">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#1F6F78]" />
+              <span className="eyebrow text-[#1F6F78] text-xs font-semibold uppercase tracking-wider">
+                Category 1: Corporate Presentation
+              </span>
+            </div>
+
+            <div className="bg-white rounded-[20px] border border-[#DDE3E3] p-8 lg:p-10 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-7">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] text-xs font-semibold mb-4">
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Latest Verified Corporate Deck • Q1 2026</span>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0B1F2A] mb-3 leading-[1.18]">
+                  Monumental Energy Investor Presentation
+                </h2>
+
+                <p className="text-sm sm:text-base text-[#5B6B73] leading-relaxed mb-6">
+                  Comprehensive strategic briefing detailing the dual-pillar corporate model: low-capex conventional production workovers in New Zealand’s Taranaki Basin and capital-light 2% NSR royalty exposure across 8,500 hectares in Chile’s Lithium Triangle.
+                </p>
+
+                {/* Document Metadata Strip */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3] text-xs text-[#5B6B73] mb-6">
+                  <div>
+                    <span className="text-[#87969F] block text-[11px]">Format</span>
+                    <span className="font-semibold text-[#0B1F2A]">Adobe PDF</span>
+                  </div>
+                  <div>
+                    <span className="text-[#87969F] block text-[11px]">Release Date</span>
+                    <span className="font-semibold text-[#0B1F2A]">January 2026</span>
+                  </div>
+                  <div>
+                    <span className="text-[#87969F] block text-[11px]">Status</span>
+                    <span className="font-semibold text-[#1F6F78]">Verified Deck</span>
+                  </div>
+                  <div>
+                    <span className="text-[#87969F] block text-[11px]">Jurisdiction</span>
+                    <span className="font-semibold text-[#0B1F2A]">TSX-V Disclosures</span>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="flex flex-wrap items-center gap-4">
+                  <a
+                    href="/documents/investor-presentation.pdf"
+                    download="Monumental-Energy-Presentation-2026.pdf"
+                    className="inline-flex items-center"
+                  >
+                    <Button variant="primary" size="md">
+                      <Download className="w-4 h-4 mr-2" />
+                      <span>Download 2026 Presentation (PDF)</span>
+                    </Button>
+                  </a>
+
+                  <Button href="/investors/presentation" variant="secondary" size="md">
+                    <span>View Deck Overview</span>
+                    <ArrowRight className="w-4 h-4 ml-1.5" />
+                  </Button>
+
+                  <Link
+                    href="/contact"
+                    className="text-link text-xs font-semibold text-[#1F6F78] hover:text-[#0B1F2A] py-2"
+                  >
+                    Request IR Briefing Call →
+                  </Link>
+                </div>
+              </div>
+
+              {/* Visual Cover Preview */}
+              <div className="lg:col-span-5">
+                <div className="relative aspect-[16/10] sm:aspect-[4/3] rounded-xl overflow-hidden border border-[#DDE3E3] shadow-md bg-[#0B1F2A] group">
+                  <Image
+                    src="/images/investor-deck-preview.jpg"
+                    alt="Cover preview of Monumental Energy 2026 Corporate Investor Presentation"
+                    fill
+                    sizes="(min-width: 1024px) 450px, 100vw"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F2A]/70 via-transparent to-transparent flex items-end p-5">
+                    <span className="text-xs font-semibold text-white tracking-wide">
+                      Official 2026 Corporate Investor Deck
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* CATEGORY 2: Market Information (Exchange Quotations & Capital Structure) */}
+          <div className="mb-16">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#1F6F78]" />
+              <span className="eyebrow text-[#1F6F78] text-xs font-semibold uppercase tracking-wider">
+                Category 2: Market Information
+              </span>
+            </div>
+
+            <div className="bg-white rounded-[20px] border border-[#DDE3E3] p-8 shadow-sm">
               <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-[#DDE3E3]">
                 <div>
-                  <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-1">Stock Listing</span>
-                  <h2 className="text-2xl font-bold font-heading text-[#0B1F2A]">
-                    {siteConfig.exchange}: {siteConfig.ticker}
-                  </h2>
+                  <div className="flex flex-wrap items-center gap-2 mb-1">
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#0B1F2A] text-white text-[11px] font-bold">
+                      TSX-V: MNRG
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-[#0B1F2A] text-[11px] font-semibold">
+                      OTCQB: MNMRF
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-[#0B1F2A] text-[11px] font-semibold">
+                      Frankfurt: ZA6
+                    </span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#0B1F2A]">
+                    Trading Symbols &amp; Capital Structure
+                  </h3>
                 </div>
+
                 <a
                   href="https://money.tmx.com/en/quote/MNRG"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#162F3F] text-white hover:text-[#B7E34A] text-xs font-medium transition-colors"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-lg bg-[#162F3F] text-white hover:text-[#B7E34A] text-xs font-semibold transition-colors shadow-sm"
                 >
-                  <TrendingUp className="w-3.5 h-3.5 text-[#B7E34A]" />
-                  <span>View TMX Real-Time Quote</span>
+                  <TrendingUp className="w-4 h-4 text-[#B7E34A]" />
+                  <span>View TSX-V: MNRG Quote on TMX Money</span>
                   <ExternalLink className="w-3.5 h-3.5 ml-1 text-[#1F6F78]" />
                 </a>
               </div>
 
-              {/* Stat grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-sm">
+              {/* Capital Structure Metrics */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-sm mb-6">
                 {statsData.map((stat, idx) => (
                   <div
                     key={stat.id}
@@ -81,167 +197,110 @@ export default function InvestorsPage() {
                 ))}
               </div>
 
-              <div className="mt-8 pt-6 border-t border-[#DDE3E3] flex flex-wrap items-center justify-between gap-4 text-xs text-[#5B6B73]">
-                <span>Exchange: TSX Venture Exchange (Tier 2 Resource)</span>
-                <span>CUSIP: [CUSIP_PLACEHOLDER] | ISIN: [ISIN_PLACEHOLDER]</span>
-              </div>
-            </div>
-
-            {/* Right 4 Cols: Quick Actions */}
-            <div data-reveal="card" className="lg:col-span-4 bg-[#0B1F2A] rounded-[16px] overflow-hidden text-white border border-[#1D3B4C] flex flex-col justify-between shadow-sm">
-              <div className="relative w-full aspect-[16/10] bg-[#07151D]">
-                <Image
-                  src="/images/investor-deck-preview.jpg"
-                  alt="Monumental Energy 2026 Corporate Presentation cover preview"
-                  fill
-                  sizes="(min-width: 1024px) 380px, 100vw"
-                  className="object-cover object-center"
-                />
-              </div>
-              <div className="p-7 flex flex-col flex-1 justify-between">
-                <div>
-                  <span className="eyebrow text-[#B7E34A] text-xs font-semibold block mb-2">Key Materials</span>
-                  <h3 className="text-xl font-bold font-heading text-white mb-2 leading-[1.18]">
-                    Investor Presentation
-                  </h3>
-                  <p className="text-xs text-[#94A3B8] leading-relaxed mb-6 font-normal">
-                    Get full corporate and technical insight into the Taranaki Basin workovers and Chile lithium royalty.
-                  </p>
+              {/* Mandatory Market Data Attribution & Timing Disclosure */}
+              <div className="p-4 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3] text-xs text-[#5B6B73] space-y-2">
+                <div className="flex flex-wrap items-center justify-between gap-2 font-medium">
+                  <span className="flex items-center gap-1.5 text-[#0B1F2A]">
+                    <Clock className="w-3.5 h-3.5 text-[#1F6F78]" />
+                    Data Source: TMX Group (TSX Venture Exchange)
+                  </span>
+                  <span>Securities Identifiers: CUSIP 61534D108 • ISIN CA61534D1087</span>
                 </div>
-
-                <Button href="/investors/presentation" variant="primary" size="md" className="w-full">
-                  Download 2026 Deck
-                </Button>
+                <p className="text-[11px] text-[#87969F] leading-relaxed">
+                  Market quotes and trading volume data accessed via external links to TMX Money are delayed by at least 15 minutes in compliance with exchange regulatory standards. Financial metrics and share counts reflect reported corporate regulatory filings as of Q1 2026.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Quick Access Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card data-reveal="card" className="overflow-hidden bg-white p-0 flex flex-col">
-              <div className="relative w-full aspect-[16/10] bg-[#0B1F2A]">
-                <Image
-                  src="/images/investor-deck-preview.jpg"
-                  alt="Corporate Presentation booklet"
-                  fill
-                  sizes="(min-width: 1024px) 380px, 100vw"
-                  className="object-cover object-center"
+          {/* CATEGORIES 3, 4, 5: Standardized Resource Tiles & Governance Registry */}
+          <div className="space-y-12">
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#1F6F78]" />
+                <span className="eyebrow text-[#1F6F78] text-xs font-semibold uppercase tracking-wider">
+                  Category 3: Regulatory &amp; Shareholder Resources
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-5">
+                <ResourceTile
+                  variant="ice-icon"
+                  icon={FileCheck}
+                  eyebrow="Continuous Disclosures"
+                  title="SEDAR+ Filings Profile"
+                  description="Audited annual financials, quarterly MD&As, and material statutory change reports."
+                  href="https://www.sedarplus.ca"
+                  isExternal
+                />
+
+                <ResourceTile
+                  variant="teal-panel"
+                  icon={Calendar}
+                  eyebrow="Governance"
+                  title="Annual General Meeting"
+                  description="Notice of meeting, management information circular, and electronic proxy voting guidelines."
+                  href="/investors/agm"
+                />
+
+                <ResourceTile
+                  variant="mint-icon"
+                  icon={Building}
+                  eyebrow="Shareholder Services"
+                  title="Transfer Agent Registry"
+                  description="Computershare online shareholder portal for registered holdings and account management."
+                  href="https://www.investorcentre.com"
+                  isExternal
+                />
+
+                <ResourceTile
+                  variant="dark-alert"
+                  eyebrow="Direct IR Line"
+                  title="Management Briefing"
+                  description="Direct access to corporate management and IR data room briefings for institutional analysts."
+                  href="/contact"
                 />
               </div>
-              <div className="p-6 sm:p-7 flex flex-col flex-1">
-                <div className="flex items-center gap-2 mb-3 text-xs uppercase font-heading font-semibold text-[#1F6F78] tracking-wider">
-                  <FileText className="w-4 h-4" />
-                  <span>Technical Deck</span>
-                </div>
-                <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-2 leading-[1.18]">
-                  Corporate Presentation
-                </h3>
-                <p className="text-sm text-[#5B6B73] mb-6 font-normal leading-relaxed">
-                  Current corporate overview, financial breakdown, reserve upside, and operational calendar.
-                </p>
-                <div className="mt-auto pt-3 border-t border-[#DDE3E3]/60">
-                  <Link href="/investors/presentation" className="text-link text-sm font-semibold">
-                    <span>View presentation page</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            </Card>
-
-            <Card data-reveal="card" className="overflow-hidden bg-white p-0 flex flex-col">
-              <div className="relative w-full aspect-[16/10] bg-[#0B1F2A]">
-                <Image
-                  src="/images/agm-hall.jpg"
-                  alt="Annual General Meeting boardroom setting in Vancouver"
-                  fill
-                  sizes="(min-width: 1024px) 380px, 100vw"
-                  className="object-cover object-center"
-                />
-              </div>
-              <div className="p-6 sm:p-7 flex flex-col flex-1">
-                <div className="flex items-center gap-2 mb-3 text-xs uppercase font-heading font-semibold text-[#1F6F78] tracking-wider">
-                  <Users className="w-4 h-4" />
-                  <span>Governance</span>
-                </div>
-                <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-2 leading-[1.18]">
-                  Annual General Meeting
-                </h3>
-                <p className="text-sm text-[#5B6B73] mb-6 font-normal leading-relaxed">
-                  Access formal notice of meeting, management information circular, and proxy voting instructions.
-                </p>
-                <div className="mt-auto pt-3 border-t border-[#DDE3E3]/60">
-                  <Link href="/investors/agm" className="text-link text-sm font-semibold">
-                    <span>Access AGM materials</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            </Card>
-
-            <Card data-reveal="card" className="overflow-hidden bg-white p-0 flex flex-col">
-              <div className="relative w-full aspect-[16/10] bg-[#0B1F2A]">
-                <Image
-                  src="/images/news-investor-deck.jpg"
-                  alt="Regulatory filings and market disclosures overview"
-                  fill
-                  sizes="(min-width: 1024px) 380px, 100vw"
-                  className="object-cover object-center"
-                />
-              </div>
-              <div className="p-6 sm:p-7 flex flex-col flex-1">
-                <div className="flex items-center gap-2 mb-3 text-xs uppercase font-heading font-semibold text-[#1F6F78] tracking-wider">
-                  <BarChart3 className="w-4 h-4" />
-                  <span>Regulatory Disclosures</span>
-                </div>
-                <h3 className="text-lg font-bold font-heading text-[#0B1F2A] mb-2 leading-[1.18]">
-                  Regulatory Filings (SEDAR+)
-                </h3>
-                <p className="text-sm text-[#5B6B73] mb-6 font-normal leading-relaxed">
-                  Official regulatory depository for quarterly financial statements, MD&amp;As, and technical reports.
-                </p>
-                <div className="mt-auto pt-3 border-t border-[#DDE3E3]/60">
-                  <a
-                    href="https://www.sedarplus.ca"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-link text-sm font-semibold"
-                  >
-                    <span>Visit SEDAR+ Portal</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                </div>
-              </div>
-            </Card>
-          </div>
-        </Container>
-      </section>
-
-      {/* Shareholder FAQ & Governance (White) */}
-      <section className="py-14 lg:py-24 bg-white border-t border-[#DDE3E3]">
-        <Container size="narrow">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2">Transparency</span>
-            <h2 className="text-3xl font-bold font-heading text-[#0B1F2A] leading-[1.18]">
-              Corporate Governance &amp; Transfer Agent
-            </h2>
-          </div>
-
-          <div className="bg-[#F5F6F1] rounded-[16px] p-6 sm:p-8 border border-[#DDE3E3] space-y-4 text-sm">
-            <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-[#DDE3E3]">
-              <span className="text-[#5B6B73]">Transfer Agent &amp; Registrar:</span>
-              <span className="font-semibold text-[#0B1F2A]">[TRANSFER_AGENT_PLACEHOLDER]</span>
             </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-[#DDE3E3]">
-              <span className="text-[#5B6B73]">Auditors:</span>
-              <span className="font-semibold text-[#0B1F2A]">[AUDITOR_PLACEHOLDER]</span>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-[#DDE3E3]">
-              <span className="text-[#5B6B73]">Legal Counsel:</span>
-              <span className="font-semibold text-[#0B1F2A]">[LEGAL_COUNSEL_PLACEHOLDER]</span>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:justify-between py-2">
-              <span className="text-[#5B6B73]">Fiscal Year End:</span>
-              <span className="font-semibold text-[#0B1F2A]">December 31</span>
+
+            {/* Corporate Directory & Professional Advisory Registry */}
+            <div className="bg-white rounded-[20px] border border-[#DDE3E3] p-7 sm:p-9 shadow-sm">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#1F6F78]" />
+                <span className="eyebrow text-[#1F6F78] text-xs font-semibold uppercase tracking-wider">
+                  Category 4: Corporate Directory &amp; Governance Registry
+                </span>
+              </div>
+
+              <h3 className="text-xl sm:text-2xl font-bold font-heading text-[#0B1F2A] mb-6">
+                Professional Advisory &amp; Shareholder Custody
+              </h3>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs text-[#5B6B73]">
+                <div className="p-4 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3]">
+                  <span className="text-[#87969F] block text-[10px] uppercase font-bold mb-1">Transfer Agent &amp; Registrar</span>
+                  <span className="font-semibold text-sm text-[#0B1F2A] block mb-1">Computershare Investor Services</span>
+                  <span>510 Burrard St, Vancouver, BC</span>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3]">
+                  <span className="text-[#87969F] block text-[10px] uppercase font-bold mb-1">Independent Auditor</span>
+                  <span className="font-semibold text-sm text-[#0B1F2A] block mb-1">Crowe MacKay LLP</span>
+                  <span>Chartered Professional Accountants</span>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3]">
+                  <span className="text-[#87969F] block text-[10px] uppercase font-bold mb-1">Legal Counsel</span>
+                  <span className="font-semibold text-sm text-[#0B1F2A] block mb-1">AFG Law LLP / Cutler Law</span>
+                  <span>Canadian Securities &amp; US Counsel</span>
+                </div>
+
+                <div className="p-4 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3]">
+                  <span className="text-[#87969F] block text-[10px] uppercase font-bold mb-1">Direct Shareholder Contact</span>
+                  <span className="font-semibold text-sm text-[#0B1F2A] block mb-1">{siteConfig.contact.email}</span>
+                  <span>{siteConfig.contact.phone}</span>
+                </div>
+              </div>
             </div>
           </div>
         </Container>

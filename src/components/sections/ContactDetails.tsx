@@ -1,64 +1,80 @@
 import React from 'react';
 import { siteConfig } from '@/data/site';
-import { Badge } from '@/components/ui/Badge';
 import { cn } from '@/lib/utils';
-import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
 
-/** Icon rows for email / phone / address / hours, all sourced from data/site.ts. */
+/** Icon rows for verified email / phone / address, sourced from data/site.ts. */
 export const ContactDetails: React.FC<{ dark?: boolean; className?: string }> = ({
   dark = false,
   className,
 }) => {
-  const { email, phone, address, hours, hoursVerified } = siteConfig.contact;
+  const { email, phone, address } = siteConfig.contact;
 
   const rows = [
-    { icon: Mail, label: 'Email', value: email, href: `mailto:${email}` },
-    { icon: Phone, label: 'Telephone', value: phone, href: `tel:${phone}` },
-    { icon: MapPin, label: 'Office Address', value: address },
-    { icon: Clock, label: 'Office Hours', value: hours, unverified: !hoursVerified },
+    {
+      icon: Mail,
+      label: 'Email Inquiries',
+      value: email,
+      href: `mailto:${email}`,
+      description: 'Official corporate and investor relations inbox',
+    },
+    {
+      icon: Phone,
+      label: 'Telephone',
+      value: phone,
+      href: `tel:${phone}`,
+      description: 'Vancouver corporate office line',
+    },
+    {
+      icon: MapPin,
+      label: 'Registered Office',
+      value: address,
+      href: 'https://maps.google.com/?q=Suite+228+-+1122+Mainland+Street,+Vancouver+BC+V6B+5L1',
+      isExternal: true,
+      description: 'Vancouver, BC, Canada',
+    },
   ];
 
   return (
-    <ul className={cn('space-y-5', className)}>
-      {rows.map(({ icon: Icon, label, value, href, unverified }) => (
+    <ul className={cn('space-y-6', className)}>
+      {rows.map(({ icon: Icon, label, value, href, isExternal, description }) => (
         <li key={label} className="flex items-start gap-4">
           <span
             className={cn(
-              'w-10 h-10 rounded-lg flex items-center justify-center shrink-0',
+              'w-11 h-11 rounded-xl flex items-center justify-center shrink-0',
               dark
                 ? 'bg-[#162F3F] border border-[#27485F] text-[#B7E34A]'
                 : 'bg-[#1F6F78]/10 text-[#1F6F78]'
             )}
           >
-            <Icon className="w-[18px] h-[18px]" aria-hidden="true" />
+            <Icon className="w-5 h-5" aria-hidden="true" />
           </span>
           <div className="min-w-0 pt-0.5">
             <span
               className={cn(
-                'text-xs uppercase tracking-wider font-medium flex items-center gap-2 mb-0.5',
+                'text-xs uppercase tracking-wider font-semibold block mb-0.5',
                 dark ? 'text-[#94A3B8]' : 'text-[#5B6B73]'
               )}
             >
               {label}
-              {unverified && (
-                <Badge variant="unverified" className="text-[10px] px-2 py-0 normal-case tracking-normal">
-                  Unverified
-                </Badge>
-              )}
             </span>
-            {href ? (
-              <a
-                href={href}
-                className={cn(
-                  'text-base font-medium transition-colors break-words',
-                  dark ? 'text-white hover:text-[#B7E34A]' : 'text-[#1F6F78] hover:text-[#0B1F2A]'
-                )}
-              >
-                {value}
-              </a>
-            ) : (
-              <span className={cn('text-sm block leading-relaxed', dark ? 'text-white/90' : 'text-[#16232B]')}>
-                {value}
+            <a
+              href={href}
+              target={isExternal ? '_blank' : undefined}
+              rel={isExternal ? 'noopener noreferrer' : undefined}
+              className={cn(
+                'text-base font-semibold transition-colors break-words inline-flex items-center gap-1.5 group',
+                dark ? 'text-white hover:text-[#B7E34A]' : 'text-[#1F6F78] hover:text-[#0B1F2A]'
+              )}
+            >
+              <span>{value}</span>
+              {isExternal && (
+                <ExternalLink className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" />
+              )}
+            </a>
+            {description && (
+              <span className={cn('text-xs block mt-0.5', dark ? 'text-[#64748B]' : 'text-[#87969F]')}>
+                {description}
               </span>
             )}
           </div>

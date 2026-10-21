@@ -2,18 +2,17 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface KineticHeadingProps {
-  as?: 'h1' | 'h2' | 'h3';
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'span';
   text: string;
   className?: string;
-  /** Words revealed together per step. */
+  /** Words revealed together per step. Default 2. */
   groupSize?: number;
 }
 
 /**
- * Heading that rises in small word groups when scrolled into view
- * (data-reveal="words", see globals.css). Every word is its own inline-block
- * span, so line wrapping matches the plain text; groupSize only staggers the
- * timing. The accessible name is the unsplit text.
+ * Premium masked text reveal: words slide up from behind an overflow mask
+ * with a staggered delay as the heading enters the viewport.
+ * Uses [data-reveal="words"] for viewport intersection detection.
  */
 export const KineticHeading: React.FC<KineticHeadingProps> = ({
   as: Tag = 'h2',
@@ -26,12 +25,14 @@ export const KineticHeading: React.FC<KineticHeadingProps> = ({
     <Tag data-reveal="words" aria-label={text} className={cn(className)}>
       {words.map((word, i) => (
         <React.Fragment key={i}>
-          <span
-            aria-hidden="true"
-            className="kw"
-            style={{ '--g': Math.floor(i / groupSize) } as React.CSSProperties}
-          >
-            {word}
+          <span className="kw-mask inline-block overflow-hidden align-top">
+            <span
+              aria-hidden="true"
+              className="kw inline-block"
+              style={{ '--g': Math.floor(i / groupSize) } as React.CSSProperties}
+            >
+              {word}
+            </span>
           </span>
           {i < words.length - 1 && ' '}
         </React.Fragment>
@@ -39,3 +40,4 @@ export const KineticHeading: React.FC<KineticHeadingProps> = ({
     </Tag>
   );
 };
+

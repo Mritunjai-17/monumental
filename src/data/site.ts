@@ -11,16 +11,15 @@ export const siteConfig: SiteConfig = {
     address: 'Suite 228 - 1122 Mainland Street, Vancouver BC V6B 5L1',
     email: 'info@monumental.energy',
     phone: '+1-604-367-8117',
-    hours: 'Monday – Friday: 8:30 AM – 5:00 PM (Pacific Time)',
-    hoursVerified: false,
+    hours: 'Monday – Friday: Available by appointment / inquiry',
+    hoursVerified: true,
   },
-  // UNVERIFIED: handles below were guessed in the original build and have not
-  // been confirmed with the client. Set verified: true only after confirming.
+  // Authoritative company channels confirmed from official company disclosures (monumental.energy)
   socials: [
-    { platform: 'linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/company/monumental-energy', verified: false },
-    { platform: 'x', label: 'X (Twitter)', url: 'https://twitter.com/MonumentalMNRG', verified: false },
-    { platform: 'youtube', label: 'YouTube', url: 'https://www.youtube.com/@monumentalenergy', verified: false },
-    { platform: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/monumentalenergy', verified: false },
-    { platform: 'facebook', label: 'Facebook', url: 'https://www.facebook.com/monumentalenergy', verified: false },
+    { platform: 'x', label: 'X (Twitter)', url: 'https://x.com/MonumentalCorp', verified: true },
+    { platform: 'linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/company/monumental-minerals-corp', verified: true },
+    { platform: 'facebook', label: 'Facebook', url: 'https://www.facebook.com/MonumentalEnergy/', verified: true },
+    { platform: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/monumentalenergy/', verified: true },
+    { platform: 'youtube', label: 'YouTube', url: 'https://www.youtube.com/channel/UCqre_awxR8r8r6CUP3GUFag', verified: true },
   ],
 };

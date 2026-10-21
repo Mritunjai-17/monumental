@@ -3,11 +3,12 @@
 import { useEffect } from 'react';
 
 /** Delay between cards that become visible in the same frame. */
-const STAGGER_MS = 180;
+const STAGGER_MS = 140;
 /** Cap per batch, so large grids reveal in small groups instead of one long chain. */
 const MAX_STEPS = 3;
 /** An element is revealed once its top crosses this fraction of the viewport height. */
 const TRIGGER = 0.9;
+
 
 declare global {
   interface Window {
