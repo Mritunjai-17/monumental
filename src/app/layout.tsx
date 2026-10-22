@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Space_Grotesk, Inter } from 'next/font/google';
+import { Space_Grotesk, Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -21,6 +21,14 @@ const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
   variable: '--font-body',
+  display: 'swap',
+});
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-serif',
   display: 'swap',
 });
 
@@ -51,7 +59,7 @@ export default function RootLayout({
   return (
     // suppressHydrationWarning: the head script below adds a class (and the hero
     // adds line-index CSS variables) to <html> before React hydrates.
-    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
       <head>
         {/* Enable entrance/scroll motion before first paint, unless reduced motion is preferred. */}
         <script dangerouslySetInnerHTML={{ __html: motionOkScript }} />

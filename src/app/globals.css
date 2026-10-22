@@ -46,6 +46,16 @@
     font-weight: 700;
   }
 
+  .font-serif,
+  h1.font-serif,
+  h2.font-serif,
+  h3.font-serif,
+  h4.font-serif,
+  h5.font-serif,
+  h6.font-serif {
+    font-family: var(--font-serif), Georgia, 'Times New Roman', serif !important;
+  }
+
   h1 {
     font-size: clamp(3rem, 2.2rem + 2.5vw, 4.5rem);
     /* 48px to 72px */

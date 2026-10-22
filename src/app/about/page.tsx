@@ -2,245 +2,189 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
-import { Button } from '@/components/ui/Button';
-import { KineticHeading } from '@/components/ui/KineticHeading';
-import { MediaReveal } from '@/components/ui/MediaReveal';
 import { constructMetadata } from '@/lib/seo';
-import { cn } from '@/lib/utils';
 import {
+  Mountain,
+  Gem,
+  Users,
   ArrowRight,
   BarChart3,
-  Users2,
+  FileText,
   Leaf,
+  Handshake,
   ShieldCheck,
-  CheckCircle2,
-  ExternalLink,
 } from 'lucide-react';
 
 export const metadata = constructMetadata({
   title: 'About Us',
   description:
-    'Monumental Energy (TSX-V: MNRG) is an emerging energy investment company focused on near-term oil and gas opportunities in New Zealand and lithium royalty exposure in Chile.',
+    'Monumental Energy is a publicly listed energy investment company combining New Zealand oil and gas exposure with a lithium royalty interest in Chile, with a disciplined focus on long-term value creation for our shareholders.',
   path: '/about',
 });
 
-const HEADLINE_WORDS = [
-  { text: 'Investing', highlight: false },
-  { text: 'in', highlight: false },
-  { text: 'Real', highlight: false },
-  { text: 'Assets', highlight: false },
-  { text: 'for', highlight: false },
-  { text: 'a', highlight: true },
-  { text: 'Changing', highlight: true },
-  { text: 'Energy', highlight: true },
-  { text: 'Future', highlight: true },
-];
-
-const MILESTONES = [
+const TIMELINE_MILESTONES = [
   {
     year: '2023',
-    title: 'Company Formation',
-    description: 'Established to pursue disciplined energy and critical minerals opportunities.',
-    completed: true,
+    dotColor: 'bg-[#B7E34A]',
+    description: 'Built a focused portfolio across New Zealand and Chile.',
   },
   {
     year: '2024',
-    title: 'Strategic Investments',
-    description: 'Investment in New Zealand Energy Corp. and 2% NSR lithium royalty at Salar de Turi.',
-    completed: true,
+    dotColor: 'border-2 border-[#1F6F78] bg-[#1F6F78]',
+    description: 'Advanced our project opportunities and corporate strategy.',
   },
   {
     year: '2025',
-    title: 'Project Advancement',
-    description: 'Progressing asset development and technical work programmes in Taranaki.',
-    completed: true,
+    dotColor: 'border-2 border-[#B7E34A] bg-[#B7E34A]',
+    description: 'Continued to progress our asset portfolio and strengthen our position.',
   },
   {
     year: '2026+',
-    title: 'Creating Long-Term Value',
-    description: 'Focused on execution, responsible development, near-term production, and growth.',
-    completed: false,
-  },
-];
-
-const VALUES = [
-  {
-    number: '01',
-    title: 'Disciplined Investment',
-    description: 'Focused on assets with clear value deliverability and responsible, asymmetric risk.',
-  },
-  {
-    number: '02',
-    title: 'Transparency',
-    description: 'Open, verified, and consistent communication with all shareholders and public markets.',
-  },
-  {
-    number: '03',
-    title: 'Sustainability',
-    description: 'Responsible stewardship, water baseline protection, and long-term societal impact.',
-  },
-  {
-    number: '04',
-    title: 'People & Partnerships',
-    description: 'Building sustained value through seasoned joint-venture operators and local partners.',
+    dotColor: 'border-2 border-[#1F6F78] bg-transparent',
+    hasArrow: true,
+    description: 'Focused on delivering long-term value through disciplined investment.',
   },
 ];
 
 export default function AboutPage() {
   return (
-    <>
-      {/* 1. HERO SECTION: Matched Alignment & Animation with Homepage Hero */}
-      <section className="relative bg-[#07161F] text-white pt-14 pb-20 sm:pt-20 sm:pb-28 lg:pt-24 lg:pb-32 overflow-hidden">
-        {/* Background photo with parallax and navy gradient overlay identical to homepage */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <MediaReveal parallax={0.15} reveal={false}>
-            <Image
-              src="/images/about-hero-taranaki.jpg"
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="hero-bg object-cover object-center"
-            />
-          </MediaReveal>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#07161F]/95 via-[#07161F]/75 to-[#07161F]/30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#07161F] via-transparent to-[#07161F]/80" />
-          <div className="hero-glow absolute top-1/4 right-1/4 w-[450px] h-[450px] bg-[#1F6F78]/15 rounded-full blur-3xl pointer-events-none" />
+    <div className="relative bg-[#F5F6F1] text-[#0B1F2A] overflow-hidden min-h-screen">
+      {/* =========================================================
+          BACKGROUND TOPOGRAPHIC CONTOUR LINES
+         ========================================================= */}
+      {/* Top Left Topo */}
+      <div
+        className="absolute top-0 left-0 w-[550px] sm:w-[680px] lg:w-[800px] h-[550px] pointer-events-none opacity-[0.06] select-none z-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 700 600" fill="none" stroke="#0B1F2A" strokeWidth="1.2" className="w-full h-full">
+          <path d="M180 0 C 260 90, 320 170, 500 190 C 600 200, 640 280, 700 320" />
+          <path d="M220 0 C 290 100, 360 180, 530 210 C 620 225, 660 320, 700 370" />
+          <path d="M260 0 C 330 120, 400 200, 560 230 C 630 245, 670 360, 700 420" />
+          <path d="M300 0 C 370 140, 440 220, 590 250 C 650 270, 680 400, 700 470" />
+          <path d="M340 0 C 410 160, 480 240, 620 270 C 670 290, 700 440, 700 520" />
+        </svg>
+      </div>
+
+      {/* Mid Left Topo */}
+      <div
+        className="absolute top-[48%] -left-20 w-[500px] h-[450px] pointer-events-none opacity-[0.05] select-none z-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 500 450" fill="none" stroke="#0B1F2A" strokeWidth="1.2" className="w-full h-full">
+          <path d="M0 250 C 120 240, 200 180, 290 190 C 380 200, 420 280, 500 300" />
+          <path d="M0 200 C 140 190, 220 130, 310 140 C 400 150, 440 230, 500 250" />
+        </svg>
+      </div>
+
+      {/* Mid Right Topo */}
+      <div
+        className="absolute top-[42%] -right-10 w-[500px] h-[450px] pointer-events-none opacity-[0.05] select-none z-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <svg viewBox="0 0 500 450" fill="none" stroke="#0B1F2A" strokeWidth="1.2" className="w-full h-full">
+          <path d="M100 450 C 160 350, 240 320, 350 310 C 420 300, 460 220, 500 180" />
+          <path d="M150 450 C 200 370, 280 340, 380 330 C 450 320, 480 250, 500 220" />
+        </svg>
+      </div>
+
+      {/* =========================================================
+          1. HERO SECTION (Split Left Content & Right Photo + Strip)
+         ========================================================= */}
+      <section className="relative overflow-hidden pt-10 sm:pt-14 lg:pt-16 pb-12 sm:pb-16">
+        {/* Desktop Split Photograph: Mount Taranaki with Drill Rig */}
+        <div className="hidden lg:block absolute top-0 right-0 bottom-0 w-[54%] z-0 overflow-hidden pointer-events-none">
+          <Image
+            src="/images/about-hero-taranaki.jpg"
+            alt="Mount Taranaki and Onshore Energy Production in New Zealand"
+            fill
+            sizes="54vw"
+            className="object-cover object-[center_35%]"
+            priority
+          />
+          {/* Subtle horizontal gradient to seamlessly blend photo into #F5F6F1 background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#F5F6F1] via-[#F5F6F1]/30 to-transparent w-full h-full" />
         </div>
 
         <Container className="relative z-10">
-          <div className="max-w-3xl">
-            {/* Animated Eyebrow: hero-eyebrow */}
-            <div className="hero-eyebrow flex items-center gap-2 mb-4">
-              <span className="w-5 h-px bg-[#B7E34A]" />
-              <span className="eyebrow block text-[#B7E34A] text-xs font-heading font-semibold tracking-[0.12em] uppercase">
-                About Monumental Energy
-              </span>
-            </div>
-
-            {/* Animated Headline with masked words matching homepage */}
-            <h1
-              id="hero-title"
-              aria-label="Investing in Real Assets for a Changing Energy Future"
-              className="text-3xl sm:text-5xl lg:text-[58px] font-bold font-heading text-white tracking-[-0.02em] leading-[1.18] mb-6"
-            >
-              {HEADLINE_WORDS.map((item, i) => (
-                <React.Fragment key={i}>
-                  <span className="hero-word-mask inline-block overflow-hidden align-top">
-                    <span
-                      aria-hidden="true"
-                      className={cn(
-                        'hero-word inline-block',
-                        item.highlight ? 'text-[#B7E34A]' : 'text-white'
-                      )}
-                      style={{ animationDelay: `calc(var(--hw${i}, ${Math.floor(i / 2)}) * 110ms + 120ms)` }}
-                    >
-                      {item.text}
-                    </span>
-                  </span>
-                  {i < HEADLINE_WORDS.length - 1 && ' '}
-                </React.Fragment>
-              ))}
-            </h1>
-
-            {/* Animated Copy: hero-copy */}
-            <p className="hero-copy text-base sm:text-lg text-[#DDE3E3]/90 font-normal leading-[1.6] max-w-2xl">
-              Monumental Energy is an emerging energy investment company focused on near-term oil and
-              gas opportunities in New Zealand and lithium royalty exposure in Chile.
-            </p>
-          </div>
-        </Container>
-      </section>
-
-      {/* 2. OUR STORY & OUR APPROACH: Split 2-Column Section */}
-      <section className="py-16 sm:py-20 lg:py-28 bg-[#F5F6F1]">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            {/* Left 5 Cols: Our Story */}
-            <div className="lg:col-span-5">
-              <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-3 font-heading tracking-[0.14em] uppercase">
-                Our Story
+          {/* Top Row: Headline & Copy */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[320px] lg:min-h-[380px]">
+            <div className="lg:col-span-7 pr-0 lg:pr-8">
+              <span className="text-[#1F6F78] uppercase text-xs sm:text-[13px] font-heading font-semibold tracking-[0.16em] mb-3 block">
+                ABOUT MONUMENTAL ENERGY
               </span>
 
-              <h2 className="text-2xl sm:text-3xl lg:text-[38px] font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.16] mb-5">
-                A Focused Strategy Across Two Key Energy Opportunities
-              </h2>
+              <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-[54px] text-[#0B1F2A] tracking-[-0.02em] leading-[1.08] mb-5">
+                A focused approach<br />to energy investment
+              </h1>
 
-              <p className="text-sm sm:text-base text-[#5B6B73] font-body leading-relaxed mb-8">
-                Monumental Energy brings together conventional energy production exposure and
-                critical minerals royalty interests, targeting long-term value for shareholders
-                through disciplined investment and responsible asset development.
+              <p className="text-[#5B6B73] text-base sm:text-lg leading-relaxed max-w-xl font-normal">
+                Monumental Energy is a publicly listed energy investment company combining New Zealand oil and gas exposure with a lithium royalty interest in Chile, with a disciplined focus on long-term value creation for our shareholders.
               </p>
-
-              <Link
-                href="/projects"
-                className="inline-flex items-center gap-3.5 group font-heading font-semibold text-sm text-[#0B1F2A] hover:text-[#1F6F78] transition-colors"
-              >
-                <div className="w-11 h-11 rounded-full bg-[#B7E34A] text-[#0B1F2A] flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:bg-[#a5d43b] shadow-2xs">
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                </div>
-                <span>Learn more about our strategy</span>
-              </Link>
             </div>
 
-            {/* Right 7 Cols: Photo + Dark Approach Card Cluster */}
-            <div className="lg:col-span-7">
-              <div className="grid grid-cols-1 sm:grid-cols-12 rounded-[20px] overflow-hidden border border-[#DDE3E3] shadow-md bg-[#07161F]">
-                {/* Visual Half: Real production facility photo */}
-                <div className="sm:col-span-7 relative min-h-[260px] sm:min-h-[360px] bg-[#0B1F2A]">
-                  <Image
-                    src="/images/about-value-creation.jpg"
-                    alt="Taranaki Basin production wellhead and pipeline infrastructure"
-                    fill
-                    sizes="(min-width: 1024px) 400px, 100vw"
-                    className="object-cover object-center"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#07161F]/60 via-transparent to-transparent" />
-                </div>
+            {/* Mobile Image Fallback */}
+            <div className="lg:hidden col-span-1 mt-2">
+              <div className="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-md border border-[#DDE3E3]">
+                <Image
+                  src="/images/about-hero-taranaki.jpg"
+                  alt="Mount Taranaki and Energy Infrastructure"
+                  fill
+                  sizes="100vw"
+                  className="object-cover object-center"
+                />
+              </div>
+            </div>
+          </div>
 
-                {/* Content Half: Dark 'Our Approach' panel */}
-                <div className="sm:col-span-5 p-7 sm:p-8 flex flex-col justify-center bg-[#07161F] text-white">
-                  <span className="eyebrow text-[#B7E34A] text-[11px] font-heading font-bold uppercase tracking-[0.16em] block mb-6">
-                    Our Approach
+          {/* Hero Bottom 3-Stat Strip */}
+          <div className="mt-8 lg:mt-12 bg-white rounded-[22px] border border-[#DDE3E3] p-6 sm:p-8 shadow-sm">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 md:divide-x md:divide-[#E8ECEC]">
+              {/* Item 1: Oil & Gas Exposure */}
+              <div className="flex items-start gap-4">
+                <Mountain className="w-8 h-8 text-[#1F6F78] shrink-0 mt-0.5 stroke-[1.6]" />
+                <div>
+                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-1">
+                    NEW ZEALAND
                   </span>
+                  <h3 className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] mb-1">
+                    Oil &amp; Gas Exposure
+                  </h3>
+                  <p className="text-xs text-[#5B6B73] leading-relaxed">
+                    Exposure to a high-quality onshore basin in Taranaki.
+                  </p>
+                </div>
+              </div>
 
-                  <div className="space-y-5">
-                    <div className="flex items-center gap-3.5">
-                      <div className="w-8 h-8 rounded-lg bg-[#162F3F] border border-[#27485F] text-[#B7E34A] flex items-center justify-center shrink-0">
-                        <BarChart3 className="w-4 h-4" />
-                      </div>
-                      <span className="font-heading font-medium text-xs sm:text-sm text-white/95">
-                        Disciplined Investment
-                      </span>
-                    </div>
+              {/* Item 2: Lithium Royalty */}
+              <div className="flex items-start gap-4 md:pl-8">
+                <Gem className="w-8 h-8 text-[#1F6F78] shrink-0 mt-0.5 stroke-[1.6]" />
+                <div>
+                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-1">
+                    CHILE
+                  </span>
+                  <h3 className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] mb-1">
+                    Lithium Royalty
+                  </h3>
+                  <p className="text-xs text-[#5B6B73] leading-relaxed">
+                    A 2% NSR royalty interest in the Salar de Turi project.
+                  </p>
+                </div>
+              </div>
 
-                    <div className="flex items-center gap-3.5">
-                      <div className="w-8 h-8 rounded-lg bg-[#162F3F] border border-[#27485F] text-[#B7E34A] flex items-center justify-center shrink-0">
-                        <Users2 className="w-4 h-4" />
-                      </div>
-                      <span className="font-heading font-medium text-xs sm:text-sm text-white/95">
-                        Strategic Partnerships
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-3.5">
-                      <div className="w-8 h-8 rounded-lg bg-[#162F3F] border border-[#27485F] text-[#B7E34A] flex items-center justify-center shrink-0">
-                        <Leaf className="w-4 h-4" />
-                      </div>
-                      <span className="font-heading font-medium text-xs sm:text-sm text-white/95">
-                        Long-term Value Creation
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-3.5">
-                      <div className="w-8 h-8 rounded-lg bg-[#162F3F] border border-[#27485F] text-[#B7E34A] flex items-center justify-center shrink-0">
-                        <ShieldCheck className="w-4 h-4" />
-                      </div>
-                      <span className="font-heading font-medium text-xs sm:text-sm text-white/95">
-                        Responsible Development
-                      </span>
-                    </div>
-                  </div>
+              {/* Item 3: Disciplined Investment */}
+              <div className="flex items-start gap-4 md:pl-8">
+                <Users className="w-8 h-8 text-[#1F6F78] shrink-0 mt-0.5 stroke-[1.6]" />
+                <div>
+                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-1">
+                    SHAREHOLDER FOCUS
+                  </span>
+                  <h3 className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] mb-1">
+                    Disciplined Investment
+                  </h3>
+                  <p className="text-xs text-[#5B6B73] leading-relaxed">
+                    A clear and focused strategy to unlock long-term value.
+                  </p>
                 </div>
               </div>
             </div>
@@ -248,191 +192,228 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* 3. OUR ASSETS: Two Assets. A Stronger Portfolio. */}
-      <section className="py-16 sm:py-20 lg:py-28 bg-white border-t border-[#DDE3E3]">
+      {/* =========================================================
+          2. OUR PORTFOLIO: Two assets. One focused strategy.
+         ========================================================= */}
+      <section className="py-10 sm:py-14 lg:py-16">
         <Container>
           {/* Header Row */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 lg:mb-14">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
-              <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2 font-heading tracking-[0.14em] uppercase">
-                Our Assets
-              </span>
-              <h2 className="text-2xl sm:text-4xl lg:text-[42px] font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.15]">
-                Two Assets. A Stronger Portfolio.
+              <div className="flex items-center gap-2.5 mb-2">
+                <span className="w-6 h-1 bg-[#B7E34A] rounded-full inline-block" />
+                <span className="text-xs font-heading font-bold text-[#87969F] uppercase tracking-[0.16em]">
+                  OUR PORTFOLIO
+                </span>
+              </div>
+              <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-[#0B1F2A] tracking-tight">
+                Two assets. One focused strategy.
               </h2>
             </div>
 
-            <p className="text-xs sm:text-sm text-[#5B6B73] font-body max-w-md leading-relaxed">
-              Our portfolio combines near-term cash flow opportunities in New Zealand with
-              long-term exposure to the global energy transition through lithium.
+            <p className="text-xs sm:text-sm text-[#5B6B73] max-w-md leading-relaxed">
+              We invest in high-quality assets with significant long-term potential, backed by an experienced team and a disciplined approach to capital allocation.
             </p>
           </div>
 
-          {/* Two Bespoke Landscape Asset Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-            {/* Asset 1: Oil & Gas - New Zealand */}
-            <article className="group relative rounded-[20px] overflow-hidden border border-[#1D3B4C] bg-[#07161F] text-white flex flex-col justify-end p-7 sm:p-9 min-h-[380px] sm:min-h-[420px] shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[#1F6F78]">
-              <Image
-                src="/images/project-new-zealand.jpg"
-                alt="Taranaki Basin Oil & Gas infrastructure and Mount Taranaki"
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#07161F] via-[#07161F]/80 to-[#07161F]/20 pointer-events-none" />
+          {/* 2 Bespoke Horizontal Asset Cards */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+            {/* Card 1: Taranaki Basin */}
+            <div className="bg-white rounded-[22px] border border-[#DDE3E3] p-5 sm:p-6 shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex flex-col sm:flex-row gap-5 items-center">
+              <div className="relative w-full sm:w-[220px] lg:w-[240px] aspect-[4/3] rounded-[16px] overflow-hidden shrink-0 shadow-inner">
+                <Image
+                  src="/images/about-hero-taranaki.jpg"
+                  alt="Taranaki Basin Oil and Gas Project"
+                  fill
+                  sizes="(min-width: 640px) 240px, 100vw"
+                  className="object-cover object-center"
+                />
+              </div>
 
-              <div className="relative z-10">
-                <span className="eyebrow text-[#2DD4BF] text-[11px] font-heading font-semibold uppercase tracking-[0.16em] block mb-2">
-                  Oil &amp; Gas • New Zealand
-                </span>
-
-                <h3 className="text-2xl sm:text-3xl font-bold font-heading text-white tracking-[-0.02em] leading-tight mb-2.5">
-                  Taranaki Basin Oil &amp; Gas
-                </h3>
-
-                <p className="text-xs sm:text-sm text-[#DDE3E3]/85 font-body leading-relaxed mb-6 max-w-lg">
-                  Strategic holding in New Zealand Energy Corp. and associated joint-venture assets
-                  targeting low-risk recompletion and near-term production.
-                </p>
+              <div className="flex flex-col justify-between h-full min-w-0 w-full py-1">
+                <div>
+                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-1">
+                    OIL &amp; GAS &bull; NEW ZEALAND
+                  </span>
+                  <h3 className="font-heading font-bold text-2xl text-[#0B1F2A] tracking-tight mb-2">
+                    Taranaki Basin
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-4">
+                    Exposure to conventional oil and gas in a proven onshore basin with an established infrastructure base.
+                  </p>
+                </div>
 
                 <Link
                   href="/projects/new-zealand"
-                  className="inline-flex items-center gap-1.5 font-heading font-semibold text-xs sm:text-sm text-[#B7E34A] hover:text-white transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-heading font-bold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors group mt-auto"
                 >
-                  <span>View project</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  <span>Explore project</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
-            </article>
+            </div>
 
-            {/* Asset 2: Lithium Royalty - Chile */}
-            <article className="group relative rounded-[20px] overflow-hidden border border-[#1D3B4C] bg-[#07161F] text-white flex flex-col justify-end p-7 sm:p-9 min-h-[380px] sm:min-h-[420px] shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:border-[#1F6F78]">
-              <Image
-                src="/images/project-salar-de-turi.jpg"
-                alt="Salar de Turi lithium brine flats and lagoon in Antofagasta, Chile"
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#07161F] via-[#07161F]/80 to-[#07161F]/20 pointer-events-none" />
+            {/* Card 2: Salar de Turi */}
+            <div className="bg-white rounded-[22px] border border-[#DDE3E3] p-5 sm:p-6 shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex flex-col sm:flex-row gap-5 items-center">
+              <div className="relative w-full sm:w-[220px] lg:w-[240px] aspect-[4/3] rounded-[16px] overflow-hidden shrink-0 shadow-inner">
+                <Image
+                  src="/images/project-salar-de-turi.jpg"
+                  alt="Salar de Turi Lithium Brine Project"
+                  fill
+                  sizes="(min-width: 640px) 240px, 100vw"
+                  className="object-cover object-center"
+                />
+              </div>
 
-              <div className="relative z-10">
-                <span className="eyebrow text-[#2DD4BF] text-[11px] font-heading font-semibold uppercase tracking-[0.16em] block mb-2">
-                  Lithium Royalty • Chile
-                </span>
-
-                <h3 className="text-2xl sm:text-3xl font-bold font-heading text-white tracking-[-0.02em] leading-tight mb-2.5">
-                  Salar de Turi Lithium Project
-                </h3>
-
-                <p className="text-xs sm:text-sm text-[#DDE3E3]/85 font-body leading-relaxed mb-6 max-w-lg">
-                  2% Net Smelter Return (NSR) royalty across 8,500 hectares of claims located in
-                  the premier South American Lithium Triangle.
-                </p>
+              <div className="flex flex-col justify-between h-full min-w-0 w-full py-1">
+                <div>
+                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-1">
+                    LITHIUM ROYALTY &bull; CHILE
+                  </span>
+                  <h3 className="font-heading font-bold text-2xl text-[#0B1F2A] tracking-tight mb-2">
+                    Salar de Turi
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-4">
+                    A 2% net smelter return royalty interest in a large, advanced lithium project in northern Chile.
+                  </p>
+                </div>
 
                 <Link
                   href="/projects/salar-de-turi"
-                  className="inline-flex items-center gap-1.5 font-heading font-semibold text-xs sm:text-sm text-[#B7E34A] hover:text-white transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-heading font-bold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors group mt-auto"
                 >
-                  <span>View project</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  <span>Explore project</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </div>
-            </article>
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* 4. OUR VALUES: Guided by Discipline, Integrity and Responsibility */}
-      <section className="py-16 sm:py-20 lg:py-28 bg-[#F5F6F1] border-t border-[#DDE3E3]">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-            {/* Left 4 Cols: Section Header */}
+      {/* =========================================================
+          3. HOW WE APPROACH INVESTMENT (Full-width Dark Navy)
+         ========================================================= */}
+      <section className="bg-[#07161F] text-white py-14 sm:py-18 relative overflow-hidden border-y border-[#183040]">
+        {/* Subtle Topo lines inside dark section */}
+        <div
+          className="absolute -right-20 top-0 w-[450px] h-[350px] pointer-events-none opacity-[0.06] select-none z-0 overflow-hidden"
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 500 400" fill="none" stroke="#2DD4BF" strokeWidth="1.2" className="w-full h-full">
+            <path d="M0 200 C 150 150, 250 250, 450 180" />
+            <path d="M0 240 C 160 190, 260 290, 460 220" />
+            <path d="M0 280 C 170 230, 270 330, 470 260" />
+          </svg>
+        </div>
+
+        <Container className="relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Left Column (Headline) */}
             <div className="lg:col-span-4">
-              <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2 font-heading tracking-[0.14em] uppercase">
-                Our Values
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-[40px] font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.18]">
-                Guided by Discipline, Integrity and Responsibility
+              <div className="flex items-center gap-2.5 mb-2.5">
+                <span className="w-6 h-1 bg-[#B7E34A] rounded-full inline-block" />
+                <span className="text-[11px] font-heading font-bold uppercase tracking-[0.16em] text-[#B7E34A]">
+                  HOW WE APPROACH INVESTMENT
+                </span>
+              </div>
+              <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-[34px] text-white tracking-tight leading-tight">
+                A disciplined approach<br />for long-term value
               </h2>
             </div>
 
-            {/* Right 8 Cols: 4 Columns with Clean Architectural Numbers */}
+            {/* Right Column: 4 Strategic Pillars */}
             <div className="lg:col-span-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-                {VALUES.map((val) => (
-                  <div key={val.number} className="flex flex-col">
-                    <span className="font-heading font-light text-4xl sm:text-5xl text-[#B4C6C9] tracking-wider mb-3 leading-none select-none">
-                      {val.number}
-                    </span>
-                    <h3 className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] mb-2 leading-snug">
-                      {val.title}
-                    </h3>
-                    <p className="text-xs text-[#5B6B73] font-body leading-relaxed">
-                      {val.description}
-                    </p>
-                  </div>
-                ))}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
+                {/* Pillar 1 */}
+                <div className="flex flex-col">
+                  <BarChart3 className="w-7 h-7 text-[#2DD4BF] mb-3.5 stroke-[1.6]" />
+                  <h3 className="font-heading font-bold text-sm sm:text-base text-white mb-1.5">
+                    Disciplined Investment
+                  </h3>
+                  <p className="text-xs text-[#87969F] leading-relaxed">
+                    Focus on high-quality assets and measured growth.
+                  </p>
+                </div>
+
+                {/* Pillar 2 */}
+                <div className="flex flex-col">
+                  <FileText className="w-7 h-7 text-[#2DD4BF] mb-3.5 stroke-[1.6]" />
+                  <h3 className="font-heading font-bold text-sm sm:text-base text-white mb-1.5">
+                    Transparency
+                  </h3>
+                  <p className="text-xs text-[#87969F] leading-relaxed">
+                    Clear and consistent communication with our shareholders.
+                  </p>
+                </div>
+
+                {/* Pillar 3 */}
+                <div className="flex flex-col">
+                  <Leaf className="w-7 h-7 text-[#2DD4BF] mb-3.5 stroke-[1.6]" />
+                  <h3 className="font-heading font-bold text-sm sm:text-base text-white mb-1.5">
+                    Responsible Development
+                  </h3>
+                  <p className="text-xs text-[#87969F] leading-relaxed">
+                    Consideration of people, environment and communities.
+                  </p>
+                </div>
+
+                {/* Pillar 4 */}
+                <div className="flex flex-col">
+                  <Handshake className="w-7 h-7 text-[#2DD4BF] mb-3.5 stroke-[1.6]" />
+                  <h3 className="font-heading font-bold text-sm sm:text-base text-white mb-1.5">
+                    Strategic Partnerships
+                  </h3>
+                  <p className="text-xs text-[#87969F] leading-relaxed">
+                    Work with experienced operators and industry partners.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* 5. OUR JOURNEY: Building a Platform for the Future (Milestone Timeline) */}
-      <section className="py-16 sm:py-20 lg:py-28 bg-white border-t border-[#DDE3E3]">
+      {/* =========================================================
+          4. OUR JOURNEY: Key milestones
+         ========================================================= */}
+      <section className="py-12 sm:py-16">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-            {/* Left 4 Cols */}
-            <div className="lg:col-span-4">
-              <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2 font-heading tracking-[0.14em] uppercase">
-                Our Journey
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-[38px] font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.18] mb-4">
-                Building a Platform for the Future
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+            {/* Left Column (Header) */}
+            <div className="lg:col-span-3">
+              <div className="flex items-center gap-2.5 mb-2">
+                <span className="w-6 h-1 bg-[#B7E34A] rounded-full inline-block" />
+                <span className="text-[11px] font-heading font-bold uppercase tracking-[0.16em] text-[#87969F]">
+                  OUR JOURNEY
+                </span>
+              </div>
+              <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#0B1F2A] tracking-tight">
+                Key milestones
               </h2>
-              <p className="text-xs sm:text-sm text-[#5B6B73] font-body leading-relaxed mb-6">
-                Monumental Energy is advancing a clear strategy to generate value through energy
-                production opportunities and critical minerals exposure.
-              </p>
-              <Link
-                href="/investors"
-                className="inline-flex items-center gap-1.5 font-heading font-semibold text-xs sm:text-sm text-[#1F6F78] hover:text-[#0B1F2A] transition-colors"
-              >
-                <span>View our full timeline &amp; filings</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
             </div>
 
-            {/* Right 8 Cols: Horizontal Milestone Timeline */}
-            <div className="lg:col-span-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4 relative pt-2">
-                {/* Horizontal connector line on desktop */}
-                <div
-                  className="hidden lg:block absolute top-[23px] left-6 right-6 h-px bg-[#DDE3E3] z-0"
-                  aria-hidden="true"
-                />
+            {/* Right Column: Horizontal Milestone Timeline */}
+            <div className="lg:col-span-9 relative">
+              {/* Desktop Horizontal Line */}
+              <div
+                className="hidden lg:block absolute top-[14px] left-3 right-8 h-px bg-[#DDE3E3] z-0"
+                aria-hidden="true"
+              />
 
-                {MILESTONES.map((item) => (
-                  <div key={item.year} className="relative z-10 flex flex-col">
-                    {/* Node & Year Header */}
-                    <div className="flex items-center gap-3 mb-3">
-                      <div
-                        className={`w-3.5 h-3.5 rounded-full border-2 ${
-                          item.completed
-                            ? 'bg-[#1F6F78] border-[#1F6F78]'
-                            : 'bg-white border-[#1F6F78]'
-                        } ring-4 ring-white shrink-0`}
-                      />
-                      <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7 relative z-10">
+                {TIMELINE_MILESTONES.map((item) => (
+                  <div key={item.year} className="flex flex-col">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className={`w-3.5 h-3.5 rounded-full ${item.dotColor} shrink-0 ring-4 ring-[#F5F6F1]`} />
+                      <span className="font-heading font-bold text-base text-[#0B1F2A]">
                         {item.year}
                       </span>
+                      {item.hasArrow && (
+                        <ArrowRight className="w-4 h-4 text-[#87969F] inline-block ml-0.5" />
+                      )}
                     </div>
-
-                    <h3 className="font-heading font-bold text-xs sm:text-sm text-[#0B1F2A] mb-1.5">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs text-[#5B6B73] font-body leading-relaxed">
+                    <p className="text-xs text-[#5B6B73] leading-relaxed">
                       {item.description}
                     </p>
                   </div>
@@ -443,73 +424,148 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* 6. GOVERNANCE & LEADERSHIP DIRECTORY */}
-      <section className="py-16 sm:py-20 bg-[#F5F6F1] border-t border-[#DDE3E3]">
+      {/* =========================================================
+          5. LEADERSHIP & GOVERNANCE: 3-Card Row
+         ========================================================= */}
+      <section className="py-8 sm:py-12">
         <Container>
-          <div className="max-w-2xl mb-10">
-            <span className="eyebrow text-[#1F6F78] text-xs font-semibold block mb-2 font-heading tracking-[0.14em] uppercase">
-              Management &amp; Oversight
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-tight">
-              Corporate Leadership &amp; Board of Directors
-            </h2>
-            <p className="text-xs sm:text-sm text-[#5B6B73] font-body mt-2">
-              Seasoned resource executive leadership with extensive expertise across Canadian
-              public equity markets, international resource financing, and continuous governance.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="rounded-[16px] bg-white border border-[#DDE3E3] p-6 shadow-2xs">
-              <div className="w-10 h-10 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-xs mb-4">
-                CEO
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            {/* Left Column (Headline) */}
+            <div className="lg:col-span-4">
+              <div className="flex items-center gap-2.5 mb-2">
+                <span className="w-6 h-1 bg-[#B7E34A] rounded-full inline-block" />
+                <span className="text-[11px] font-heading font-bold uppercase tracking-[0.16em] text-[#87969F]">
+                  LEADERSHIP &amp; GOVERNANCE
+                </span>
               </div>
-              <h3 className="text-base font-bold font-heading text-[#0B1F2A] mb-0.5">
-                Executive Leadership
+              <h3 className="font-heading font-bold text-2xl sm:text-3xl text-[#0B1F2A] tracking-tight leading-snug">
+                Experienced leadership<br />and a strong governance foundation
               </h3>
-              <span className="text-[11px] font-heading font-semibold text-[#1F6F78] uppercase tracking-wider block mb-2.5">
-                Chief Executive Officer &amp; Director
-              </span>
-              <p className="text-xs text-[#5B6B73] font-body leading-relaxed">
-                Resource capital market veteran leading corporate strategy, joint venture
-                structuring, and operational execution in Vancouver.
-              </p>
             </div>
 
-            <div className="rounded-[16px] bg-white border border-[#DDE3E3] p-6 shadow-2xs">
-              <div className="w-10 h-10 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-xs mb-4">
-                CFO
-              </div>
-              <h3 className="text-base font-bold font-heading text-[#0B1F2A] mb-0.5">
-                Financial Governance
-              </h3>
-              <span className="text-[11px] font-heading font-semibold text-[#1F6F78] uppercase tracking-wider block mb-2.5">
-                Chief Financial Officer
-              </span>
-              <p className="text-xs text-[#5B6B73] font-body leading-relaxed">
-                Chartered professional accountant with oversight of financial reporting, TSX
-                Venture compliance, fiscal auditing, and internal controls.
-              </p>
-            </div>
+            {/* Right Column: 3 Resource Cards */}
+            <div className="lg:col-span-8">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                {/* Card 1: Our Team */}
+                <div className="bg-white rounded-[20px] border border-[#DDE3E3] p-5 sm:p-6 shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex flex-col justify-between group">
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <Users className="w-7 h-7 text-[#1F6F78] stroke-[1.6]" />
+                    </div>
+                    <h4 className="font-heading font-bold text-base text-[#0B1F2A] mb-1.5">
+                      Our Team
+                    </h4>
+                    <p className="text-xs text-[#5B6B73] leading-relaxed mb-4">
+                      A leadership team with deep industry experience in energy and natural resources.
+                    </p>
+                  </div>
+                  <div className="flex justify-end">
+                    <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all" />
+                  </div>
+                </div>
 
-            <div className="rounded-[16px] bg-white border border-[#DDE3E3] p-6 shadow-2xs">
-              <div className="w-10 h-10 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center font-heading font-bold text-xs mb-4">
-                BOD
+                {/* Card 2: Governance */}
+                <Link
+                  href="/investors/agm"
+                  className="bg-white rounded-[20px] border border-[#DDE3E3] p-5 sm:p-6 shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <ShieldCheck className="w-7 h-7 text-[#1F6F78] stroke-[1.6]" />
+                    </div>
+                    <h4 className="font-heading font-bold text-base text-[#0B1F2A] mb-1.5">
+                      Governance
+                    </h4>
+                    <p className="text-xs text-[#5B6B73] leading-relaxed mb-4">
+                      Committed to high standards of corporate governance and accountability.
+                    </p>
+                  </div>
+                  <div className="flex justify-end">
+                    <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all" />
+                  </div>
+                </Link>
+
+                {/* Card 3: Policies & Charters */}
+                <Link
+                  href="/investors"
+                  className="bg-white rounded-[20px] border border-[#DDE3E3] p-5 sm:p-6 shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <FileText className="w-7 h-7 text-[#1F6F78] stroke-[1.6]" />
+                    </div>
+                    <h4 className="font-heading font-bold text-base text-[#0B1F2A] mb-1.5">
+                      Policies &amp; Charters
+                    </h4>
+                    <p className="text-xs text-[#5B6B73] leading-relaxed mb-4">
+                      Our policies and charters support transparent and responsible business.
+                    </p>
+                  </div>
+                  <div className="flex justify-end">
+                    <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all" />
+                  </div>
+                </Link>
               </div>
-              <h3 className="text-base font-bold font-heading text-[#0B1F2A] mb-0.5">
-                Independent Board
-              </h3>
-              <span className="text-[11px] font-heading font-semibold text-[#1F6F78] uppercase tracking-wider block mb-2.5">
-                Board of Directors
-              </span>
-              <p className="text-xs text-[#5B6B73] font-body leading-relaxed">
-                Independent directors with specialized backgrounds spanning petroleum engineering,
-                South American mineral titles, and TSX-V compliance.
-              </p>
             </div>
           </div>
         </Container>
       </section>
-    </>
+
+      {/* =========================================================
+          6. BOTTOM CTA BANNER
+         ========================================================= */}
+      <section className="relative overflow-hidden bg-[#07161F] text-white py-14 sm:py-16 mt-8 sm:mt-12">
+        {/* Background photo with overlay and topography */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <Image
+            src="/images/taranaki-panoramic-coast.jpg"
+            alt="New Zealand Landscape"
+            fill
+            sizes="100vw"
+            className="object-cover object-center opacity-30 mix-blend-luminosity"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#07161F] via-[#07161F]/90 to-[#07161F]/75" />
+          <div className="absolute -right-20 -bottom-20 w-[500px] h-[400px] opacity-[0.08]">
+            <svg viewBox="0 0 500 400" fill="none" stroke="#2DD4BF" strokeWidth="1.2" className="w-full h-full">
+              <path d="M0 300 C 150 250, 250 350, 450 280" />
+              <path d="M0 340 C 160 290, 260 390, 460 320" />
+            </svg>
+          </div>
+        </div>
+
+        <Container className="relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            {/* Left: Headline */}
+            <div>
+              <span className="text-[11px] font-heading font-bold uppercase tracking-[0.16em] text-[#B7E34A] block mb-2">
+                EXPLORE MORE
+              </span>
+              <h3 className="font-heading font-bold text-2xl sm:text-3xl lg:text-[34px] text-white tracking-tight leading-snug">
+                Learn more about our projects<br />and investor information.
+              </h3>
+            </div>
+
+            {/* Right: 2 Action Buttons */}
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                href="/projects"
+                className="bg-[#B7E34A] hover:bg-[#a5d43b] text-[#0B1F2A] font-heading font-bold text-xs sm:text-sm px-6 py-3.5 rounded-lg flex items-center gap-2 transition-all shadow-sm"
+              >
+                <span>View Our Projects</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+
+              <Link
+                href="/investors"
+                className="bg-[#07161F]/70 hover:bg-[#07161F] text-white border border-white/20 hover:border-white/40 font-heading font-semibold text-xs sm:text-sm px-6 py-3.5 rounded-lg flex items-center gap-2 transition-all"
+              >
+                <span>Go to Investor Centre</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </section>
+    </div>
   );
 }
