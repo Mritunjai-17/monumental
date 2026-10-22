@@ -4,9 +4,16 @@ import React, { useState, useMemo } from 'react';
 import { marketQuoteData, chartHistoricalData, ChartPoint } from '@/data/investors';
 import { TrendingUp, ExternalLink, ChevronDown } from 'lucide-react';
 
+interface ComputedChartPoint extends ChartPoint {
+  x: number;
+  y: number;
+  volY: number;
+  volHeight: number;
+}
+
 export function MarketPerformanceCard() {
   const [timeframe, setTimeframe] = useState<string>('5D');
-  const [hoveredPoint, setHoveredPoint] = useState<ChartPoint | null>(null);
+  const [hoveredPoint, setHoveredPoint] = useState<ComputedChartPoint | null>(null);
   const [hoverX, setHoverX] = useState<number | null>(null);
   const [showVolume, setShowVolume] = useState<boolean>(true);
 
