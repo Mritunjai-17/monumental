@@ -28,7 +28,7 @@ export default function NewsPage() {
       const matchesCategory =
         selectedCategory === 'All News' ||
         article.category.toLowerCase().includes(selectedCategory.toLowerCase()) ||
-        article.releaseType.toLowerCase().includes(selectedCategory.toLowerCase());
+        Boolean(article.releaseType?.toLowerCase().includes(selectedCategory.toLowerCase()));
 
       const matchesSearch =
         searchQuery.trim() === '' ||
@@ -193,7 +193,7 @@ export default function NewsPage() {
             <div className="lg:col-span-7">
               <div className="group relative rounded-[18px] lg:rounded-[22px] overflow-hidden aspect-[16/10.5] shadow-[0_12px_36px_-6px_rgba(11,31,42,0.14)] bg-[#07161F] border border-[#DDE3E3]/80">
                 <Image
-                  src={currentFeatured.image}
+                  src={currentFeatured.image || '/images/about-hero-taranaki.jpg'}
                   alt={currentFeatured.title}
                   fill
                   sizes="(min-width: 1024px) 58vw, 100vw"
@@ -312,7 +312,7 @@ export default function NewsPage() {
                   >
                     <div className="relative rounded-[14px] overflow-hidden aspect-[16/10] bg-[#07161F] border border-[#DDE3E3] shadow-sm mb-3.5">
                       <Image
-                        src={article.image}
+                        src={article.image || '/images/about-hero-taranaki.jpg'}
                         alt={article.title}
                         fill
                         sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
@@ -434,7 +434,7 @@ export default function NewsPage() {
                   >
                     <div className="relative w-32 h-24 sm:w-36 sm:h-28 rounded-xl overflow-hidden bg-[#07161F] shrink-0 border border-[#DDE3E3]/60">
                       <Image
-                        src={article.image}
+                        src={article.image || '/images/about-hero-taranaki.jpg'}
                         alt={article.title}
                         fill
                         sizes="144px"

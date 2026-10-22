@@ -34,7 +34,14 @@ export interface NewsItem {
   /** false until the release is confirmed against the official filing / newswire. */
   verified: boolean;
   /** Distinguishes official announcements from corporate briefings and regulatory notices. */
-  releaseType?: 'Official Press Release' | 'Strategic Briefing' | 'Corporate Briefing' | 'Regulatory Notice';
+  releaseType?:
+    | 'Official Press Release'
+    | 'Strategic Briefing'
+    | 'Corporate Briefing'
+    | 'Corporate Update'
+    | 'Investor Relations'
+    | 'Industry Insight'
+    | 'Regulatory Notice';
   /** Original company release authority or regulatory depository source. */
   source?: string;
   /** Link to original filing / depository if applicable. */
