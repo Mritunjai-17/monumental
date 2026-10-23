@@ -62,8 +62,9 @@ export default function NewZealandProjectPage() {
             className="object-cover object-center"
             priority
           />
-          {/* Seamless gradient fade into off-white background */}
+          {/* Seamless dual gradient fade (left into copy, bottom into page background) */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#F5F6F1] via-[#F5F6F1]/40 to-transparent w-full h-full" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#F5F6F1] via-[#F5F6F1]/30 to-transparent w-full h-full" />
         </div>
 
         <Container className="relative z-10">

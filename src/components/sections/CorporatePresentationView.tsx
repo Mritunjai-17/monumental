@@ -198,19 +198,13 @@ export function CorporatePresentationView() {
     setCurrentSlideIndex((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
   };
 
-  const handleJumpToChapter = (chapterNum: number) => {
-    const idx = SLIDES.findIndex((s) => s.chapterNumber === chapterNum);
-    if (idx !== -1) {
-      setCurrentSlideIndex(idx);
-    }
-  };
 
   return (
     <div className="relative bg-[#F5F6F1] text-[#0B1F2A] overflow-hidden min-h-screen">
       {/* =========================================================
           1. HERO SECTION (Split Left Content & Right Photograph)
          ========================================================= */}
-      <section className="page-intro-y relative overflow-hidden">
+      <section className="page-intro-y !pb-5 sm:!pb-7 lg:!pb-9 relative overflow-hidden">
         {/* Subtle Topographical Elevation Contour Background (Top Left) */}
         <div
           className="absolute top-0 left-0 w-[550px] sm:w-[650px] lg:w-[750px] h-[550px] pointer-events-none opacity-[0.07] select-none z-0 overflow-hidden"
@@ -239,12 +233,13 @@ export function CorporatePresentationView() {
             className="object-cover object-[center_35%]"
             priority
           />
-          {/* Seamless gradient fade into off-white background */}
+          {/* Seamless dual gradient fade (left into copy, bottom into page background) */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#F5F6F1] via-[#F5F6F1]/45 to-transparent w-full h-full" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#F5F6F1] via-[#F5F6F1]/30 to-transparent w-full h-full" />
         </div>
 
         <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center lg:min-h-[350px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center lg:min-h-[270px]">
             {/* Left Column (Copy) */}
             <div className="lg:col-span-7 lg:pr-6 min-w-0">
               <Eyebrow className="hero-eyebrow">INVESTOR PRESENTATION</Eyebrow>
@@ -282,7 +277,7 @@ export function CorporatePresentationView() {
          ========================================================= */}
       <section className="section-y pt-0">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
             {/* LEFT 8 COLS: INTERACTIVE SLIDE VIEWER & THUMBNAILS */}
             <div data-reveal className="lg:col-span-8 space-y-4 min-w-0">
               {/* Main Presentation Screen / Frame */}
@@ -455,8 +450,8 @@ export function CorporatePresentationView() {
             </div>
 
             {/* RIGHT 4 COLS: DARK SIDEBAR CARD */}
-            <div data-reveal="card" className="lg:col-span-4 min-w-0">
-              <div className="relative rounded-[20px] lg:rounded-[24px] bg-[#0B1F2A] text-white p-6 sm:p-8 border border-[#1D3B4C] shadow-2xl overflow-hidden">
+            <div data-reveal="card" className="lg:col-span-4 min-w-0 flex flex-col">
+              <div className="relative rounded-[20px] lg:rounded-[24px] bg-[#0B1F2A] text-white p-6 sm:p-8 border border-[#1D3B4C] shadow-2xl overflow-hidden flex flex-col justify-between h-full">
                 {/* Topographic Watermark Contour (Top Right) */}
                 <div
                   className="absolute top-0 right-0 w-64 h-64 pointer-events-none opacity-[0.06] select-none z-0"
@@ -470,8 +465,8 @@ export function CorporatePresentationView() {
                   </svg>
                 </div>
 
-                {/* Eyebrow & Headline */}
-                <div className="relative z-10 mb-6">
+                {/* Eyebrow & Headline & Summary */}
+                <div className="relative z-10">
                   <Eyebrow dark>LATEST PRESENTATION</Eyebrow>
 
                   <KineticHeading
@@ -507,75 +502,28 @@ export function CorporatePresentationView() {
                     </div>
                   </div>
 
-                  <p className={cn(type.body, tone.mutedDark, 'mb-6')}>
+                  <p className={cn(type.body, tone.mutedDark)}>
                     An overview of Monumental Energy&apos;s assets, strategy and long-term opportunities in New Zealand and Chile.
                   </p>
-
-                  {/* Dual Action Buttons */}
-                  <div className="space-y-3">
-                    <a
-                      href="/documents/investor-presentation.pdf"
-                      download="Monumental-Energy-Presentation-2026.pdf"
-                      className={cn(btnPrimary, 'w-full')}
-                    >
-                      <Download className="w-4 h-4" aria-hidden="true" />
-                      <span>Download PDF</span>
-                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                    </a>
-
-                    <Button href="/contact" variant="secondary-dark" size="md" className="w-full">
-                      <Calendar className="w-4 h-4 text-[#2DD4BF]" aria-hidden="true" />
-                      Request Investor Briefing
-                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                    </Button>
-                  </div>
                 </div>
 
-                {/* Presentation Chapters List */}
-                <div className="relative z-10 pt-5 border-t border-white/10">
-                  <Eyebrow dark>PRESENTATION CHAPTERS</Eyebrow>
+                {/* Dual Action Buttons (Anchored to bottom) */}
+                <div className="relative z-10 pt-6 space-y-3">
+                  <a
+                    href="/documents/investor-presentation.pdf"
+                    download="Monumental-Energy-Presentation-2026.pdf"
+                    className={cn(btnPrimary, 'w-full')}
+                  >
+                    <Download className="w-4 h-4" aria-hidden="true" />
+                    <span>Download PDF</span>
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  </a>
 
-                  <div className="space-y-1">
-                    {SLIDES.map((ch) => {
-                      const isCurrent = ch.chapterNumber === currentSlide.chapterNumber;
-                      return (
-                        <button
-                          key={ch.chapterNumber}
-                          type="button"
-                          onClick={() => handleJumpToChapter(ch.chapterNumber)}
-                          aria-current={isCurrent ? 'true' : undefined}
-                          className={cn(
-                            'w-full min-h-11 py-2.5 px-3 rounded-xl flex items-center justify-between gap-3 text-left transition-colors group',
-                            isCurrent ? 'bg-white/10 text-white' : 'hover:bg-white/5 text-[#DDE3E3]'
-                          )}
-                        >
-                          <div className="flex items-center gap-3 min-w-0">
-                            <span
-                              className={cn(
-                                'w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-mono font-bold shrink-0',
-                                isCurrent
-                                  ? 'bg-[#B7E34A] text-[#0B1F2A]'
-                                  : 'border border-white/20 text-[#DDE3E3]/75 group-hover:border-white/50'
-                              )}
-                            >
-                              {ch.chapterNumber}
-                            </span>
-                            <span className="text-sm font-medium group-hover:text-white transition-colors">
-                              {ch.chapterTitle}
-                            </span>
-                          </div>
-
-                          <ArrowRight
-                            className={cn(
-                              'w-3.5 h-3.5 shrink-0 transition-transform group-hover:translate-x-1',
-                              isCurrent ? 'text-[#B7E34A]' : 'text-[#DDE3E3]/60'
-                            )}
-                            aria-hidden="true"
-                          />
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <Button href="/contact" variant="secondary-dark" size="md" className="w-full">
+                    <Calendar className="w-4 h-4 text-[#2DD4BF]" aria-hidden="true" />
+                    Request Investor Briefing
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  </Button>
                 </div>
               </div>
             </div>

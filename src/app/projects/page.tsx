@@ -3,182 +3,119 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { KineticHeading } from '@/components/ui/KineticHeading';
-import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Button } from '@/components/ui/Button';
-import { MediaReveal } from '@/components/ui/MediaReveal';
 import { constructMetadata } from '@/lib/seo';
 import { cn } from '@/lib/utils';
 import { type, tone } from '@/lib/typography';
-import { ArrowRight, Layers, MapPin } from 'lucide-react';
+import {
+  ArrowRight,
+  MapPin,
+  FileText,
+  Layers,
+  Gem,
+  Mountain,
+  Sun,
+  Droplets,
+  CloudRain,
+  ExternalLink,
+  Compass,
+} from 'lucide-react';
+import { LagunaBlancaIntelligenceRow } from '@/components/sections/LagunaBlancaIntelligenceRow';
 
 export const metadata = constructMetadata({
-  title: 'Our Projects & Investments',
+  title: 'Laguna Blanca Project | Chile Lithium & Cesium Exploration',
   description:
-    'A focused portfolio of energy opportunities combining near-term conventional energy exposure in New Zealand with long-term lithium royalty exposure in Chile.',
+    'An early-stage brine and cesium-sediment project in Chile’s Central Andes. Laguna Blanca is a large, strategically located land package in a proven lithium region of northern Chile.',
   path: '/projects',
 });
 
-export default function ProjectsPage() {
+export default function LagunaBlancaProjectPage() {
   return (
-    <div className="relative bg-[#F5F6F1] text-[#0B1F2A] overflow-hidden">
-      {/* Subtle Topographical Elevation Contour Background (Top Right) */}
-      <div
-        className="absolute top-0 right-0 w-[550px] sm:w-[650px] lg:w-[750px] h-[550px] pointer-events-none opacity-[0.07] select-none z-0 overflow-hidden"
-        aria-hidden="true"
-      >
-        <svg viewBox="0 0 700 600" fill="none" stroke="#0B1F2A" strokeWidth="1.2" className="w-full h-full">
-          <path d="M180 0 C 260 90, 320 170, 500 190 C 600 200, 640 280, 700 320" />
-          <path d="M220 0 C 290 100, 360 180, 530 210 C 620 225, 660 320, 700 370" />
-          <path d="M260 0 C 330 120, 400 200, 560 230 C 630 245, 670 360, 700 420" />
-          <path d="M300 0 C 370 140, 440 220, 590 250 C 650 270, 680 400, 700 470" />
-          <path d="M340 0 C 410 160, 480 240, 620 270 C 670 290, 700 440, 700 520" />
-          <path d="M380 0 C 450 180, 520 260, 650 290" />
-          <path d="M420 0 C 490 200, 560 280, 700 310" />
-          <path d="M140 30 C 220 110, 280 190, 460 210 C 560 220, 600 290, 650 330" />
-          <path d="M100 70 C 180 150, 240 230, 420 250 C 520 260, 560 330, 610 380" />
-          <path d="M60 120 C 140 200, 200 280, 380 300 C 480 310, 520 380, 570 430" />
-          <path d="M20 180 C 100 260, 160 340, 340 360 C 440 370, 480 440, 530 490" />
-        </svg>
-      </div>
-
+    <div className="relative bg-[#F5F6F1] text-[#0B1F2A] overflow-hidden min-h-screen">
       {/* =========================================================
-          1. HERO / PAGE TITLE SECTION
+          1. HERO SECTION (Split Left Content & Right Photograph)
          ========================================================= */}
-      <section className="page-intro-y relative z-10">
-        <Container>
-          <div className="max-w-3xl">
-            <Eyebrow className="hero-eyebrow">ENERGY PORTFOLIO</Eyebrow>
-            <KineticHeading
-              as="h1"
-              text="Our Projects & Investments"
-              className={cn(type.h1, tone.headingLight, 'mb-5')}
-            />
-            <p className={cn('hero-copy max-w-2xl', type.lead, tone.mutedLight)}>
-              A focused portfolio of energy opportunities combining near-term conventional energy exposure in New Zealand with long-term lithium royalty exposure in Chile.
-            </p>
-          </div>
-        </Container>
-      </section>
+      <section className="relative overflow-hidden pt-8 sm:pt-12 lg:pt-14 pb-8 sm:pb-10">
+        {/* Subtle Topographical Elevation Contour Background (Top Left) */}
+        <div
+          className="absolute top-0 left-0 w-[550px] sm:w-[650px] lg:w-[750px] h-[550px] pointer-events-none opacity-[0.06] select-none z-0 overflow-hidden"
+          aria-hidden="true"
+        >
+          <svg viewBox="0 0 700 600" fill="none" stroke="#0B1F2A" strokeWidth="1.2" className="w-full h-full">
+            <path d="M180 0 C 260 90, 320 170, 500 190 C 600 200, 640 280, 700 320" />
+            <path d="M220 0 C 290 100, 360 180, 530 210 C 620 225, 660 320, 700 370" />
+            <path d="M260 0 C 330 120, 400 200, 560 230 C 630 245, 670 360, 700 420" />
+            <path d="M300 0 C 370 140, 440 220, 590 250 C 650 270, 680 400, 700 470" />
+            <path d="M340 0 C 410 160, 480 240, 620 270 C 670 290, 700 440, 700 520" />
+          </svg>
+        </div>
 
-      {/* =========================================================
-          2. PROJECT 01: NEW ZEALAND OIL & GAS INVESTMENT
-         ========================================================= */}
-      <section aria-labelledby="project-nz-heading" className="section-y pt-0 relative z-10">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-            {/* Left: Project Image */}
-            <div className="lg:col-span-7 min-w-0">
-              <div className="group relative rounded-[20px] lg:rounded-[24px] overflow-hidden aspect-[16/10.5] shadow-[0_12px_36px_-6px_rgba(11,31,42,0.14)] bg-[#07161F] border border-[#DDE3E3]/80">
-                <MediaReveal>
-                  <Image
-                    src="/images/about-hero-taranaki.jpg"
-                    alt="New Zealand Oil & Gas facility in Taranaki Basin with Mount Taranaki"
-                    fill
-                    sizes="(min-width: 1200px) 660px, (min-width: 1024px) 58vw, 100vw"
-                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                    priority
-                  />
-                </MediaReveal>
+        {/* Desktop Split Photograph with Soft Inset Fades */}
+        <div className="hidden lg:block absolute top-0 right-0 bottom-0 w-[58%] z-0 overflow-hidden pointer-events-none">
+          <Image
+            src="/images/salar-turi-panoramic-landscape.jpg"
+            alt="Laguna Blanca salar and snow-capped Andean volcanoes in northern Chile"
+            fill
+            sizes="60vw"
+            className="object-cover object-center"
+            priority
+          />
+          {/* Dual Gradient Overlay: Left fade into copy + bottom fade into page */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#F5F6F1] via-[#F5F6F1]/45 to-transparent w-full h-full" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#F5F6F1] via-[#F5F6F1]/20 to-transparent w-full h-full" />
 
-                {/* Subtle gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#07161F]/70 via-transparent to-[#07161F]/20 pointer-events-none" />
-
-                {/* Top-Left Pill Badge */}
-                <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-10">
-                  <span className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#B7E34A] text-[#0B1F2A] font-heading font-bold text-[10px] sm:text-[11px] uppercase tracking-wider shadow-sm">
-                    NEAR-TERM PRODUCTION
-                  </span>
-                </div>
-
-                {/* Bottom Watermark: 01 & NEW ZEALAND */}
-                <div className="absolute bottom-4 left-5 right-5 sm:bottom-5 sm:left-6 sm:right-6 z-10 flex items-end justify-between pointer-events-none select-none" aria-hidden="true">
-                  <span className="font-heading font-light text-5xl sm:text-6xl lg:text-[68px] text-white/95 leading-none drop-shadow-md">
-                    01
-                  </span>
-                  <span className="text-[10px] sm:text-[11px] font-heading font-semibold tracking-[0.22em] text-[#B7E34A] uppercase drop-shadow">
-                    NEW ZEALAND
-                  </span>
-                </div>
-              </div>
+          {/* Location Badge on Image (Bottom Right) */}
+          <div className="absolute bottom-6 right-8 z-10 bg-[#0B1F2A]/85 backdrop-blur-md text-white rounded-xl py-2 px-3.5 border border-white/10 shadow-lg flex items-center gap-2.5">
+            <MapPin className="w-4 h-4 text-[#2DD4BF] shrink-0" aria-hidden="true" />
+            <div className="text-left">
+              <span className="font-heading font-bold text-xs text-white block leading-tight">
+                Laguna Blanca
+              </span>
+              <span className="text-[10px] text-[#DDE3E3]/80 block leading-tight">
+                Arica y Parinacota Region, Chile
+              </span>
             </div>
+          </div>
+        </div>
 
-            {/* Right: Content & Metrics */}
-            <div className="lg:col-span-5 min-w-0 flex flex-col justify-center" data-reveal="fade">
-              <Eyebrow>OIL &amp; GAS &nbsp;·&nbsp; TARANAKI BASIN, NEW ZEALAND</Eyebrow>
+        <Container className="relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center lg:min-h-[380px]">
+            {/* Left Column (Copy) */}
+            <div className="lg:col-span-6 min-w-0">
+              <Eyebrow className="hero-eyebrow text-[#1F6F78]">
+                CHILE &nbsp;·&nbsp; LITHIUM &amp; CESIUM EXPLORATION
+              </Eyebrow>
 
               <KineticHeading
-                as="h2"
-                id="project-nz-heading"
-                text={'New Zealand\nOil & Gas Investment'}
-                className={cn(type.h2Compact, tone.headingLight, 'mb-4')}
+                as="h1"
+                text="Laguna Blanca"
+                className={cn(type.h1, tone.headingLight, 'mb-3')}
               />
 
-              <p className="text-base text-[#5B6B73] leading-relaxed mb-8">
-                Strategic holding in New Zealand Energy Corp. and associated joint-venture assets targeting low-risk recompletion and near-term production.
+              <p className="text-lg sm:text-xl font-medium text-[#1F6F78] mb-4 leading-snug">
+                An early-stage brine and cesium-sediment project in Chile&apos;s Central Andes.
               </p>
 
-              {/* 3 Metric Columns with Dividers */}
-              <div className="grid grid-cols-3 divide-x divide-[#DDE3E3] py-1 mb-8">
-                {/* Metric 1 */}
-                <div className="pr-3 min-w-0">
-                  {/* Derrick / Oil Rig Icon */}
-                  <svg className="w-5 h-5 text-[#1F6F78] mb-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M4 22h16" />
-                    <path d="M7 22l4-18h2l4 18" />
-                    <path d="M8 15h8" />
-                    <path d="M9.5 9h5" />
-                    <path d="M12 2v2" />
-                  </svg>
-                  <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] block leading-tight">
-                    Conventional
-                  </span>
-                  <span className="text-xs sm:text-sm text-[#5B6B73] block mt-0.5">
-                    Oil &amp; Gas
-                  </span>
-                </div>
+              <p className={cn('hero-copy max-w-xl', type.lead, tone.mutedLight)}>
+                Laguna Blanca is a large, strategically located land package with lithium brine and cesium-bearing sediment potential, positioned in a proven lithium region of northern Chile.
+              </p>
+            </div>
 
-                {/* Metric 2 */}
-                <div className="px-3 min-w-0">
-                  {/* Bar Chart Icon */}
-                  <svg className="w-5 h-5 text-[#1F6F78] mb-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M12 20V10" />
-                    <path d="M18 20V4" />
-                    <path d="M6 20v-4" />
-                  </svg>
-                  <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] block leading-tight">
-                    Near-term
-                  </span>
-                  <span className="text-xs sm:text-sm text-[#5B6B73] block mt-0.5">
-                    Opportunities
-                  </span>
+            {/* Mobile / Tablet Image fallback */}
+            <div className="lg:hidden col-span-1">
+              <div className="relative rounded-[16px] overflow-hidden aspect-[16/10] shadow-md border border-[#DDE3E3]">
+                <Image
+                  src="/images/salar-turi-panoramic-landscape.jpg"
+                  alt="Laguna Blanca salar and Andean volcanic mountains"
+                  fill
+                  sizes="100vw"
+                  className="object-cover object-center"
+                />
+                <div className="absolute bottom-3 right-3 bg-[#0B1F2A]/85 backdrop-blur-md text-white rounded-lg py-1.5 px-2.5 text-[11px] border border-white/10 flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#2DD4BF]" />
+                  <span>Arica y Parinacota Region, Chile</span>
                 </div>
-
-                {/* Metric 3 */}
-                <div className="pl-3 min-w-0">
-                  {/* Partnership / Handshake Icon */}
-                  <svg className="w-5 h-5 text-[#1F6F78] mb-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="m11 17 2 2a1 1 0 0 0 1.4 0l6.6-6.6a2 2 0 0 0 0-2.8l-1.6-1.6a2 2 0 0 0-2.8 0L14 10.6" />
-                    <path d="m13 7 1.6-1.6a2 2 0 0 0 0-2.8l-1.6-1.6a2 2 0 0 0-2.8 0L3.6 7.6a2 2 0 0 0 0 2.8l4 4a2 2 0 0 0 2.8 0L13 12" />
-                  </svg>
-                  <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] block leading-tight">
-                    Strategic
-                  </span>
-                  <span className="text-xs sm:text-sm text-[#5B6B73] block mt-0.5">
-                    Partnership
-                  </span>
-                </div>
-              </div>
-
-              {/* Action Link */}
-              <div>
-                <Link
-                  href="/projects/new-zealand"
-                  className="inline-flex items-center gap-2 min-h-[44px] text-sm font-semibold text-[#1F6F78] hover:text-[#0B1F2A] group transition-colors"
-                >
-                  <span>Explore project</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
               </div>
             </div>
           </div>
@@ -186,300 +123,251 @@ export default function ProjectsPage() {
       </section>
 
       {/* =========================================================
-          3. PROJECT 02: SALAR DE TURI LITHIUM PROJECT
+          2. KEY STATS STRIP (4 Metrics + Footnote)
          ========================================================= */}
-      <section aria-labelledby="project-cl-heading" className="section-y bg-white border-t border-[#DDE3E3]">
+      <section className="py-2">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
-            {/* Left: Content & Metrics */}
-            <div className="lg:col-span-5 min-w-0 order-2 lg:order-1 flex flex-col justify-center" data-reveal="fade">
-              <Eyebrow>LITHIUM ROYALTY &nbsp;·&nbsp; CHILE</Eyebrow>
-
-              <div className="flex items-start flex-wrap gap-x-3 gap-y-2 mb-4">
-                <KineticHeading
-                  as="h2"
-                  id="project-cl-heading"
-                  text={'Salar de Turi\nLithium Project'}
-                  className={cn(type.h2Compact, tone.headingLight)}
-                />
-                <span className="px-3 py-1 rounded-full border border-[#B7E34A] bg-[#B7E34A]/15 text-[#0B1F2A] font-heading font-bold text-xs tracking-wide mt-1.5">
-                  2% NSR
+          <div
+            data-reveal="card"
+            className="rounded-[20px] bg-white border border-[#DDE3E3] p-4 sm:p-6 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 sm:gap-6 items-center divide-y sm:divide-y-0 sm:divide-x divide-[#E8EDE9]"
+          >
+            {/* Stat 1: Total project area */}
+            <div className="flex items-center gap-3.5 pt-2 sm:pt-0">
+              <div className="w-11 h-11 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M3 7V5a2 2 0 0 1 2-2h2" />
+                  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
+                  <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
+                  <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
+                  <rect width="10" height="10" x="7" y="7" rx="1.5" />
+                </svg>
+              </div>
+              <div className="min-w-0">
+                <span className="font-heading font-bold text-lg sm:text-xl text-[#0B1F2A] block leading-tight">
+                  12,425 hectares*
+                </span>
+                <span className="text-xs text-[#5B6B73] block mt-0.5">
+                  Total project area
                 </span>
               </div>
+            </div>
 
-              <p className="text-base text-[#5B6B73] leading-relaxed mb-8">
-                2% Net Smelter Return (NSR) royalty across 8,500 hectares of claims located in the South American Lithium Triangle.
+            {/* Stat 2: Mining concessions */}
+            <div className="flex items-center gap-3.5 pt-4 sm:pt-0 sm:pl-5">
+              <div className="w-11 h-11 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
+                <FileText className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <div className="min-w-0">
+                <span className="font-heading font-bold text-lg sm:text-xl text-[#0B1F2A] block leading-tight">
+                  51 concessions*
+                </span>
+                <span className="text-xs text-[#5B6B73] block mt-0.5">
+                  Mining concessions
+                </span>
+              </div>
+            </div>
+
+            {/* Stat 3: Project stage */}
+            <div className="flex items-center gap-3.5 pt-4 sm:pt-0 sm:pl-5">
+              <div className="w-11 h-11 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
+                <Layers className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <div className="min-w-0">
+                <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight">
+                  Early exploration stage
+                </span>
+                <span className="text-xs text-[#5B6B73] block mt-0.5">
+                  Lithium brine and cesium-bearing sediments
+                </span>
+              </div>
+            </div>
+
+            {/* Stat 4: Region */}
+            <div className="flex items-center gap-3.5 pt-4 sm:pt-0 sm:pl-5">
+              <div className="w-11 h-11 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
+                <MapPin className="w-5 h-5" aria-hidden="true" />
+              </div>
+              <div className="min-w-0">
+                <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight">
+                  Arica y Parinacota Region
+                </span>
+                <span className="text-xs text-[#5B6B73] block mt-0.5">
+                  Northern Chile
+                </span>
+              </div>
+            </div>
+
+            {/* Disclaimer / Footnote */}
+            <div className="pt-4 sm:pt-0 sm:pl-5 lg:col-span-1">
+              <p className="text-[11px] text-[#5B6B73] leading-snug">
+                * Figures reported on the company&apos;s project page and should be revalidated before publication.
               </p>
-
-              {/* 3 Metric Columns with Dividers */}
-              <div className="grid grid-cols-3 divide-x divide-[#DDE3E3] py-1 mb-8">
-                {/* Metric 1 */}
-                <div className="pr-3 min-w-0">
-                  {/* Mountain / Claims Hectares Icon */}
-                  <svg className="w-5 h-5 text-[#1F6F78] mb-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-                  </svg>
-                  <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] block leading-tight">
-                    8,500
-                  </span>
-                  <span className="text-xs sm:text-sm text-[#5B6B73] block mt-0.5">
-                    Hectares
-                  </span>
-                </div>
-
-                {/* Metric 2 */}
-                <div className="px-3 min-w-0">
-                  {/* Layers / Lithium Royalty Icon */}
-                  <Layers className="w-5 h-5 text-[#1F6F78] mb-2.5 stroke-[1.6]" aria-hidden="true" />
-                  <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] block leading-tight">
-                    Lithium
-                  </span>
-                  <span className="text-xs sm:text-sm text-[#5B6B73] block mt-0.5">
-                    Royalty
-                  </span>
-                </div>
-
-                {/* Metric 3 */}
-                <div className="pl-3 min-w-0">
-                  {/* Location Pin Icon */}
-                  <MapPin className="w-5 h-5 text-[#1F6F78] mb-2.5 stroke-[1.6]" aria-hidden="true" />
-                  <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] block leading-tight">
-                    Atacama
-                  </span>
-                  <span className="text-xs sm:text-sm text-[#5B6B73] block mt-0.5">
-                    Region, Chile
-                  </span>
-                </div>
-              </div>
-
-              {/* Action Link */}
-              <div>
-                <Link
-                  href="/projects/salar-de-turi"
-                  className="inline-flex items-center gap-2 min-h-[44px] text-sm font-semibold text-[#1F6F78] hover:text-[#0B1F2A] group transition-colors"
-                >
-                  <span>Explore project</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Right: Project Image */}
-            <div className="lg:col-span-7 min-w-0 order-1 lg:order-2">
-              <div className="group relative rounded-[20px] lg:rounded-[24px] overflow-hidden aspect-[16/10.5] shadow-[0_12px_36px_-6px_rgba(11,31,42,0.14)] bg-[#07161F] border border-[#DDE3E3]/80">
-                <MediaReveal>
-                  <Image
-                    src="/images/project-salar-de-turi.jpg"
-                    alt="Salar de Turi Lithium brine lagoon and Andean mountains in Chile"
-                    fill
-                    sizes="(min-width: 1200px) 660px, (min-width: 1024px) 58vw, 100vw"
-                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                  />
-                </MediaReveal>
-
-                {/* Subtle dark gradient overlay for bottom watermark */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#07161F]/70 via-transparent to-transparent pointer-events-none" />
-
-                {/* Bottom Watermark: 02 —— CHILE */}
-                <div className="absolute bottom-4 right-5 sm:bottom-5 sm:right-6 z-10 flex items-center gap-3 pointer-events-none select-none" aria-hidden="true">
-                  <span className="font-heading font-light text-5xl sm:text-6xl lg:text-[68px] text-white/95 leading-none drop-shadow-md">
-                    02
-                  </span>
-                  <span className="w-10 h-[1px] bg-white/70" />
-                  <span className="text-[10px] sm:text-[11px] font-heading font-semibold tracking-[0.22em] text-white/90 uppercase drop-shadow">
-                    CHILE
-                  </span>
-                </div>
-              </div>
             </div>
           </div>
         </Container>
       </section>
 
       {/* =========================================================
-          4. OUR PORTFOLIO AT A GLANCE
+          3. MIDDLE ROW: MAP (COL 1) | GLANCE CARD (COL 2) | GEOLOGICAL FORMATION (COL 3)
          ========================================================= */}
-      <section aria-labelledby="portfolio-glance-heading" className="section-y-compact border-y border-[#DDE3E3]">
+      <LagunaBlancaIntelligenceRow />
+
+      {/* =========================================================
+          4. BOTTOM SECTION: MILESTONES (LEFT) | PROJECT DOCUMENTS (RIGHT)
+         ========================================================= */}
+      <section className="py-6 sm:py-8">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-center">
-            {/* Left title column */}
-            <div className="md:col-span-4 lg:col-span-3 min-w-0">
-              <SectionHeading
-                size="compact"
-                eyebrow="OUR PORTFOLIO"
-                title="At a Glance"
-                id="portfolio-glance-heading"
-                className="mb-0"
-              />
-            </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            {/* -------------------------------------------------------
+                LEFT CARD: EXPLORATION & REGULATORY HISTORY
+               ------------------------------------------------------- */}
+            <div data-reveal="card" className="lg:col-span-7 min-w-0">
+              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-6 sm:p-7 shadow-sm flex flex-col justify-between">
+                <div>
+                  <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-1">
+                    Exploration &amp; regulatory history
+                  </h3>
+                  <p className="text-xs text-[#5B6B73] mb-6">
+                    Key milestones in the advancement of Laguna Blanca.
+                  </p>
 
-            {/* Middle stat column: 2 Core asset exposures */}
-            <div data-reveal="card" className="md:col-span-4 lg:col-span-4 min-w-0 md:border-l border-[#DDE3E3] md:pl-8 lg:pl-10 flex items-start gap-4 lg:gap-5">
-              <span className="font-heading font-bold text-6xl sm:text-7xl tracking-[-0.02em] text-[#0B1F2A] leading-none shrink-0 select-none">
-                2
-              </span>
-              <div className="min-w-0">
-                <h3 className={cn(type.h4, tone.headingLight, 'mb-1')}>
-                  Core asset<br />exposures
-                </h3>
-                <p className="text-sm text-[#5B6B73] leading-relaxed">
-                  A balanced portfolio across conventional energy and critical minerals.
-                </p>
-              </div>
-            </div>
+                  {/* Horizontal Milestones Timeline */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-3 relative">
+                    {/* Connecting line behind milestone points */}
+                    <div className="hidden sm:block absolute top-5 left-6 right-6 h-[2px] bg-[#E8EDE9] z-0" />
 
-            {/* Right stat column: 8,500 Hectares of claims */}
-            <div data-reveal="card" className="md:col-span-4 lg:col-span-5 min-w-0 md:border-l border-[#DDE3E3] md:pl-8 lg:pl-10 flex flex-row md:flex-col lg:flex-row items-start gap-4 md:gap-3 lg:gap-5">
-              <span className="font-heading font-bold text-5xl sm:text-6xl tracking-[-0.02em] text-[#0B1F2A] leading-none shrink-0 select-none">
-                8,500
-              </span>
-              <div className="min-w-0">
-                <h3 className={cn(type.h4, tone.headingLight, 'mb-1')}>
-                  Hectares<br />of claims
-                </h3>
-                <p className="text-sm text-[#5B6B73] leading-relaxed">
-                  Royalty exposure at Salar de Turi, in the heart of the South American Lithium Triangle.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* =========================================================
-          5. STRATEGIC LOCATIONS: POSITIONED IN KEY ENERGY REGIONS
-         ========================================================= */}
-      <section aria-labelledby="strategic-locations-heading" className="section-y bg-white">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-            {/* Left copy */}
-            <div className="lg:col-span-5 min-w-0">
-              <SectionHeading
-                eyebrow="STRATEGIC LOCATIONS"
-                title={'Positioned in Key\nEnergy Regions'}
-                description="Our assets are located in established energy regions with access to infrastructure and global markets."
-                id="strategic-locations-heading"
-                className="mb-6"
-              />
-              <Link
-                href="/projects/new-zealand"
-                className="inline-flex items-center gap-2 min-h-[44px] text-sm font-semibold text-[#1F6F78] hover:text-[#0B1F2A] group transition-colors"
-              >
-                <span>View project details</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-              </Link>
-            </div>
-
-            {/* Right map vignettes: New Zealand & Chile */}
-            <div className="lg:col-span-7 min-w-0">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-6 items-center justify-items-center">
-                {/* Vignette 1: New Zealand */}
-                <div data-reveal="card">
-                  <Link href="/projects/new-zealand" className="flex flex-col items-center group text-center">
-                    <div className="relative w-48 h-48 sm:w-52 sm:h-52 lg:w-56 lg:h-56 rounded-full overflow-hidden bg-gradient-to-b from-[#EDF2F0] to-[#E2EAE7] border border-[#CCD8D5] shadow-[0_4px_20px_rgba(11,31,42,0.06)] flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_8px_28px_rgba(11,31,42,0.12)]">
-                      {/* SVG Map of New Zealand & surrounding region */}
-                      <svg viewBox="0 0 200 200" className="w-full h-full p-2" fill="none" aria-hidden="true">
-                        {/* Subtle globe grid rings */}
-                        <circle cx="100" cy="100" r="92" stroke="#CBD5D2" strokeWidth="0.7" strokeDasharray="3 3" />
-                        <circle cx="100" cy="100" r="62" stroke="#CBD5D2" strokeWidth="0.7" strokeDasharray="2 2" />
-                        <circle cx="100" cy="100" r="32" stroke="#CBD5D2" strokeWidth="0.5" strokeDasharray="2 3" />
-                        <line x1="100" y1="8" x2="100" y2="192" stroke="#CBD5D2" strokeWidth="0.5" strokeDasharray="2 4" />
-                        <line x1="8" y1="100" x2="192" y2="100" stroke="#CBD5D2" strokeWidth="0.5" strokeDasharray="2 4" />
-
-                        {/* Australia East Coast (faint background silhouette) */}
-                        <path
-                          d="M0 60 C 15 65, 25 80, 28 100 C 30 115, 20 135, 12 150 C 5 160, 0 170, 0 180 Z"
-                          fill="#D6DFDC"
-                          opacity="0.5"
-                        />
-
-                        {/* New Zealand North Island */}
-                        <path
-                          d="M128 58 C 122 52, 114 56, 112 62 C 110 68, 116 74, 122 80 C 128 86, 134 94, 126 104 C 118 112, 102 110, 94 116 C 88 120, 92 126, 100 128 C 108 130, 116 122, 124 116 C 134 108, 142 96, 138 84 C 136 74, 132 64, 128 58 Z"
-                          fill="#1F6F78"
-                        />
-
-                        {/* New Zealand South Island */}
-                        <path
-                          d="M96 118 C 90 124, 82 136, 76 148 C 70 160, 72 170, 80 170 C 88 170, 96 158, 104 146 C 110 138, 112 128, 104 122 C 100 118, 98 116, 96 118 Z"
-                          fill="#1F6F78"
-                        />
-
-                        {/* Stewart Island */}
-                        <circle cx="70" cy="174" r="2.5" fill="#1F6F78" />
-
-                        {/* Taranaki Basin Concession Highlight (Glowing Pulse + Dot) */}
-                        <g transform="translate(97, 114)">
-                          <circle r="14" fill="#B7E34A" fillOpacity="0.25" className="animate-ping" />
-                          <circle r="8" fill="#B7E34A" fillOpacity="0.6" />
-                          <circle r="4" fill="#0B1F2A" stroke="#B7E34A" strokeWidth="1.5" />
-                        </g>
-                      </svg>
+                    {/* Milestone 1: 2022 */}
+                    <div className="relative z-10 flex flex-col items-start">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="w-4 h-4 rounded-full bg-[#B7E34A] border-2 border-white shadow-sm shrink-0" />
+                        <span className="font-heading font-bold text-sm text-[#0B1F2A]">
+                          2022
+                        </span>
+                      </div>
+                      <span className="font-heading font-semibold text-xs text-[#0B1F2A] block leading-snug">
+                        Surface sampling and exploration work
+                      </span>
+                      <p className="text-[11px] text-[#5B6B73] mt-1 leading-relaxed">
+                        Initial field program completed, including surface sampling (as reported by the company).
+                      </p>
                     </div>
 
-                    <div className="mt-4">
-                      <span className={cn(type.h4, tone.headingLight, 'block group-hover:text-[#1F6F78] transition-colors')}>
-                        New Zealand
+                    {/* Milestone 2: June 2024 */}
+                    <div className="relative z-10 flex flex-col items-start">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="w-4 h-4 rounded-full bg-[#1F6F78] border-2 border-white shadow-sm shrink-0" />
+                        <span className="font-heading font-bold text-sm text-[#0B1F2A]">
+                          June 2024
+                        </span>
+                      </div>
+                      <span className="font-heading font-semibold text-xs text-[#0B1F2A] block leading-snug">
+                        Joint RFI filing
                       </span>
-                      <span className="text-sm text-[#5B6B73] block mt-0.5">
-                        Taranaki Basin
-                      </span>
-                      <span className="text-sm text-[#5B6B73] block">
-                        Oil &amp; Gas
-                      </span>
+                      <p className="text-[11px] text-[#5B6B73] mt-1 leading-relaxed">
+                        Application for a joint Request for Information (RFI) submitted with a third party (as reported by the company).
+                      </p>
                     </div>
-                  </Link>
+
+                    {/* Milestone 3: Current status */}
+                    <div className="relative z-10 flex flex-col items-start">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="w-4 h-4 rounded-full bg-white border-2 border-[#1F6F78] shadow-sm shrink-0" />
+                        <span className="font-heading font-bold text-sm text-[#0B1F2A]">
+                          Current status
+                        </span>
+                      </div>
+                      <span className="font-heading font-semibold text-xs text-[#0B1F2A] block leading-snug">
+                        Check latest company disclosure
+                      </span>
+                      <p className="text-[11px] text-[#5B6B73] mt-1 leading-relaxed">
+                        Refer to the company&apos;s latest news releases for updates on the RFI process and next steps.
+                      </p>
+                    </div>
+                  </div>
                 </div>
+              </div>
+            </div>
 
-                {/* Vignette 2: Chile */}
-                <div data-reveal="card">
-                  <Link href="/projects/salar-de-turi" className="flex flex-col items-center group text-center">
-                    <div className="relative w-48 h-48 sm:w-52 sm:h-52 lg:w-56 lg:h-56 rounded-full overflow-hidden bg-gradient-to-b from-[#EDF2F0] to-[#E2EAE7] border border-[#CCD8D5] shadow-[0_4px_20px_rgba(11,31,42,0.06)] flex items-center justify-center transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_8px_28px_rgba(11,31,42,0.12)]">
-                      {/* SVG Map of South America with Chile highlighted */}
-                      <svg viewBox="0 0 200 200" className="w-full h-full p-2" fill="none" aria-hidden="true">
-                        {/* Subtle globe grid rings */}
-                        <circle cx="100" cy="100" r="92" stroke="#CBD5D2" strokeWidth="0.7" strokeDasharray="3 3" />
-                        <circle cx="100" cy="100" r="62" stroke="#CBD5D2" strokeWidth="0.7" strokeDasharray="2 2" />
-                        <circle cx="100" cy="100" r="32" stroke="#CBD5D2" strokeWidth="0.5" strokeDasharray="2 3" />
-                        <line x1="100" y1="8" x2="100" y2="192" stroke="#CBD5D2" strokeWidth="0.5" strokeDasharray="2 4" />
-                        <line x1="8" y1="100" x2="192" y2="100" stroke="#CBD5D2" strokeWidth="0.5" strokeDasharray="2 4" />
+            {/* -------------------------------------------------------
+                RIGHT CARD: PROJECT DOCUMENTS
+               ------------------------------------------------------- */}
+            <div data-reveal="card" className="lg:col-span-5 min-w-0">
+              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-6 sm:p-7 shadow-sm flex flex-col justify-between">
+                <div>
+                  <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-1">
+                    Project documents
+                  </h3>
+                  <p className="text-xs text-[#5B6B73] mb-6">
+                    Access the latest technical updates, announcements and regulatory information.
+                  </p>
 
-                        {/* South America Continent Outline (Faint silhouette) */}
-                        <path
-                          d="M90 28 C 125 26, 162 42, 178 72 C 188 92, 178 120, 154 140 C 138 152, 118 168, 108 182 C 102 188, 96 186, 94 178 C 90 162, 86 138, 84 108 C 82 88, 74 68, 72 52 C 72 40, 78 30, 90 28 Z"
-                          fill="#D6DFDC"
-                          opacity="0.65"
-                        />
+                  {/* 3 Document Links */}
+                  <div className="space-y-3">
+                    {/* Doc 1 */}
+                    <Link
+                      href="/investors/presentation"
+                      className="group flex items-center justify-between p-3.5 rounded-xl border border-[#E8EDE9] hover:border-[#1F6F78]/50 hover:bg-[#FAFBF9] transition-all"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-9 h-9 rounded-lg bg-[#EDF3F1] flex items-center justify-center text-[#1F6F78] shrink-0">
+                          <FileText className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <span className="font-heading font-bold text-xs sm:text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors block leading-tight">
+                            Technical updates
+                          </span>
+                          <span className="text-[11px] text-[#5B6B73] block mt-0.5 leading-snug">
+                            Reports and presentations related to Laguna Blanca.
+                          </span>
+                        </div>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-[#5B6B73] group-hover:text-[#1F6F78] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                    </Link>
 
-                        {/* Chile Western Ribbon Highlight */}
-                        <path
-                          d="M93 64 C 96 72, 97 82, 96 94 C 95 110, 93 128, 92 146 C 90 160, 88 172, 93 182 C 91 184, 87 182, 86 176 C 83 164, 84 148, 86 130 C 88 112, 89 94, 87 78 C 85 70, 87 64, 93 64 Z"
-                          fill="#1F6F78"
-                          stroke="#1F6F78"
-                          strokeWidth="1.2"
-                        />
+                    {/* Doc 2 */}
+                    <Link
+                      href="/news"
+                      className="group flex items-center justify-between p-3.5 rounded-xl border border-[#E8EDE9] hover:border-[#1F6F78]/50 hover:bg-[#FAFBF9] transition-all"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-9 h-9 rounded-lg bg-[#EDF3F1] flex items-center justify-center text-[#1F6F78] shrink-0">
+                          <FileText className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <span className="font-heading font-bold text-xs sm:text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors block leading-tight">
+                            Official announcements
+                          </span>
+                          <span className="text-[11px] text-[#5B6B73] block mt-0.5 leading-snug">
+                            News releases and updates from the company.
+                          </span>
+                        </div>
+                      </div>
+                      <ArrowRight className="w-4 h-4 text-[#5B6B73] group-hover:text-[#1F6F78] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                    </Link>
 
-                        {/* Salar de Turi Concession Marker (Atacama / Northern Chile) */}
-                        <g transform="translate(93, 86)">
-                          <circle r="14" fill="#B7E34A" fillOpacity="0.25" className="animate-ping" />
-                          <circle r="8" fill="#B7E34A" fillOpacity="0.6" />
-                          <circle r="4" fill="#0B1F2A" stroke="#B7E34A" strokeWidth="1.5" />
-                        </g>
-                      </svg>
-                    </div>
-
-                    <div className="mt-4">
-                      <span className={cn(type.h4, tone.headingLight, 'block group-hover:text-[#1F6F78] transition-colors')}>
-                        Chile
-                      </span>
-                      <span className="text-sm text-[#5B6B73] block mt-0.5">
-                        Salar de Turi
-                      </span>
-                      <span className="text-sm text-[#5B6B73] block">
-                        Lithium Royalty
-                      </span>
-                    </div>
-                  </Link>
+                    {/* Doc 3 */}
+                    <a
+                      href="https://www.sedarplus.ca"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center justify-between p-3.5 rounded-xl border border-[#E8EDE9] hover:border-[#1F6F78]/50 hover:bg-[#FAFBF9] transition-all"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-9 h-9 rounded-lg bg-[#EDF3F1] flex items-center justify-center text-[#1F6F78] shrink-0">
+                          <FileText className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <span className="font-heading font-bold text-xs sm:text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors block leading-tight">
+                            Investor disclosures
+                          </span>
+                          <span className="text-[11px] text-[#5B6B73] block mt-0.5 leading-snug">
+                            View filings on SEDAR+.
+                          </span>
+                        </div>
+                      </div>
+                      <ExternalLink className="w-4 h-4 text-[#5B6B73] group-hover:text-[#1F6F78] group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -488,37 +376,45 @@ export default function ProjectsPage() {
       </section>
 
       {/* =========================================================
-          6. BOTTOM CALL-TO-ACTION BAND
+          5. BOTTOM CALL-TO-ACTION BANNER
          ========================================================= */}
-      <section aria-labelledby="banner-heading" className="section-y relative overflow-hidden bg-[#0B1F2A] text-white border-t border-[#1D3B4C]">
-        {/* Panoramic Mountain Landscape Photo (Mt. Taranaki centered) */}
+      <section aria-labelledby="laguna-cta-heading" className="section-y relative overflow-hidden bg-[#0B1F2A] text-white border-t border-[#1D3B4C] mt-4">
+        {/* Mountain Background Photo */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/about-hero-taranaki.jpg"
-            alt="Panoramic Mount Taranaki energy landscape"
+            src="/images/salar-turi-sunset-banner.jpg"
+            alt="Panoramic Andean Mountain Landscape"
             fill
             sizes="100vw"
-            className="object-cover object-[center_35%] opacity-55 brightness-90 contrast-125"
+            className="object-cover object-center opacity-45 brightness-90 contrast-115"
           />
-          {/* Multi-stop Cinematic Overlay allowing the mountain peak to shine through */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#07161F]/90 via-[#0B1F2A]/65 to-[#07161F]/85" />
+          {/* Multi-stop Cinematic Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#07161F]/95 via-[#0B1F2A]/80 to-[#07161F]/90" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#07161F]/80 via-transparent to-[#07161F]/40" />
         </div>
 
         <Container className="relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <SectionHeading
-              dark
-              size="compact"
-              eyebrow="INVEST IN THE ENERGY TRANSITION"
-              title="Two Assets. A Longer-Term Perspective."
-              id="banner-heading"
-              className="mb-0 min-w-0"
-            />
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8">
+            <div data-reveal="fade" className="min-w-0 max-w-2xl">
+              <span className="text-[11px] font-mono font-bold tracking-widest text-[#2DD4BF] uppercase block mb-2">
+                STAY INFORMED
+              </span>
+              <h2 id="laguna-cta-heading" className="font-heading font-bold text-2xl sm:text-3xl text-white mb-2">
+                Follow the project&apos;s next milestones
+              </h2>
+              <p className="text-sm text-[#DDE3E3]/80">
+                Get the latest news, announcements and investor updates on Laguna Blanca.
+              </p>
+            </div>
 
-            <div data-reveal className="shrink-0">
-              <Button href="/investors" variant="primary" size="md">
-                Explore Our Projects
+            <div data-reveal className="flex flex-wrap items-center gap-3 sm:gap-4 shrink-0">
+              <Button href="/news" variant="primary" size="md">
+                View latest news
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Button>
+
+              <Button href="/investors" variant="secondary-dark" size="md">
+                Visit investor centre
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
               </Button>
             </div>
