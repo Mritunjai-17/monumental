@@ -140,7 +140,7 @@ export const Header: React.FC = () => {
                               {child.label}
                             </span>
                             {child.description && (
-                              <span className="text-[11px] text-[#5B6B73] line-clamp-1 block mt-0.5">
+                              <span className="text-[11px] text-white/55 line-clamp-1 block mt-0.5">
                                 {child.description}
                               </span>
                             )}
@@ -187,9 +187,11 @@ export const Header: React.FC = () => {
           {/* Mobile Hamburger Button */}
           <div className="flex items-center lg:hidden">
             <button
+              type="button"
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Open mobile navigation menu"
-              className="w-10 h-10 flex items-center justify-center rounded-lg text-white hover:bg-white/10 active:bg-white/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
+              aria-expanded={isMobileMenuOpen}
+              className="w-11 h-11 -mr-1.5 flex items-center justify-center rounded-lg text-white hover:bg-white/10 active:bg-white/15 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
             >
               <Menu className="w-6 h-6" />
             </button>

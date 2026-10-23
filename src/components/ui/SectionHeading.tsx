@@ -1,16 +1,24 @@
 import React from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { type, tone } from '@/lib/typography';
 import { KineticHeading } from '@/components/ui/KineticHeading';
+import { Eyebrow } from '@/components/ui/Eyebrow';
 import { ArrowRight } from 'lucide-react';
 
 interface SectionHeadingProps {
   eyebrow?: string;
+  /** Use "\n" for a line break from the sm breakpoint up. */
   title: string;
-  description?: string;
+  description?: React.ReactNode;
   align?: 'left' | 'center';
   dark?: boolean;
   className?: string;
+  /** Heading level. Default h2. */
+  as?: 'h1' | 'h2' | 'h3';
+  /** "compact" for narrow columns and CTA bands. */
+  size?: 'default' | 'compact';
+  id?: string;
   /** "View all" style link rendered on the same row as the heading. */
   action?: { label: string; shortLabel?: string; href: string };
 }
@@ -22,33 +30,29 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   align = 'left',
   dark = false,
   className,
+  as = 'h2',
+  size = 'default',
+  id,
   action,
 }) => {
   const heading = (
     <div className={cn(align === 'center' && !action ? 'text-center mx-auto max-w-3xl' : 'max-w-3xl')}>
-      {eyebrow && (
-        <span
-          className={cn(
-            'eyebrow block mb-3 font-heading tracking-[0.12em] uppercase font-semibold text-xs sm:text-sm',
-            dark ? 'text-[#B7E34A]' : 'text-[#1F6F78]'
-          )}
-        >
-          {eyebrow}
-        </span>
-      )}
+      {eyebrow && <Eyebrow dark={dark}>{eyebrow}</Eyebrow>}
       <KineticHeading
+        as={as}
+        id={id}
         text={title}
         className={cn(
-          'text-3xl sm:text-4xl lg:text-[44px] font-bold font-heading tracking-[-0.02em] leading-[1.18]',
+          size === 'compact' ? type.h2Compact : type.h2,
           description && 'mb-4',
-          dark ? 'text-white' : 'text-[#0B1F2A]'
+          dark ? tone.headingDark : tone.headingLight
         )}
       />
       {description && (
         <p
           className={cn(
-            'text-base sm:text-lg leading-[1.6]',
-            dark ? 'text-[#DDE3E3]/80' : 'text-[#5B6B73]'
+            type.lead,
+            dark ? 'text-[#DDE3E3]/80' : tone.mutedLight
           )}
         >
           {description}
@@ -81,4 +85,3 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
     </div>
   );
 };
-

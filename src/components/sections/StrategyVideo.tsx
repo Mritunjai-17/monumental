@@ -11,7 +11,7 @@ export const StrategyVideo: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section className="py-14 lg:py-24 bg-[#0B1F2A] text-white relative overflow-hidden border-y border-[#1D3B4C]/60">
+    <section className="section-y bg-[#0B1F2A] text-white relative overflow-hidden border-y border-[#1D3B4C]/60">
       {/* Background glow */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#1F6F78]/15 rounded-full blur-3xl -translate-y-1/2 pointer-events-none" />
 

@@ -12,6 +12,8 @@
 
   html {
     scroll-behavior: smooth;
+    /* Anchor targets clear the sticky header */
+    scroll-padding-top: 88px;
     color: var(--color-text);
     background-color: var(--color-bg);
     font-family: var(--font-body);
@@ -29,6 +31,9 @@
     flex-direction: column;
     color: var(--color-text);
     background-color: var(--color-bg);
+    /* Safety net only: decorative glows/topo layers must never cause sideways
+       scroll. clip (not hidden) keeps the sticky header working. */
+    overflow-x: clip;
   }
 
   /* STRICT RULE: h1, h2, h3, h4, h5, h6 and every heading-styled element MUST use Space Grotesk ONLY */
@@ -44,6 +49,13 @@
     line-height: 1.18;
     color: inherit;
     font-weight: 700;
+  }
+
+  /* Even line lengths, no single-word last lines */
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
   }
 
   .font-serif,
@@ -96,6 +108,62 @@
   }
 }
 
+/* Section rhythm, matching the original homepage sections (56px / 96px).
+ * .section-y          standard content section
+ * .section-y-compact  secondary band (stat strip, filter bar, short CTA)
+ * .page-intro-y       light inner-page hero, followed by a .section-y section
+ */
+@layer components {
+  .section-y {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .section-y-compact {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .page-intro-y {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .section-y {
+      padding-top: 4.5rem;
+      padding-bottom: 4.5rem;
+    }
+
+    .section-y-compact {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    .page-intro-y {
+      padding-top: 3.5rem;
+      padding-bottom: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-y {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+
+    .section-y-compact {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .page-intro-y {
+      padding-top: 4rem;
+      padding-bottom: 3.5rem;
+    }
+  }
+}
+
 /* Custom interactive styles */
 .text-link {
   color: var(--color-secondary);
@@ -106,6 +174,13 @@
   text-decoration: none;
   position: relative;
   transition: color 0.2s ease, opacity 0.15s ease, transform 0.15s ease;
+}
+
+/* Invisible ~40px tap area around the inline link, without changing layout */
+.text-link::before {
+  content: '';
+  position: absolute;
+  inset: -10px -4px;
 }
 
 .text-link::after {

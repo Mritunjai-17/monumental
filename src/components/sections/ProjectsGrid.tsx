@@ -15,7 +15,7 @@ import {
 
 export const ProjectsGrid: React.FC = () => {
   return (
-    <section className="py-14 lg:py-24 bg-[#F5F6F1]">
+    <section className="section-y bg-[#F5F6F1]">
       <Container>
         <SectionHeading
           eyebrow="Asset Portfolio"

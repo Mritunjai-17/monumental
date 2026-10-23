@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
   const verifiedSocials = siteConfig.socials.filter((social) => social.verified);
 
   return (
-    <footer className="bg-[#07151D] text-white/80 border-t border-[#162F3F] pt-14 pb-8" aria-label="Site Footer">
+    <footer className="bg-[#07151D] text-white/80 border-t border-[#162F3F] pt-14 lg:pt-20 pb-8" aria-label="Site Footer">
       <div data-reveal="fade" className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-12">
@@ -57,7 +57,7 @@ export const Footer: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Monumental Energy on ${social.label}`}
-                    className="w-9 h-9 rounded-lg bg-[#0E2836] border border-[#1D3B4C] flex items-center justify-center text-white/80 hover:text-[#B7E34A] hover:border-[#1F6F78] transition-colors"
+                    className="w-11 h-11 rounded-lg bg-[#0E2836] border border-[#1D3B4C] flex items-center justify-center text-white/80 hover:text-[#B7E34A] hover:border-[#1F6F78] transition-colors"
                   >
                     {socialIcons[social.platform]}
                   </a>
@@ -71,29 +71,29 @@ export const Footer: React.FC = () => {
             <h3 className="font-heading font-semibold text-white text-xs uppercase tracking-wider mb-4">
               Company &amp; Assets
             </h3>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-1 text-sm">
               <li>
-                <Link href="/about" className="hover:text-[#B7E34A] transition-colors">
+                <Link href="/about" className="inline-block py-1.5 hover:text-[#B7E34A] transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/projects" className="hover:text-[#B7E34A] transition-colors">
+                <Link href="/projects" className="inline-block py-1.5 hover:text-[#B7E34A] transition-colors">
                   Projects Overview
                 </Link>
               </li>
               <li>
-                <Link href="/projects/new-zealand" className="hover:text-[#B7E34A] transition-colors">
+                <Link href="/projects/new-zealand" className="inline-block py-1.5 hover:text-[#B7E34A] transition-colors">
                   New Zealand Oil &amp; Gas
                 </Link>
               </li>
               <li>
-                <Link href="/projects/salar-de-turi" className="hover:text-[#B7E34A] transition-colors">
+                <Link href="/projects/salar-de-turi" className="inline-block py-1.5 hover:text-[#B7E34A] transition-colors">
                   Salar de Turi Lithium
                 </Link>
               </li>
               <li>
-                <Link href="/esg" className="hover:text-[#B7E34A] transition-colors">
+                <Link href="/esg" className="inline-block py-1.5 hover:text-[#B7E34A] transition-colors">
                   ESG &amp; Sustainability
                 </Link>
               </li>
@@ -105,24 +105,24 @@ export const Footer: React.FC = () => {
             <h3 className="font-heading font-semibold text-white text-xs uppercase tracking-wider mb-4">
               Investors &amp; Disclosures
             </h3>
-            <ul className="space-y-2.5 text-sm">
+            <ul className="space-y-1 text-sm">
               <li>
-                <Link href="/investors" className="hover:text-[#B7E34A] transition-colors">
+                <Link href="/investors" className="inline-block py-1.5 hover:text-[#B7E34A] transition-colors">
                   Investor Centre Hub
                 </Link>
               </li>
               <li>
-                <Link href="/investors/presentation" className="hover:text-[#B7E34A] transition-colors">
+                <Link href="/investors/presentation" className="inline-block py-1.5 hover:text-[#B7E34A] transition-colors">
                   Corporate Presentation (PDF)
                 </Link>
               </li>
               <li>
-                <Link href="/investors/agm" className="hover:text-[#B7E34A] transition-colors">
+                <Link href="/investors/agm" className="inline-block py-1.5 hover:text-[#B7E34A] transition-colors">
                   Shareholder AGM Information
                 </Link>
               </li>
               <li>
-                <Link href="/news" className="hover:text-[#B7E34A] transition-colors">
+                <Link href="/news" className="inline-block py-1.5 hover:text-[#B7E34A] transition-colors">
                   News &amp; Market Releases
                 </Link>
               </li>
@@ -131,7 +131,7 @@ export const Footer: React.FC = () => {
                   href="https://www.sedarplus.ca"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 hover:text-[#B7E34A] transition-colors"
+                  className="inline-flex items-center gap-1.5 py-1.5 hover:text-[#B7E34A] transition-colors"
                 >
                   <span>SEDAR+ Filings Profile</span>
                   <ExternalLink className="w-3.5 h-3.5 text-[#1F6F78]" />
@@ -142,7 +142,7 @@ export const Footer: React.FC = () => {
                   href="https://money.tmx.com/en/quote/MNRG"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 hover:text-[#B7E34A] transition-colors"
+                  className="inline-flex items-center gap-1.5 py-1.5 hover:text-[#B7E34A] transition-colors"
                 >
                   <span>TSX-V: MNRG Delayed Quote</span>
                   <ExternalLink className="w-3.5 h-3.5 text-[#1F6F78]" />
@@ -214,8 +214,8 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Legal Bar */}
-        <div className="border-t border-[#162F3F] pt-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#64748B]">
-          <p>© 2026 Monumental Energy Corp. All rights reserved.</p>
+        <div className="border-t border-[#162F3F] pt-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#94A3B8]">
+          <p className="text-xs">© 2026 Monumental Energy Corp. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-6">
             <Link href="/privacy-policy" className="hover:text-white transition-colors">
               Privacy Policy

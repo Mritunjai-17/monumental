@@ -2,7 +2,13 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
+import { Button } from '@/components/ui/Button';
+import { Eyebrow } from '@/components/ui/Eyebrow';
+import { KineticHeading } from '@/components/ui/KineticHeading';
+import { SectionHeading } from '@/components/ui/SectionHeading';
 import { constructMetadata } from '@/lib/seo';
+import { cn } from '@/lib/utils';
+import { type, tone } from '@/lib/typography';
 import {
   Leaf,
   Users,
@@ -46,6 +52,22 @@ const KEY_DOCUMENTS = [
     isExternal: true,
   },
 ];
+
+/** Homepage card hover. */
+const cardHover =
+  'transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_-4px_rgba(11,31,42,0.08)] hover:border-[#1F6F78]/40';
+
+/** Small uppercase meta label inside cards. */
+const cardLabel = 'text-[11px] font-heading font-bold uppercase tracking-wider text-[#5B6B73] block mb-1';
+
+/** Image pillar card (Our approach). */
+const pillarCard = cn(
+  'h-full bg-white rounded-[16px] border border-[#DDE3E3] overflow-hidden shadow-sm flex flex-col justify-between group',
+  cardHover
+);
+
+const learnMoreLink =
+  'inline-flex items-center gap-1.5 text-sm font-semibold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors group mt-auto py-1';
 
 export default function EsgPage() {
   return (
@@ -92,7 +114,7 @@ export default function EsgPage() {
       {/* =========================================================
           1. HERO SECTION (Split Left Content & Right Coastal Photo + Strip)
          ========================================================= */}
-      <section className="relative overflow-hidden pt-10 sm:pt-14 lg:pt-16 pb-12 sm:pb-16">
+      <section className="relative overflow-hidden page-intro-y">
         {/* Desktop Split Photograph: High-angle Coastal Landscape with Mount Taranaki */}
         <div className="hidden lg:block absolute top-0 right-0 bottom-0 w-[54%] z-0 overflow-hidden pointer-events-none">
           <Image
@@ -109,24 +131,24 @@ export default function EsgPage() {
 
         <Container className="relative z-10">
           {/* Top Row: Headline & Copy */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[320px] lg:min-h-[380px]">
-            <div className="lg:col-span-7 pr-0 lg:pr-8">
-              <span className="text-[#1F6F78] uppercase text-xs sm:text-[13px] font-heading font-semibold tracking-[0.16em] mb-3 block">
-                SUSTAINABILITY
-              </span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center lg:min-h-[380px]">
+            <div className="lg:col-span-7 min-w-0 lg:pr-8">
+              <Eyebrow className="hero-eyebrow">SUSTAINABILITY</Eyebrow>
 
-              <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-[54px] text-[#0B1F2A] tracking-[-0.02em] leading-[1.08] mb-5">
-                Responsible Energy.<br />Transparent Decisions.
-              </h1>
+              <KineticHeading
+                as="h1"
+                text={'Responsible Energy.\nTransparent Decisions.'}
+                className={cn(type.h1, tone.headingLight, 'mb-5')}
+              />
 
-              <p className="text-[#5B6B73] text-base sm:text-lg leading-relaxed max-w-xl font-normal">
+              <p className={cn('hero-copy max-w-xl', type.lead, tone.mutedLight)}>
                 We take a disciplined approach to energy investment, with a focus on environmental stewardship, respect for communities, and transparent governance.
               </p>
             </div>
 
             {/* Mobile Image Fallback */}
-            <div className="lg:hidden col-span-1 mt-2">
-              <div className="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-md border border-[#DDE3E3]">
+            <div className="lg:hidden col-span-1">
+              <div className="relative rounded-[16px] overflow-hidden aspect-[16/10] shadow-md border border-[#DDE3E3]">
                 <Image
                   src="/images/taranaki-panoramic-coast.jpg"
                   alt="Environmental Stewardship in New Zealand"
@@ -139,42 +161,36 @@ export default function EsgPage() {
           </div>
 
           {/* Hero Bottom 3-Stat Strip */}
-          <div className="mt-8 lg:mt-12 bg-white rounded-[22px] border border-[#DDE3E3] p-6 sm:p-8 shadow-sm">
+          <div className="hero-cta-group mt-8 lg:mt-12 bg-white rounded-[20px] lg:rounded-[24px] border border-[#DDE3E3] p-6 sm:p-7 lg:p-8 shadow-sm">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 md:divide-x md:divide-[#E8ECEC]">
               {/* Item 1: Environment */}
-              <div className="flex items-start gap-4">
-                <Leaf className="w-8 h-8 text-[#1F6F78] shrink-0 mt-0.5 stroke-[1.6]" />
-                <div>
-                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-1">
-                    ENVIRONMENT
-                  </span>
-                  <p className="text-xs sm:text-[13px] text-[#5B6B73] leading-relaxed">
+              <div className="flex items-start gap-4 min-w-0">
+                <Leaf className="w-8 h-8 text-[#1F6F78] shrink-0 mt-0.5 stroke-[1.6]" aria-hidden="true" />
+                <div className="min-w-0">
+                  <span className={cardLabel}>ENVIRONMENT</span>
+                  <p className={cn(type.body, tone.mutedLight)}>
                     Minimizing our footprint and managing natural resources responsibly.
                   </p>
                 </div>
               </div>
 
               {/* Item 2: Communities */}
-              <div className="flex items-start gap-4 md:pl-8">
-                <Users className="w-8 h-8 text-[#1F6F78] shrink-0 mt-0.5 stroke-[1.6]" />
-                <div>
-                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-1">
-                    COMMUNITIES
-                  </span>
-                  <p className="text-xs sm:text-[13px] text-[#5B6B73] leading-relaxed">
+              <div className="flex items-start gap-4 min-w-0 md:pl-8">
+                <Users className="w-8 h-8 text-[#1F6F78] shrink-0 mt-0.5 stroke-[1.6]" aria-hidden="true" />
+                <div className="min-w-0">
+                  <span className={cardLabel}>COMMUNITIES</span>
+                  <p className={cn(type.body, tone.mutedLight)}>
                     Building respectful relationships and creating long-term value.
                   </p>
                 </div>
               </div>
 
               {/* Item 3: Governance */}
-              <div className="flex items-start gap-4 md:pl-8">
-                <ShieldCheck className="w-8 h-8 text-[#1F6F78] shrink-0 mt-0.5 stroke-[1.6]" />
-                <div>
-                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-1">
-                    GOVERNANCE
-                  </span>
-                  <p className="text-xs sm:text-[13px] text-[#5B6B73] leading-relaxed">
+              <div className="flex items-start gap-4 min-w-0 md:pl-8">
+                <ShieldCheck className="w-8 h-8 text-[#1F6F78] shrink-0 mt-0.5 stroke-[1.6]" aria-hidden="true" />
+                <div className="min-w-0">
+                  <span className={cardLabel}>GOVERNANCE</span>
+                  <p className={cn(type.body, tone.mutedLight)}>
                     Maintaining transparency, accountability and strong governance practices.
                   </p>
                 </div>
@@ -187,131 +203,109 @@ export default function EsgPage() {
       {/* =========================================================
           2. OUR APPROACH: Our approach to responsible stewardship
          ========================================================= */}
-      <section className="py-10 sm:py-14 lg:py-16">
+      <section className="relative section-y pt-0">
         <Container>
-          {/* Header Row */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-            <div>
-              <div className="flex items-center gap-2.5 mb-2">
-                <span className="w-6 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                <span className="text-xs font-heading font-bold text-[#87969F] uppercase tracking-[0.16em]">
-                  OUR APPROACH
-                </span>
-              </div>
-              <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-[#0B1F2A] tracking-tight">
-                Our approach to responsible stewardship
-              </h2>
-            </div>
-
-            <p className="text-xs sm:text-sm text-[#5B6B73] max-w-md leading-relaxed">
-              Our ESG approach is integrated into how we evaluate opportunities, manage our assets and work with stakeholders. We focus on practical measures that support sustainable development and long-term value.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="OUR APPROACH"
+            title="Our approach to responsible stewardship"
+            description="Our ESG approach is integrated into how we evaluate opportunities, manage our assets and work with stakeholders. We focus on practical measures that support sustainable development and long-term value."
+          />
 
           {/* 3 Pillar Cards Row with Visual Split */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 items-stretch">
             {/* Card 1: Care for the environment */}
-            <div className="bg-white rounded-[22px] border border-[#DDE3E3] overflow-hidden shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex flex-col justify-between group">
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0B1F2A]">
-                <Image
-                  src="/images/esg-stewardship.jpg"
-                  alt="Care for the environment water monitoring"
-                  fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-500"
-                />
-              </div>
-
-              <div className="p-6 sm:p-7 flex flex-col justify-between flex-1">
-                <div>
-                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-1">
-                    ENVIRONMENT
-                  </span>
-                  <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] tracking-tight mb-2">
-                    Care for the environment
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-4">
-                    We aim to minimize environmental impacts through responsible planning, monitoring and management.
-                  </p>
+            <div data-reveal="card" className="h-full">
+              <div className={pillarCard}>
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0B1F2A]">
+                  <Image
+                    src="/images/esg-stewardship.jpg"
+                    alt="Care for the environment water monitoring"
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-500"
+                  />
                 </div>
 
-                <Link
-                  href="/projects"
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-heading font-bold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors group mt-auto"
-                >
-                  <span>Learn more</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+                <div className="p-6 sm:p-7 flex flex-col justify-between flex-1">
+                  <div>
+                    <span className={cardLabel}>ENVIRONMENT</span>
+                    <h3 className={cn(type.h3, tone.headingLight, 'mb-2')}>
+                      Care for the environment
+                    </h3>
+                    <p className={cn(type.body, tone.mutedLight, 'mb-4')}>
+                      We aim to minimize environmental impacts through responsible planning, monitoring and management.
+                    </p>
+                  </div>
+
+                  <Link href="/projects" className={learnMoreLink}>
+                    <span>Learn more</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
             </div>
 
             {/* Card 2: Work with our communities */}
-            <div className="bg-white rounded-[22px] border border-[#DDE3E3] overflow-hidden shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex flex-col justify-between group">
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0B1F2A]">
-                <Image
-                  src="/images/esg-community.jpg"
-                  alt="Work with our communities consultation"
-                  fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-500"
-                />
-              </div>
-
-              <div className="p-6 sm:p-7 flex flex-col justify-between flex-1">
-                <div>
-                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-1">
-                    COMMUNITIES
-                  </span>
-                  <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] tracking-tight mb-2">
-                    Work with our communities
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-4">
-                    We value open dialogue, local partnerships and opportunities that support regional development.
-                  </p>
+            <div data-reveal="card" className="h-full">
+              <div className={pillarCard}>
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0B1F2A]">
+                  <Image
+                    src="/images/esg-community.jpg"
+                    alt="Work with our communities consultation"
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-500"
+                  />
                 </div>
 
-                <Link
-                  href="/about"
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-heading font-bold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors group mt-auto"
-                >
-                  <span>Learn more</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+                <div className="p-6 sm:p-7 flex flex-col justify-between flex-1">
+                  <div>
+                    <span className={cardLabel}>COMMUNITIES</span>
+                    <h3 className={cn(type.h3, tone.headingLight, 'mb-2')}>
+                      Work with our communities
+                    </h3>
+                    <p className={cn(type.body, tone.mutedLight, 'mb-4')}>
+                      We value open dialogue, local partnerships and opportunities that support regional development.
+                    </p>
+                  </div>
+
+                  <Link href="/about" className={learnMoreLink}>
+                    <span>Learn more</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
             </div>
 
             {/* Card 3: Operate with integrity */}
-            <div className="bg-white rounded-[22px] border border-[#DDE3E3] overflow-hidden shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex flex-col justify-between group">
-              <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0B1F2A]">
-                <Image
-                  src="/images/news-corporate-agm.jpg"
-                  alt="Operate with integrity corporate governance"
-                  fill
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-500"
-                />
-              </div>
-
-              <div className="p-6 sm:p-7 flex flex-col justify-between flex-1">
-                <div>
-                  <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-1">
-                    GOVERNANCE
-                  </span>
-                  <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] tracking-tight mb-2">
-                    Operate with integrity
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-4">
-                    We are committed to transparent reporting, strong governance and responsible decision-making.
-                  </p>
+            <div data-reveal="card" className="h-full">
+              <div className={pillarCard}>
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#0B1F2A]">
+                  <Image
+                    src="/images/news-corporate-agm.jpg"
+                    alt="Operate with integrity corporate governance"
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover object-center group-hover:scale-[1.03] transition-transform duration-500"
+                  />
                 </div>
 
-                <Link
-                  href="/investors/agm"
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-heading font-bold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors group mt-auto"
-                >
-                  <span>Learn more</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+                <div className="p-6 sm:p-7 flex flex-col justify-between flex-1">
+                  <div>
+                    <span className={cardLabel}>GOVERNANCE</span>
+                    <h3 className={cn(type.h3, tone.headingLight, 'mb-2')}>
+                      Operate with integrity
+                    </h3>
+                    <p className={cn(type.body, tone.mutedLight, 'mb-4')}>
+                      We are committed to transparent reporting, strong governance and responsible decision-making.
+                    </p>
+                  </div>
+
+                  <Link href="/investors/agm" className={learnMoreLink}>
+                    <span>Learn more</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -321,7 +315,7 @@ export default function EsgPage() {
       {/* =========================================================
           3. DARK NAVY BANNER (3 Strategic Principles)
          ========================================================= */}
-      <section className="bg-[#07161F] text-white py-12 sm:py-16 relative overflow-hidden border-y border-[#183040]">
+      <section className="bg-[#0B1F2A] text-white section-y-compact relative overflow-hidden border-y border-[#1D3B4C]">
         {/* Subtle Topo lines inside dark section */}
         <div
           className="absolute -right-20 top-0 w-[450px] h-[350px] pointer-events-none opacity-[0.06] select-none z-0 overflow-hidden"
@@ -337,45 +331,45 @@ export default function EsgPage() {
         <Container className="relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:divide-x md:divide-white/10">
             {/* Column 1: Water and Land Care */}
-            <div className="flex items-start gap-4">
+            <div data-reveal="card" className="flex items-start gap-4 min-w-0">
               <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#2DD4BF] shrink-0 mt-0.5">
-                <Droplet className="w-6 h-6 stroke-[1.6]" />
+                <Droplet className="w-6 h-6 stroke-[1.6]" aria-hidden="true" />
               </div>
-              <div>
-                <span className="text-[11px] font-heading font-bold uppercase tracking-[0.16em] text-white/90 block mb-1">
+              <div className="min-w-0">
+                <span className="text-xs font-heading font-bold uppercase tracking-[0.12em] text-white/90 block mb-1.5">
                   WATER AND LAND CARE
                 </span>
-                <p className="text-xs sm:text-[13px] text-[#87969F] leading-relaxed">
+                <p className={cn(type.body, 'text-[#DDE3E3]/75')}>
                   Responsible exploration and development practices to help protect water, land and biodiversity.
                 </p>
               </div>
             </div>
 
             {/* Column 2: Respectful Engagement */}
-            <div className="flex items-start gap-4 md:pl-8">
+            <div data-reveal="card" className="flex items-start gap-4 min-w-0 md:pl-8">
               <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#2DD4BF] shrink-0 mt-0.5">
-                <Users className="w-6 h-6 stroke-[1.6]" />
+                <Users className="w-6 h-6 stroke-[1.6]" aria-hidden="true" />
               </div>
-              <div>
-                <span className="text-[11px] font-heading font-bold uppercase tracking-[0.16em] text-white/90 block mb-1">
+              <div className="min-w-0">
+                <span className="text-xs font-heading font-bold uppercase tracking-[0.12em] text-white/90 block mb-1.5">
                   RESPECTFUL ENGAGEMENT
                 </span>
-                <p className="text-xs sm:text-[13px] text-[#87969F] leading-relaxed">
+                <p className={cn(type.body, 'text-[#DDE3E3]/75')}>
                   Ongoing stakeholder engagement and consideration of local communities.
                 </p>
               </div>
             </div>
 
             {/* Column 3: Transparent Reporting */}
-            <div className="flex items-start gap-4 md:pl-8">
+            <div data-reveal="card" className="flex items-start gap-4 min-w-0 md:pl-8">
               <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#2DD4BF] shrink-0 mt-0.5">
-                <ShieldCheck className="w-6 h-6 stroke-[1.6]" />
+                <ShieldCheck className="w-6 h-6 stroke-[1.6]" aria-hidden="true" />
               </div>
-              <div>
-                <span className="text-[11px] font-heading font-bold uppercase tracking-[0.16em] text-white/90 block mb-1">
+              <div className="min-w-0">
+                <span className="text-xs font-heading font-bold uppercase tracking-[0.12em] text-white/90 block mb-1.5">
                   TRANSPARENT REPORTING
                 </span>
-                <p className="text-xs sm:text-[13px] text-[#87969F] leading-relaxed">
+                <p className={cn(type.body, 'text-[#DDE3E3]/75')}>
                   Clear communication and accountable governance to build long-term trust.
                 </p>
               </div>
@@ -387,60 +381,58 @@ export default function EsgPage() {
       {/* =========================================================
           4. POLICIES & DISCLOSURES: Key documents
          ========================================================= */}
-      <section className="py-12 sm:py-16">
+      <section className="relative section-y">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
             {/* Left Column (Headline & Action) */}
-            <div className="lg:col-span-4">
-              <div className="flex items-center gap-2.5 mb-2">
-                <span className="w-6 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                <span className="text-[11px] font-heading font-bold uppercase tracking-[0.16em] text-[#87969F]">
-                  POLICIES &amp; DISCLOSURES
-                </span>
-              </div>
-              <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#0B1F2A] tracking-tight mb-2">
-                Key documents
-              </h2>
-              <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-6">
-                Access our ESG-related policies, reports and regulatory disclosures.
-              </p>
+            <div className="lg:col-span-4 min-w-0">
+              <SectionHeading
+                size="compact"
+                eyebrow="POLICIES & DISCLOSURES"
+                title="Key documents"
+                description="Access our ESG-related policies, reports and regulatory disclosures."
+                className="mb-6 sm:mb-8"
+              />
 
-              <Link
-                href="/investors"
-                className="inline-flex items-center gap-2 border border-[#0B1F2A]/30 hover:border-[#0B1F2A] rounded-lg px-4 py-2.5 text-xs font-heading font-bold text-[#0B1F2A] transition-all group"
-              >
-                <span>View all disclosures</span>
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-              </Link>
+              <div data-reveal>
+                <Button href="/investors" variant="secondary" size="md">
+                  View all disclosures
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </Button>
+              </div>
             </div>
 
             {/* Right Column: 2x2 Grid of Document Cards */}
-            <div className="lg:col-span-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            <div className="lg:col-span-8 min-w-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
                 {KEY_DOCUMENTS.map((doc) => (
-                  <Link
-                    key={doc.id}
-                    href={doc.href}
-                    target={doc.isExternal ? '_blank' : undefined}
-                    rel={doc.isExternal ? 'noopener noreferrer' : undefined}
-                    className="p-5 rounded-[18px] bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex items-center justify-between group"
-                  >
-                    <div className="flex items-start gap-3.5 min-w-0 pr-3">
-                      <div className="w-9 h-9 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 mt-0.5">
-                        <FileText className="w-4 h-4 stroke-[1.8]" />
+                  <div key={doc.id} data-reveal="card" className="h-full">
+                    <Link
+                      href={doc.href}
+                      target={doc.isExternal ? '_blank' : undefined}
+                      rel={doc.isExternal ? 'noopener noreferrer' : undefined}
+                      className={cn(
+                        'h-full p-5 sm:p-6 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex items-center justify-between group',
+                        cardHover
+                      )}
+                    >
+                      <div className="flex items-start gap-3.5 min-w-0 pr-3">
+                        <div className="w-10 h-10 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0">
+                          <FileText className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className={cn(type.h4, tone.headingLight, 'group-hover:text-[#1F6F78] transition-colors mb-1')}>
+                            {doc.title}
+                          </h3>
+                          <p className={cn(type.body, tone.mutedLight)}>
+                            {doc.description}
+                          </p>
+                        </div>
                       </div>
-                      <div className="min-w-0">
-                        <h4 className="font-heading font-bold text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors leading-snug mb-1">
-                          {doc.title}
-                        </h4>
-                        <p className="text-[11px] text-[#87969F] leading-relaxed">
-                          {doc.description}
-                        </p>
-                      </div>
-                    </div>
 
-                    <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0" />
-                  </Link>
+                      <ArrowRight className="w-4 h-4 text-[#5B6B73] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0" aria-hidden="true" />
+                    </Link>
+                  </div>
                 ))}
               </div>
             </div>
@@ -451,9 +443,9 @@ export default function EsgPage() {
       {/* =========================================================
           5. BOTTOM CTA BANNER
          ========================================================= */}
-      <section className="relative overflow-hidden bg-[#07161F] text-white py-14 sm:py-16 mt-6 sm:mt-10">
+      <section className="relative overflow-hidden bg-[#0B1F2A] text-white section-y-compact">
         {/* Background photo with overlay and topography */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
           <Image
             src="/images/taranaki-panoramic-coast.jpg"
             alt="New Zealand Natural Setting"
@@ -473,32 +465,25 @@ export default function EsgPage() {
         <Container className="relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
             {/* Left: Headline */}
-            <div>
-              <span className="text-[11px] font-heading font-bold uppercase tracking-[0.16em] text-[#B7E34A] block mb-2">
-                OUR PROJECTS
-              </span>
-              <h3 className="font-heading font-bold text-2xl sm:text-3xl lg:text-[34px] text-white tracking-tight leading-snug">
-                Learn more about our projects<br />and how we create long-term value.
-              </h3>
-            </div>
+            <SectionHeading
+              dark
+              size="compact"
+              eyebrow="OUR PROJECTS"
+              title={'Learn more about our projects\nand how we create long-term value.'}
+              className="mb-0 sm:mb-0 min-w-0"
+            />
 
             {/* Right: 2 Action Buttons */}
-            <div className="flex flex-wrap items-center gap-4">
-              <Link
-                href="/projects"
-                className="bg-[#B7E34A] hover:bg-[#a5d43b] text-[#0B1F2A] font-heading font-bold text-xs sm:text-sm px-6 py-3.5 rounded-lg flex items-center gap-2 transition-all shadow-sm"
-              >
-                <span>Explore our projects</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+            <div data-reveal className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4 shrink-0">
+              <Button href="/projects" variant="primary" size="md">
+                Explore our projects
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Button>
 
-              <Link
-                href="/investors"
-                className="bg-[#07161F]/70 hover:bg-[#07161F] text-white border border-white/20 hover:border-white/40 font-heading font-semibold text-xs sm:text-sm px-6 py-3.5 rounded-lg flex items-center gap-2 transition-all"
-              >
-                <span>View investor disclosures</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+              <Button href="/investors" variant="secondary-dark" size="md">
+                View investor disclosures
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Button>
             </div>
           </div>
         </Container>

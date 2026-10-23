@@ -2,7 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
+import { Eyebrow } from '@/components/ui/Eyebrow';
+import { KineticHeading } from '@/components/ui/KineticHeading';
+import { SectionHeading } from '@/components/ui/SectionHeading';
 import { constructMetadata } from '@/lib/seo';
+import { cn } from '@/lib/utils';
+import { type, tone } from '@/lib/typography';
 import {
   Calendar,
   MapPin,
@@ -61,6 +66,52 @@ const OFFICIAL_DOCUMENTS = [
   },
 ];
 
+const VOTING_STEPS = [
+  {
+    step: 1,
+    title: 'Registered shareholders',
+    body: 'If your shares are registered in your name, you can vote online through Computershare or return a signed proxy form by mail.',
+    Icon: FileEdit,
+  },
+  {
+    step: 2,
+    title: 'Beneficial shareholders',
+    body: 'If you hold shares through a broker or financial institution, you will receive a Voting Instruction Form (VIF) and should follow the instructions provided by your intermediary.',
+    Icon: Users,
+  },
+  {
+    step: 3,
+    title: 'Filing archive',
+    body: 'All official meeting materials and results are filed on SEDAR+. You can view the complete record of the AGM and related disclosures.',
+    Icon: FileSearch,
+  },
+];
+
+const RESOURCES = [
+  {
+    href: '/investors',
+    title: 'Investor Centre',
+    description: 'Financial information, filings and more',
+    Icon: BarChart3,
+  },
+  {
+    href: '/investors/presentation',
+    title: 'Corporate Presentation',
+    description: 'View our latest investor deck',
+    Icon: FileText,
+  },
+  {
+    href: '/news',
+    title: 'News & Market Releases',
+    description: 'Latest company announcements',
+    Icon: Newspaper,
+  },
+];
+
+const cardHover =
+  'transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_-4px_rgba(11,31,42,0.08)] hover:border-[#1F6F78]/40';
+const detailLabelClass = 'text-xs text-[#5B6B73] uppercase font-heading font-bold tracking-wider block mb-1';
+
 export default function AgmPage() {
   return (
     <div className="relative bg-[#F5F6F1] text-[#0B1F2A] overflow-hidden min-h-screen">
@@ -113,7 +164,7 @@ export default function AgmPage() {
       {/* =========================================================
           1. HERO SECTION (Split Left Content & Right Boardroom Photo)
          ========================================================= */}
-      <section className="relative overflow-hidden pt-10 sm:pt-14 lg:pt-16 pb-8 lg:pb-12">
+      <section className="relative overflow-hidden page-intro-y">
         {/* Desktop Split Boardroom Image with Seamless Fade */}
         <div className="hidden lg:block absolute top-0 right-0 bottom-0 w-[54%] z-0 overflow-hidden pointer-events-none">
           <Image
@@ -129,24 +180,24 @@ export default function AgmPage() {
         </div>
 
         <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[320px] lg:min-h-[380px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center lg:min-h-[380px]">
             {/* Left Column (Headline & Copy) */}
-            <div className="lg:col-span-7 pr-0 lg:pr-8">
-              <span className="text-[#1F6F78] uppercase text-xs sm:text-[13px] font-heading font-semibold tracking-[0.16em] mb-3 block">
-                SHAREHOLDER GOVERNANCE
-              </span>
+            <div className="lg:col-span-7 min-w-0 lg:pr-8">
+              <Eyebrow className="hero-eyebrow">SHAREHOLDER GOVERNANCE</Eyebrow>
 
-              <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-[54px] text-[#0B1F2A] tracking-[-0.02em] leading-[1.08] mb-5">
-                Annual General<br />Meeting
-              </h1>
+              <KineticHeading
+                as="h1"
+                text={'Annual General\nMeeting'}
+                className={cn(type.h1, tone.headingLight, 'mb-5')}
+              />
 
-              <p className="text-[#5B6B73] text-base sm:text-lg leading-relaxed max-w-xl font-normal">
+              <p className={cn('hero-copy max-w-xl', type.lead, tone.mutedLight)}>
                 Access the official meeting notice, proxy materials and related documents for Monumental Energy&apos;s Annual General and Special Meeting of Shareholders.
               </p>
             </div>
 
             {/* Mobile Image Fallback */}
-            <div className="lg:hidden col-span-1 mt-2">
+            <div className="lg:hidden col-span-1">
               <div className="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-md border border-[#DDE3E3]">
                 <Image
                   src="/images/agm-boardroom.jpg"
@@ -164,27 +215,27 @@ export default function AgmPage() {
       {/* =========================================================
           2. MAIN SECTION: MEETING STATUS & OFFICIAL MEETING MATERIALS
          ========================================================= */}
-      <section className="py-6 sm:py-8 lg:py-10">
+      <section className="relative z-10 section-y pt-0">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
             {/* LEFT CARD: MEETING STATUS (White Card) */}
-            <div className="lg:col-span-6 bg-white rounded-[22px] border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
-              <div>
+            <div data-reveal="card" className="lg:col-span-6 min-w-0">
+              <div className="h-full bg-white rounded-[20px] lg:rounded-[24px] border border-[#DDE3E3] p-6 sm:p-8">
                 {/* Top Row: Meeting Status Header */}
-                <div className="flex items-start gap-5 pb-7 border-b border-[#E8ECEC]">
-                  <div className="w-14 h-14 rounded-2xl bg-[#E2F89E] border border-[#C6EE5B] flex items-center justify-center text-[#1F6F78] shrink-0 mt-0.5">
-                    <Calendar className="w-7 h-7 text-[#1F6F78]" />
+                <div className="flex items-start gap-4 sm:gap-5 pb-7 border-b border-[#E8ECEC]">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#E2F89E] border border-[#C6EE5B] flex items-center justify-center text-[#1F6F78] shrink-0 mt-0.5">
+                    <Calendar className="w-6 h-6 sm:w-7 sm:h-7 text-[#1F6F78]" aria-hidden="true" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-[11px] text-[#87969F] uppercase font-heading font-bold tracking-wider leading-none mb-1.5">
-                      MEETING<br />STATUS
-                    </div>
-                    <h2 className="font-heading font-bold text-xl sm:text-2xl lg:text-[26px] text-[#0B1F2A] tracking-tight leading-snug mb-1.5">
-                      2026 Annual General &amp; Special Meeting
-                    </h2>
-                    <div className="flex items-center gap-2 text-sm font-semibold text-[#15803D]">
+                    <Eyebrow className="mb-2">Meeting Status</Eyebrow>
+                    <KineticHeading
+                      as="h2"
+                      text="2026 Annual General & Special Meeting"
+                      className={cn(type.h3, tone.headingLight, 'mb-2')}
+                    />
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold text-[#15803D]">
                       <span>Meeting held</span>
-                      <span className="text-[#87969F]">&bull;</span>
+                      <span className="text-[#5B6B73]" aria-hidden="true">&bull;</span>
                       <span className="text-[#0B1F2A]">7 August 2026</span>
                     </div>
                   </div>
@@ -193,33 +244,33 @@ export default function AgmPage() {
                 {/* Bottom Row: Record Date & Location Columns */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-7">
                   {/* Record Date */}
-                  <div className="flex flex-col">
+                  <div className="flex flex-col min-w-0">
                     <div className="flex items-center gap-2 mb-2">
-                      <Users className="w-5 h-5 text-[#1F6F78] shrink-0" />
-                      <span className="text-xs text-[#87969F] font-heading font-semibold uppercase tracking-wider">
+                      <Users className="w-5 h-5 text-[#1F6F78] shrink-0" aria-hidden="true" />
+                      <span className="text-xs text-[#5B6B73] font-heading font-semibold uppercase tracking-wider">
                         Record date
                       </span>
                     </div>
                     <span className="font-heading font-bold text-lg sm:text-xl text-[#0B1F2A] block mb-1.5">
                       3 July 2026
                     </span>
-                    <p className="text-xs text-[#5B6B73] leading-relaxed">
+                    <p className={cn(type.body, tone.mutedLight)}>
                       Shareholders of record as of this date were eligible to vote at the meeting.
                     </p>
                   </div>
 
                   {/* Location */}
-                  <div className="flex flex-col">
+                  <div className="flex flex-col min-w-0">
                     <div className="flex items-center gap-2 mb-2">
-                      <MapPin className="w-5 h-5 text-[#1F6F78] shrink-0" />
-                      <span className="text-xs text-[#87969F] font-heading font-semibold uppercase tracking-wider">
+                      <MapPin className="w-5 h-5 text-[#1F6F78] shrink-0" aria-hidden="true" />
+                      <span className="text-xs text-[#5B6B73] font-heading font-semibold uppercase tracking-wider">
                         Location
                       </span>
                     </div>
                     <span className="font-heading font-bold text-lg sm:text-xl text-[#0B1F2A] block mb-1.5">
                       Vancouver, British Columbia
                     </span>
-                    <p className="text-xs text-[#5B6B73] leading-relaxed">
+                    <p className={cn(type.body, tone.mutedLight)}>
                       The meeting was held as a hybrid meeting with both in-person and virtual participation.
                     </p>
                   </div>
@@ -228,17 +279,12 @@ export default function AgmPage() {
             </div>
 
             {/* RIGHT CARD: OFFICIAL MEETING MATERIALS (Dark Navy Card) */}
-            <div className="lg:col-span-6 bg-[#07161F] text-white rounded-[22px] border border-[#183040] p-7 sm:p-9 shadow-xl flex flex-col justify-between">
-              <div>
+            <div data-reveal="card" className="lg:col-span-6 min-w-0">
+              <div className="h-full bg-[#0B1F2A] text-white rounded-[20px] lg:rounded-[24px] border border-[#1D3B4C] p-6 sm:p-8 shadow-xl">
                 {/* Header Row */}
-                <div className="flex items-center justify-between pb-5 border-b border-white/10 mb-2">
-                  <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                    <span className="text-xs font-heading font-semibold text-[#B7E34A] uppercase tracking-[0.16em]">
-                      OFFICIAL MEETING MATERIALS
-                    </span>
-                  </div>
-                  <span className="text-[11px] font-heading font-medium text-[#87969F] uppercase tracking-wider">
+                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 pb-5 border-b border-white/10 mb-2">
+                  <Eyebrow dark className="mb-0">OFFICIAL MEETING MATERIALS</Eyebrow>
+                  <span className="text-xs font-heading font-medium text-[#DDE3E3]/75 uppercase tracking-wider">
                     ALL DOCUMENTS
                   </span>
                 </div>
@@ -251,21 +297,21 @@ export default function AgmPage() {
                       href={doc.url}
                       target={doc.isExternal ? '_blank' : undefined}
                       rel={doc.isExternal ? 'noopener noreferrer' : undefined}
-                      className="py-4 flex items-center justify-between gap-4 group transition-colors block"
+                      className="py-4 flex items-center justify-between gap-4 group transition-colors"
                     >
                       <div className="flex items-start gap-4 min-w-0">
                         <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#2DD4BF] group-hover:bg-[#B7E34A]/20 group-hover:border-[#B7E34A] group-hover:text-[#B7E34A] transition-colors shrink-0 mt-0.5">
                           {doc.isExternal ? (
-                            <ExternalLink className="w-5 h-5" />
+                            <ExternalLink className="w-5 h-5" aria-hidden="true" />
                           ) : (
-                            <FileText className="w-5 h-5" />
+                            <FileText className="w-5 h-5" aria-hidden="true" />
                           )}
                         </div>
                         <div className="min-w-0">
-                          <h3 className="font-heading font-semibold text-sm sm:text-[15px] text-white group-hover:text-[#B7E34A] transition-colors leading-snug line-clamp-2">
+                          <h3 className="font-heading font-semibold text-[15px] sm:text-base text-white group-hover:text-[#B7E34A] transition-colors leading-snug line-clamp-2">
                             {doc.title}
                           </h3>
-                          <p className="text-xs text-[#87969F] leading-relaxed line-clamp-1 mt-0.5">
+                          <p className="text-sm text-[#DDE3E3]/75 leading-relaxed line-clamp-2 sm:line-clamp-1 mt-0.5">
                             {doc.description}
                           </p>
                         </div>
@@ -273,14 +319,17 @@ export default function AgmPage() {
 
                       <div className="flex items-center gap-3 shrink-0">
                         <div className="text-right hidden sm:block">
-                          <span className="text-[10px] text-[#87969F] uppercase block leading-none mb-0.5">
+                          <span className="text-[11px] text-[#DDE3E3]/75 uppercase block leading-none mb-1">
                             {doc.isExternal ? '' : 'Published'}
                           </span>
-                          <span className="text-xs text-[#87969F] group-hover:text-white transition-colors">
+                          <span className="text-xs text-[#DDE3E3]/75 group-hover:text-white transition-colors whitespace-nowrap">
                             {doc.publishedDate}
                           </span>
                         </div>
-                        <ArrowRight className="w-4 h-4 text-[#2DD4BF] group-hover:text-[#B7E34A] group-hover:translate-x-1 transition-all" />
+                        <ArrowRight
+                          className="w-4 h-4 text-[#2DD4BF] group-hover:text-[#B7E34A] group-hover:translate-x-1 transition-all"
+                          aria-hidden="true"
+                        />
                       </div>
                     </a>
                   ))}
@@ -294,151 +343,93 @@ export default function AgmPage() {
       {/* =========================================================
           3. HOW SHAREHOLDER VOTING WORKS
          ========================================================= */}
-      <section className="py-8 sm:py-12">
+      <section className="relative z-10 section-y pt-0">
         <Container>
-          {/* Section Header */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-7">
-            <div>
-              <div className="flex items-center gap-2.5 mb-2">
-                <span className="w-6 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#0B1F2A] tracking-tight">
-                  How shareholder voting works
-                </h2>
-              </div>
-              <p className="text-xs sm:text-sm text-[#5B6B73]">
-                Different processes apply depending on how you hold your shares.
-              </p>
-            </div>
+          {/* Section Header (external link kept as a plain anchor so it opens in a new tab) */}
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12 sm:mb-16">
+            <SectionHeading
+              title="How shareholder voting works"
+              description="Different processes apply depending on how you hold your shares."
+              className="mb-0 min-w-0"
+            />
 
             <a
+              data-reveal="fade"
               href="https://www.sedarplus.ca"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-heading font-bold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors shrink-0 group"
+              className="text-link text-sm font-semibold shrink-0 inline-flex items-center gap-1.5 sm:pb-1.5 group"
             >
               <span>Learn more about voting</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
             </a>
           </div>
 
           {/* 3 Step Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            {/* Step 1: Registered Shareholders */}
-            <div className="bg-white rounded-[20px] border border-[#DDE3E3] p-7 shadow-sm hover:border-[#1F6F78] transition-all flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-5">
-                  <span className="w-8 h-8 rounded-full bg-[#E2F89E] text-[#0B1F2A] font-heading font-bold text-sm flex items-center justify-center">
-                    1
-                  </span>
-                  <div className="w-9 h-9 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78]">
-                    <FileEdit className="w-5 h-5" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mb-6 lg:mb-8">
+            {VOTING_STEPS.map(({ step, title, body, Icon }) => (
+              <div key={step} data-reveal="card" className="h-full min-w-0">
+                <div className={cn('h-full bg-white rounded-[16px] border border-[#DDE3E3] p-6 sm:p-7', cardHover)}>
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="w-8 h-8 rounded-full bg-[#E2F89E] text-[#0B1F2A] font-heading font-bold text-sm flex items-center justify-center">
+                      {step}
+                    </span>
+                    <div className="w-9 h-9 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78]">
+                      <Icon className="w-5 h-5" aria-hidden="true" />
+                    </div>
                   </div>
+
+                  <h3 className={cn(type.h4, tone.headingLight, 'mb-2')}>{title}</h3>
+
+                  <p className={cn(type.body, tone.mutedLight)}>{body}</p>
                 </div>
-
-                <h3 className="font-heading font-bold text-base text-[#0B1F2A] mb-2">
-                  Registered shareholders
-                </h3>
-
-                <p className="text-xs text-[#5B6B73] leading-relaxed">
-                  If your shares are registered in your name, you can vote online through Computershare or return a signed proxy form by mail.
-                </p>
               </div>
-            </div>
-
-            {/* Step 2: Beneficial Shareholders */}
-            <div className="bg-white rounded-[20px] border border-[#DDE3E3] p-7 shadow-sm hover:border-[#1F6F78] transition-all flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-5">
-                  <span className="w-8 h-8 rounded-full bg-[#E2F89E] text-[#0B1F2A] font-heading font-bold text-sm flex items-center justify-center">
-                    2
-                  </span>
-                  <div className="w-9 h-9 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78]">
-                    <Users className="w-5 h-5" />
-                  </div>
-                </div>
-
-                <h3 className="font-heading font-bold text-base text-[#0B1F2A] mb-2">
-                  Beneficial shareholders
-                </h3>
-
-                <p className="text-xs text-[#5B6B73] leading-relaxed">
-                  If you hold shares through a broker or financial institution, you will receive a Voting Instruction Form (VIF) and should follow the instructions provided by your intermediary.
-                </p>
-              </div>
-            </div>
-
-            {/* Step 3: Filing Archive */}
-            <div className="bg-white rounded-[20px] border border-[#DDE3E3] p-7 shadow-sm hover:border-[#1F6F78] transition-all flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-5">
-                  <span className="w-8 h-8 rounded-full bg-[#E2F89E] text-[#0B1F2A] font-heading font-bold text-sm flex items-center justify-center">
-                    3
-                  </span>
-                  <div className="w-9 h-9 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78]">
-                    <FileSearch className="w-5 h-5" />
-                  </div>
-                </div>
-
-                <h3 className="font-heading font-bold text-base text-[#0B1F2A] mb-2">
-                  Filing archive
-                </h3>
-
-                <p className="text-xs text-[#5B6B73] leading-relaxed">
-                  All official meeting materials and results are filed on SEDAR+. You can view the complete record of the AGM and related disclosures.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
 
           {/* Need Help? Horizontal Card */}
-          <div className="bg-white rounded-[20px] border border-[#DDE3E3] p-6 sm:p-7 shadow-sm">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-              {/* Left Column: Need help? (5 cols) */}
-              <div className="lg:col-span-5 flex items-start gap-4">
+          <div data-reveal className="bg-white rounded-[16px] border border-[#DDE3E3] p-6 sm:p-7">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+              {/* Left Column: Need help? */}
+              <div className="sm:col-span-2 lg:col-span-4 flex items-start gap-4 min-w-0">
                 <div className="w-12 h-12 rounded-full bg-[#E2F89E] border border-[#C6EE5B] flex items-center justify-center text-[#1F6F78] shrink-0 mt-0.5">
-                  <Phone className="w-5 h-5 text-[#1F6F78]" />
+                  <Phone className="w-5 h-5 text-[#1F6F78]" aria-hidden="true" />
                 </div>
-                <div>
-                  <h4 className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] mb-1">
-                    Need help?
-                  </h4>
-                  <p className="text-xs text-[#5B6B73] leading-relaxed">
+                <div className="min-w-0">
+                  <h3 className={cn(type.h4, tone.headingLight, 'mb-1')}>Need help?</h3>
+                  <p className={cn(type.body, tone.mutedLight)}>
                     If you have questions about the meeting materials or require assistance with voting, please contact our investor relations team or our transfer agent.
                   </p>
                 </div>
               </div>
 
-              {/* Middle Column: Investor Relations (3.5 cols) */}
-              <div className="lg:col-span-3 lg:border-l lg:border-[#E8ECEC] lg:pl-6 flex items-start gap-3.5">
+              {/* Middle Column: Investor Relations */}
+              <div className="lg:col-span-4 lg:border-l lg:border-[#E8ECEC] lg:pl-8 flex items-start gap-3.5 min-w-0">
                 <div className="w-9 h-9 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 mt-0.5">
-                  <Mail className="w-4 h-4" />
+                  <Mail className="w-4 h-4" aria-hidden="true" />
                 </div>
-                <div>
-                  <span className="text-[11px] text-[#87969F] uppercase font-heading font-bold tracking-wider block mb-1">
-                    Investor Relations
-                  </span>
+                <div className="min-w-0">
+                  <span className={detailLabelClass}>Investor Relations</span>
                   <a
                     href="mailto:info@monumental.energy"
-                    className="text-xs sm:text-[13px] font-semibold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors"
+                    className="text-sm font-semibold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors break-words"
                   >
                     info@monumental.energy
                   </a>
                 </div>
               </div>
 
-              {/* Right Column: Transfer Agent (3.5 cols) */}
-              <div className="lg:col-span-4 lg:border-l lg:border-[#E8ECEC] lg:pl-6 flex items-start gap-3.5">
+              {/* Right Column: Transfer Agent */}
+              <div className="lg:col-span-4 lg:border-l lg:border-[#E8ECEC] lg:pl-8 flex items-start gap-3.5 min-w-0">
                 <div className="w-9 h-9 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 mt-0.5">
-                  <Building className="w-4 h-4" />
+                  <Building className="w-4 h-4" aria-hidden="true" />
                 </div>
-                <div>
-                  <span className="text-[11px] text-[#87969F] uppercase font-heading font-bold tracking-wider block mb-1">
-                    Transfer Agent
-                  </span>
-                  <span className="text-xs sm:text-[13px] font-bold text-[#0B1F2A] block mb-0.5">
+                <div className="min-w-0">
+                  <span className={detailLabelClass}>Transfer Agent</span>
+                  <span className="text-sm font-bold text-[#0B1F2A] block mb-0.5">
                     Computershare Investor Services Inc.
                   </span>
-                  <span className="text-[11px] text-[#87969F] block">
+                  <span className={cn('text-sm block', tone.mutedLight)}>
                     For voting support and shareholder enquiries.
                   </span>
                 </div>
@@ -451,80 +442,41 @@ export default function AgmPage() {
       {/* =========================================================
           4. RELATED INVESTOR RESOURCES (3-Card Row)
          ========================================================= */}
-      <section className="py-10 sm:py-14">
+      <section className="relative z-10 section-y pt-0">
         <Container>
-          {/* Header Bar */}
-          <div className="flex items-center gap-2.5 mb-6">
-            <span className="w-6 h-1 bg-[#B7E34A] rounded-full inline-block" />
-            <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] tracking-tight">
-              Related Investor Resources
-            </h3>
-          </div>
+          <SectionHeading title="Related Investor Resources" size="compact" />
 
           {/* 3 Resource Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1: Investor Centre */}
-            <Link
-              href="/investors"
-              className="p-5 sm:p-6 rounded-[20px] bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
-                  <BarChart3 className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors leading-tight mb-1">
-                    Investor Centre
-                  </h4>
-                  <span className="text-xs text-[#87969F] block">
-                    Financial information, filings and more
-                  </span>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {RESOURCES.map(({ href, title, description, Icon }) => (
+              <div key={href} data-reveal="card" className="h-full min-w-0">
+                <Link
+                  href={href}
+                  className={cn(
+                    'h-full p-5 sm:p-6 rounded-[16px] bg-white border border-[#DDE3E3] flex items-center justify-between gap-4 group',
+                    cardHover
+                  )}
+                >
+                  <div className="flex items-center gap-4 min-w-0">
+                    <div className="w-12 h-12 rounded-2xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
+                      <Icon className="w-6 h-6" aria-hidden="true" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className={cn(type.h4, tone.headingLight, 'group-hover:text-[#1F6F78] transition-colors mb-1')}>
+                        {title}
+                      </h3>
+                      <span className={cn('text-sm leading-relaxed block', tone.mutedLight)}>
+                        {description}
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowRight
+                    className="w-4 h-4 text-[#5B6B73] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0"
+                    aria-hidden="true"
+                  />
+                </Link>
               </div>
-              <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
-            </Link>
-
-            {/* Card 2: Corporate Presentation */}
-            <Link
-              href="/investors/presentation"
-              className="p-5 sm:p-6 rounded-[20px] bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
-                  <FileText className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors leading-tight mb-1">
-                    Corporate Presentation
-                  </h4>
-                  <span className="text-xs text-[#87969F] block">
-                    View our latest investor deck
-                  </span>
-                </div>
-              </div>
-              <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
-            </Link>
-
-            {/* Card 3: News & Market Releases */}
-            <Link
-              href="/news"
-              className="p-5 sm:p-6 rounded-[20px] bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
-                  <Newspaper className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors leading-tight mb-1">
-                    News &amp; Market Releases
-                  </h4>
-                  <span className="text-xs text-[#87969F] block">
-                    Latest company announcements
-                  </span>
-                </div>
-              </div>
-              <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
-            </Link>
+            ))}
           </div>
         </Container>
       </section>

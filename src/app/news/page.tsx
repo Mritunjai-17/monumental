@@ -4,8 +4,14 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
+import { Button } from '@/components/ui/Button';
+import { Eyebrow } from '@/components/ui/Eyebrow';
+import { KineticHeading } from '@/components/ui/KineticHeading';
+import { SectionHeading } from '@/components/ui/SectionHeading';
+import { cn } from '@/lib/utils';
+import { type, tone } from '@/lib/typography';
 import { newsArticles } from '@/data/news';
-import { ArrowRight, Search, Newspaper, Mail, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Search, Newspaper, Mail, CheckCircle2, Calendar } from 'lucide-react';
 
 const CATEGORIES = [
   'All News',
@@ -14,6 +20,9 @@ const CATEGORIES = [
   'Investor Relations',
   'Industry Insights',
 ] as const;
+
+const cardHover =
+  'transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_-4px_rgba(11,31,42,0.08)] hover:border-[#1F6F78]/40';
 
 export default function NewsPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All News');
@@ -76,7 +85,7 @@ export default function NewsPage() {
       {/* =========================================================
           1. HERO SECTION (Split Left Content & Right Photograph)
          ========================================================= */}
-      <section className="relative overflow-hidden pt-10 sm:pt-14 lg:pt-16 pb-8 lg:pb-12">
+      <section className="relative overflow-hidden page-intro-y">
         {/* Subtle Topographical Elevation Contour Background (Top Left) */}
         <div
           className="absolute top-0 left-0 w-[550px] sm:w-[650px] lg:w-[750px] h-[550px] pointer-events-none opacity-[0.07] select-none z-0 overflow-hidden"
@@ -110,24 +119,24 @@ export default function NewsPage() {
         </div>
 
         <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[320px] lg:min-h-[380px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center lg:min-h-[380px]">
             {/* Left Column (Copy) */}
-            <div className="lg:col-span-6 pr-0 lg:pr-6">
-              <span className="text-[#1F6F78] uppercase text-xs sm:text-[13px] font-heading font-semibold tracking-[0.16em] mb-3 block">
-                LATEST UPDATES
-              </span>
+            <div className="lg:col-span-6 lg:pr-6 min-w-0">
+              <Eyebrow className="hero-eyebrow">LATEST UPDATES</Eyebrow>
 
-              <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-[54px] text-[#0B1F2A] tracking-[-0.02em] leading-[1.08] mb-5">
-                News &amp; Insights
-              </h1>
+              <KineticHeading
+                as="h1"
+                text="News & Insights"
+                className={cn(type.h1, tone.headingLight, 'mb-5')}
+              />
 
-              <p className="text-[#5B6B73] text-base sm:text-lg leading-relaxed max-w-xl font-normal">
+              <p className={cn('hero-copy max-w-xl', type.lead, tone.mutedLight)}>
                 Stay informed with the latest company announcements, project updates and industry perspectives from Monumental Energy.
               </p>
             </div>
 
             {/* Mobile / Tablet Image fallback */}
-            <div className="lg:hidden col-span-1 mt-4">
+            <div className="lg:hidden hero-copy">
               <div className="relative rounded-[16px] overflow-hidden aspect-[16/10] shadow-md border border-[#DDE3E3]">
                 <Image
                   src="/images/about-hero-taranaki.jpg"
@@ -145,22 +154,29 @@ export default function NewsPage() {
       {/* =========================================================
           2. FILTER PILLS & SEARCH BAR
          ========================================================= */}
-      <section className="pb-8 pt-2">
+      <section className="section-y-compact pt-0">
         <Container>
-          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
-            {/* Filter Pills */}
-            <div className="flex items-center flex-wrap gap-2 sm:gap-2.5">
+          <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 lg:gap-6">
+            {/* Filter Pills: scroll horizontally on small screens */}
+            <div
+              role="group"
+              aria-label="Filter news by category"
+              className="-mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 flex items-center flex-nowrap lg:flex-wrap gap-2 sm:gap-2.5 overflow-x-auto lg:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden min-w-0"
+            >
               {CATEGORIES.map((cat) => {
                 const isActive = selectedCategory === cat;
                 return (
                   <button
                     key={cat}
+                    type="button"
+                    aria-pressed={isActive}
                     onClick={() => setSelectedCategory(cat)}
-                    className={`px-4 sm:px-5 py-2 rounded-full text-xs font-heading font-semibold transition-all duration-200 ${
+                    className={cn(
+                      'shrink-0 whitespace-nowrap min-h-[44px] px-5 rounded-full border text-sm font-heading font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F6F78] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F5F6F1]',
                       isActive
-                        ? 'bg-[#0B1F2A] text-white shadow-sm'
-                        : 'text-[#5B6B73] hover:text-[#0B1F2A] hover:bg-black/5'
-                    }`}
+                        ? 'bg-[#0B1F2A] border-[#0B1F2A] text-white shadow-sm'
+                        : 'bg-white border-[#DDE3E3] text-[#5B6B73] hover:text-[#0B1F2A] hover:border-[#1F6F78]/40'
+                    )}
                   >
                     {cat}
                   </button>
@@ -169,14 +185,18 @@ export default function NewsPage() {
             </div>
 
             {/* Search Input */}
-            <div className="relative w-full lg:w-72">
-              <Search className="w-4 h-4 text-[#87969F] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <div className="relative w-full lg:w-72 shrink-0">
+              <Search
+                className="w-4 h-4 text-[#5B6B73] absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"
+                aria-hidden="true"
+              />
               <input
                 type="text"
+                aria-label="Search news"
                 placeholder="Search news, announcements..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 rounded-full border border-[#DDE3E3] bg-white text-xs text-[#0B1F2A] placeholder:text-[#87969F] focus:outline-none focus:border-[#1F6F78] shadow-sm transition-colors"
+                className="w-full h-11 pl-11 pr-4 rounded-full border border-[#DDE3E3] bg-white text-sm text-[#0B1F2A] placeholder:text-[#5B6B73] focus:outline-none focus:border-[#1F6F78] focus:ring-2 focus:ring-[#1F6F78]/20 shadow-sm transition-colors"
               />
             </div>
           </div>
@@ -186,12 +206,12 @@ export default function NewsPage() {
       {/* =========================================================
           3. FEATURED STORY SPOTLIGHT
          ========================================================= */}
-      <section className="py-6 sm:py-8">
+      <section className="section-y pt-0">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Left: Featured Image */}
-            <div className="lg:col-span-7">
-              <div className="group relative rounded-[18px] lg:rounded-[22px] overflow-hidden aspect-[16/10.5] shadow-[0_12px_36px_-6px_rgba(11,31,42,0.14)] bg-[#07161F] border border-[#DDE3E3]/80">
+            <div className="lg:col-span-7 min-w-0">
+              <div className="group relative rounded-[20px] lg:rounded-[24px] overflow-hidden aspect-[16/10.5] shadow-[0_12px_36px_-6px_rgba(11,31,42,0.14)] bg-[#07161F] border border-[#DDE3E3]/80">
                 <Image
                   src={currentFeatured.image || '/images/about-hero-taranaki.jpg'}
                   alt={currentFeatured.title}
@@ -205,32 +225,34 @@ export default function NewsPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#07161F]/70 via-transparent to-[#07161F]/20 pointer-events-none" />
 
                 {/* Top-Left Pill Badge: FEATURED */}
-                <div className="absolute top-5 left-5 z-10">
+                <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-10">
                   <span className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#B7E34A] text-[#0B1F2A] font-heading font-bold text-[10px] sm:text-[11px] uppercase tracking-wider shadow-sm">
                     FEATURED
                   </span>
                 </div>
 
                 {/* Bottom Bar: Press Release Tag & Pagination Arrows */}
-                <div className="absolute bottom-5 left-6 right-6 z-10 flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-white/90 text-xs font-heading font-medium">
-                    <Newspaper className="w-4 h-4 text-[#B7E34A]" />
-                    <span>{currentFeatured.releaseType}</span>
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5 z-10 flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2 text-white/90 text-xs font-heading font-medium min-w-0">
+                    <Newspaper className="w-4 h-4 text-[#B7E34A] shrink-0" aria-hidden="true" />
+                    <span className="truncate">{currentFeatured.releaseType}</span>
                   </div>
 
                   {/* Carousel Prev/Next */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
                     <button
+                      type="button"
                       onClick={handlePrevFeatured}
                       aria-label="Previous featured story"
-                      className="w-8 h-8 rounded-full bg-black/50 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm"
+                      className="w-11 h-11 rounded-full bg-black/50 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
                     >
                       &larr;
                     </button>
                     <button
+                      type="button"
                       onClick={handleNextFeatured}
                       aria-label="Next featured story"
-                      className="w-8 h-8 rounded-full bg-black/50 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm"
+                      className="w-11 h-11 rounded-full bg-black/50 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
                     >
                       &rarr;
                     </button>
@@ -240,12 +262,10 @@ export default function NewsPage() {
             </div>
 
             {/* Right: Featured Copy */}
-            <div className="lg:col-span-5 flex flex-col justify-center">
-              <span className="text-xs uppercase font-heading font-semibold tracking-[0.14em] text-[#1F6F78] mb-3 block">
-                {currentFeatured.date}
-              </span>
+            <div className="lg:col-span-5 flex flex-col justify-center min-w-0">
+              <Eyebrow>{currentFeatured.date}</Eyebrow>
 
-              <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-[36px] text-[#0B1F2A] leading-[1.18] tracking-[-0.01em] mb-4">
+              <h2 className={cn(type.h2Compact, tone.headingLight, 'mb-4')}>
                 <Link
                   href={`/news/${currentFeatured.slug}`}
                   className="hover:text-[#1F6F78] transition-colors"
@@ -254,7 +274,7 @@ export default function NewsPage() {
                 </Link>
               </h2>
 
-              <p className="text-sm sm:text-base text-[#5B6B73] leading-relaxed mb-8">
+              <p className={cn(type.lead, tone.mutedLight, 'mb-8')}>
                 {currentFeatured.excerpt}
               </p>
 
@@ -263,10 +283,10 @@ export default function NewsPage() {
                   href={`/news/${currentFeatured.slug}`}
                   className="inline-flex items-center gap-3 group"
                 >
-                  <span className="w-10 h-10 rounded-full bg-[#B7E34A] group-hover:bg-[#A3CF36] flex items-center justify-center text-[#0B1F2A] shadow-sm transition-all duration-200 group-hover:scale-105">
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  <span className="w-11 h-11 rounded-full bg-[#B7E34A] group-hover:bg-[#A3CF36] flex items-center justify-center text-[#0B1F2A] shadow-sm transition-all duration-200 group-hover:scale-105">
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                   </span>
-                  <span className="font-heading font-bold text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
+                  <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
                     Read full announcement
                   </span>
                 </Link>
@@ -279,83 +299,93 @@ export default function NewsPage() {
       {/* =========================================================
           4. DUAL SECTION: RECENT NEWS & LATEST ANNOUNCEMENTS
          ========================================================= */}
-      <section className="py-12 sm:py-16">
+      <section className="section-y bg-white">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
             {/* Left 8 Cols: Recent News Grid */}
-            <div className="lg:col-span-8">
+            <div className="lg:col-span-8 min-w-0">
               {/* Header */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-7 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                  <h3 className="font-serif text-2xl sm:text-3xl text-[#0B1F2A] font-normal">
-                    Recent News
-                  </h3>
-                </div>
+              <div data-reveal="fade" className="mb-12 sm:mb-16 flex flex-row items-end justify-between gap-4">
+                <KineticHeading
+                  as="h2"
+                  text="Recent News"
+                  className={cn(type.h2, tone.headingLight)}
+                />
 
                 <Link
                   href="#all-news"
                   onClick={() => setSelectedCategory('All News')}
-                  className="text-xs font-semibold text-[#1F6F78] hover:text-[#0B1F2A] inline-flex items-center gap-1.5 transition-colors group"
+                  className="text-link text-sm font-semibold shrink-0 inline-flex items-center gap-1.5 pb-1.5 text-[#1F6F78] group"
                 >
-                  <span>View all news</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                  <span className="hidden sm:inline">View all news</span>
+                  <span className="sm:hidden">View all</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </Link>
               </div>
 
               {/* 3-Card Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                 {recentNews.map((article) => (
-                  <article
-                    key={article.id}
-                    className="flex flex-col group bg-transparent"
-                  >
-                    <div className="relative rounded-[14px] overflow-hidden aspect-[16/10] bg-[#07161F] border border-[#DDE3E3] shadow-sm mb-3.5">
-                      <Image
-                        src={article.image || '/images/about-hero-taranaki.jpg'}
-                        alt={article.title}
-                        fill
-                        sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
-                        className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-                      />
-                    </div>
+                  <div key={article.id} data-reveal="card" className="h-full min-w-0">
+                    <article
+                      className={cn(
+                        'group flex flex-col h-full bg-[#F5F6F1] rounded-[16px] border border-[#DDE3E3] overflow-hidden',
+                        cardHover
+                      )}
+                    >
+                      <div className="relative overflow-hidden aspect-[16/10] bg-[#07161F]">
+                        <Image
+                          src={article.image || '/images/about-hero-taranaki.jpg'}
+                          alt={article.title}
+                          fill
+                          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                        />
+                      </div>
 
-                    <span className="text-[10px] sm:text-[11px] uppercase font-heading font-semibold text-[#1F6F78] tracking-wider mb-2 block">
-                      {article.date} &nbsp;|&nbsp; {article.category.toUpperCase()}
-                    </span>
+                      {/* Narrower padding at md-xl, where three cards share the 8-column track */}
+                      <div className="p-6 md:p-5 xl:p-6 flex flex-col flex-1">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#5B6B73] mb-3">
+                          <span className="flex items-center gap-1.5 font-medium">
+                            <Calendar className="w-3.5 h-3.5 text-[#1F6F78]" aria-hidden="true" />
+                            {article.date}
+                          </span>
+                          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#1F6F78] truncate">
+                            {article.category}
+                          </span>
+                        </div>
 
-                    <h4 className="font-heading font-bold text-base text-[#0B1F2A] leading-snug mb-2 group-hover:text-[#1F6F78] transition-colors line-clamp-2">
-                      <Link href={`/news/${article.slug}`}>{article.title}</Link>
-                    </h4>
+                        <h3 className={cn(type.h4, tone.headingLight, 'mb-3 line-clamp-3 group-hover:text-[#1F6F78] transition-colors')}>
+                          <Link href={`/news/${article.slug}`}>{article.title}</Link>
+                        </h3>
 
-                    <p className="text-xs text-[#5B6B73] leading-relaxed line-clamp-3 mb-4">
-                      {article.excerpt}
-                    </p>
+                        <p className="text-sm text-[#5B6B73] leading-relaxed line-clamp-3 mb-6">
+                          {article.excerpt}
+                        </p>
 
-                    <div className="mt-auto pt-1">
-                      <Link
-                        href={`/news/${article.slug}`}
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#1F6F78] group-hover:text-[#0B1F2A] transition-colors"
-                      >
-                        <span>Read more</span>
-                        <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    </div>
-                  </article>
+                        <div className="mt-auto pt-3 border-t border-[#DDE3E3]/60">
+                          <Link
+                            href={`/news/${article.slug}`}
+                            className="text-link text-sm font-semibold inline-flex items-center gap-1 text-[#1F6F78]"
+                          >
+                            <span>Read more</span>
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                          </Link>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
                 ))}
               </div>
             </div>
 
             {/* Right 4 Cols: Latest Announcements (Dark Card) */}
-            <div className="lg:col-span-4">
-              <div className="relative rounded-[20px] bg-[#07161F] text-white p-6 sm:p-7 border border-[#1D3B4C] shadow-xl overflow-hidden">
+            <div className="lg:col-span-4 min-w-0" data-reveal>
+              <div className="relative rounded-[20px] lg:rounded-[24px] bg-[#07161F] text-white p-6 sm:p-7 border border-[#1D3B4C] shadow-xl overflow-hidden">
                 {/* Header */}
-                <div className="flex items-center gap-2.5 mb-4">
-                  <span className="w-5 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                  <h3 className="font-heading font-bold text-lg sm:text-xl text-white">
-                    Latest Announcements
-                  </h3>
-                </div>
+                <h3 className={cn(type.h3, tone.headingDark, 'mb-4')}>
+                  Latest Announcements
+                </h3>
 
                 {/* Announcement List */}
                 <div className="divide-y divide-white/10">
@@ -363,17 +393,17 @@ export default function NewsPage() {
                     <Link
                       key={item.id}
                       href={`/news/${item.slug}`}
-                      className="py-3.5 flex items-start justify-between gap-3 group transition-colors block"
+                      className="py-4 flex items-start justify-between gap-3 group transition-colors"
                     >
-                      <div>
-                        <span className="text-[10px] text-[#87969F] uppercase tracking-wider block mb-1">
+                      <div className="min-w-0">
+                        <span className="text-xs text-[#DDE3E3]/75 uppercase tracking-wider block mb-1">
                           {item.date}
                         </span>
-                        <span className="text-xs sm:text-[13px] font-medium text-white group-hover:text-[#B7E34A] transition-colors leading-snug line-clamp-2 block">
+                        <span className="text-sm font-medium text-white group-hover:text-[#B7E34A] transition-colors leading-snug line-clamp-2 block">
                           {item.title}
                         </span>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-2 transition-transform group-hover:translate-x-1" />
+                      <ArrowRight className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-2 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                     </Link>
                   ))}
                 </div>
@@ -383,7 +413,7 @@ export default function NewsPage() {
                   <Link
                     href="#all-news"
                     onClick={() => setSelectedCategory('All News')}
-                    className="w-full py-2.5 rounded-full border border-white/20 hover:border-[#B7E34A] text-white hover:text-[#B7E34A] text-xs font-heading font-semibold tracking-wide text-center block transition-all"
+                    className="w-full min-h-[44px] px-5 rounded-full border border-white/20 hover:border-[#B7E34A] text-white hover:text-[#B7E34A] text-sm font-heading font-semibold tracking-wide inline-flex items-center justify-center transition-all"
                   >
                     View all news &rarr;
                   </Link>
@@ -397,27 +427,27 @@ export default function NewsPage() {
       {/* =========================================================
           5. INSIGHTS & PERSPECTIVES
          ========================================================= */}
-      <section className="py-12 sm:py-16 border-t border-[#DDE3E3]">
+      <section className="section-y">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             {/* Left Column (Headline & Action) */}
-            <div className="lg:col-span-4">
-              <div className="w-7 h-1 bg-[#B7E34A] rounded-full mb-3.5" />
-              <h3 className="font-serif text-2xl sm:text-3xl text-[#0B1F2A] font-normal leading-tight mb-3">
-                Insights &amp; Perspectives
-              </h3>
-              <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed max-w-sm mb-6">
-                Thoughts, trends and developments shaping the energy and critical minerals landscape.
-              </p>
+            <div className="lg:col-span-4 min-w-0">
+              <SectionHeading
+                title="Insights & Perspectives"
+                description="Thoughts, trends and developments shaping the energy and critical minerals landscape."
+                size="compact"
+                className="mb-8"
+              />
               <div>
                 <button
+                  type="button"
                   onClick={() => setSelectedCategory('Industry Insights')}
-                  className="inline-flex items-center gap-3 group cursor-pointer"
+                  className="inline-flex items-center gap-3 group cursor-pointer min-h-[44px]"
                 >
-                  <span className="w-9 h-9 rounded-full bg-[#B7E34A] group-hover:bg-[#A3CF36] flex items-center justify-center text-[#0B1F2A] shadow-sm transition-all duration-200 group-hover:scale-105">
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                  <span className="w-11 h-11 rounded-full bg-[#B7E34A] group-hover:bg-[#A3CF36] flex items-center justify-center text-[#0B1F2A] shadow-sm transition-all duration-200 group-hover:scale-105">
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                   </span>
-                  <span className="font-heading font-bold text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
+                  <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
                     Explore insights
                   </span>
                 </button>
@@ -425,38 +455,42 @@ export default function NewsPage() {
             </div>
 
             {/* Right Column: 2 Horizontal Insight Cards */}
-            <div className="lg:col-span-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="lg:col-span-8 min-w-0">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                 {insights.map((article) => (
-                  <article
-                    key={article.id}
-                    className="flex items-center gap-4 group p-3 rounded-[16px] hover:bg-white hover:shadow-sm border border-transparent hover:border-[#DDE3E3] transition-all"
-                  >
-                    <div className="relative w-32 h-24 sm:w-36 sm:h-28 rounded-xl overflow-hidden bg-[#07161F] shrink-0 border border-[#DDE3E3]/60">
-                      <Image
-                        src={article.image || '/images/about-hero-taranaki.jpg'}
-                        alt={article.title}
-                        fill
-                        sizes="144px"
-                        className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-                      />
-                    </div>
-                    <div className="flex flex-col min-w-0">
-                      <span className="text-[10px] uppercase font-heading font-semibold text-[#1F6F78] tracking-wider mb-1 block">
-                        INDUSTRY INSIGHTS
-                      </span>
-                      <h4 className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] leading-snug mb-2 group-hover:text-[#1F6F78] transition-colors line-clamp-2">
-                        <Link href={`/news/${article.slug}`}>{article.title}</Link>
-                      </h4>
-                      <Link
-                        href={`/news/${article.slug}`}
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#1F6F78] group-hover:text-[#0B1F2A] transition-colors mt-auto"
-                      >
-                        <span>Read article</span>
-                        <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    </div>
-                  </article>
+                  <div key={article.id} data-reveal="card" className="h-full min-w-0">
+                    <article
+                      className={cn(
+                        'group flex items-center gap-4 sm:gap-5 h-full p-5 sm:p-6 bg-white rounded-[16px] border border-[#DDE3E3]',
+                        cardHover
+                      )}
+                    >
+                      <div className="relative w-24 h-20 sm:w-32 sm:h-24 rounded-[12px] overflow-hidden bg-[#07161F] shrink-0 border border-[#DDE3E3]/60">
+                        <Image
+                          src={article.image || '/images/about-hero-taranaki.jpg'}
+                          alt={article.title}
+                          fill
+                          sizes="128px"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+                        />
+                      </div>
+                      <div className="flex flex-col min-w-0 self-stretch justify-center">
+                        <span className="text-[11px] uppercase font-heading font-semibold text-[#1F6F78] tracking-wider mb-1.5 block">
+                          INDUSTRY INSIGHTS
+                        </span>
+                        <h3 className={cn(type.h4, tone.headingLight, 'mb-2 line-clamp-2 group-hover:text-[#1F6F78] transition-colors')}>
+                          <Link href={`/news/${article.slug}`}>{article.title}</Link>
+                        </h3>
+                        <Link
+                          href={`/news/${article.slug}`}
+                          className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#1F6F78] group-hover:text-[#0B1F2A] transition-colors"
+                        >
+                          <span>Read article</span>
+                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                        </Link>
+                      </div>
+                    </article>
+                  </div>
                 ))}
               </div>
             </div>
@@ -467,71 +501,68 @@ export default function NewsPage() {
       {/* =========================================================
           6. BOTTOM NEWSLETTER / SUBSCRIPTION BANNER
          ========================================================= */}
-      <section className="pb-16 sm:pb-20 lg:pb-24 pt-4">
-        <Container>
-          <div className="relative rounded-[18px] lg:rounded-[22px] overflow-hidden min-h-[190px] sm:min-h-[210px] shadow-2xl border border-[#1D3B4C] bg-[#07161F]">
-            {/* Panoramic Sunset Mountain Landscape Photo */}
-            <div className="absolute inset-0 z-0">
-              <Image
-                src="/images/taranaki-sunset-banner.jpg"
-                alt="Golden hour sunset over Mount Taranaki"
-                fill
-                sizes="100vw"
-                className="object-cover object-[center_35%] opacity-65 brightness-95 contrast-110"
+      <section className="relative section-y-compact bg-[#0B1F2A] border-t border-[#1D3B4C] overflow-hidden">
+        {/* Panoramic Sunset Mountain Landscape Photo */}
+        <div className="absolute inset-0 z-0" aria-hidden="true">
+          <Image
+            src="/images/taranaki-sunset-banner.jpg"
+            alt="Golden hour sunset over Mount Taranaki"
+            fill
+            sizes="100vw"
+            className="object-cover object-[center_35%] opacity-50 brightness-95 contrast-110"
+          />
+          {/* Multi-stop Cinematic Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1F2A]/95 via-[#0B1F2A]/80 to-[#0B1F2A]/70" />
+        </div>
+
+        <Container className="relative z-10">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+            <div data-reveal="fade" className="min-w-0 max-w-2xl">
+              <Eyebrow dark>STAY INFORMED</Eyebrow>
+              <KineticHeading
+                as="h2"
+                text="Get the latest company updates"
+                className={cn(type.h2Compact, tone.headingDark, 'mb-3')}
               />
-              {/* Multi-stop Cinematic Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#07161F]/95 via-[#0B1F2A]/75 to-[#07161F]/80" />
+              <p className="text-sm sm:text-base leading-relaxed text-[#DDE3E3]/85 max-w-lg">
+                Subscribe to receive news releases, corporate updates and investor information directly to your inbox.
+              </p>
             </div>
 
-            {/* Banner Content Container */}
-            <div className="relative z-10 px-8 py-10 sm:px-12 sm:py-12 lg:px-16 lg:py-14 flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-5 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                  <span className="text-[#B7E34A] text-xs font-heading font-semibold uppercase tracking-[0.16em]">
-                    STAY INFORMED
-                  </span>
+            {/* Email Form */}
+            <div className="shrink-0 w-full md:w-auto md:max-w-md" data-reveal>
+              {subscribed ? (
+                <div role="status" className="inline-flex items-center gap-2 min-h-[44px] px-5 rounded-full bg-[#B7E34A]/20 border border-[#B7E34A] text-[#B7E34A] text-sm font-heading font-bold">
+                  <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
+                  <span>Thank you for subscribing!</span>
                 </div>
-                <h2 className="font-serif text-2xl sm:text-3xl lg:text-[34px] font-normal text-white leading-tight tracking-[-0.01em] mb-2">
-                  Get the latest company updates
-                </h2>
-                <p className="text-xs sm:text-sm text-[#DDE3E3] font-normal max-w-lg">
-                  Subscribe to receive news releases, corporate updates and investor information directly to your inbox.
-                </p>
-              </div>
-
-              {/* Email Form */}
-              <div className="shrink-0 w-full md:w-auto">
-                {subscribed ? (
-                  <div className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#B7E34A]/20 border border-[#B7E34A] text-[#B7E34A] text-xs font-heading font-bold">
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>Thank you for subscribing!</span>
+              ) : (
+                <form
+                  onSubmit={handleSubscribe}
+                  className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-1.5 p-1.5 rounded-2xl sm:rounded-full bg-[#07161F]/85 backdrop-blur-md border border-white/20 shadow-xl w-full md:w-[26rem]"
+                >
+                  <div className="flex items-center flex-grow min-w-0 px-3 h-11">
+                    <Mail className="w-4 h-4 text-[#DDE3E3]/75 mr-2.5 shrink-0" aria-hidden="true" />
+                    <input
+                      type="email"
+                      required
+                      aria-label="Email address"
+                      placeholder="Enter your email address"
+                      value={emailInput}
+                      onChange={(e) => setEmailInput(e.target.value)}
+                      className="w-full min-w-0 bg-transparent text-sm text-white placeholder:text-[#DDE3E3]/60 focus:outline-none"
+                    />
                   </div>
-                ) : (
-                  <form
-                    onSubmit={handleSubscribe}
-                    className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-1.5 p-1.5 rounded-2xl sm:rounded-full bg-[#0B1F2A]/85 backdrop-blur-md border border-white/20 shadow-xl max-w-md w-full"
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="md"
+                    className="shrink-0 rounded-full min-h-[44px] focus-visible:ring-offset-[#07161F]"
                   >
-                    <div className="flex items-center flex-grow px-3 py-1.5">
-                      <Mail className="w-4 h-4 text-[#87969F] mr-2.5 shrink-0" />
-                      <input
-                        type="email"
-                        required
-                        placeholder="Enter your email address"
-                        value={emailInput}
-                        onChange={(e) => setEmailInput(e.target.value)}
-                        className="w-full bg-transparent text-xs text-white placeholder:text-[#87969F] focus:outline-none"
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="px-6 py-2.5 rounded-full bg-[#B7E34A] hover:bg-[#A3CF36] text-[#0B1F2A] font-heading font-bold text-xs uppercase tracking-wider transition-all duration-200 shrink-0 shadow-md hover:scale-[1.02]"
-                    >
-                      Subscribe
-                    </button>
-                  </form>
-                )}
-              </div>
+                    Subscribe
+                  </Button>
+                </form>
+              )}
             </div>
           </div>
         </Container>

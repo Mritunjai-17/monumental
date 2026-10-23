@@ -6,7 +6,7 @@ import { KineticHeading } from '@/components/ui/KineticHeading';
 
 export const ContactCTA: React.FC = () => {
   return (
-    <section id="contact-ir" className="py-14 lg:py-24 bg-[#0B1F2A] text-white relative overflow-hidden">
+    <section id="contact-ir" className="section-y bg-[#0B1F2A] text-white relative overflow-hidden">
       {/* Subtle background radial glow */}
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#1F6F78]/15 rounded-full blur-3xl pointer-events-none" />
 

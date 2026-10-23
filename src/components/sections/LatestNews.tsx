@@ -12,7 +12,7 @@ export const LatestNews: React.FC = () => {
   const hasNews = recentNews.length > 0;
 
   return (
-    <section className="py-14 lg:py-24 bg-white">
+    <section className="section-y bg-white">
       <Container>
         <SectionHeading
           eyebrow="Market Disclosures"

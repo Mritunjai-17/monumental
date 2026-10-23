@@ -19,6 +19,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   const pathname = usePathname();
   const [expandedDropdown, setExpandedDropdown] = useState<string | null>(null);
   const prevPathname = useRef(pathname);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   // Close menu on actual route change (not on mount)
   useEffect(() => {
@@ -36,9 +37,13 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
       }
     };
 
+    // Move focus into the dialog, and back to the opener when it closes.
+    const opener = document.activeElement as HTMLElement | null;
+
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
+      closeButtonRef.current?.focus();
     } else {
       document.body.style.overflow = 'unset';
     }
@@ -46,6 +51,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
     return () => {
       document.body.style.overflow = 'unset';
       window.removeEventListener('keydown', handleKeyDown);
+      if (isOpen) opener?.focus();
     };
   }, [isOpen, onClose]);
 
@@ -75,10 +81,11 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           />
         </Link>
         <button
+          ref={closeButtonRef}
           type="button"
           onClick={onClose}
           aria-label="Close navigation menu"
-          className="w-10 h-10 flex items-center justify-center rounded-lg text-white hover:bg-[#162F3F] active:bg-[#1F6F78]/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
+          className="w-11 h-11 -mr-1.5 flex items-center justify-center rounded-lg text-white hover:bg-[#162F3F] active:bg-[#1F6F78]/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
         >
           <X className="w-6 h-6" />
         </button>
@@ -137,7 +144,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                             {child.label}
                           </span>
                           {child.description && (
-                            <span className="text-xs text-[#5B6B73] pl-5 line-clamp-1">{child.description}</span>
+                            <span className="text-xs text-white/55 pl-5 line-clamp-1">{child.description}</span>
                           )}
                         </Link>
                       ))}
@@ -171,17 +178,17 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           Investor Contact
         </Button>
 
-        <div className="flex flex-col gap-2.5 text-xs text-[#5B6B73] pt-1">
+        <div className="flex flex-col text-sm text-[#DDE3E3]/75">
           <a
             href={`mailto:${siteConfig.contact.email}`}
-            className="flex items-center gap-2.5 hover:text-[#B7E34A] transition-colors"
+            className="min-h-[44px] flex items-center gap-2.5 hover:text-[#B7E34A] transition-colors"
           >
             <Mail className="w-4 h-4 text-[#1F6F78]" />
             <span>{siteConfig.contact.email}</span>
           </a>
           <a
             href={`tel:${siteConfig.contact.phone}`}
-            className="flex items-center gap-2.5 hover:text-[#B7E34A] transition-colors"
+            className="min-h-[44px] flex items-center gap-2.5 hover:text-[#B7E34A] transition-colors"
           >
             <Phone className="w-4 h-4 text-[#1F6F78]" />
             <span>{siteConfig.contact.phone}</span>

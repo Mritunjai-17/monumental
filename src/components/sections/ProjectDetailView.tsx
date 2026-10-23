@@ -45,7 +45,7 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
       />
 
       {/* 2. Overview & Key Facts Table (Off-white) */}
-      <section className="py-14 lg:py-24 bg-[#F5F6F1]">
+      <section className="section-y bg-[#F5F6F1]">
         <Container>
           {/* Project banner (3:2 photo slot, cropped wide) */}
           <div className="relative w-full aspect-[16/9] sm:aspect-[21/9] rounded-[16px] overflow-hidden border border-[#DDE3E3] shadow-md mb-10 lg:mb-14 bg-[#0B1F2A]">
@@ -142,7 +142,7 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
       </section>
 
       {/* 3. Location & Geographic Setting */}
-      <section className="py-14 lg:py-24 bg-white border-y border-[#DDE3E3]">
+      <section className="section-y bg-white border-y border-[#DDE3E3]">
         <Container>
           <div className="max-w-3xl mb-8">
             <span className="eyebrow text-[#1F6F78] block mb-2 font-heading tracking-[0.12em] uppercase font-semibold text-xs sm:text-sm">
@@ -163,7 +163,7 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
       </section>
 
       {/* 4. Development Timeline (Off-white) */}
-      <section className="py-14 lg:py-24 bg-[#F5F6F1]">
+      <section className="section-y bg-[#F5F6F1]">
         <Container>
           <div className="max-w-3xl mb-12">
             <span className="eyebrow text-[#1F6F78] block mb-2 font-heading tracking-[0.12em] uppercase font-semibold text-xs sm:text-sm">
@@ -203,7 +203,7 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
       </section>
 
       {/* 5. Document Downloads List (White) */}
-      <section className="py-14 lg:py-24 bg-white border-t border-[#DDE3E3]">
+      <section className="section-y bg-white border-t border-[#DDE3E3]">
         <Container>
           <div className="max-w-3xl mb-10">
             <span className="eyebrow text-[#1F6F78] block mb-2 font-heading tracking-[0.12em] uppercase font-semibold text-xs sm:text-sm">
@@ -244,7 +244,7 @@ export const ProjectDetailView: React.FC<{ project: Project }> = ({ project }) =
       </section>
 
       {/* 6. CTA Band (Navy) */}
-      <section className="py-14 lg:py-24 bg-[#0B1F2A] text-white text-center">
+      <section className="section-y bg-[#0B1F2A] text-white text-center">
         <Container size="narrow">
           <span className="eyebrow text-[#B7E34A] block mb-2 font-heading tracking-[0.12em] uppercase font-semibold text-xs sm:text-sm">
             Investor Due Diligence

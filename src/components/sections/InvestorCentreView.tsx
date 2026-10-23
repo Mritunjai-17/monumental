@@ -4,6 +4,11 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
+import { Button } from '@/components/ui/Button';
+import { Eyebrow } from '@/components/ui/Eyebrow';
+import { KineticHeading } from '@/components/ui/KineticHeading';
+import { cn } from '@/lib/utils';
+import { type, tone } from '@/lib/typography';
 import {
   investorCapitalData,
   corporateDeck,
@@ -18,7 +23,6 @@ import {
   ShieldCheck,
   TrendingUp,
   ArrowRight,
-  FileText,
   Clock,
   Building,
   CheckCircle2,
@@ -30,8 +34,63 @@ import {
   Calendar,
 } from 'lucide-react';
 
+/*
+ * Download links need the native `download` attribute, which <Button href>
+ * does not forward, so they reuse the Button "md" styles on a plain <a>.
+ */
+const btnBase =
+  'group inline-flex items-center justify-center gap-2 font-body font-semibold text-[15px] sm:text-base px-6 py-3 sm:px-7 sm:py-3.5 rounded-[10px] border transition-all duration-200 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98] active:translate-y-0';
+const btnPrimary = cn(
+  btnBase,
+  'bg-[#B7E34A] text-[#0B1F2A] border-transparent hover:bg-[#A3CF36] hover:-translate-y-0.5 hover:shadow-lg focus-visible:ring-[#B7E34A]'
+);
+const btnNavy = cn(
+  btnBase,
+  'bg-[#0B1F2A] text-white border-transparent hover:bg-[#1F6F78] hover:-translate-y-0.5 hover:shadow-lg focus-visible:ring-[#0B1F2A]'
+);
+
+const cardHover =
+  'transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_-4px_rgba(11,31,42,0.08)] hover:border-[#1F6F78]/40';
+
+/* Dark panel inside the navy capital-structure section. */
+const darkPanel = 'rounded-[16px] bg-[#07161F]/60 border border-[#1D3B4C]';
+const darkPanelHover = 'transition-colors duration-300 hover:border-[#2DD4BF]/40';
+
+const TABS = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'warrants', label: 'Warrants & Options' },
+  { id: 'shareholders', label: 'Holders & Float' },
+] as const;
+
+type TabId = (typeof TABS)[number]['id'];
+
+const METRICS = [
+  { label: 'Issued & Outstanding', value: '62.4M', note: 'Common voting equity shares' },
+  { label: 'Cash & Liquidity', value: '$1.5M', note: 'Unrestricted treasury reserves' },
+  { label: 'Marketable Securities', value: '1.2M', note: 'Common shares held in NZEC' },
+  { label: 'Fully Diluted Total', value: '91.1M', note: 'Including all options & warrants' },
+];
+
+const FLOAT_SEGMENTS = [
+  {
+    swatch: 'bg-[#B7E34A]',
+    title: '40% Insiders & Associates',
+    text: '38.2M shares held by management and founders; subject to voluntary lock-up & escrow.',
+  },
+  {
+    swatch: 'bg-[#1F6F78]',
+    title: '40% Institutional Funds',
+    text: 'Strategic natural resource and critical mineral investment funds.',
+  },
+  {
+    swatch: 'bg-[#87969F]',
+    title: '20% Retail Float',
+    text: 'Liquid public market tradeable float on TSX-V, OTCQB, and Frankfurt.',
+  },
+];
+
 export function InvestorCentreView() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'warrants' | 'shareholders'>('overview');
+  const [activeTab, setActiveTab] = useState<TabId>('overview');
   const [emailInput, setEmailInput] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
@@ -48,7 +107,7 @@ export function InvestorCentreView() {
       {/* =========================================================
           1. HERO SECTION (Split Left Content & Right Photograph)
          ========================================================= */}
-      <section className="relative overflow-hidden pt-10 sm:pt-14 lg:pt-16 pb-10 lg:pb-12">
+      <section className="page-intro-y relative overflow-hidden">
         {/* Topographical Elevation Contour Background (Top Left) */}
         <div
           className="absolute top-0 left-0 w-[550px] sm:w-[650px] lg:w-[750px] h-[550px] pointer-events-none opacity-[0.07] select-none z-0 overflow-hidden"
@@ -82,44 +141,41 @@ export function InvestorCentreView() {
         </div>
 
         <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[340px] lg:min-h-[400px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center lg:min-h-[400px]">
             {/* Left Column (Copy & Actions) */}
-            <div className="lg:col-span-6 pr-0 lg:pr-6">
-              <span className="text-[#1F6F78] uppercase text-xs sm:text-[13px] font-heading font-semibold tracking-[0.16em] mb-3 block">
-                SHAREHOLDER HUB
-              </span>
+            <div className="lg:col-span-6 lg:pr-6 min-w-0">
+              <Eyebrow className="hero-eyebrow">SHAREHOLDER HUB</Eyebrow>
 
-              <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-[54px] text-[#0B1F2A] tracking-[-0.02em] leading-[1.08] mb-5">
-                Investor Centre
-              </h1>
+              <KineticHeading
+                as="h1"
+                text="Investor Centre"
+                className={cn(type.h1, tone.headingLight, 'mb-5')}
+              />
 
-              <p className="text-[#5B6B73] text-base sm:text-lg leading-relaxed max-w-xl font-normal mb-8">
+              <p className={cn('hero-copy max-w-xl mb-8', type.lead, tone.mutedLight)}>
                 Official regulatory disclosures, audited financial reporting, verified corporate presentation materials, and capital structure transparency for Monumental Energy Corp. (TSX-V: MNRG).
               </p>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+              <div className="hero-cta-group flex flex-wrap items-center gap-3 sm:gap-4">
                 <a
                   href="/documents/investor-presentation.pdf"
                   download="Monumental-Energy-Presentation-2026.pdf"
-                  className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#B7E34A] hover:bg-[#A3CF36] text-[#0B1F2A] font-heading font-bold text-xs uppercase tracking-wider transition-all duration-200 shadow-sm hover:scale-[1.02]"
+                  className={btnPrimary}
                 >
-                  <Download className="w-4 h-4 text-[#0B1F2A]" />
+                  <Download className="w-4 h-4" aria-hidden="true" />
                   <span>Download 2026 Presentation</span>
                 </a>
 
-                <Link
-                  href="/investors/presentation"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[#DDE3E3] hover:border-[#0B1F2A] bg-white text-[#0B1F2A] font-heading font-semibold text-xs tracking-wide transition-all shadow-sm"
-                >
-                  <Layers className="w-4 h-4 text-[#1F6F78]" />
-                  <span>Interactive Slide Deck</span>
-                </Link>
+                <Button href="/investors/presentation" variant="secondary" size="md">
+                  <Layers className="w-4 h-4" aria-hidden="true" />
+                  Interactive Slide Deck
+                </Button>
               </div>
             </div>
 
             {/* Mobile / Tablet Image fallback */}
-            <div className="lg:hidden col-span-1 mt-4">
+            <div className="lg:hidden col-span-1">
               <div className="relative rounded-[16px] overflow-hidden aspect-[16/10] shadow-md border border-[#DDE3E3]">
                 <Image
                   src="/images/corporate-office.jpg"
@@ -136,8 +192,10 @@ export function InvestorCentreView() {
 
       {/* =========================================================
           2. LIVE MARKET PERFORMANCE & DETAILED QUOTE (QuoteMedia Chart)
+          Follows the hero on the same background, so no top padding;
+          the card carries its own bottom margin.
          ========================================================= */}
-      <section className="pt-2 pb-6 sm:pb-8">
+      <section>
         <Container>
           <MarketPerformanceCard />
         </Container>
@@ -146,455 +204,391 @@ export function InvestorCentreView() {
       {/* =========================================================
           3. FINANCIAL TERMINAL & CAPITAL STRUCTURE (Interactive Tabs)
          ========================================================= */}
-      <section className="py-6 sm:py-10">
-        <Container>
-          <div className="relative rounded-[22px] bg-[#07161F] text-white border border-[#1D3B4C] shadow-2xl overflow-hidden p-6 sm:p-8 lg:p-10">
-            {/* Header: Trading Symbols & Institutional Title */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-white/10 mb-8">
-              <div>
-                <div className="flex flex-wrap items-center gap-2 mb-2">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0B1F2A] border border-[#2DD4BF]/30 text-white text-xs font-heading font-bold">
-                    <span className="w-2 h-2 rounded-full bg-[#B7E34A] animate-pulse" />
-                    <span>TSX-V: MNRG</span>
-                  </span>
+      <section className="section-y relative overflow-hidden bg-[#0B1F2A] text-white border-y border-[#1D3B4C]">
+        {/* Background glow */}
+        <div
+          className="absolute top-1/3 right-0 w-96 h-96 bg-[#1F6F78]/15 rounded-full blur-3xl pointer-events-none"
+          aria-hidden="true"
+        />
 
-                  {investorCapitalData.crossListings.map((cross) => (
-                    <span
-                      key={cross.exchange}
-                      className="px-2.5 py-1 rounded-full bg-white/10 text-[#DDE3E3] text-xs font-heading font-medium"
-                    >
-                      {cross.exchange}: {cross.symbol}
-                    </span>
-                  ))}
-                </div>
+        <Container className="relative z-10">
+          {/* Header: Trading Symbols & Title */}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8 sm:mb-10">
+            <div data-reveal="fade" className="min-w-0 max-w-3xl">
+              <div className="flex flex-wrap items-center gap-2 mb-5">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#07161F] border border-[#2DD4BF]/30 text-white text-xs font-heading font-bold">
+                  <span className="w-2 h-2 rounded-full bg-[#B7E34A] animate-pulse" />
+                  <span>TSX-V: MNRG</span>
+                </span>
 
-                <div>
-                  <span className="text-[#B7E34A] text-xs font-heading font-semibold uppercase tracking-[0.16em] block mb-1">
-                    SHARE CAPITALIZATION
+                {investorCapitalData.crossListings.map((cross) => (
+                  <span
+                    key={cross.exchange}
+                    className="px-2.5 py-1 rounded-full bg-white/10 text-[#DDE3E3] text-xs font-heading font-medium"
+                  >
+                    {cross.exchange}: {cross.symbol}
                   </span>
-                  <h2 className="font-heading font-bold text-2xl sm:text-3xl text-white tracking-tight">
-                    Capital Structure &amp; Share Ownership
-                  </h2>
-                </div>
+                ))}
               </div>
 
-              {/* TMX External Link & Tab Switcher */}
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-                <a
-                  href="https://money.tmx.com/en/quote/MNRG"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-heading font-semibold transition-colors shrink-0"
-                >
-                  <TrendingUp className="w-4 h-4 text-[#B7E34A]" />
-                  <span>TMX Money Quote</span>
-                  <ExternalLink className="w-3.5 h-3.5 text-[#2DD4BF]" />
-                </a>
+              <Eyebrow dark>SHARE CAPITALIZATION</Eyebrow>
+              <KineticHeading
+                text="Capital Structure & Share Ownership"
+                className={cn(type.h2, tone.headingDark)}
+              />
+            </div>
 
-                {/* Tab Buttons */}
-                <div className="flex items-center bg-[#0B1F2A] p-1 rounded-full border border-white/15">
+            <a
+              href="https://money.tmx.com/en/quote/MNRG"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="self-start lg:self-auto inline-flex items-center gap-2 min-h-11 px-5 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-heading font-semibold transition-colors shrink-0"
+            >
+              <TrendingUp className="w-4 h-4 text-[#B7E34A]" aria-hidden="true" />
+              <span>TMX Money Quote</span>
+              <ExternalLink className="w-3.5 h-3.5 text-[#2DD4BF]" aria-hidden="true" />
+            </a>
+          </div>
+
+          {/* Tab Buttons: scroll horizontally on narrow screens */}
+          <div className="-mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto pb-6 mb-8 border-b border-white/10">
+            <div
+              role="tablist"
+              aria-label="Capital structure views"
+              className="inline-flex items-center gap-1 bg-[#07161F]/70 p-1 rounded-full border border-white/15 whitespace-nowrap"
+            >
+              {TABS.map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
                   <button
-                    onClick={() => setActiveTab('overview')}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-heading font-semibold transition-all ${
-                      activeTab === 'overview'
+                    key={tab.id}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={cn(
+                      'min-h-11 px-5 rounded-full text-sm font-heading font-semibold transition-all shrink-0',
+                      isActive
                         ? 'bg-[#B7E34A] text-[#0B1F2A] shadow-sm'
-                        : 'text-[#87969F] hover:text-white'
-                    }`}
+                        : 'text-[#DDE3E3]/75 hover:text-white'
+                    )}
                   >
-                    Overview
+                    {tab.label}
                   </button>
-                  <button
-                    onClick={() => setActiveTab('warrants')}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-heading font-semibold transition-all ${
-                      activeTab === 'warrants'
-                        ? 'bg-[#B7E34A] text-[#0B1F2A] shadow-sm'
-                        : 'text-[#87969F] hover:text-white'
-                    }`}
-                  >
-                    Warrants &amp; Options
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('shareholders')}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-heading font-semibold transition-all ${
-                      activeTab === 'shareholders'
-                        ? 'bg-[#B7E34A] text-[#0B1F2A] shadow-sm'
-                        : 'text-[#87969F] hover:text-white'
-                    }`}
-                  >
-                    Holders &amp; Float
-                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* =========================================================
+              TAB 1: OVERVIEW & KEY METRICS
+             ========================================================= */}
+          {activeTab === 'overview' && (
+            <div role="tabpanel" className="space-y-6 lg:space-y-8">
+              {/* 4 Metric Tiles */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+                {METRICS.map((metric) => (
+                  <div key={metric.label} className={cn(darkPanel, darkPanelHover, 'p-4 sm:p-6 min-w-0')}>
+                    <span className="text-xs text-[#DDE3E3]/75 font-heading font-semibold uppercase tracking-wider block mb-2">
+                      {metric.label}
+                    </span>
+                    <span className="font-heading font-bold text-3xl sm:text-4xl text-white block mb-1.5 tracking-[-0.02em]">
+                      {metric.value}
+                    </span>
+                    <span className="text-sm text-[#DDE3E3]/75 block leading-snug">
+                      {metric.note}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Float Distribution Breakdown */}
+              <div className={cn(darkPanel, 'p-5 sm:p-6')}>
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                  <div className="flex items-center gap-2">
+                    <PieChart className="w-4 h-4 text-[#B7E34A] shrink-0" aria-hidden="true" />
+                    <h3 className="font-heading font-bold text-sm text-white uppercase tracking-wider">
+                      Share Ownership &amp; Float Concentration
+                    </h3>
+                  </div>
+                  <span className="text-sm text-[#DDE3E3]/75">
+                    Tight Capital Structure (40% Insiders • 40% Institutional • 20% Retail)
+                  </span>
+                </div>
+
+                {/* 3-Segment Proportional Distribution Bar */}
+                <div className="w-full h-3.5 rounded-full overflow-hidden flex bg-white/10 mb-5 p-0.5">
+                  <div
+                    style={{ width: '40%' }}
+                    className="h-full bg-[#B7E34A] rounded-l-full"
+                    title="40% Insiders & Close Associates"
+                  />
+                  <div
+                    style={{ width: '40%' }}
+                    className="h-full bg-[#1F6F78]"
+                    title="40% Institutional Funds"
+                  />
+                  <div
+                    style={{ width: '20%' }}
+                    className="h-full bg-[#87969F] rounded-r-full"
+                    title="20% Tradeable Retail Float"
+                  />
+                </div>
+
+                {/* Distribution Legend */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {FLOAT_SEGMENTS.map((seg) => (
+                    <div key={seg.title} className="p-4 rounded-xl bg-black/30 border border-white/5 min-w-0">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className={cn('w-2.5 h-2.5 rounded-sm shrink-0', seg.swatch)} />
+                        <span className="font-heading font-bold text-white text-sm">{seg.title}</span>
+                      </div>
+                      <span className="text-[#DDE3E3]/75 block text-sm leading-relaxed">{seg.text}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
+          )}
 
-            {/* =========================================================
-                TAB 1: OVERVIEW & KEY METRICS
-               ========================================================= */}
-            {activeTab === 'overview' && (
-              <div className="space-y-8 animate-fadeIn">
-                {/* 4 Metric Tiles */}
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                  <div className="p-5 rounded-2xl bg-[#0B1F2A]/80 border border-white/10 relative overflow-hidden group hover:border-[#1F6F78] transition-colors">
-                    <span className="text-xs text-[#87969F] font-heading uppercase tracking-wider block mb-2">
-                      Issued &amp; Outstanding
-                    </span>
-                    <span className="font-heading font-bold text-3xl sm:text-4xl text-white block mb-1.5 tracking-tight">
-                      62.4M
-                    </span>
-                    <span className="text-xs text-[#87969F] block">
-                      Common voting equity shares
-                    </span>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-[#0B1F2A]/80 border border-white/10 relative overflow-hidden group hover:border-[#1F6F78] transition-colors">
-                    <span className="text-xs text-[#87969F] font-heading uppercase tracking-wider block mb-2">
-                      Cash &amp; Liquidity
-                    </span>
-                    <span className="font-heading font-bold text-3xl sm:text-4xl text-white block mb-1.5 tracking-tight">
-                      $1.5M
-                    </span>
-                    <span className="text-xs text-[#87969F] block">
-                      Unrestricted treasury reserves
-                    </span>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-[#0B1F2A]/80 border border-white/10 relative overflow-hidden group hover:border-[#1F6F78] transition-colors">
-                    <span className="text-xs text-[#87969F] font-heading uppercase tracking-wider block mb-2">
-                      Marketable Securities
-                    </span>
-                    <span className="font-heading font-bold text-3xl sm:text-4xl text-white block mb-1.5 tracking-tight">
-                      1.2M
-                    </span>
-                    <span className="text-xs text-[#87969F] block">
-                      Common shares held in NZEC
-                    </span>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-[#0B1F2A]/80 border border-white/10 relative overflow-hidden group hover:border-[#1F6F78] transition-colors">
-                    <span className="text-xs text-[#87969F] font-heading uppercase tracking-wider block mb-2">
-                      Fully Diluted Total
-                    </span>
-                    <span className="font-heading font-bold text-3xl sm:text-4xl text-white block mb-1.5 tracking-tight">
-                      91.1M
-                    </span>
-                    <span className="text-xs text-[#87969F] block">
-                      Including all options &amp; warrants
-                    </span>
-                  </div>
+          {/* =========================================================
+              TAB 2: WARRANTS & OPTIONS SCHEDULE
+             ========================================================= */}
+          {activeTab === 'warrants' && (
+            <div role="tabpanel" className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+              {/* Warrants Table */}
+              <div className={cn(darkPanel, 'p-5 sm:p-6 min-w-0')}>
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h3 className="font-heading font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#B7E34A]" />
+                    Outstanding Warrants Schedule
+                  </h3>
+                  <span className="text-xs font-semibold text-[#B7E34A] bg-[#B7E34A]/10 px-2.5 py-1 rounded-full">
+                    Total: {investorCapitalData.totalWarrants}
+                  </span>
                 </div>
 
-                {/* Float Distribution Breakdown */}
-                <div className="p-6 rounded-2xl bg-[#0B1F2A]/60 border border-white/10">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                    <div className="flex items-center gap-2">
-                      <PieChart className="w-4 h-4 text-[#B7E34A]" />
-                      <h3 className="font-heading font-bold text-sm text-white uppercase tracking-wider">
-                        Share Ownership &amp; Float Concentration
-                      </h3>
-                    </div>
-                    <span className="text-xs text-[#87969F]">
-                      Tight Capital Structure (40% Insiders • 40% Institutional • 20% Retail)
-                    </span>
-                  </div>
-
-                  {/* 3-Segment Proportional Distribution Bar */}
-                  <div className="w-full h-3.5 rounded-full overflow-hidden flex bg-white/10 mb-5 p-0.5">
-                    <div
-                      style={{ width: '40%' }}
-                      className="h-full bg-[#B7E34A] rounded-l-full"
-                      title="40% Insiders & Close Associates"
-                    />
-                    <div
-                      style={{ width: '40%' }}
-                      className="h-full bg-[#1F6F78]"
-                      title="40% Institutional Funds"
-                    />
-                    <div
-                      style={{ width: '20%' }}
-                      className="h-full bg-[#87969F] rounded-r-full"
-                      title="20% Tradeable Retail Float"
-                    />
-                  </div>
-
-                  {/* Distribution Legend */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs pt-1">
-                    <div className="p-3.5 rounded-xl bg-black/30 border border-white/5">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="w-2.5 h-2.5 rounded-sm bg-[#B7E34A]" />
-                        <span className="font-heading font-bold text-white text-sm">40% Insiders &amp; Associates</span>
-                      </div>
-                      <span className="text-[#87969F] block text-xs leading-relaxed">
-                        38.2M shares held by management and founders; subject to voluntary lock-up &amp; escrow.
-                      </span>
-                    </div>
-
-                    <div className="p-3.5 rounded-xl bg-black/30 border border-white/5">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="w-2.5 h-2.5 rounded-sm bg-[#1F6F78]" />
-                        <span className="font-heading font-bold text-white text-sm">40% Institutional Funds</span>
-                      </div>
-                      <span className="text-[#87969F] block text-xs leading-relaxed">
-                        Strategic natural resource and critical mineral investment funds.
-                      </span>
-                    </div>
-
-                    <div className="p-3.5 rounded-xl bg-black/30 border border-white/5">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="w-2.5 h-2.5 rounded-sm bg-[#87969F]" />
-                        <span className="font-heading font-bold text-white text-sm">20% Retail Float</span>
-                      </div>
-                      <span className="text-[#87969F] block text-xs leading-relaxed">
-                        Liquid public market tradeable float on TSX-V, OTCQB, and Frankfurt.
-                      </span>
-                    </div>
-                  </div>
+                <div className="overflow-x-auto -mx-5 px-5 sm:mx-0 sm:px-0">
+                  <table className="w-full min-w-[460px] text-sm text-left">
+                    <thead>
+                      <tr className="border-b border-white/10 text-[#DDE3E3]/75">
+                        <th scope="col" className="py-2.5 pr-4 font-medium">Tranche</th>
+                        <th scope="col" className="py-2.5 px-2 font-medium text-right whitespace-nowrap">Quantity</th>
+                        <th scope="col" className="py-2.5 px-2 font-medium text-right whitespace-nowrap">Exercise Price</th>
+                        <th scope="col" className="py-2.5 pl-2 font-medium text-right">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {investorCapitalData.warrants.map((w) => (
+                        <tr key={w.tranche} className="hover:bg-white/5">
+                          <td className="py-3 pr-4 font-semibold text-white">{w.tranche}</td>
+                          <td className="py-3 px-2 text-right font-mono text-[#DDE3E3] whitespace-nowrap">{w.quantity}</td>
+                          <td className="py-3 px-2 text-right font-mono text-[#B7E34A] font-semibold whitespace-nowrap">{w.strikePrice}</td>
+                          <td className="py-3 pl-2 text-right text-[#DDE3E3]/75">{w.status}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
-            )}
 
-            {/* =========================================================
-                TAB 2: WARRANTS & OPTIONS SCHEDULE
-               ========================================================= */}
-            {activeTab === 'warrants' && (
-              <div className="space-y-8 animate-fadeIn">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {/* Warrants Table */}
-                  <div className="p-6 rounded-2xl bg-[#0B1F2A]/70 border border-white/10">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="font-heading font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-[#B7E34A]" />
-                        Outstanding Warrants Schedule
-                      </h3>
-                      <span className="text-xs font-semibold text-[#B7E34A] bg-[#B7E34A]/10 px-2.5 py-1 rounded-full">
-                        Total: {investorCapitalData.totalWarrants}
+              {/* Stock Options Table */}
+              <div className={cn(darkPanel, 'p-5 sm:p-6 min-w-0')}>
+                <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                  <h3 className="font-heading font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#1F6F78]" />
+                    Stock Incentive Options
+                  </h3>
+                  <span className="text-xs font-semibold text-[#2DD4BF] bg-[#1F6F78]/20 px-2.5 py-1 rounded-full">
+                    Total: {investorCapitalData.totalOptions}
+                  </span>
+                </div>
+
+                <div className="overflow-x-auto -mx-5 px-5 sm:mx-0 sm:px-0">
+                  <table className="w-full min-w-[460px] text-sm text-left">
+                    <thead>
+                      <tr className="border-b border-white/10 text-[#DDE3E3]/75">
+                        <th scope="col" className="py-2.5 pr-4 font-medium">Incentive Plan</th>
+                        <th scope="col" className="py-2.5 px-2 font-medium text-right whitespace-nowrap">Options</th>
+                        <th scope="col" className="py-2.5 px-2 font-medium text-right whitespace-nowrap">Strike Price</th>
+                        <th scope="col" className="py-2.5 pl-2 font-medium text-right">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {investorCapitalData.options.map((opt) => (
+                        <tr key={opt.tranche} className="hover:bg-white/5">
+                          <td className="py-3 pr-4 font-semibold text-white">{opt.tranche}</td>
+                          <td className="py-3 px-2 text-right font-mono text-[#DDE3E3] whitespace-nowrap">{opt.quantity}</td>
+                          <td className="py-3 px-2 text-right font-mono text-[#B7E34A] font-semibold whitespace-nowrap">{opt.strikePrice}</td>
+                          <td className="py-3 pl-2 text-right text-[#DDE3E3]/75">{opt.status}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* =========================================================
+              TAB 3: SIGNIFICANT SHAREHOLDERS & ESCROW
+             ========================================================= */}
+          {activeTab === 'shareholders' && (
+            <div role="tabpanel" className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5">
+                {investorCapitalData.significantShareholders.map((holder) => (
+                  <div key={holder.name} className={cn(darkPanel, darkPanelHover, 'p-5 sm:p-6 min-w-0')}>
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 mb-2">
+                      <span className="text-xs uppercase tracking-wider text-[#B7E34A] font-heading font-semibold">
+                        {holder.stakeType}
+                      </span>
+                      <span className="font-heading font-bold text-xl text-white">
+                        {holder.shares} Shares
                       </span>
                     </div>
-
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs text-left">
-                        <thead>
-                          <tr className="border-b border-white/10 text-[#87969F]">
-                            <th className="py-2.5 font-medium">Tranche</th>
-                            <th className="py-2.5 font-medium text-right">Quantity</th>
-                            <th className="py-2.5 font-medium text-right">Exercise Price</th>
-                            <th className="py-2.5 font-medium text-right">Status</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-white/5">
-                          {investorCapitalData.warrants.map((w) => (
-                            <tr key={w.tranche} className="hover:bg-white/5">
-                              <td className="py-3 font-semibold text-white">{w.tranche}</td>
-                              <td className="py-3 text-right font-mono text-[#DDE3E3]">{w.quantity}</td>
-                              <td className="py-3 text-right font-mono text-[#B7E34A] font-semibold">{w.strikePrice}</td>
-                              <td className="py-3 text-right text-[#87969F]">{w.status}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+                    <h4 className={cn(type.h4, tone.headingDark, 'mb-2')}>
+                      {holder.name}
+                    </h4>
+                    <p className="text-sm text-[#DDE3E3]/75 leading-relaxed">
+                      {holder.notes}
+                    </p>
                   </div>
+                ))}
+              </div>
 
-                  {/* Stock Options Table */}
-                  <div className="p-6 rounded-2xl bg-[#0B1F2A]/70 border border-white/10">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="font-heading font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-[#1F6F78]" />
-                        Stock Incentive Options
-                      </h3>
-                      <span className="text-xs font-semibold text-[#2DD4BF] bg-[#1F6F78]/20 px-2.5 py-1 rounded-full">
-                        Total: {investorCapitalData.totalOptions}
-                      </span>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs text-left">
-                        <thead>
-                          <tr className="border-b border-white/10 text-[#87969F]">
-                            <th className="py-2.5 font-medium">Incentive Plan</th>
-                            <th className="py-2.5 font-medium text-right">Options</th>
-                            <th className="py-2.5 font-medium text-right">Strike Price</th>
-                            <th className="py-2.5 font-medium text-right">Status</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-white/5">
-                          {investorCapitalData.options.map((opt) => (
-                            <tr key={opt.tranche} className="hover:bg-white/5">
-                              <td className="py-3 font-semibold text-white">{opt.tranche}</td>
-                              <td className="py-3 text-right font-mono text-[#DDE3E3]">{opt.quantity}</td>
-                              <td className="py-3 text-right font-mono text-[#B7E34A] font-semibold">{opt.strikePrice}</td>
-                              <td className="py-3 text-right text-[#87969F]">{opt.status}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+              {/* Escrow Disclosure Callout */}
+              <div className="p-5 sm:p-6 rounded-[16px] bg-[#162F3F]/60 border border-[#1F6F78]/50 text-sm text-[#DDE3E3] leading-relaxed">
+                <div className="flex items-center gap-2 text-white font-semibold mb-1.5">
+                  <ShieldCheck className="w-4 h-4 text-[#B7E34A] shrink-0" aria-hidden="true" />
+                  <span>Statutory Escrow &amp; Voluntary Lock-Up Notice</span>
                 </div>
+                <p>{investorCapitalData.escrowNotice}</p>
               </div>
-            )}
+            </div>
+          )}
 
-            {/* =========================================================
-                TAB 3: SIGNIFICANT SHAREHOLDERS & ESCROW
-               ========================================================= */}
-            {activeTab === 'shareholders' && (
-              <div className="space-y-6 animate-fadeIn">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {investorCapitalData.significantShareholders.map((holder) => (
-                    <div
-                      key={holder.name}
-                      className="p-6 rounded-2xl bg-[#0B1F2A]/80 border border-white/10 hover:border-[#1F6F78] transition-colors"
-                    >
-                      <div className="flex items-center justify-between gap-2 mb-2">
-                        <span className="text-xs uppercase tracking-wider text-[#B7E34A] font-heading font-semibold">
-                          {holder.stakeType}
-                        </span>
-                        <span className="font-heading font-bold text-xl text-white">
-                          {holder.shares} Shares
-                        </span>
-                      </div>
-                      <h4 className="font-heading font-bold text-lg text-white mb-2">
-                        {holder.name}
-                      </h4>
-                      <p className="text-xs text-[#87969F] leading-relaxed">
-                        {holder.notes}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Escrow Disclosure Callout */}
-                <div className="p-5 rounded-2xl bg-[#162F3F]/60 border border-[#1F6F78]/50 text-xs text-[#DDE3E3] leading-relaxed">
-                  <div className="flex items-center gap-2 text-white font-semibold mb-1.5">
-                    <ShieldCheck className="w-4 h-4 text-[#B7E34A]" />
-                    <span>Statutory Escrow &amp; Voluntary Lock-Up Notice</span>
-                  </div>
-                  <p>{investorCapitalData.escrowNotice}</p>
-                </div>
-              </div>
-            )}
-
-            {/* Footer / Attribution Notice */}
-            <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-[11px] text-[#87969F]">
-              <div className="flex items-center gap-2">
-                <Clock className="w-3.5 h-3.5 text-[#1F6F78]" />
-                <span>Data Source: TMX Group (TSX Venture Exchange) • Delayed 15 minutes</span>
-              </div>
-              <div>
-                <span>Securities Identifiers: CUSIP {investorCapitalData.identifiers.cusip} • ISIN {investorCapitalData.identifiers.isin}</span>
-              </div>
+          {/* Footer / Attribution Notice */}
+          <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#DDE3E3]/75">
+            <div className="flex items-start sm:items-center gap-2">
+              <Clock className="w-3.5 h-3.5 text-[#2DD4BF] shrink-0 mt-0.5 sm:mt-0" aria-hidden="true" />
+              <span>Data Source: TMX Group (TSX Venture Exchange) • Delayed 15 minutes</span>
+            </div>
+            <div className="break-words">
+              <span>Securities Identifiers: CUSIP {investorCapitalData.identifiers.cusip} • ISIN {investorCapitalData.identifiers.isin}</span>
             </div>
           </div>
         </Container>
       </section>
 
       {/* =========================================================
-          3. CORE SHAREHOLDER DOCUMENTS (Dual Featured Cards)
+          4. CORE SHAREHOLDER DOCUMENTS (Dual Featured Cards)
          ========================================================= */}
-      <section className="py-10 sm:py-14">
+      <section className="section-y">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
             {/* Card 1: Official Corporate Presentation */}
-            <div className="lg:col-span-7 bg-white rounded-[22px] border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-4">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] text-xs font-heading font-semibold">
-                    <ShieldCheck className="w-4 h-4" />
-                    <span>Verified Corporate Deck • Q1 2026</span>
-                  </span>
-                  <span className="text-xs text-[#87969F] font-heading font-medium">
-                    28 Slides (PDF)
-                  </span>
+            <div data-reveal="card" className="lg:col-span-7 min-w-0">
+              <div className={cn('h-full bg-white rounded-[20px] lg:rounded-[24px] border border-[#DDE3E3] p-6 sm:p-8 shadow-sm flex flex-col justify-between', cardHover)}>
+                <div>
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1F6F78]/10 text-[#1F6F78] text-xs font-heading font-semibold">
+                      <ShieldCheck className="w-4 h-4" aria-hidden="true" />
+                      <span>Verified Corporate Deck • Q1 2026</span>
+                    </span>
+                    <span className="text-xs text-[#5B6B73] font-heading font-medium">
+                      28 Slides (PDF)
+                    </span>
+                  </div>
+
+                  <h3 className={cn(type.h3, tone.headingLight, 'mb-3')}>
+                    {corporateDeck.title}
+                  </h3>
+
+                  <p className={cn(type.body, tone.mutedLight, 'mb-6')}>
+                    {corporateDeck.summary}
+                  </p>
+
+                  {/* Document Metadata Strip */}
+                  <dl className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3 p-4 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3] text-sm mb-6">
+                    <div className="min-w-0">
+                      <dt className="text-[#5B6B73] text-xs">Format</dt>
+                      <dd className="font-semibold text-[#0B1F2A] break-words">{corporateDeck.format}</dd>
+                    </div>
+                    <div className="min-w-0">
+                      <dt className="text-[#5B6B73] text-xs">Release</dt>
+                      <dd className="font-semibold text-[#0B1F2A] break-words">{corporateDeck.releaseDate}</dd>
+                    </div>
+                    <div className="min-w-0">
+                      <dt className="text-[#5B6B73] text-xs">File Size</dt>
+                      <dd className="font-semibold text-[#0B1F2A] break-words">{corporateDeck.fileSize}</dd>
+                    </div>
+                    <div className="min-w-0">
+                      <dt className="text-[#5B6B73] text-xs">Disclosure</dt>
+                      <dd className="font-semibold text-[#1F6F78] break-words">TSX-V Compliant</dd>
+                    </div>
+                  </dl>
                 </div>
 
-                <h3 className="font-heading font-bold text-2xl sm:text-3xl text-[#0B1F2A] leading-tight mb-3">
-                  {corporateDeck.title}
-                </h3>
+                {/* Action Buttons */}
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  <a
+                    href={corporateDeck.downloadUrl}
+                    download="Monumental-Energy-Presentation-2026.pdf"
+                    className={btnPrimary}
+                  >
+                    <Download className="w-4 h-4" aria-hidden="true" />
+                    <span>Download Deck (PDF)</span>
+                  </a>
 
-                <p className="text-sm text-[#5B6B73] leading-relaxed mb-6">
-                  {corporateDeck.summary}
-                </p>
-
-                {/* Document Metadata Strip */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3] text-xs text-[#5B6B73] mb-6">
-                  <div>
-                    <span className="text-[#87969F] block text-[11px]">Format</span>
-                    <span className="font-semibold text-[#0B1F2A]">{corporateDeck.format}</span>
-                  </div>
-                  <div>
-                    <span className="text-[#87969F] block text-[11px]">Release</span>
-                    <span className="font-semibold text-[#0B1F2A]">{corporateDeck.releaseDate}</span>
-                  </div>
-                  <div>
-                    <span className="text-[#87969F] block text-[11px]">File Size</span>
-                    <span className="font-semibold text-[#0B1F2A]">{corporateDeck.fileSize}</span>
-                  </div>
-                  <div>
-                    <span className="text-[#87969F] block text-[11px]">Disclosure</span>
-                    <span className="font-semibold text-[#1F6F78]">TSX-V Compliant</span>
-                  </div>
+                  <Button href="/investors/presentation" variant="secondary" size="md">
+                    View Slides Online
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  </Button>
                 </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
-                <a
-                  href={corporateDeck.downloadUrl}
-                  download="Monumental-Energy-Presentation-2026.pdf"
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#B7E34A] hover:bg-[#A3CF36] text-[#0B1F2A] font-heading font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
-                >
-                  <Download className="w-4 h-4 text-[#0B1F2A]" />
-                  <span>Download Deck (PDF)</span>
-                </a>
-
-                <Link
-                  href="/investors/presentation"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#DDE3E3] hover:border-[#0B1F2A] text-[#0B1F2A] font-heading font-semibold text-xs transition-colors"
-                >
-                  <span>View Slides Online</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
               </div>
             </div>
 
             {/* Card 2: LIFE Offering Document */}
-            <div className="lg:col-span-5 bg-white rounded-[22px] border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between gap-2 mb-4">
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#B7E34A]/20 text-[#0B1F2A] text-xs font-heading font-bold uppercase tracking-wider">
-                    Statutory Offering Document
+            <div data-reveal="card" className="lg:col-span-5 min-w-0">
+              <div className={cn('h-full bg-white rounded-[20px] lg:rounded-[24px] border border-[#DDE3E3] p-6 sm:p-8 shadow-sm flex flex-col justify-between', cardHover)}>
+                <div>
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#B7E34A]/20 text-[#0B1F2A] text-xs font-heading font-bold uppercase tracking-wider">
+                      Statutory Offering Document
+                    </span>
+                    <span className="text-xs text-[#5B6B73] font-heading font-medium">
+                      NI 45-106
+                    </span>
+                  </div>
+
+                  <h3 className={cn(type.h3, tone.headingLight, 'mb-2')}>
+                    Listed Issuer Financing Exemption (LIFE)
+                  </h3>
+
+                  <span className="text-xs font-semibold text-[#1F6F78] block mb-4">
+                    {lifeOfferingDoc.amendedDate}
                   </span>
-                  <span className="text-xs text-[#87969F] font-heading font-medium">
-                    NI 45-106
-                  </span>
+
+                  <ul className="space-y-2.5 text-sm text-[#5B6B73] mb-6">
+                    {lifeOfferingDoc.keyTerms.map((term, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78] mt-2 shrink-0" />
+                        <span className="leading-relaxed">{term}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
 
-                <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] leading-tight mb-2">
-                  Listed Issuer Financing Exemption (LIFE)
-                </h3>
-
-                <span className="text-xs font-semibold text-[#1F6F78] block mb-4">
-                  {lifeOfferingDoc.amendedDate}
-                </span>
-
-                <ul className="space-y-2.5 text-xs text-[#5B6B73] mb-6">
-                  {lifeOfferingDoc.keyTerms.map((term, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78] mt-1.5 shrink-0" />
-                      <span className="leading-relaxed">{term}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div>
-                <a
-                  href={lifeOfferingDoc.downloadUrl}
-                  download="Monumental-Energy-LIFE-Offering.pdf"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full bg-[#0B1F2A] hover:bg-[#162F3F] text-white font-heading font-semibold text-xs tracking-wider transition-colors shadow-sm"
-                >
-                  <Download className="w-4 h-4 text-[#B7E34A]" />
-                  <span>Download LIFE Document</span>
-                </a>
+                <div>
+                  <a
+                    href={lifeOfferingDoc.downloadUrl}
+                    download="Monumental-Energy-LIFE-Offering.pdf"
+                    className={cn(btnNavy, 'w-full')}
+                  >
+                    <Download className="w-4 h-4 text-[#B7E34A]" aria-hidden="true" />
+                    <span>Download LIFE Document</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -602,141 +596,146 @@ export function InvestorCentreView() {
       </section>
 
       {/* =========================================================
-          4. DUAL SECTION: SEDAR+ FILINGS & ADVISORY DIRECTORY
+          5. DUAL SECTION: SEDAR+ FILINGS & ADVISORY DIRECTORY
+          Same background as the documents section above: no top padding.
          ========================================================= */}
-      <section className="py-10 sm:py-16">
+      <section className="section-y pt-0">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
             {/* Left 8 Cols: Regulatory Filings (SEDAR+ Archive) */}
-            <div className="lg:col-span-8">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-7 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                  <h3 className="font-serif text-2xl sm:text-3xl text-[#0B1F2A] font-normal">
-                    Continuous Disclosures &amp; SEDAR+ Archive
-                  </h3>
-                </div>
+            <div className="lg:col-span-8 min-w-0">
+              <div
+                data-reveal="fade"
+                className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-6 mb-8 sm:mb-10"
+              >
+                <KineticHeading
+                  text="Continuous Disclosures & SEDAR+ Archive"
+                  className={cn(type.h2Compact, tone.headingLight, 'min-w-0')}
+                />
 
                 <a
                   href="https://www.sedarplus.ca"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-semibold text-[#1F6F78] hover:text-[#0B1F2A] inline-flex items-center gap-1.5 transition-colors group"
+                  className="text-sm font-semibold text-[#1F6F78] hover:text-[#0B1F2A] inline-flex items-center gap-1.5 min-h-11 sm:min-h-0 sm:pb-1.5 transition-colors group shrink-0"
                 >
                   <span>SEDAR+ Profile</span>
-                  <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
+                  <ExternalLink className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                 </a>
               </div>
 
               {/* Filings List */}
-              <div className="bg-white rounded-[20px] border border-[#DDE3E3] shadow-sm divide-y divide-[#DDE3E3] overflow-hidden mb-6">
-                {sedarFilings.map((filing) => (
-                  <div
-                    key={filing.id}
-                    className="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-[#F9FAF7] transition-colors"
-                  >
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2.5">
-                        <span className="text-[11px] font-heading font-semibold text-[#1F6F78] uppercase tracking-wider">
-                          {filing.date}
-                        </span>
-                        <span className="w-1 h-1 rounded-full bg-[#87969F]" />
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#F5F6F1] text-[#5B6B73] font-medium border border-[#DDE3E3]">
-                          {filing.documentType}
-                        </span>
-                      </div>
-                      <h4 className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] leading-snug">
-                        {filing.title}
-                      </h4>
-                    </div>
-
-                    <a
-                      href={filing.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-xs font-heading font-semibold text-[#0B1F2A] hover:text-[#1F6F78] shrink-0"
+              <div data-reveal="card" className="mb-6">
+                <div className="bg-white rounded-[16px] border border-[#DDE3E3] shadow-sm divide-y divide-[#DDE3E3] overflow-hidden">
+                  {sedarFilings.map((filing) => (
+                    <div
+                      key={filing.id}
+                      className="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 hover:bg-[#F9FAF7] transition-colors"
                     >
-                      <span>View Filing</span>
-                      <ExternalLink className="w-3.5 h-3.5 text-[#1F6F78]" />
-                    </a>
-                  </div>
-                ))}
+                      <div className="space-y-1.5 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2.5">
+                          <span className="text-xs font-heading font-semibold text-[#1F6F78] uppercase tracking-wider">
+                            {filing.date}
+                          </span>
+                          <span className="w-1 h-1 rounded-full bg-[#87969F]" />
+                          <span className="text-[11px] px-2 py-0.5 rounded-full bg-[#F5F6F1] text-[#5B6B73] font-medium border border-[#DDE3E3]">
+                            {filing.documentType}
+                          </span>
+                        </div>
+                        <h3 className={cn(type.h4, tone.headingLight)}>
+                          {filing.title}
+                        </h3>
+                      </div>
+
+                      <a
+                        href={filing.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 min-h-11 text-sm font-heading font-semibold text-[#0B1F2A] hover:text-[#1F6F78] shrink-0 transition-colors"
+                      >
+                        <span>View Filing</span>
+                        <ExternalLink className="w-3.5 h-3.5 text-[#1F6F78]" aria-hidden="true" />
+                      </a>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Secondary Governance Links (AGM & Computershare) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Link
-                  href="/investors/agm"
-                  className="p-5 rounded-2xl bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] transition-all flex items-center justify-between group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78]">
-                      <Calendar className="w-5 h-5" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
+                <div data-reveal="card" className="min-w-0">
+                  <Link
+                    href="/investors/agm"
+                    className={cn('h-full p-5 sm:p-6 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex items-center justify-between gap-3 group', cardHover)}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-11 h-11 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0">
+                        <Calendar className="w-5 h-5" aria-hidden="true" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-xs text-[#5B6B73] block">Shareholder Voting</span>
+                        <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
+                          2026 Annual General Meeting
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-xs text-[#87969F] block">Shareholder Voting</span>
-                      <span className="font-heading font-bold text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
-                        2026 Annual General Meeting
-                      </span>
-                    </div>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all" />
-                </Link>
+                    <ChevronRight className="w-5 h-5 text-[#5B6B73] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0" aria-hidden="true" />
+                  </Link>
+                </div>
 
-                <a
-                  href="https://www.investorcentre.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-5 rounded-2xl bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] transition-all flex items-center justify-between group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-[#B7E34A]/20 flex items-center justify-center text-[#0B1F2A]">
-                      <Building className="w-5 h-5" />
+                <div data-reveal="card" className="min-w-0">
+                  <a
+                    href="https://www.investorcentre.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn('h-full p-5 sm:p-6 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex items-center justify-between gap-3 group', cardHover)}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-11 h-11 rounded-xl bg-[#B7E34A]/20 flex items-center justify-center text-[#0B1F2A] shrink-0">
+                        <Building className="w-5 h-5" aria-hidden="true" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-xs text-[#5B6B73] block">Transfer Registry</span>
+                        <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
+                          Computershare Investor Portal
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-xs text-[#87969F] block">Transfer Registry</span>
-                      <span className="font-heading font-bold text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
-                        Computershare Investor Portal
-                      </span>
-                    </div>
-                  </div>
-                  <ExternalLink className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-0.5 transition-all" />
-                </a>
+                    <ExternalLink className="w-4 h-4 text-[#5B6B73] group-hover:text-[#0B1F2A] group-hover:translate-x-0.5 transition-all shrink-0" aria-hidden="true" />
+                  </a>
+                </div>
               </div>
             </div>
 
             {/* Right 4 Cols: Corporate Directory & Professional Advisory (Dark Card) */}
-            <div className="lg:col-span-4">
-              <div className="relative rounded-[20px] bg-[#07161F] text-white p-6 sm:p-7 border border-[#1D3B4C] shadow-xl overflow-hidden">
-                <div className="flex items-center gap-2.5 mb-5">
-                  <span className="w-5 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                  <h3 className="font-heading font-bold text-lg sm:text-xl text-white">
-                    Corporate Directory
-                  </h3>
-                </div>
+            <div data-reveal="card" className="lg:col-span-4 min-w-0">
+              <div className="relative rounded-[16px] bg-[#0B1F2A] text-white p-6 sm:p-7 border border-[#1D3B4C] shadow-xl overflow-hidden">
+                <h3 className={cn(type.h3, tone.headingDark, 'mb-5')}>
+                  Corporate Directory
+                </h3>
 
                 <div className="divide-y divide-white/10 space-y-4">
                   {professionalAdvisory.map((adv) => (
-                    <div key={adv.role} className="pt-4 first:pt-0">
-                      <span className="text-[10px] text-[#B7E34A] uppercase tracking-wider font-heading font-semibold block mb-1">
+                    <div key={adv.role} className="pt-4 first:pt-0 min-w-0">
+                      <span className="text-[11px] text-[#B7E34A] uppercase tracking-wider font-heading font-semibold block mb-1">
                         {adv.role}
                       </span>
-                      <span className="text-xs sm:text-[13px] font-medium text-white block mb-0.5">
+                      <span className="text-sm font-semibold text-white block mb-0.5">
                         {adv.name}
                       </span>
-                      <span className="text-[11px] text-[#87969F] block leading-relaxed mb-1.5">
+                      <span className="text-sm text-[#DDE3E3]/75 block leading-relaxed mb-1.5">
                         {adv.address}
                       </span>
                       {adv.phone && (
-                        <div className="flex items-center gap-2 text-[11px] text-[#DDE3E3] mt-1">
-                          <Phone className="w-3 h-3 text-[#2DD4BF]" />
+                        <div className="flex items-center gap-2 text-sm text-[#DDE3E3] mt-1">
+                          <Phone className="w-3.5 h-3.5 text-[#2DD4BF] shrink-0" aria-hidden="true" />
                           <span>{adv.phone}</span>
                         </div>
                       )}
                       {adv.email && (
-                        <div className="flex items-center gap-2 text-[11px] text-[#DDE3E3] mt-1">
-                          <Mail className="w-3 h-3 text-[#2DD4BF]" />
-                          <span>{adv.email}</span>
+                        <div className="flex items-center gap-2 text-sm text-[#DDE3E3] mt-1 min-w-0">
+                          <Mail className="w-3.5 h-3.5 text-[#2DD4BF] shrink-0" aria-hidden="true" />
+                          <span className="break-all">{adv.email}</span>
                         </div>
                       )}
                       {adv.website && (
@@ -744,10 +743,10 @@ export function InvestorCentreView() {
                           href={adv.website}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-[11px] text-[#2DD4BF] hover:text-[#B7E34A] transition-colors mt-1"
+                          className="inline-flex items-center gap-1 min-h-11 text-sm text-[#2DD4BF] hover:text-[#B7E34A] transition-colors"
                         >
                           <span>Portal Link</span>
-                          <ExternalLink className="w-3 h-3" />
+                          <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
                         </a>
                       )}
                     </div>
@@ -756,12 +755,10 @@ export function InvestorCentreView() {
 
                 {/* Direct IR Line Button */}
                 <div className="pt-6 mt-4 border-t border-white/10">
-                  <Link
-                    href="/contact"
-                    className="w-full py-2.5 rounded-full border border-white/20 hover:border-[#B7E34A] text-white hover:text-[#B7E34A] text-xs font-heading font-semibold tracking-wide text-center block transition-all"
-                  >
-                    Contact Investor Relations &rarr;
-                  </Link>
+                  <Button href="/contact" variant="secondary-dark" size="md" className="w-full">
+                    Contact Investor Relations
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  </Button>
                 </div>
               </div>
             </div>
@@ -770,73 +767,67 @@ export function InvestorCentreView() {
       </section>
 
       {/* =========================================================
-          5. BOTTOM NEWSLETTER / IR ALERTS BANNER
+          6. BOTTOM NEWSLETTER / IR ALERTS BAND (final dark CTA band)
          ========================================================= */}
-      <section className="pb-16 sm:pb-20 lg:pb-24 pt-4">
-        <Container>
-          <div className="relative rounded-[18px] lg:rounded-[22px] overflow-hidden min-h-[190px] sm:min-h-[210px] shadow-2xl border border-[#1D3B4C] bg-[#07161F]">
-            {/* Panoramic Sunset Mountain Landscape Photo */}
-            <div className="absolute inset-0 z-0">
-              <Image
-                src="/images/taranaki-sunset-banner.jpg"
-                alt="Sunset over Mount Taranaki"
-                fill
-                sizes="100vw"
-                className="object-cover object-[center_35%] opacity-65 brightness-95 contrast-110"
+      <section className="section-y-compact relative overflow-hidden bg-[#0B1F2A] text-white border-t border-[#1D3B4C]">
+        {/* Panoramic Sunset Mountain Landscape Photo */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/images/taranaki-sunset-banner.jpg"
+            alt="Sunset over Mount Taranaki"
+            fill
+            sizes="100vw"
+            className="object-cover object-[center_35%] opacity-65 brightness-95 contrast-110"
+          />
+          {/* Multi-stop Cinematic Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#07161F]/95 via-[#0B1F2A]/75 to-[#07161F]/80" />
+        </div>
+
+        <Container className="relative z-10">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+            <div data-reveal="fade" className="min-w-0 max-w-xl">
+              <Eyebrow dark>MARKET ALERTS</Eyebrow>
+              <KineticHeading
+                text="Stay Informed on TSX-V Disclosures"
+                className={cn(type.h2Compact, tone.headingDark, 'mb-3')}
               />
-              {/* Multi-stop Cinematic Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#07161F]/95 via-[#0B1F2A]/75 to-[#07161F]/80" />
+              <p className={cn(type.body, tone.mutedDark, 'max-w-lg')}>
+                Subscribe to receive regulatory press releases, quarterly MD&amp;As, and corporate presentation updates directly.
+              </p>
             </div>
 
-            {/* Banner Content Container */}
-            <div className="relative z-10 px-8 py-10 sm:px-12 sm:py-12 lg:px-16 lg:py-14 flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="w-5 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                  <span className="text-[#B7E34A] text-xs font-heading font-semibold uppercase tracking-[0.16em]">
-                    MARKET ALERTS
-                  </span>
+            {/* Email Form */}
+            <div data-reveal className="shrink-0 w-full md:w-auto md:min-w-[380px]">
+              {subscribed ? (
+                <div className="inline-flex items-center gap-2 min-h-11 px-5 rounded-full bg-[#B7E34A]/20 border border-[#B7E34A] text-[#B7E34A] text-sm font-heading font-bold">
+                  <CheckCircle2 className="w-4 h-4" aria-hidden="true" />
+                  <span>Thank you for subscribing!</span>
                 </div>
-                <h2 className="font-serif text-2xl sm:text-3xl lg:text-[34px] font-normal text-white leading-tight tracking-[-0.01em] mb-2">
-                  Stay Informed on TSX-V Disclosures
-                </h2>
-                <p className="text-xs sm:text-sm text-[#DDE3E3] font-normal max-w-lg">
-                  Subscribe to receive regulatory press releases, quarterly MD&amp;As, and corporate presentation updates directly.
-                </p>
-              </div>
-
-              {/* Email Form */}
-              <div className="shrink-0 w-full md:w-auto">
-                {subscribed ? (
-                  <div className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#B7E34A]/20 border border-[#B7E34A] text-[#B7E34A] text-xs font-heading font-bold">
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>Thank you for subscribing!</span>
-                  </div>
-                ) : (
-                  <form
-                    onSubmit={handleSubscribe}
-                    className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-1.5 p-1.5 rounded-2xl sm:rounded-full bg-[#0B1F2A]/85 backdrop-blur-md border border-white/20 shadow-xl max-w-md w-full"
+              ) : (
+                <form
+                  onSubmit={handleSubscribe}
+                  className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 p-1.5 rounded-[14px] bg-[#0B1F2A]/85 backdrop-blur-md border border-white/20 shadow-xl w-full md:max-w-md"
+                >
+                  <label className="flex items-center flex-grow min-w-0 px-3 min-h-11">
+                    <Mail className="w-4 h-4 text-[#DDE3E3]/60 mr-2.5 shrink-0" aria-hidden="true" />
+                    <span className="sr-only">Email address</span>
+                    <input
+                      type="email"
+                      required
+                      placeholder="Enter your corporate email"
+                      value={emailInput}
+                      onChange={(e) => setEmailInput(e.target.value)}
+                      className="w-full min-w-0 bg-transparent text-sm text-white placeholder:text-[#DDE3E3]/50 focus:outline-none"
+                    />
+                  </label>
+                  <button
+                    type="submit"
+                    className="min-h-11 px-6 rounded-[10px] bg-[#B7E34A] hover:bg-[#A3CF36] text-[#0B1F2A] font-body font-semibold text-[15px] transition-all duration-200 shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B1F2A]"
                   >
-                    <div className="flex items-center flex-grow px-3 py-1.5">
-                      <Mail className="w-4 h-4 text-[#87969F] mr-2.5 shrink-0" />
-                      <input
-                        type="email"
-                        required
-                        placeholder="Enter your corporate email"
-                        value={emailInput}
-                        onChange={(e) => setEmailInput(e.target.value)}
-                        className="w-full bg-transparent text-xs text-white placeholder:text-[#87969F] focus:outline-none"
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="px-6 py-2.5 rounded-full bg-[#B7E34A] hover:bg-[#A3CF36] text-[#0B1F2A] font-heading font-bold text-xs uppercase tracking-wider transition-all duration-200 shrink-0 shadow-md hover:scale-[1.02]"
-                    >
-                      Subscribe
-                    </button>
-                  </form>
-                )}
-              </div>
+                    Subscribe
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </Container>

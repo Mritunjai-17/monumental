@@ -32,10 +32,12 @@ export const NewsletterForm: React.FC<{ dark?: boolean }> = ({ dark = false }) =
       <input
         type="email"
         required
+        aria-label="Email address for news alerts"
+        autoComplete="email"
         placeholder="Enter your email for news alerts"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className={`px-4 py-3 rounded-[10px] text-sm flex-1 border transition-all focus:outline-none focus:ring-2 focus:ring-[#1F6F78] ${
+        className={`min-w-0 px-4 py-3 rounded-[10px] text-base flex-1 border transition-all focus:outline-none focus:ring-2 focus:ring-[#1F6F78] ${
           dark
             ? 'bg-[#0E2836] border-[#1D3B4C] text-white placeholder-white/50 focus:border-[#1F6F78]'
             : 'bg-white border-[#DDE3E3] text-[#16232B] placeholder-[#5B6B73]/70 focus:border-[#1F6F78]'
@@ -46,7 +48,7 @@ export const NewsletterForm: React.FC<{ dark?: boolean }> = ({ dark = false }) =
         variant="primary"
         size="sm"
         disabled={status === 'loading'}
-        className="shrink-0"
+        className="shrink-0 min-h-[44px]"
       >
         {status === 'loading' ? 'Joining...' : 'Subscribe'}
       </Button>

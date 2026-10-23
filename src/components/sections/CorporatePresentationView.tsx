@@ -4,6 +4,12 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
+import { Button } from '@/components/ui/Button';
+import { Eyebrow } from '@/components/ui/Eyebrow';
+import { KineticHeading } from '@/components/ui/KineticHeading';
+import { SectionHeading } from '@/components/ui/SectionHeading';
+import { cn } from '@/lib/utils';
+import { type, tone } from '@/lib/typography';
 import {
   Download,
   Calendar,
@@ -12,15 +18,9 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  ZoomIn,
-  ZoomOut,
-  Maximize2,
   BarChart3,
-  ShieldCheck,
   Users,
   Newspaper,
-  CheckCircle2,
-  ExternalLink,
 } from 'lucide-react';
 
 interface SlideData {
@@ -141,9 +141,52 @@ const SLIDES: SlideData[] = [
 
 const TOTAL_SLIDES = 32;
 
+/* Resource links in the "Explore Investor Resources" row. */
+const RESOURCES = [
+  {
+    href: '/investors',
+    title: 'Financial Statements',
+    description: 'Annual and quarterly reports',
+    icon: BarChart3,
+    iconBox: 'bg-[#1F6F78]/10',
+    external: false,
+  },
+  {
+    href: 'https://www.sedarplus.ca',
+    title: 'SEDAR+ Filings',
+    description: 'Regulatory filings and disclosures',
+    icon: FileText,
+    iconBox: 'bg-[#B7E34A]/20',
+    external: true,
+  },
+  {
+    href: '/investors',
+    title: 'Shareholder Information',
+    description: 'Governance and share structure',
+    icon: Users,
+    iconBox: 'bg-[#1F6F78]/10',
+    external: false,
+  },
+  {
+    href: '/news',
+    title: 'Latest News',
+    description: 'Company announcements',
+    icon: Newspaper,
+    iconBox: 'bg-[#B7E34A]/20',
+    external: false,
+  },
+];
+
+/* Download link uses the native `download` attribute, which <Button href>
+ * does not forward, so it reuses the Button primary "md" styles. */
+const btnPrimary =
+  'group inline-flex items-center justify-center gap-2 font-body font-semibold text-[15px] sm:text-base px-6 py-3 sm:px-7 sm:py-3.5 rounded-[10px] border border-transparent bg-[#B7E34A] text-[#0B1F2A] hover:bg-[#A3CF36] hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-[0.98] transition-all duration-200 select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B1F2A]';
+
+const resourceCard =
+  'h-full p-5 sm:p-6 rounded-[16px] bg-white border border-[#DDE3E3] shadow-sm flex items-center justify-between gap-3 group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_-4px_rgba(11,31,42,0.08)] hover:border-[#1F6F78]/40';
+
 export function CorporatePresentationView() {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const currentSlide = SLIDES[currentSlideIndex];
 
@@ -167,7 +210,7 @@ export function CorporatePresentationView() {
       {/* =========================================================
           1. HERO SECTION (Split Left Content & Right Photograph)
          ========================================================= */}
-      <section className="relative overflow-hidden pt-10 sm:pt-14 lg:pt-16 pb-8 lg:pb-12">
+      <section className="page-intro-y relative overflow-hidden">
         {/* Subtle Topographical Elevation Contour Background (Top Left) */}
         <div
           className="absolute top-0 left-0 w-[550px] sm:w-[650px] lg:w-[750px] h-[550px] pointer-events-none opacity-[0.07] select-none z-0 overflow-hidden"
@@ -201,24 +244,24 @@ export function CorporatePresentationView() {
         </div>
 
         <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[300px] lg:min-h-[350px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center lg:min-h-[350px]">
             {/* Left Column (Copy) */}
-            <div className="lg:col-span-7 pr-0 lg:pr-6">
-              <span className="text-[#1F6F78] uppercase text-xs sm:text-[13px] font-heading font-semibold tracking-[0.16em] mb-3 block">
-                INVESTOR PRESENTATION
-              </span>
+            <div className="lg:col-span-7 lg:pr-6 min-w-0">
+              <Eyebrow className="hero-eyebrow">INVESTOR PRESENTATION</Eyebrow>
 
-              <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-[52px] text-[#0B1F2A] tracking-[-0.02em] leading-[1.08] mb-5">
-                Our Strategy &amp; Corporate Overview
-              </h1>
+              <KineticHeading
+                as="h1"
+                text="Our Strategy & Corporate Overview"
+                className={cn(type.h1, tone.headingLight, 'mb-5')}
+              />
 
-              <p className="text-[#5B6B73] text-base sm:text-lg leading-relaxed max-w-xl font-normal">
+              <p className={cn('hero-copy max-w-xl', type.lead, tone.mutedLight)}>
                 Explore our latest corporate presentation for an overview of our assets, strategy and long-term opportunities in energy and critical minerals.
               </p>
             </div>
 
             {/* Mobile / Tablet Image fallback */}
-            <div className="lg:hidden col-span-1 mt-2">
+            <div className="lg:hidden col-span-1">
               <div className="relative rounded-[16px] overflow-hidden aspect-[16/10] shadow-md border border-[#DDE3E3]">
                 <Image
                   src="/images/about-hero-taranaki.jpg"
@@ -235,16 +278,18 @@ export function CorporatePresentationView() {
 
       {/* =========================================================
           2. MAIN SECTION: INTERACTIVE PRESENTATION VIEWER & SIDEBAR
+          Follows the hero on the same background: no top padding.
          ========================================================= */}
-      <section className="py-6 sm:py-10">
+      <section className="section-y pt-0">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-            {/* LEFT 7.5 COLS: INTERACTIVE SLIDE VIEWER & THUMBNAILS */}
-            <div className="lg:col-span-8 space-y-4">
+            {/* LEFT 8 COLS: INTERACTIVE SLIDE VIEWER & THUMBNAILS */}
+            <div data-reveal className="lg:col-span-8 space-y-4 min-w-0">
               {/* Main Presentation Screen / Frame */}
-              <div className="relative rounded-[20px] bg-[#07161F] border border-[#1D3B4C] shadow-2xl overflow-hidden aspect-[16/10] flex flex-col justify-between group">
-                {/* Active Slide Canvas */}
-                <div className="relative w-full h-full p-6 sm:p-10 flex flex-col justify-between overflow-hidden">
+              <div className="relative rounded-[20px] lg:rounded-[24px] bg-[#07161F] border border-[#1D3B4C] shadow-2xl overflow-hidden flex flex-col group">
+                {/* Active Slide Canvas: content-sized with a min height so
+                    longer slides never clip on narrow screens */}
+                <div className="relative w-full min-h-[380px] sm:min-h-[420px] lg:min-h-[460px] p-5 sm:py-8 sm:px-20 flex flex-col justify-between overflow-hidden">
                   {/* Slide Background Image */}
                   <div className="absolute inset-0 z-0">
                     <Image
@@ -260,34 +305,32 @@ export function CorporatePresentationView() {
                   </div>
 
                   {/* Top Bar of Slide */}
-                  <div className="relative z-10 flex items-center justify-between text-white border-b border-white/10 pb-4">
-                    <div className="flex items-center gap-2">
+                  <div className="relative z-10 flex items-center justify-between gap-3 text-white border-b border-white/10 pb-4">
+                    <div className="flex items-center gap-2 min-w-0">
                       <span className="font-heading font-extrabold text-sm sm:text-base tracking-widest uppercase text-white">
                         MONUMENTAL
                       </span>
-                      <span className="text-[11px] font-heading font-semibold text-[#87969F] tracking-wider uppercase">
+                      <span className="text-[11px] font-heading font-semibold text-[#DDE3E3]/75 tracking-wider uppercase">
                         ENERGY
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      <span className="font-mono text-[11px] font-bold text-[#B7E34A] px-2 py-0.5 rounded bg-black/40 border border-white/10">
-                        TSX-V: MNRG
-                      </span>
-                    </div>
+                    <span className="font-mono text-[11px] font-bold text-[#B7E34A] px-2 py-0.5 rounded bg-black/40 border border-white/10 shrink-0">
+                      TSX-V: MNRG
+                    </span>
                   </div>
 
                   {/* Middle Narrative of Slide */}
-                  <div className="relative z-10 max-w-xl py-4 sm:py-6">
-                    <span className="inline-block text-[10px] sm:text-[11px] uppercase tracking-wider font-heading font-bold text-[#B7E34A] mb-2">
+                  <div className="relative z-10 max-w-xl py-5 sm:py-6">
+                    <span className="inline-block text-[11px] uppercase tracking-wider font-heading font-bold text-[#B7E34A] mb-2">
                       {currentSlide.badge}
                     </span>
 
-                    <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-white leading-[1.14] tracking-tight mb-3">
+                    <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-white leading-[1.15] tracking-[-0.02em] mb-3">
                       {currentSlide.title}
                     </h2>
 
-                    <p className="text-xs sm:text-sm text-[#DDE3E3] leading-relaxed mb-4 font-normal">
+                    <p className={cn(type.body, 'text-[#DDE3E3] mb-4')}>
                       {currentSlide.tagline}
                     </p>
 
@@ -295,8 +338,8 @@ export function CorporatePresentationView() {
                     {currentSlide.metrics && (
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
                         {currentSlide.metrics.map((m) => (
-                          <div key={m.label} className="p-2.5 rounded-lg bg-black/50 border border-white/10 backdrop-blur-sm">
-                            <span className="text-[9px] text-[#87969F] uppercase block">{m.label}</span>
+                          <div key={m.label} className="p-2.5 rounded-lg bg-black/50 border border-white/10 backdrop-blur-sm min-w-0">
+                            <span className="text-[10px] text-[#DDE3E3]/75 uppercase block leading-tight mb-0.5">{m.label}</span>
                             <span className="font-heading font-bold text-sm text-[#B7E34A] block">{m.value}</span>
                           </div>
                         ))}
@@ -304,7 +347,7 @@ export function CorporatePresentationView() {
                     )}
 
                     {currentSlide.highlights && !currentSlide.metrics && (
-                      <ul className="space-y-1.5 text-xs text-[#DDE3E3] pt-1">
+                      <ul className="space-y-1.5 text-sm text-[#DDE3E3] pt-1">
                         {currentSlide.highlights.slice(0, 3).map((h, i) => (
                           <li key={i} className="flex items-start gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-[#B7E34A] mt-1.5 shrink-0" />
@@ -316,103 +359,63 @@ export function CorporatePresentationView() {
                   </div>
 
                   {/* Slide Footer */}
-                  <div className="relative z-10 text-[10px] sm:text-[11px] text-[#87969F] uppercase tracking-wider flex items-center justify-between border-t border-white/10 pt-3">
-                    <span>{currentSlide.subtitle}</span>
-                    <span className="font-mono text-white/80">SLIDE {currentSlide.id} OF 32</span>
+                  <div className="relative z-10 text-[10px] sm:text-[11px] text-[#DDE3E3]/75 uppercase tracking-wider flex items-start sm:items-center justify-between gap-3 border-t border-white/10 pt-3">
+                    <span className="min-w-0">{currentSlide.subtitle}</span>
+                    <span className="font-mono text-white/80 shrink-0">SLIDE {currentSlide.id} OF 32</span>
                   </div>
 
-                  {/* Circular Prev/Next Arrows overlaying slide */}
+                  {/* Circular Prev/Next Arrows overlaying slide (sm+; the
+                      thumbnail bar carries prev/next on phones) */}
                   <button
+                    type="button"
                     onClick={handlePrev}
                     aria-label="Previous slide"
-                    className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white flex items-center justify-center transition-all duration-200 backdrop-blur-md border border-white/15 shadow-lg group-hover:scale-105"
+                    className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white items-center justify-center transition-all duration-200 backdrop-blur-md border border-white/15 shadow-lg group-hover:scale-105"
                   >
-                    <ChevronLeft className="w-5 h-5" />
+                    <ChevronLeft className="w-5 h-5" aria-hidden="true" />
                   </button>
 
                   <button
+                    type="button"
                     onClick={handleNext}
                     aria-label="Next slide"
-                    className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/60 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white flex items-center justify-center transition-all duration-200 backdrop-blur-md border border-white/15 shadow-lg group-hover:scale-105"
+                    className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full bg-black/60 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white items-center justify-center transition-all duration-200 backdrop-blur-md border border-white/15 shadow-lg group-hover:scale-105"
                   >
-                    <ChevronRight className="w-5 h-5" />
+                    <ChevronRight className="w-5 h-5" aria-hidden="true" />
                   </button>
-                </div>
-
-                {/* Bottom Scrubber & Controls Strip */}
-                <div className="bg-[#0B1F2A] px-5 py-3 border-t border-white/10 flex items-center justify-between gap-4 text-xs text-white">
-                  {/* Slide Counter */}
-                  <span className="font-mono text-xs font-semibold text-[#87969F] shrink-0">
-                    <strong className="text-white">{currentSlide.id}</strong> / {TOTAL_SLIDES}
-                  </span>
-
-                  {/* Progress Scrubber Bar */}
-                  <div
-                    onClick={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      const ratio = (e.clientX - rect.left) / rect.width;
-                      const nextIndex = Math.min(Math.floor(ratio * SLIDES.length), SLIDES.length - 1);
-                      setCurrentSlideIndex(nextIndex);
-                    }}
-                    className="flex-grow h-1.5 bg-white/15 rounded-full cursor-pointer relative overflow-hidden group/bar"
-                  >
-                    <div
-                      style={{ width: `${(currentSlide.id / TOTAL_SLIDES) * 100}%` }}
-                      className="h-full bg-[#B7E34A] rounded-full transition-all duration-300"
-                    />
-                  </div>
-
-                  {/* Controls: Zoom & Fullscreen */}
-                  <div className="flex items-center gap-3 text-[#87969F] shrink-0">
-                    <button
-                      onClick={handlePrev}
-                      className="hover:text-white transition-colors"
-                      title="Zoom Out"
-                    >
-                      <ZoomOut className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={handleNext}
-                      className="hover:text-white transition-colors"
-                      title="Zoom In"
-                    >
-                      <ZoomIn className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => setIsFullscreen(!isFullscreen)}
-                      className="hover:text-[#B7E34A] transition-colors"
-                      title="Fullscreen"
-                    >
-                      <Maximize2 className="w-4 h-4" />
-                    </button>
-                  </div>
                 </div>
               </div>
 
-              {/* Slide Thumbnail Carousel Bar */}
-              <div className="flex items-center justify-between gap-3 pt-2">
+              {/* Slide Thumbnail Carousel Bar (scrolls horizontally on phones) */}
+              <div className="flex items-center justify-between gap-2 sm:gap-3 pt-2">
                 <button
+                  type="button"
                   onClick={handlePrev}
-                  className="w-8 h-8 rounded-lg bg-white hover:bg-[#0B1F2A] hover:text-white text-[#0B1F2A] border border-[#DDE3E3] flex items-center justify-center shrink-0 transition-colors shadow-sm"
+                  aria-label="Previous slide"
+                  className="w-11 h-11 rounded-lg bg-white hover:bg-[#0B1F2A] hover:text-white text-[#0B1F2A] border border-[#DDE3E3] flex items-center justify-center shrink-0 transition-colors shadow-sm"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-4 h-4" aria-hidden="true" />
                 </button>
 
-                <div className="grid grid-cols-5 gap-2 sm:gap-3 flex-grow">
+                <div className="flex gap-2 overflow-x-auto p-1 sm:grid sm:grid-cols-5 sm:gap-3 sm:overflow-visible flex-grow min-w-0">
                   {SLIDES.map((slide, idx) => {
                     const isActive = idx === currentSlideIndex;
                     return (
                       <button
                         key={slide.id}
+                        type="button"
                         onClick={() => setCurrentSlideIndex(idx)}
-                        className="flex flex-col items-center group text-left cursor-pointer"
+                        aria-label={`Go to ${slide.thumbnailTitle}`}
+                        aria-current={isActive ? 'true' : undefined}
+                        className="w-24 shrink-0 sm:w-auto flex flex-col items-center group text-left cursor-pointer"
                       >
                         <div
-                          className={`relative w-full aspect-[16/10] rounded-lg overflow-hidden border transition-all ${
+                          className={cn(
+                            'relative w-full aspect-[16/10] rounded-lg overflow-hidden border transition-all',
                             isActive
-                              ? 'border-[#B7E34A] ring-2 ring-[#B7E34A]/40 shadow-md scale-[1.03]'
+                              ? 'border-[#B7E34A] ring-2 ring-[#B7E34A]/40 shadow-md sm:scale-[1.03]'
                               : 'border-[#DDE3E3] group-hover:border-[#0B1F2A]/40 opacity-75 group-hover:opacity-100'
-                          }`}
+                          )}
                         >
                           <Image
                             src={slide.image}
@@ -422,15 +425,16 @@ export function CorporatePresentationView() {
                             className="object-cover object-center"
                           />
                           <div className="absolute inset-0 bg-[#07161F]/50 flex items-center justify-center p-1">
-                            <span className="text-[9px] font-heading font-bold text-white text-center leading-tight line-clamp-2">
+                            <span className="text-[10px] font-heading font-bold text-white text-center leading-tight line-clamp-2">
                               {slide.thumbnailTitle}
                             </span>
                           </div>
                         </div>
                         <span
-                          className={`text-[10px] font-mono mt-1 font-semibold ${
-                            isActive ? 'text-[#0B1F2A]' : 'text-[#87969F]'
-                          }`}
+                          className={cn(
+                            'text-[11px] font-mono mt-1 font-semibold',
+                            isActive ? 'text-[#0B1F2A]' : 'text-[#5B6B73]'
+                          )}
                         >
                           {slide.chapterNumber}
                         </span>
@@ -440,17 +444,19 @@ export function CorporatePresentationView() {
                 </div>
 
                 <button
+                  type="button"
                   onClick={handleNext}
-                  className="w-8 h-8 rounded-lg bg-white hover:bg-[#0B1F2A] hover:text-white text-[#0B1F2A] border border-[#DDE3E3] flex items-center justify-center shrink-0 transition-colors shadow-sm"
+                  aria-label="Next slide"
+                  className="w-11 h-11 rounded-lg bg-white hover:bg-[#0B1F2A] hover:text-white text-[#0B1F2A] border border-[#DDE3E3] flex items-center justify-center shrink-0 transition-colors shadow-sm"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-4 h-4" aria-hidden="true" />
                 </button>
               </div>
             </div>
 
-            {/* RIGHT 4.5 COLS: DARK SIDEBAR CARD */}
-            <div className="lg:col-span-4">
-              <div className="relative rounded-[22px] bg-[#07161F] text-white p-6 sm:p-8 border border-[#1D3B4C] shadow-2xl overflow-hidden">
+            {/* RIGHT 4 COLS: DARK SIDEBAR CARD */}
+            <div data-reveal="card" className="lg:col-span-4 min-w-0">
+              <div className="relative rounded-[20px] lg:rounded-[24px] bg-[#0B1F2A] text-white p-6 sm:p-8 border border-[#1D3B4C] shadow-2xl overflow-hidden">
                 {/* Topographic Watermark Contour (Top Right) */}
                 <div
                   className="absolute top-0 right-0 w-64 h-64 pointer-events-none opacity-[0.06] select-none z-0"
@@ -466,45 +472,42 @@ export function CorporatePresentationView() {
 
                 {/* Eyebrow & Headline */}
                 <div className="relative z-10 mb-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-5 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                    <span className="text-[#B7E34A] text-xs font-heading font-semibold uppercase tracking-[0.16em]">
-                      LATEST PRESENTATION
-                    </span>
-                  </div>
+                  <Eyebrow dark>LATEST PRESENTATION</Eyebrow>
 
-                  <h3 className="font-heading font-bold text-2xl sm:text-3xl text-white leading-tight mb-4">
-                    Corporate Presentation
-                  </h3>
+                  <KineticHeading
+                    as="h2"
+                    text="Corporate Presentation"
+                    className={cn(type.h2Compact, tone.headingDark, 'mb-5')}
+                  />
 
                   {/* 3-Stat Metadata Strip */}
-                  <div className="grid grid-cols-3 gap-2 py-3 px-3 rounded-xl bg-[#0B1F2A] border border-white/10 text-center mb-5">
-                    <div>
-                      <Calendar className="w-4 h-4 text-[#B7E34A] mx-auto mb-1" />
-                      <span className="font-heading font-bold text-xs text-white block leading-tight">
+                  <div className="grid grid-cols-3 gap-2 py-3 px-2 sm:px-3 rounded-xl bg-[#07161F]/70 border border-white/10 text-center mb-5">
+                    <div className="min-w-0">
+                      <Calendar className="w-4 h-4 text-[#B7E34A] mx-auto mb-1" aria-hidden="true" />
+                      <span className="font-heading font-bold text-sm text-white block leading-tight">
                         August 2024
                       </span>
-                      <span className="text-[10px] text-[#87969F] block">Published date</span>
+                      <span className="text-xs text-[#DDE3E3]/75 block">Published date</span>
                     </div>
 
-                    <div>
-                      <FileText className="w-4 h-4 text-[#2DD4BF] mx-auto mb-1" />
-                      <span className="font-heading font-bold text-xs text-white block leading-tight">
+                    <div className="min-w-0">
+                      <FileText className="w-4 h-4 text-[#2DD4BF] mx-auto mb-1" aria-hidden="true" />
+                      <span className="font-heading font-bold text-sm text-white block leading-tight">
                         PDF
                       </span>
-                      <span className="text-[10px] text-[#87969F] block">Format</span>
+                      <span className="text-xs text-[#DDE3E3]/75 block">Format</span>
                     </div>
 
-                    <div>
-                      <Monitor className="w-4 h-4 text-[#B7E34A] mx-auto mb-1" />
-                      <span className="font-heading font-bold text-xs text-white block leading-tight">
+                    <div className="min-w-0">
+                      <Monitor className="w-4 h-4 text-[#B7E34A] mx-auto mb-1" aria-hidden="true" />
+                      <span className="font-heading font-bold text-sm text-white block leading-tight">
                         32
                       </span>
-                      <span className="text-[10px] text-[#87969F] block">Slides</span>
+                      <span className="text-xs text-[#DDE3E3]/75 block">Slides</span>
                     </div>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-[#DDE3E3] leading-relaxed mb-6 font-normal">
+                  <p className={cn(type.body, tone.mutedDark, 'mb-6')}>
                     An overview of Monumental Energy&apos;s assets, strategy and long-term opportunities in New Zealand and Chile.
                   </p>
 
@@ -513,30 +516,24 @@ export function CorporatePresentationView() {
                     <a
                       href="/documents/investor-presentation.pdf"
                       download="Monumental-Energy-Presentation-2026.pdf"
-                      className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full bg-[#B7E34A] hover:bg-[#A3CF36] text-[#0B1F2A] font-heading font-bold text-xs uppercase tracking-wider transition-all duration-200 shadow-md hover:scale-[1.01]"
+                      className={cn(btnPrimary, 'w-full')}
                     >
-                      <Download className="w-4 h-4 text-[#0B1F2A]" />
-                      <span>Download PDF &rarr;</span>
+                      <Download className="w-4 h-4" aria-hidden="true" />
+                      <span>Download PDF</span>
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </a>
 
-                    <Link
-                      href="/contact"
-                      className="w-full inline-flex items-center justify-center gap-2 py-3 px-6 rounded-full border border-white/20 hover:border-[#B7E34A] text-white hover:text-[#B7E34A] font-heading font-semibold text-xs tracking-wider transition-colors"
-                    >
-                      <Calendar className="w-4 h-4 text-[#2DD4BF]" />
-                      <span>Request Investor Briefing &rarr;</span>
-                    </Link>
+                    <Button href="/contact" variant="secondary-dark" size="md" className="w-full">
+                      <Calendar className="w-4 h-4 text-[#2DD4BF]" aria-hidden="true" />
+                      Request Investor Briefing
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    </Button>
                   </div>
                 </div>
 
                 {/* Presentation Chapters List */}
                 <div className="relative z-10 pt-5 border-t border-white/10">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="w-4 h-0.5 bg-[#B7E34A] rounded-full inline-block" />
-                    <span className="text-[11px] font-heading font-bold text-[#B7E34A] uppercase tracking-wider">
-                      PRESENTATION CHAPTERS
-                    </span>
-                  </div>
+                  <Eyebrow dark>PRESENTATION CHAPTERS</Eyebrow>
 
                   <div className="space-y-1">
                     {SLIDES.map((ch) => {
@@ -544,32 +541,36 @@ export function CorporatePresentationView() {
                       return (
                         <button
                           key={ch.chapterNumber}
+                          type="button"
                           onClick={() => handleJumpToChapter(ch.chapterNumber)}
-                          className={`w-full py-2.5 px-3 rounded-xl flex items-center justify-between text-left transition-colors group ${
-                            isCurrent
-                              ? 'bg-white/10 text-white'
-                              : 'hover:bg-white/5 text-[#DDE3E3]'
-                          }`}
+                          aria-current={isCurrent ? 'true' : undefined}
+                          className={cn(
+                            'w-full min-h-11 py-2.5 px-3 rounded-xl flex items-center justify-between gap-3 text-left transition-colors group',
+                            isCurrent ? 'bg-white/10 text-white' : 'hover:bg-white/5 text-[#DDE3E3]'
+                          )}
                         >
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3 min-w-0">
                             <span
-                              className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-mono font-bold ${
+                              className={cn(
+                                'w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-mono font-bold shrink-0',
                                 isCurrent
                                   ? 'bg-[#B7E34A] text-[#0B1F2A]'
-                                  : 'border border-white/20 text-[#87969F] group-hover:border-white/50'
-                              }`}
+                                  : 'border border-white/20 text-[#DDE3E3]/75 group-hover:border-white/50'
+                              )}
                             >
                               {ch.chapterNumber}
                             </span>
-                            <span className="text-xs font-medium group-hover:text-white transition-colors">
+                            <span className="text-sm font-medium group-hover:text-white transition-colors">
                               {ch.chapterTitle}
                             </span>
                           </div>
 
                           <ArrowRight
-                            className={`w-3.5 h-3.5 transition-transform group-hover:translate-x-1 ${
-                              isCurrent ? 'text-[#B7E34A]' : 'text-[#87969F]'
-                            }`}
+                            className={cn(
+                              'w-3.5 h-3.5 shrink-0 transition-transform group-hover:translate-x-1',
+                              isCurrent ? 'text-[#B7E34A]' : 'text-[#DDE3E3]/60'
+                            )}
+                            aria-hidden="true"
                           />
                         </button>
                       );
@@ -585,118 +586,56 @@ export function CorporatePresentationView() {
       {/* =========================================================
           3. EXPLORE INVESTOR RESOURCES (4-Card Row)
          ========================================================= */}
-      <section className="py-12 sm:py-16 border-t border-[#DDE3E3]">
+      <section className="section-y bg-white border-t border-[#DDE3E3]">
         <Container>
-          {/* Header Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
-            <div>
-              <div className="flex items-center gap-2.5 mb-2">
-                <span className="w-6 h-1 bg-[#B7E34A] rounded-full inline-block" />
-                <h3 className="font-heading font-bold text-2xl sm:text-3xl text-[#0B1F2A] tracking-tight">
-                  Explore Investor Resources
-                </h3>
-              </div>
-              <p className="text-xs sm:text-sm text-[#5B6B73]">
-                Access financial reports, filings and other key investor information.
-              </p>
-            </div>
-
-            <Link
-              href="/investors"
-              className="inline-flex items-center gap-1.5 text-xs font-heading font-bold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors shrink-0 group"
-            >
-              <span>View all resources</span>
-              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
+          <SectionHeading
+            title="Explore Investor Resources"
+            description="Access financial reports, filings and other key investor information."
+            action={{ label: 'View all resources', shortLabel: 'View all', href: '/investors' }}
+          />
 
           {/* 4 Resource Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-            {/* Card 1: Financial Statements */}
-            <Link
-              href="/investors"
-              className="p-5 sm:p-6 rounded-[18px] bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-3.5">
-                <div className="w-11 h-11 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
-                  <BarChart3 className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-heading font-bold text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors leading-tight mb-0.5">
-                    Financial Statements
-                  </h4>
-                  <span className="text-[11px] text-[#87969F] block">
-                    Annual and quarterly reports
-                  </span>
-                </div>
-              </div>
-              <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-5">
+            {RESOURCES.map((res) => {
+              const Icon = res.icon;
+              const inner = (
+                <>
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div
+                      className={cn(
+                        'w-11 h-11 rounded-xl flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform',
+                        res.iconBox
+                      )}
+                    >
+                      <Icon className="w-5 h-5" aria-hidden="true" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className={cn(type.h4, tone.headingLight, 'group-hover:text-[#1F6F78] transition-colors mb-0.5')}>
+                        {res.title}
+                      </h3>
+                      <span className="text-sm text-[#5B6B73] block leading-snug">
+                        {res.description}
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-[#5B6B73] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0" aria-hidden="true" />
+                </>
+              );
 
-            {/* Card 2: SEDAR+ Filings */}
-            <a
-              href="https://www.sedarplus.ca"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-5 sm:p-6 rounded-[18px] bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-3.5">
-                <div className="w-11 h-11 rounded-xl bg-[#B7E34A]/20 flex items-center justify-center text-[#0B1F2A] shrink-0 group-hover:scale-105 transition-transform">
-                  <FileText className="w-5 h-5 text-[#1F6F78]" />
+              return (
+                <div key={res.title} data-reveal="card" className="min-w-0">
+                  {res.external ? (
+                    <a href={res.href} target="_blank" rel="noopener noreferrer" className={resourceCard}>
+                      {inner}
+                    </a>
+                  ) : (
+                    <Link href={res.href} className={resourceCard}>
+                      {inner}
+                    </Link>
+                  )}
                 </div>
-                <div>
-                  <h4 className="font-heading font-bold text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors leading-tight mb-0.5">
-                    SEDAR+ Filings
-                  </h4>
-                  <span className="text-[11px] text-[#87969F] block">
-                    Regulatory filings and disclosures
-                  </span>
-                </div>
-              </div>
-              <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
-            </a>
-
-            {/* Card 3: Shareholder Information */}
-            <Link
-              href="/investors"
-              className="p-5 sm:p-6 rounded-[18px] bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-3.5">
-                <div className="w-11 h-11 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
-                  <Users className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-heading font-bold text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors leading-tight mb-0.5">
-                    Shareholder Information
-                  </h4>
-                  <span className="text-[11px] text-[#87969F] block">
-                    Governance and share structure
-                  </span>
-                </div>
-              </div>
-              <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
-            </Link>
-
-            {/* Card 4: Latest News */}
-            <Link
-              href="/news"
-              className="p-5 sm:p-6 rounded-[18px] bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-3.5">
-                <div className="w-11 h-11 rounded-xl bg-[#B7E34A]/20 flex items-center justify-center text-[#0B1F2A] shrink-0 group-hover:scale-105 transition-transform">
-                  <Newspaper className="w-5 h-5 text-[#1F6F78]" />
-                </div>
-                <div>
-                  <h4 className="font-heading font-bold text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors leading-tight mb-0.5">
-                    Latest News
-                  </h4>
-                  <span className="text-[11px] text-[#87969F] block">
-                    Company announcements
-                  </span>
-                </div>
-              </div>
-              <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
-            </Link>
+              );
+            })}
           </div>
         </Container>
       </section>

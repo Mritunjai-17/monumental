@@ -110,7 +110,7 @@ export function MarketPerformanceCard() {
   };
 
   return (
-    <div className="bg-white rounded-[22px] border border-[#DDE3E3] p-6 sm:p-8 lg:p-9 shadow-sm mb-10 sm:mb-14">
+    <div className="bg-white rounded-[20px] lg:rounded-[24px] border border-[#DDE3E3] p-6 sm:p-8 lg:p-9 shadow-sm mb-10 sm:mb-14">
       {/* =========================================================
           TOP QUOTEMEDIA TICKER & PRICE STRIP
          ========================================================= */}
@@ -121,7 +121,7 @@ export function MarketPerformanceCard() {
             <span className="font-heading font-bold text-sm text-[#0B1F2A] tracking-wider uppercase">
               {marketQuoteData.symbol}
             </span>
-            <span className="text-xs text-[#87969F]">|</span>
+            <span className="text-xs text-[#5B6B73]">|</span>
             <span className="text-xs text-[#5B6B73] font-medium">
               {marketQuoteData.exchange}
             </span>
@@ -152,7 +152,7 @@ export function MarketPerformanceCard() {
             </span>
           </div>
 
-          <div className="text-[11px] text-[#87969F] mt-1.5 flex flex-wrap items-center gap-2 font-mono">
+          <div className="text-[11px] text-[#5B6B73] mt-1.5 flex flex-wrap items-center gap-2 font-mono">
             <span>{marketQuoteData.timestamp}</span>
             <span>•</span>
             <span className="uppercase">{marketQuoteData.currency} | DELAYED PRICE | MARKET CLOSED</span>
@@ -169,7 +169,7 @@ export function MarketPerformanceCard() {
           >
             <TrendingUp className="w-4 h-4 text-[#1F6F78]" />
             <span>TMX Money Live Quote</span>
-            <ExternalLink className="w-3.5 h-3.5 text-[#87969F]" />
+            <ExternalLink className="w-3.5 h-3.5 text-[#5B6B73]" />
           </a>
         </div>
       </div>
@@ -184,7 +184,7 @@ export function MarketPerformanceCard() {
             <h3 className="font-heading font-bold text-sm text-[#0B1F2A]">
               Detailed Quote
             </h3>
-            <span className="text-[10px] uppercase font-mono tracking-wider text-[#87969F]">
+            <span className="text-[10px] uppercase font-mono tracking-wider text-[#5B6B73]">
               QuoteMedia Feed
             </span>
           </div>
@@ -250,7 +250,7 @@ export function MarketPerformanceCard() {
             </div>
             <div className="flex items-center justify-between py-1 border-b border-[#E6EBEB]">
               <span className="text-[#5B6B73]">Year Low</span>
-              <span className="font-mono text-[#87969F]">${marketQuoteData.yearLow}</span>
+              <span className="font-mono text-[#5B6B73]">${marketQuoteData.yearLow}</span>
             </div>
 
             <div className="flex items-center justify-between py-1 border-b border-[#E6EBEB]">
@@ -295,12 +295,12 @@ export function MarketPerformanceCard() {
             </div>
 
             {/* Timeframe Selector Pills */}
-            <div className="flex items-center bg-[#F5F6F1] p-1 rounded-lg border border-[#DDE3E3]">
+            <div className="flex items-center max-w-full overflow-x-auto bg-[#F5F6F1] p-1 rounded-lg border border-[#DDE3E3]">
               {['1D', '5D', '1M', '3M', '6M', 'YTD', '1Y'].map((tf) => (
                 <button
                   key={tf}
                   onClick={() => setTimeframe(tf)}
-                  className={`px-2.5 py-1 rounded-md text-[11px] font-heading font-semibold transition-all ${
+                  className={`shrink-0 min-w-11 min-h-11 px-2.5 rounded-md text-xs font-heading font-semibold transition-all ${
                     timeframe === tf
                       ? 'bg-[#0B1F2A] text-white shadow-sm'
                       : 'text-[#5B6B73] hover:text-[#0B1F2A]'
@@ -314,10 +314,10 @@ export function MarketPerformanceCard() {
             {/* Volume Toggle */}
             <button
               onClick={() => setShowVolume((prev) => !prev)}
-              className={`px-2.5 py-1 rounded-md text-[11px] font-heading font-semibold transition-colors border ${
+              className={`min-h-11 px-3 rounded-md text-xs font-heading font-semibold transition-colors border ${
                 showVolume
                   ? 'border-[#1F6F78] text-[#1F6F78] bg-[#1F6F78]/10'
-                  : 'border-[#DDE3E3] text-[#87969F]'
+                  : 'border-[#DDE3E3] text-[#5B6B73]'
               }`}
             >
               Volume {showVolume ? 'ON' : 'OFF'}
@@ -325,7 +325,7 @@ export function MarketPerformanceCard() {
           </div>
 
           {/* Subhead Frequency */}
-          <div className="flex items-center justify-between text-[11px] text-[#87969F] mb-1 px-1">
+          <div className="flex items-center justify-between text-[11px] text-[#5B6B73] mb-1 px-1">
             <span>
               Frequency: <strong className="text-[#0B1F2A]">DAILY</strong> ({timeframe} Performance Window)
             </span>
@@ -369,7 +369,7 @@ export function MarketPerformanceCard() {
                     <text
                       x={svgWidth - padRight + 10}
                       y={yPos + 3.5}
-                      fill="#87969F"
+                      fill="#5B6B73"
                       fontSize="10"
                       fontFamily="monospace"
                     >
@@ -383,7 +383,7 @@ export function MarketPerformanceCard() {
               <text
                 x={svgWidth - 12}
                 y={svgHeight / 2}
-                fill="#87969F"
+                fill="#5B6B73"
                 fontSize="10"
                 fontFamily="sans-serif"
                 transform={`rotate(90, ${svgWidth - 12}, ${svgHeight / 2})`}
@@ -481,7 +481,7 @@ export function MarketPerformanceCard() {
                       x={pt.x}
                       y={svgHeight - 12}
                       textAnchor="middle"
-                      fill="#87969F"
+                      fill="#5B6B73"
                       fontSize="10"
                       fontFamily="sans-serif"
                     >
@@ -495,7 +495,7 @@ export function MarketPerformanceCard() {
           </div>
 
           {/* Footer Attribution */}
-          <div className="pt-3 mt-2 border-t border-[#DDE3E3] flex items-center justify-between text-[11px] text-[#87969F]">
+          <div className="pt-3 mt-2 border-t border-[#DDE3E3] flex items-center justify-between text-[11px] text-[#5B6B73]">
             <span>© QuoteMedia Market Data • Profiles by Morningstar</span>
             <span>TSX Venture Exchange (15-min delayed)</span>
           </div>

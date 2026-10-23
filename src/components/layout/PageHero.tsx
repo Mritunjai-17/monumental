@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { ChevronRight } from 'lucide-react';
 import { KineticHeading } from '@/components/ui/KineticHeading';
+import { Eyebrow } from '@/components/ui/Eyebrow';
+import { cn } from '@/lib/utils';
+import { type, tone } from '@/lib/typography';
 
 interface BreadcrumbItem {
   label: string;
@@ -17,6 +20,8 @@ interface PageHeroProps {
   breadcrumbs: BreadcrumbItem[];
   badge?: React.ReactNode;
   backgroundImage?: string;
+  /** "compact" uses the section-title scale, for long titles such as news releases. */
+  titleSize?: 'default' | 'compact';
 }
 
 export const PageHero: React.FC<PageHeroProps> = ({
@@ -26,6 +31,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
   breadcrumbs,
   badge,
   backgroundImage,
+  titleSize = 'default',
 }) => {
   return (
     <section className="bg-[#0B1F2A] text-white pt-12 sm:pt-16 pb-16 sm:pb-20 border-b border-[#1D3B4C] relative overflow-hidden">
@@ -46,17 +52,17 @@ export const PageHero: React.FC<PageHeroProps> = ({
       )}
 
       {/* Background glow */}
-      <div className="absolute top-0 right-1/4 w-80 h-80 bg-[#1F6F78]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-80 h-80 bg-[#1F6F78]/15 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
 
       <Container className="relative z-10">
         {/* Breadcrumb Navigation */}
-        <nav aria-label="Breadcrumb" className="mb-6 flex items-center flex-wrap gap-2 text-xs text-[#94A3B8]">
+        <nav aria-label="Breadcrumb" className="hero-eyebrow mb-6 flex items-center flex-wrap gap-2 text-xs text-[#DDE3E3]/75">
           <Link href="/" className="hover:text-[#B7E34A] transition-colors">
             Home
           </Link>
-          {breadcrumbs.map((crumb, index) => (
+          {breadcrumbs.map((crumb) => (
             <React.Fragment key={crumb.label}>
-              <ChevronRight className="w-3.5 h-3.5 text-[#5B6B73]" />
+              <ChevronRight className="w-3.5 h-3.5 text-[#DDE3E3]/50" aria-hidden="true" />
               {crumb.href ? (
                 <Link href={crumb.href} className="hover:text-[#B7E34A] transition-colors">
                   {crumb.label}
@@ -68,24 +74,28 @@ export const PageHero: React.FC<PageHeroProps> = ({
           ))}
         </nav>
 
-        <div className="max-w-3xl">
+        <div className="max-w-3xl min-w-0">
           {eyebrow && (
-            <span className="eyebrow text-[#B7E34A] block mb-3 font-heading tracking-[0.12em] uppercase font-semibold text-xs sm:text-sm">
+            <Eyebrow dark className="hero-eyebrow">
               {eyebrow}
-            </span>
+            </Eyebrow>
           )}
 
-          <div className="flex flex-wrap items-center gap-4 mb-4">
+          <div className={cn('flex flex-wrap items-center gap-4', description ? 'mb-5' : 'mb-0')}>
             <KineticHeading
               as="h1"
               text={title}
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold font-heading text-white tracking-[-0.02em] leading-tight"
+              className={cn(
+                titleSize === 'compact' ? type.h2 : type.h1,
+                tone.headingDark,
+                'min-w-0'
+              )}
             />
-            {badge && <div>{badge}</div>}
+            {badge && <div className="hero-copy">{badge}</div>}
           </div>
 
           {description && (
-            <p className="text-base sm:text-lg text-[#DDE3E3]/90 leading-relaxed font-normal">
+            <p className={cn('hero-copy max-w-2xl', type.lead, 'text-[#DDE3E3]/90')}>
               {description}
             </p>
           )}

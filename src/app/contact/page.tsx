@@ -4,6 +4,12 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
+import { Button } from '@/components/ui/Button';
+import { Eyebrow } from '@/components/ui/Eyebrow';
+import { KineticHeading } from '@/components/ui/KineticHeading';
+import { SectionHeading } from '@/components/ui/SectionHeading';
+import { cn } from '@/lib/utils';
+import { type, tone } from '@/lib/typography';
 import {
   Building2,
   Mail,
@@ -27,6 +33,37 @@ interface ContactFormData {
   message: string;
   agreePrivacy: boolean;
 }
+
+/** Shared field styles: full width, 48px tall, 16px text (no iOS zoom). */
+const fieldClass =
+  'block w-full min-w-0 bg-white text-[#0B1F2A] rounded-[10px] border border-transparent px-4 text-base focus:outline-none focus:ring-2 focus:ring-[#B7E34A] placeholder-[#5B6B73]/70';
+const labelClass = 'block text-sm font-heading font-semibold text-white mb-2';
+const detailLabelClass = 'text-xs font-heading font-bold uppercase tracking-wider text-[#5B6B73] block mb-1';
+const iconTileClass =
+  'w-11 h-11 rounded-2xl bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center shrink-0 mt-0.5';
+const resourceCardClass =
+  'h-full p-5 sm:p-6 rounded-[16px] bg-white border border-[#DDE3E3] flex items-center justify-between gap-4 group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_-4px_rgba(11,31,42,0.08)] hover:border-[#1F6F78]/40';
+
+const RESOURCES = [
+  {
+    href: '/investors',
+    title: 'Investor Centre',
+    description: 'Financial information, filings and share information.',
+    Icon: BarChart3,
+  },
+  {
+    href: '/news',
+    title: 'Latest News & Disclosures',
+    description: 'Company announcements and media releases.',
+    Icon: FileText,
+  },
+  {
+    href: '/investors/agm',
+    title: 'AGM & Shareholder Information',
+    description: 'Meeting materials, voting information and related documents.',
+    Icon: Users,
+  },
+];
 
 export default function ContactPage() {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -125,7 +162,7 @@ export default function ContactPage() {
       {/* =========================================================
           1. HERO SECTION (Split Left Content & Right Boardroom Photo)
          ========================================================= */}
-      <section className="relative overflow-hidden pt-10 sm:pt-14 lg:pt-16 pb-8 lg:pb-12">
+      <section className="relative overflow-hidden page-intro-y">
         <div className="hidden lg:block absolute top-0 right-0 bottom-0 w-[54%] z-0 overflow-hidden pointer-events-none">
           <Image
             src="/images/agm-boardroom.jpg"
@@ -139,22 +176,22 @@ export default function ContactPage() {
         </div>
 
         <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[320px] lg:min-h-[360px]">
-            <div className="lg:col-span-7 pr-0 lg:pr-8">
-              <span className="text-[#1F6F78] uppercase text-xs sm:text-[13px] font-heading font-semibold tracking-[0.16em] mb-3 block">
-                CORPORATE &amp; INVESTOR RELATIONS
-              </span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center lg:min-h-[360px]">
+            <div className="lg:col-span-7 min-w-0 lg:pr-8">
+              <Eyebrow className="hero-eyebrow">CORPORATE &amp; INVESTOR RELATIONS</Eyebrow>
 
-              <h1 className="font-heading font-bold text-4xl sm:text-5xl lg:text-[54px] text-[#0B1F2A] tracking-[-0.02em] leading-[1.08] mb-5">
-                Let&apos;s start<br />a conversation.
-              </h1>
+              <KineticHeading
+                as="h1"
+                text={"Let's start\na conversation."}
+                className={cn(type.h1, tone.headingLight, 'mb-5')}
+              />
 
-              <p className="text-[#5B6B73] text-base sm:text-lg leading-relaxed max-w-xl font-normal">
+              <p className={cn('hero-copy max-w-xl', type.lead, tone.mutedLight)}>
                 We welcome enquiries from shareholders, investors, analysts, brokers, media and business partners.
               </p>
             </div>
 
-            <div className="lg:hidden col-span-1 mt-2">
+            <div className="lg:hidden col-span-1">
               <div className="relative rounded-[20px] overflow-hidden aspect-[16/10] shadow-md border border-[#DDE3E3]">
                 <Image
                   src="/images/agm-boardroom.jpg"
@@ -171,18 +208,22 @@ export default function ContactPage() {
 
       {/* =========================================================
           2. MAIN SECTION: CONTACT INFORMATION (NO MAP) & SEND MESSAGE FORM
+          Bottom padding equals the grid gap so the resource row below reads
+          as part of the same block.
          ========================================================= */}
-      <section className="py-6 sm:py-10">
+      <section className="relative z-10 pt-0 pb-6 lg:pb-8">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
             {/* LEFT CARD: Contact Information (Map omitted per user request) */}
-            <div className="lg:col-span-5 bg-white rounded-[22px] border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
-              <div>
+            <div data-reveal="card" className="lg:col-span-5 min-w-0">
+              <div className="h-full bg-white rounded-[20px] lg:rounded-[24px] border border-[#DDE3E3] p-6 sm:p-8 flex flex-col">
                 <div className="mb-7">
-                  <h2 className="font-heading font-bold text-2xl text-[#0B1F2A] tracking-tight mb-1.5">
-                    Contact Information
-                  </h2>
-                  <p className="text-xs sm:text-sm text-[#5B6B73]">
+                  <KineticHeading
+                    as="h2"
+                    text="Contact Information"
+                    className={cn(type.h3, tone.headingLight, 'mb-2')}
+                  />
+                  <p className={cn(type.body, tone.mutedLight)}>
                     Get in touch with our team for any enquiries.
                   </p>
                 </div>
@@ -190,14 +231,14 @@ export default function ContactPage() {
                 <div className="space-y-6">
                   {/* Entity */}
                   <div className="flex items-start gap-4">
-                    <div className="w-11 h-11 rounded-2xl bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center shrink-0 mt-0.5">
-                      <Building2 className="w-5 h-5 stroke-[1.8]" />
+                    <div className={iconTileClass}>
+                      <Building2 className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
-                    <div>
-                      <h3 className="font-heading font-bold text-base text-[#0B1F2A] leading-snug mb-0.5">
+                    <div className="min-w-0">
+                      <h3 className={cn(type.h4, tone.headingLight, 'mb-0.5')}>
                         Monumental Energy Corp.
                       </h3>
-                      <p className="text-xs text-[#5B6B73]">
+                      <p className={cn('text-sm', tone.mutedLight)}>
                         Corporate &amp; Investor Relations
                       </p>
                     </div>
@@ -205,16 +246,14 @@ export default function ContactPage() {
 
                   {/* Email */}
                   <div className="flex items-start gap-4">
-                    <div className="w-11 h-11 rounded-2xl bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center shrink-0 mt-0.5">
-                      <Mail className="w-5 h-5 stroke-[1.8]" />
+                    <div className={iconTileClass}>
+                      <Mail className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
-                    <div>
-                      <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-0.5">
-                        Email
-                      </span>
+                    <div className="min-w-0">
+                      <span className={detailLabelClass}>Email</span>
                       <a
                         href="mailto:info@monumental.energy"
-                        className="text-sm font-semibold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors"
+                        className="text-sm sm:text-[15px] font-semibold text-[#1F6F78] hover:text-[#0B1F2A] transition-colors break-words"
                       >
                         info@monumental.energy
                       </a>
@@ -223,16 +262,14 @@ export default function ContactPage() {
 
                   {/* Phone */}
                   <div className="flex items-start gap-4">
-                    <div className="w-11 h-11 rounded-2xl bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center shrink-0 mt-0.5">
-                      <Phone className="w-5 h-5 stroke-[1.8]" />
+                    <div className={iconTileClass}>
+                      <Phone className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
-                    <div>
-                      <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-0.5">
-                        Phone
-                      </span>
+                    <div className="min-w-0">
+                      <span className={detailLabelClass}>Phone</span>
                       <a
                         href="tel:+16043678117"
-                        className="text-sm font-semibold text-[#0B1F2A] hover:text-[#1F6F78] transition-colors"
+                        className="text-sm sm:text-[15px] font-semibold text-[#0B1F2A] hover:text-[#1F6F78] transition-colors"
                       >
                         +1-604-367-8117
                       </a>
@@ -241,14 +278,12 @@ export default function ContactPage() {
 
                   {/* Registered Office */}
                   <div className="flex items-start gap-4">
-                    <div className="w-11 h-11 rounded-2xl bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center shrink-0 mt-0.5">
-                      <MapPin className="w-5 h-5 stroke-[1.8]" />
+                    <div className={iconTileClass}>
+                      <MapPin className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
-                    <div>
-                      <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-0.5">
-                        Registered Office
-                      </span>
-                      <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed">
+                    <div className="min-w-0">
+                      <span className={detailLabelClass}>Registered Office</span>
+                      <p className={cn(type.body, tone.mutedLight)}>
                         Suite 228 - 1122 Mainland Street,<br />
                         Vancouver, BC V6B 5L1, Canada
                       </p>
@@ -256,18 +291,16 @@ export default function ContactPage() {
                   </div>
 
                   {/* Transfer Agent */}
-                  <div className="flex items-start gap-4 pt-4 border-t border-[#E8ECEC]">
-                    <div className="w-11 h-11 rounded-2xl bg-[#1F6F78]/10 text-[#1F6F78] flex items-center justify-center shrink-0 mt-0.5">
-                      <FileCheck className="w-5 h-5 stroke-[1.8]" />
+                  <div className="flex items-start gap-4 pt-6 border-t border-[#E8ECEC]">
+                    <div className={iconTileClass}>
+                      <FileCheck className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
-                    <div>
-                      <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#87969F] block mb-0.5">
-                        Transfer Agent
-                      </span>
-                      <span className="text-xs sm:text-sm font-semibold text-[#0B1F2A] block mb-0.5">
+                    <div className="min-w-0">
+                      <span className={detailLabelClass}>Transfer Agent</span>
+                      <span className="text-sm sm:text-[15px] font-semibold text-[#0B1F2A] block mb-0.5">
                         Computershare Investor Services Inc.
                       </span>
-                      <p className="text-xs text-[#87969F]">
+                      <p className={cn('text-sm', tone.mutedLight)}>
                         For voting support and shareholder enquiries.
                       </p>
                     </div>
@@ -276,31 +309,35 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* RIGHT CARD: Send us a message (Dark Navy Card #07161F) */}
-            <div className="lg:col-span-7 bg-[#07161F] text-white rounded-[22px] border border-[#183040] p-7 sm:p-9 shadow-xl flex flex-col justify-between">
-              <div>
-                <div className="mb-6">
-                  <h2 className="font-heading font-bold text-2xl text-white tracking-tight mb-1.5">
-                    Send us a message
-                  </h2>
-                  <p className="text-xs sm:text-sm text-[#87969F]">
+            {/* RIGHT CARD: Send us a message (Dark Navy Card) */}
+            <div data-reveal="card" className="lg:col-span-7 min-w-0">
+              <div className="h-full bg-[#0B1F2A] text-white rounded-[20px] lg:rounded-[24px] border border-[#1D3B4C] p-6 sm:p-8 shadow-xl flex flex-col">
+                <div className="mb-7">
+                  <KineticHeading
+                    as="h2"
+                    text="Send us a message"
+                    className={cn(type.h3, tone.headingDark, 'mb-2')}
+                  />
+                  <p className={cn(type.body, 'text-[#DDE3E3]/80')}>
                     Fill out the form below and our team will get back to you.
                   </p>
                 </div>
 
                 {formStatus === 'success' ? (
-                  <div className="py-12 text-center bg-white/5 rounded-2xl border border-white/10 p-8">
+                  <div className="py-10 px-6 sm:px-8 text-center bg-white/5 rounded-[16px] border border-white/10">
                     <div className="w-14 h-14 rounded-full bg-[#B7E34A]/20 text-[#B7E34A] mx-auto flex items-center justify-center mb-4">
-                      <CheckCircle2 className="w-8 h-8" />
+                      <CheckCircle2 className="w-8 h-8" aria-hidden="true" />
                     </div>
-                    <h3 className="font-heading font-bold text-xl text-white mb-2">
+                    <h3 className={cn(type.h4, tone.headingDark, 'mb-2')}>
                       Message Successfully Sent
                     </h3>
-                    <p className="text-xs sm:text-sm text-[#87969F] max-w-md mx-auto mb-6 leading-relaxed">
+                    <p className={cn(type.body, 'text-[#DDE3E3]/80 max-w-md mx-auto mb-6')}>
                       Thank you for contacting Monumental Energy. A representative will review your inquiry and follow up promptly.
                     </p>
-                    <button
+                    <Button
                       type="button"
+                      variant="primary"
+                      size="md"
                       onClick={() => {
                         setFormStatus('idle');
                         setFormData({
@@ -312,55 +349,59 @@ export default function ContactPage() {
                           agreePrivacy: false,
                         });
                       }}
-                      className="inline-flex items-center gap-2 bg-[#B7E34A] hover:bg-[#a5d43b] text-[#0B1F2A] font-heading font-bold text-xs px-5 py-2.5 rounded-lg transition-all"
                     >
-                      <span>Send Another Message</span>
-                    </button>
+                      Send Another Message
+                    </Button>
                   </div>
                 ) : (
-                  <form onSubmit={handleContactSubmit} className="space-y-4">
+                  <form onSubmit={handleContactSubmit} className="space-y-5">
                     {/* Row 1: Full Name & Email */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-heading font-semibold text-white/90 mb-1.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-4">
+                      <div className="min-w-0">
+                        <label htmlFor="contact-full-name" className={labelClass}>
                           Full Name *
                         </label>
                         <input
+                          id="contact-full-name"
                           type="text"
                           required
+                          autoComplete="name"
                           placeholder="Your full name"
                           value={formData.fullName}
                           onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                          className="w-full bg-white text-[#0B1F2A] rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#B7E34A] placeholder-[#87969F]"
+                          className={cn(fieldClass, 'h-12')}
                         />
                       </div>
 
-                      <div>
-                        <label className="block text-xs font-heading font-semibold text-white/90 mb-1.5">
+                      <div className="min-w-0">
+                        <label htmlFor="contact-email" className={labelClass}>
                           Email Address *
                         </label>
                         <input
+                          id="contact-email"
                           type="email"
                           required
+                          autoComplete="email"
                           placeholder="Your email address"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full bg-white text-[#0B1F2A] rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#B7E34A] placeholder-[#87969F]"
+                          className={cn(fieldClass, 'h-12')}
                         />
                       </div>
                     </div>
 
                     {/* Row 2: Inquiry Type & Phone */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-heading font-semibold text-white/90 mb-1.5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-4">
+                      <div className="min-w-0">
+                        <label htmlFor="contact-inquiry-type" className={labelClass}>
                           Inquiry Type *
                         </label>
                         <select
+                          id="contact-inquiry-type"
                           required
                           value={formData.inquiryType}
                           onChange={(e) => setFormData({ ...formData, inquiryType: e.target.value })}
-                          className="w-full bg-white text-[#0B1F2A] rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#B7E34A] cursor-pointer"
+                          className={cn(fieldClass, 'h-12 cursor-pointer')}
                         >
                           <option value="">Select an option</option>
                           <option value="Prospective Investor">Prospective Investor</option>
@@ -372,32 +413,35 @@ export default function ContactPage() {
                         </select>
                       </div>
 
-                      <div>
-                        <label className="block text-xs font-heading font-semibold text-white/90 mb-1.5">
+                      <div className="min-w-0">
+                        <label htmlFor="contact-phone" className={labelClass}>
                           Phone (optional)
                         </label>
                         <input
+                          id="contact-phone"
                           type="tel"
+                          autoComplete="tel"
                           placeholder="Your phone number"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full bg-white text-[#0B1F2A] rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#B7E34A] placeholder-[#87969F]"
+                          className={cn(fieldClass, 'h-12')}
                         />
                       </div>
                     </div>
 
                     {/* Row 3: Message */}
                     <div>
-                      <label className="block text-xs font-heading font-semibold text-white/90 mb-1.5">
+                      <label htmlFor="contact-message" className={labelClass}>
                         Message *
                       </label>
                       <textarea
+                        id="contact-message"
                         required
                         rows={4}
                         placeholder="Tell us how we can help you..."
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="w-full bg-white text-[#0B1F2A] rounded-lg p-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#B7E34A] placeholder-[#87969F] resize-none"
+                        className={cn(fieldClass, 'py-3 min-h-[128px] resize-none')}
                       />
                     </div>
 
@@ -408,9 +452,9 @@ export default function ContactPage() {
                         type="checkbox"
                         checked={formData.agreePrivacy}
                         onChange={(e) => setFormData({ ...formData, agreePrivacy: e.target.checked })}
-                        className="w-4 h-4 rounded border-white/20 bg-white/10 text-[#B7E34A] focus:ring-[#B7E34A] mt-0.5 cursor-pointer accent-[#B7E34A]"
+                        className="w-5 h-5 rounded border-white/20 bg-white/10 text-[#B7E34A] focus:ring-[#B7E34A] mt-0.5 shrink-0 cursor-pointer accent-[#B7E34A]"
                       />
-                      <label htmlFor="agree-privacy" className="text-xs text-[#87969F] leading-relaxed cursor-pointer">
+                      <label htmlFor="agree-privacy" className="text-sm text-[#DDE3E3]/80 leading-relaxed cursor-pointer">
                         I agree to the collection and use of my personal information for the purpose of responding to my enquiry, as outlined in the company&apos;s{' '}
                         <span className="text-white underline">Privacy Policy</span>.
                       </label>
@@ -418,31 +462,33 @@ export default function ContactPage() {
 
                     {/* Error display */}
                     {formStatus === 'error' && (
-                      <div className="flex items-center gap-2 p-3 bg-red-900/30 border border-red-500/50 rounded-lg text-red-300 text-xs">
-                        <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+                      <div role="alert" className="flex items-start gap-2 p-3 bg-red-900/30 border border-red-500/50 rounded-[10px] text-red-200 text-sm">
+                        <AlertCircle className="w-4 h-4 shrink-0 text-red-400 mt-0.5" aria-hidden="true" />
                         <span>{errorMessage}</span>
                       </div>
                     )}
 
                     {/* Row 5: Submit Button */}
                     <div className="pt-2">
-                      <button
+                      <Button
                         type="submit"
+                        variant="primary"
+                        size="md"
                         disabled={formStatus === 'submitting'}
-                        className="bg-[#B7E34A] hover:bg-[#a5d43b] text-[#0B1F2A] font-heading font-bold text-xs sm:text-sm px-6 py-3.5 rounded-lg flex items-center gap-2 transition-all shadow-sm disabled:opacity-50"
+                        className="w-full sm:w-auto"
                       >
                         {formStatus === 'submitting' ? (
                           <>
-                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
                             <span>Transmitting...</span>
                           </>
                         ) : (
                           <>
                             <span>Send inquiry</span>
-                            <ArrowRight className="w-4 h-4" />
+                            <ArrowRight className="w-4 h-4" aria-hidden="true" />
                           </>
                         )}
-                      </button>
+                      </Button>
                     </div>
                   </form>
                 )}
@@ -455,79 +501,45 @@ export default function ContactPage() {
       {/* =========================================================
           3. RESOURCE CARDS (3-Card Row)
          ========================================================= */}
-      <section className="py-6 sm:py-10">
+      <section className="relative z-10 section-y pt-0">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1: Investor Centre */}
-            <Link
-              href="/investors"
-              className="p-5 sm:p-6 rounded-[20px] bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
-                  <BarChart3 className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors leading-tight mb-1">
-                    Investor Centre
-                  </h4>
-                  <span className="text-xs text-[#87969F] block">
-                    Financial information, filings and share information.
-                  </span>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {RESOURCES.map(({ href, title, description, Icon }) => (
+              <div key={href} data-reveal="card" className="h-full min-w-0">
+                <Link href={href} className={resourceCardClass}>
+                  <div className="flex items-center gap-4 min-w-0">
+                    <div className="w-12 h-12 rounded-2xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
+                      <Icon className="w-6 h-6" aria-hidden="true" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className={cn(type.h4, tone.headingLight, 'group-hover:text-[#1F6F78] transition-colors mb-1')}>
+                        {title}
+                      </h3>
+                      <span className={cn('text-sm leading-relaxed block', tone.mutedLight)}>
+                        {description}
+                      </span>
+                    </div>
+                  </div>
+                  <ArrowRight
+                    className="w-4 h-4 text-[#5B6B73] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0"
+                    aria-hidden="true"
+                  />
+                </Link>
               </div>
-              <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
-            </Link>
-
-            {/* Card 2: Latest News & Disclosures */}
-            <Link
-              href="/news"
-              className="p-5 sm:p-6 rounded-[20px] bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
-                  <FileText className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors leading-tight mb-1">
-                    Latest News &amp; Disclosures
-                  </h4>
-                  <span className="text-xs text-[#87969F] block">
-                    Company announcements and media releases.
-                  </span>
-                </div>
-              </div>
-              <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
-            </Link>
-
-            {/* Card 3: AGM & Shareholder Information */}
-            <Link
-              href="/investors/agm"
-              className="p-5 sm:p-6 rounded-[20px] bg-white border border-[#DDE3E3] shadow-sm hover:border-[#1F6F78] hover:shadow-md transition-all flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
-                  <Users className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors leading-tight mb-1">
-                    AGM &amp; Shareholder Information
-                  </h4>
-                  <span className="text-xs text-[#87969F] block">
-                    Meeting materials, voting information and related documents.
-                  </span>
-                </div>
-              </div>
-              <ArrowRight className="w-4 h-4 text-[#87969F] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
-            </Link>
+            ))}
           </div>
         </Container>
       </section>
 
       {/* =========================================================
           4. BOTTOM NEWSLETTER STRIP (Stay Informed)
+          id="newsletter" is the target of /contact#newsletter links on the
+          homepage (LatestNews, InvestorHub).
          ========================================================= */}
-      <section className="relative overflow-hidden bg-[#07161F] text-white py-12 sm:py-14 mt-6 sm:mt-10">
+      <section
+        id="newsletter"
+        className="relative z-10 overflow-hidden bg-[#0B1F2A] text-white section-y-compact scroll-mt-24"
+      >
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Image
             src="/images/taranaki-panoramic-coast.jpg"
@@ -536,27 +548,24 @@ export default function ContactPage() {
             sizes="100vw"
             className="object-cover object-center opacity-30 mix-blend-luminosity"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#07161F] via-[#07161F]/90 to-[#07161F]/75" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1F2A] via-[#0B1F2A]/90 to-[#0B1F2A]/75" />
         </div>
 
         <Container className="relative z-10">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
-            <div>
-              <span className="text-[11px] font-heading font-bold uppercase tracking-[0.16em] text-[#B7E34A] block mb-1.5">
-                STAY INFORMED
-              </span>
-              <h3 className="font-heading font-bold text-2xl sm:text-3xl text-white tracking-tight leading-snug mb-1">
-                Get the latest news
-              </h3>
-              <p className="text-xs text-[#87969F]">
-                Subscribe to receive company updates and announcements.
-              </p>
-            </div>
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            <SectionHeading
+              eyebrow="STAY INFORMED"
+              title="Get the latest news"
+              description="Subscribe to receive company updates and announcements."
+              size="compact"
+              dark
+              className="mb-0 min-w-0"
+            />
 
-            <div className="w-full lg:max-w-md">
+            <div data-reveal className="w-full lg:max-w-md shrink-0">
               {newsletterStatus === 'success' ? (
-                <div className="flex items-center gap-2 text-sm text-[#B7E34A] py-2">
-                  <CheckCircle2 className="w-5 h-5 shrink-0" />
+                <div role="status" className="flex items-center gap-2 text-sm text-[#B7E34A] py-2">
+                  <CheckCircle2 className="w-5 h-5 shrink-0" aria-hidden="true" />
                   <span>Thank you for subscribing to Monumental Energy news alerts.</span>
                 </div>
               ) : (
@@ -564,19 +573,23 @@ export default function ContactPage() {
                   <input
                     type="email"
                     required
+                    aria-label="Your email address"
+                    autoComplete="email"
                     placeholder="Your email address"
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
-                    className="flex-1 bg-white text-[#0B1F2A] rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#B7E34A] placeholder-[#87969F]"
+                    className={cn(fieldClass, 'h-12 sm:flex-1')}
                   />
-                  <button
+                  <Button
                     type="submit"
+                    variant="primary"
+                    size="md"
                     disabled={newsletterStatus === 'loading'}
-                    className="bg-[#B7E34A] hover:bg-[#a5d43b] text-[#0B1F2A] font-heading font-bold text-xs sm:text-sm px-6 py-3 rounded-lg flex items-center justify-center gap-2 transition-all shrink-0 shadow-sm"
+                    className="w-full sm:w-auto shrink-0"
                   >
                     <span>Subscribe</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                  </Button>
                 </form>
               )}
             </div>
