@@ -277,16 +277,30 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  {/* Registered Office */}
+                  {/* Head Office (Canada) */}
                   <div className="flex items-start gap-4">
                     <div className={iconTileClass}>
                       <MapPin className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
                     <div className="min-w-0">
-                      <span className={detailLabelClass}>Registered Office</span>
+                      <span className={detailLabelClass}>Head Office (Canada)</span>
                       <p className={cn(type.body, tone.mutedLight)}>
-                        Suite 228 - 1122 Mainland Street,<br />
+                        Suite 228 – 1122 Mainland Street,<br />
                         Vancouver, BC V6B 5L1, Canada
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* New Plymouth Office (New Zealand) */}
+                  <div className="flex items-start gap-4">
+                    <div className={iconTileClass}>
+                      <MapPin className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className={detailLabelClass}>New Plymouth Office (New Zealand)</span>
+                      <p className={cn(type.body, tone.mutedLight)}>
+                        #11 Young St., New Plymouth Central,<br />
+                        New Plymouth 4310, New Zealand
                       </p>
                     </div>
                   </div>

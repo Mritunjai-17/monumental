@@ -14,32 +14,57 @@ import {
   FileText,
   Layers,
   Gem,
-  Mountain,
-  Sun,
-  Droplets,
-  CloudRain,
   ExternalLink,
-  Compass,
+  Newspaper,
+  ShieldCheck,
+  Award,
+  Zap,
+  TrendingUp,
 } from 'lucide-react';
 import { LagunaBlancaIntelligenceRow } from '@/components/sections/LagunaBlancaIntelligenceRow';
 
 export const metadata = constructMetadata({
-  title: 'Laguna Blanca Project | Chile Lithium & Cesium Exploration',
+  title: 'Salar De Laguna Blanca | Chile Cesium & Lithium Brine Project',
   description:
-    'An early-stage brine and cesium-sediment project in Chile’s Central Andes. Laguna Blanca is a large, strategically located land package in a proven lithium region of northern Chile.',
+    'Laguna Blanca comprises 51 exploration concessions across 12,425 hectares in Chile’s Lithium Triangle, officially designated for Exclusive Private Development. Prospective for high-value cesium formate and low-cost DLE lithium.',
   path: '/projects',
 });
 
 export default function LagunaBlancaProjectPage() {
+  // Structured Data (JSON-LD) for Search Engine Optimization
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Place',
+    name: 'Salar De Laguna Blanca',
+    description:
+      'A 12,425-hectare cesium and lithium brine exploration salar project in the central Andes high desert of northern Chile, declared available for Exclusive Private Development.',
+    url: 'https://monumental.energy/projects',
+    geo: {
+      '@type': 'GeoCoordinates',
+      addressCountry: 'CL',
+      addressRegion: 'Antofagasta / Central Andes',
+    },
+    containedInPlace: {
+      '@type': 'Place',
+      name: 'Lithium Triangle (Chile, Argentina, Bolivia)',
+    },
+  };
+
   return (
     <div className="relative bg-[#F5F6F1] text-[#0B1F2A] overflow-hidden min-h-screen">
+      {/* Schema.org Structured Metadata */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       {/* =========================================================
-          1. HERO SECTION (Split Left Content & Right Photograph)
+          1. HERO SECTION: Split Left Copy & Right Photographic Panel
          ========================================================= */}
-      <section className="relative overflow-hidden pt-8 sm:pt-12 lg:pt-14 pb-8 sm:pb-10">
-        {/* Subtle Topographical Elevation Contour Background (Top Left) */}
+      <section className="relative overflow-hidden pt-10 sm:pt-14 lg:pt-16 pb-10 sm:pb-14">
+        {/* Subtle Topographical Elevation Contour Background */}
         <div
-          className="absolute top-0 left-0 w-[550px] sm:w-[650px] lg:w-[750px] h-[550px] pointer-events-none opacity-[0.06] select-none z-0 overflow-hidden"
+          className="absolute top-0 left-0 w-[550px] sm:w-[650px] lg:w-[750px] h-[550px] pointer-events-none opacity-[0.05] select-none z-0 overflow-hidden"
           aria-hidden="true"
         >
           <svg viewBox="0 0 700 600" fill="none" stroke="#0B1F2A" strokeWidth="1.2" className="w-full h-full">
@@ -51,70 +76,75 @@ export default function LagunaBlancaProjectPage() {
           </svg>
         </div>
 
-        {/* Desktop Split Photograph with Soft Inset Fades */}
-        <div className="hidden lg:block absolute top-0 right-0 bottom-0 w-[58%] z-0 overflow-hidden pointer-events-none">
+        {/* Desktop Photographic Panel */}
+        <div className="hidden lg:block absolute top-0 right-0 bottom-0 w-[56%] z-0 overflow-hidden pointer-events-none">
           <Image
             src="/images/salar-turi-panoramic-landscape.jpg"
-            alt="Laguna Blanca salar and snow-capped Andean volcanoes in northern Chile"
+            alt="Salar De Laguna Blanca volcanic landscape and high-altitude salar basin in northern Chile"
             fill
-            sizes="60vw"
+            sizes="56vw"
             className="object-cover object-center"
             priority
           />
-          {/* Dual Gradient Overlay: Left fade into copy + bottom fade into page */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#F5F6F1] via-[#F5F6F1]/45 to-transparent w-full h-full" />
+          {/* Gradients blending photograph seamlessly into the background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#F5F6F1] via-[#F5F6F1]/55 to-transparent w-full h-full" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#F5F6F1] via-[#F5F6F1]/20 to-transparent w-full h-full" />
 
-          {/* Location Badge on Image (Bottom Right) */}
-          <div className="absolute bottom-6 right-8 z-10 bg-[#0B1F2A]/85 backdrop-blur-md text-white rounded-xl py-2 px-3.5 border border-white/10 shadow-lg flex items-center gap-2.5">
+          {/* Location Identifier Badge */}
+          <div className="absolute bottom-6 right-8 z-10 bg-[#0B1F2A]/90 backdrop-blur-md text-white rounded-xl py-2.5 px-4 border border-white/10 shadow-lg flex items-center gap-3">
             <MapPin className="w-4 h-4 text-[#2DD4BF] shrink-0" aria-hidden="true" />
             <div className="text-left">
               <span className="font-heading font-bold text-xs text-white block leading-tight">
-                Laguna Blanca
+                Salar De Laguna Blanca
               </span>
-              <span className="text-[10px] text-[#DDE3E3]/80 block leading-tight">
-                Arica y Parinacota Region, Chile
+              <span className="text-[10px] text-[#DDE3E3]/80 block leading-tight mt-0.5">
+                Central Andes High Plateau · Chile
               </span>
             </div>
           </div>
         </div>
 
         <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center lg:min-h-[380px]">
-            {/* Left Column (Copy) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center lg:min-h-[440px]">
+            {/* Left Narrative Column */}
             <div className="lg:col-span-6 min-w-0">
-              <Eyebrow className="hero-eyebrow text-[#1F6F78]">
-                CHILE &nbsp;·&nbsp; LITHIUM &amp; CESIUM EXPLORATION
+              <Eyebrow className="hero-eyebrow text-[#1F6F78] mb-3">
+                CHILE · CENTRAL ANDES · CRITICAL MINERALS
               </Eyebrow>
 
               <KineticHeading
                 as="h1"
-                text="Laguna Blanca"
+                text="Salar De Laguna Blanca"
                 className={cn(type.h1, tone.headingLight, 'mb-3')}
               />
 
-              <p className="text-lg sm:text-xl font-medium text-[#1F6F78] mb-4 leading-snug">
-                An early-stage brine and cesium-sediment project in Chile&apos;s Central Andes.
+              <p className="text-lg sm:text-xl font-medium text-[#1F6F78] mb-5 leading-snug">
+                Cesium &amp; Lithium Brine Exploration Project
               </p>
 
-              <p className={cn('hero-copy max-w-xl', type.lead, tone.mutedLight)}>
-                Laguna Blanca is a large, strategically located land package with lithium brine and cesium-bearing sediment potential, positioned in a proven lithium region of northern Chile.
-              </p>
+              <div className="space-y-4 text-sm sm:text-base text-[#5B6B73] leading-relaxed max-w-xl">
+                <p>
+                  Occupying an active closed hydrological catchment in northern Chile’s high desert, Laguna Blanca is strategically situated in the <strong>Lithium Triangle</strong>—the world&apos;s premier lithium basin holding over half of global brine reserves.
+                </p>
+                <p>
+                  The asset pairs anomalous lithium concentrations with rare, high-value cesium evaporites, supported by year-round heavy transport access along the paved Route 27CH corridor.
+                </p>
+              </div>
             </div>
 
-            {/* Mobile / Tablet Image fallback */}
+            {/* Mobile / Tablet Image Viewport */}
             <div className="lg:hidden col-span-1">
-              <div className="relative rounded-[16px] overflow-hidden aspect-[16/10] shadow-md border border-[#DDE3E3]">
+              <div className="relative rounded-[18px] overflow-hidden aspect-[16/10] shadow-md border border-[#DDE3E3]">
                 <Image
                   src="/images/salar-turi-panoramic-landscape.jpg"
-                  alt="Laguna Blanca salar and Andean volcanic mountains"
+                  alt="Salar De Laguna Blanca high-altitude volcanic landscape"
                   fill
                   sizes="100vw"
                   className="object-cover object-center"
                 />
-                <div className="absolute bottom-3 right-3 bg-[#0B1F2A]/85 backdrop-blur-md text-white rounded-lg py-1.5 px-2.5 text-[11px] border border-white/10 flex items-center gap-1.5">
+                <div className="absolute bottom-3 right-3 bg-[#0B1F2A]/90 backdrop-blur-md text-white rounded-lg py-1.5 px-3 text-[11px] border border-white/10 flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#2DD4BF]" />
-                  <span>Arica y Parinacota Region, Chile</span>
+                  <span>Central Andes, Chile</span>
                 </div>
               </div>
             </div>
@@ -123,226 +153,460 @@ export default function LagunaBlancaProjectPage() {
       </section>
 
       {/* =========================================================
-          2. KEY STATS STRIP (4 Metrics + Footnote)
+          2. EXECUTIVE SNAPSHOT: 5 DISTINCT METRICS
          ========================================================= */}
-      <section className="py-2">
+      <section className="py-4 sm:py-6">
         <Container>
           <div
             data-reveal="card"
-            className="rounded-[20px] bg-white border border-[#DDE3E3] p-4 sm:p-6 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 sm:gap-6 items-center divide-y sm:divide-y-0 sm:divide-x divide-[#E8EDE9]"
+            className="rounded-[20px] bg-white border border-[#DDE3E3] p-5 sm:p-7 shadow-sm grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-6 items-center divide-y sm:divide-y-0 sm:divide-x divide-[#E8EDE9]"
           >
-            {/* Stat 1: Total project area */}
+            {/* Metric 1 */}
             <div className="flex items-center gap-3.5 pt-2 sm:pt-0">
-              <div className="w-11 h-11 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <path d="M3 7V5a2 2 0 0 1 2-2h2" />
-                  <path d="M17 3h2a2 2 0 0 1 2 2v2" />
-                  <path d="M21 17v2a2 2 0 0 1-2 2h-2" />
-                  <path d="M7 21H5a2 2 0 0 1-2-2v-2" />
-                  <rect width="10" height="10" x="7" y="7" rx="1.5" />
-                </svg>
+              <div className="w-10 h-10 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
+                <Layers className="w-4 h-4" />
               </div>
               <div className="min-w-0">
                 <span className="font-heading font-bold text-lg sm:text-xl text-[#0B1F2A] block leading-tight">
-                  12,425 hectares*
+                  12,425 ha
                 </span>
                 <span className="text-xs text-[#5B6B73] block mt-0.5">
-                  Total project area
+                  Total concession package
                 </span>
               </div>
             </div>
 
-            {/* Stat 2: Mining concessions */}
+            {/* Metric 2 */}
             <div className="flex items-center gap-3.5 pt-4 sm:pt-0 sm:pl-5">
-              <div className="w-11 h-11 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
-                <FileText className="w-5 h-5" aria-hidden="true" />
+              <div className="w-10 h-10 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
+                <FileText className="w-4 h-4" />
               </div>
               <div className="min-w-0">
                 <span className="font-heading font-bold text-lg sm:text-xl text-[#0B1F2A] block leading-tight">
-                  51 concessions*
+                  51 Claims
                 </span>
                 <span className="text-xs text-[#5B6B73] block mt-0.5">
-                  Mining concessions
+                  100% owned via Minera Kairos
                 </span>
               </div>
             </div>
 
-            {/* Stat 3: Project stage */}
+            {/* Metric 3 */}
             <div className="flex items-center gap-3.5 pt-4 sm:pt-0 sm:pl-5">
-              <div className="w-11 h-11 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
-                <Layers className="w-5 h-5" aria-hidden="true" />
+              <div className="w-10 h-10 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
+                <Award className="w-4 h-4" />
               </div>
               <div className="min-w-0">
                 <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight">
-                  Early exploration stage
+                  Exclusive Status
                 </span>
                 <span className="text-xs text-[#5B6B73] block mt-0.5">
-                  Lithium brine and cesium-bearing sediments
+                  100% private commercial title
                 </span>
               </div>
             </div>
 
-            {/* Stat 4: Region */}
+            {/* Metric 4 */}
             <div className="flex items-center gap-3.5 pt-4 sm:pt-0 sm:pl-5">
-              <div className="w-11 h-11 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
-                <MapPin className="w-5 h-5" aria-hidden="true" />
+              <div className="w-10 h-10 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
+                <MapPin className="w-4 h-4" />
               </div>
               <div className="min-w-0">
                 <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight">
-                  Arica y Parinacota Region
+                  Route 27CH
                 </span>
                 <span className="text-xs text-[#5B6B73] block mt-0.5">
-                  Northern Chile
+                  80 km east of San Pedro (1.5h)
                 </span>
               </div>
             </div>
 
-            {/* Disclaimer / Footnote */}
-            <div className="pt-4 sm:pt-0 sm:pl-5 lg:col-span-1">
-              <p className="text-[11px] text-[#5B6B73] leading-snug">
-                * Figures reported on the company&apos;s project page and should be revalidated before publication.
-              </p>
+            {/* Metric 5 */}
+            <div className="flex items-center gap-3.5 pt-4 sm:pt-0 sm:pl-5">
+              <div className="w-10 h-10 rounded-xl bg-[#EDF3F1] border border-[#CCD8D5] flex items-center justify-center text-[#1F6F78] shrink-0">
+                <Gem className="w-4 h-4" />
+              </div>
+              <div className="min-w-0">
+                <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight">
+                  Cs + Li Brine
+                </span>
+                <span className="text-xs text-[#5B6B73] block mt-0.5">
+                  Dual-commodity potential
+                </span>
+              </div>
             </div>
           </div>
         </Container>
       </section>
 
       {/* =========================================================
-          3. MIDDLE ROW: MAP (COL 1) | GLANCE CARD (COL 2) | GEOLOGICAL FORMATION (COL 3)
+          3. REGULATORY ARCHITECTURE & POLICY ADVANTAGE
+         ========================================================= */}
+      <section className="py-8 sm:py-12">
+        <Container>
+          <div className="rounded-[22px] bg-white border border-[#DDE3E3] p-7 sm:p-9 lg:p-11 shadow-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+              {/* Left Column: National Policy Context */}
+              <div className="lg:col-span-7">
+                <Eyebrow>Regulatory Framework &amp; Concession Rights</Eyebrow>
+                <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#0B1F2A] mb-4">
+                  Exclusive Private Development Designation
+                </h2>
+                <div className="space-y-4 text-sm sm:text-base text-[#5B6B73] leading-relaxed">
+                  <p>
+                    Under the Chilean National Lithium Strategy (<em>Estrategia Nacional del Litio</em>), salt flats across the country were classified into strategic categories. While Tier-1 basins like Salar de Atacama and Maricunga mandate state-controlled majority joint ventures with Codelco or ENAMI, Laguna Blanca was designated eligible for <strong>exclusive private development</strong>.
+                  </p>
+                  <p>
+                    This outcome affords Monumental Energy full commercial independence, unrestricted operational execution, and zero mandatory state equity dilution—providing a clear regulatory runway for private exploration and eventual production.
+                  </p>
+                </div>
+              </div>
+
+              {/* Right Column: Title Integrity Box */}
+              <div className="lg:col-span-5 bg-[#FAFBF9] rounded-xl p-6 sm:p-7 border border-[#E8EDE9]">
+                <h3 className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] mb-3">
+                  Concession Package Structure
+                </h3>
+                <ul className="space-y-3 text-xs sm:text-sm text-[#5B6B73] leading-relaxed">
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78] shrink-0 mt-2" />
+                    <span><strong>100% Subsidiary Ownership:</strong> Concessions are registered directly through Lithium Chile’s Chilean entity, Minera Kairos Chile Limitada.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78] shrink-0 mt-2" />
+                    <span><strong>Continuous Block:</strong> 51 contiguous claims covering the salar basin floor and surrounding alluvial fans.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78] shrink-0 mt-2" />
+                    <span><strong>Infrastructure Proximity:</strong> Direct access via the paved Paso de Jama international highway (Route 27CH).</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* =========================================================
+          4. BASIN GEOLOGY & SITE INTELLIGENCE
          ========================================================= */}
       <LagunaBlancaIntelligenceRow />
 
       {/* =========================================================
-          4. BOTTOM SECTION: MILESTONES (LEFT) | PROJECT DOCUMENTS (RIGHT)
+          5. COMMERCIAL & MARKET FUNDAMENTALS: CESIUM & LITHIUM
          ========================================================= */}
-      <section className="py-6 sm:py-8">
+      <section className="py-8 sm:py-12">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            {/* -------------------------------------------------------
-                LEFT CARD: EXPLORATION & REGULATORY HISTORY
-               ------------------------------------------------------- */}
-            <div data-reveal="card" className="lg:col-span-7 min-w-0">
-              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-6 sm:p-7 shadow-sm flex flex-col justify-between">
+          <div className="mb-8">
+            <Eyebrow>Market Drivers &amp; Industrial Demand</Eyebrow>
+            <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#0B1F2A] mb-2">
+              Critical Minerals Economics
+            </h2>
+            <p className="text-sm sm:text-base text-[#5B6B73] max-w-2xl leading-relaxed">
+              Laguna Blanca targets two distinct critical commodities: rare, high-margin cesium for deepwater drilling fluids, and low-cost lithium brine for the energy transition.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* PILLAR 1: CESIUM (High-Value Rare Mineral) */}
+            <div data-reveal="card" className="lg:col-span-6 min-w-0 flex flex-col">
+              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
                 <div>
-                  <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-1">
-                    Exploration &amp; regulatory history
+                  <div className="flex items-center justify-between gap-3 mb-3">
+                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                      Commodity 01 · Cesium (Cs)
+                    </span>
+                    <span className="font-heading text-xs text-[#5B6B73]">Global Scarcity</span>
+                  </div>
+
+                  <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-3">
+                    Cesium: Oilfield Formate &amp; Monopoly Supply Risk
                   </h3>
-                  <p className="text-xs text-[#5B6B73] mb-6">
-                    Key milestones in the advancement of Laguna Blanca.
-                  </p>
 
-                  {/* Horizontal Milestones Timeline */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-3 relative">
-                    {/* Connecting line behind milestone points */}
-                    <div className="hidden sm:block absolute top-5 left-6 right-6 h-[2px] bg-[#E8EDE9] z-0" />
+                  <div className="space-y-3.5 text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-6">
+                    <p>
+                      <strong>High-Density Drilling Formate:</strong> Cesium is one of the rarest high-value critical minerals in industrial use. Deepwater oil and gas operators lease cesium formate brine as an ultra-dense, non-damaging drilling fluid for high-pressure/high-temperature (HPHT) wells. Because approximately 85% of the fluid is recovered and recycled, it commands premium leasing revenues.
+                    </p>
+                    <p>
+                      <strong>Single-Source Geopolitical Vulnerability:</strong> Virtually the entire global commercial cesium supply originates from a single pegmatite deposit—the Tanco mine in Manitoba, Canada. With 100% of raw concentrate shipped to China for refining, Western industrial supply remains vulnerable to trade restrictions.
+                    </p>
+                  </div>
 
-                    {/* Milestone 1: 2022 */}
-                    <div className="relative z-10 flex flex-col items-start">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="w-4 h-4 rounded-full bg-[#B7E34A] border-2 border-white shadow-sm shrink-0" />
-                        <span className="font-heading font-bold text-sm text-[#0B1F2A]">
-                          2022
-                        </span>
+                  {/* USGS Price Benchmarks */}
+                  <div className="rounded-xl border border-[#E8EDE9] bg-[#FAFBF9] p-4 sm:p-5 mb-4">
+                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-[11px] text-[#1F6F78] block mb-2.5">
+                      USGS Benchmark Pricing (Mineral Commodity Summaries)
+                    </span>
+                    <div className="space-y-2 text-xs">
+                      <div className="flex justify-between items-center py-1.5 border-b border-[#E8EDE9]">
+                        <span className="text-[#0B1F2A] font-medium">99.8% Pure Metal (1g ampoule)</span>
+                        <span className="font-mono font-bold text-[#0B1F2A]">$63.00 – $81.00 / g</span>
                       </div>
-                      <span className="font-heading font-semibold text-xs text-[#0B1F2A] block leading-snug">
-                        Surface sampling and exploration work
-                      </span>
-                      <p className="text-[11px] text-[#5B6B73] mt-1 leading-relaxed">
-                        Initial field program completed, including surface sampling (as reported by the company).
-                      </p>
-                    </div>
-
-                    {/* Milestone 2: June 2024 */}
-                    <div className="relative z-10 flex flex-col items-start">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="w-4 h-4 rounded-full bg-[#1F6F78] border-2 border-white shadow-sm shrink-0" />
-                        <span className="font-heading font-bold text-sm text-[#0B1F2A]">
-                          June 2024
-                        </span>
+                      <div className="flex justify-between items-center py-1.5 border-b border-[#E8EDE9]">
+                        <span className="text-[#5B6B73]">Cesium Acetate (99.9%, 50g)</span>
+                        <span className="font-mono font-semibold text-[#0B1F2A]">$118.20</span>
                       </div>
-                      <span className="font-heading font-semibold text-xs text-[#0B1F2A] block leading-snug">
-                        Joint RFI filing
-                      </span>
-                      <p className="text-[11px] text-[#5B6B73] mt-1 leading-relaxed">
-                        Application for a joint Request for Information (RFI) submitted with a third party (as reported by the company).
-                      </p>
-                    </div>
-
-                    {/* Milestone 3: Current status */}
-                    <div className="relative z-10 flex flex-col items-start">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="w-4 h-4 rounded-full bg-white border-2 border-[#1F6F78] shadow-sm shrink-0" />
-                        <span className="font-heading font-bold text-sm text-[#0B1F2A]">
-                          Current status
-                        </span>
+                      <div className="flex justify-between items-center py-1.5 border-b border-[#E8EDE9]">
+                        <span className="text-[#5B6B73]">Cesium Iodide (99.9%, 50g)</span>
+                        <span className="font-mono font-semibold text-[#0B1F2A]">$117.00</span>
                       </div>
-                      <span className="font-heading font-semibold text-xs text-[#0B1F2A] block leading-snug">
-                        Check latest company disclosure
-                      </span>
-                      <p className="text-[11px] text-[#5B6B73] mt-1 leading-relaxed">
-                        Refer to the company&apos;s latest news releases for updates on the RFI process and next steps.
-                      </p>
+                      <div className="flex justify-between items-center py-1.5">
+                        <span className="text-[#5B6B73]">Cesium Carbonate / Chloride (99.9%, 50g)</span>
+                        <span className="font-mono font-semibold text-[#0B1F2A]">$101.80 / $103.60</span>
+                      </div>
                     </div>
                   </div>
+                </div>
+
+                <div className="pt-4 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                  <span>HPHT Drilling Formate Application</span>
+                  <span className="font-heading font-medium text-xs text-[#1F6F78]">85% Fluid Recovery Rate</span>
                 </div>
               </div>
             </div>
 
-            {/* -------------------------------------------------------
-                RIGHT CARD: PROJECT DOCUMENTS
-               ------------------------------------------------------- */}
-            <div data-reveal="card" className="lg:col-span-5 min-w-0">
-              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-6 sm:p-7 shadow-sm flex flex-col justify-between">
+            {/* PILLAR 2: LITHIUM (Energy Transition & DLE Advantage) */}
+            <div data-reveal="card" className="lg:col-span-6 min-w-0 flex flex-col">
+              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
                 <div>
-                  <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-1">
-                    Project documents
+                  <div className="flex items-center justify-between gap-3 mb-3">
+                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                      Commodity 02 · Lithium (Li)
+                    </span>
+                    <span className="font-heading text-xs text-[#5B6B73]">Structural Deficit</span>
+                  </div>
+
+                  <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-3">
+                    Lithium: Global Supply Shortfall &amp; DLE Advantage
                   </h3>
-                  <p className="text-xs text-[#5B6B73] mb-6">
-                    Access the latest technical updates, announcements and regulatory information.
+
+                  <div className="space-y-3.5 text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-6">
+                    <p>
+                      <strong>Structural Market Deficit:</strong> Global demand for battery-grade lithium continues to outpace long-term supply expansion. Consensus commodity forecasts project a widening supply deficit beginning in 2027, driven by electric vehicle adoption and grid-scale storage deployment.
+                    </p>
+                    <p>
+                      <strong>Direct Lithium Extraction (DLE) Economics:</strong> Salar brine projects offer superior unit economics and lower lifecycle carbon emissions compared to energy-intensive hardrock pegmatite (spodumene) mining. Modern DLE technologies compress processing cycles from 18 months to hours, avoiding multi-year solar evaporation ponds and preserving local hydrology.
+                    </p>
+                  </div>
+
+                  {/* DLE vs Hardrock Comparison */}
+                  <div className="rounded-xl border border-[#E8EDE9] bg-[#FAFBF9] p-4 sm:p-5 mb-4">
+                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-[11px] text-[#1F6F78] block mb-2.5">
+                      DLE Brine vs. Hardrock Spodumene Advantages
+                    </span>
+                    <div className="space-y-2.5 text-xs">
+                      <div className="flex items-start gap-2.5 pb-2 border-b border-[#E8EDE9]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78] shrink-0 mt-1.5" />
+                        <div>
+                          <span className="text-[#0B1F2A] font-semibold block">Lower CAPEX &amp; Operating Cost:</span>
+                          <span className="text-[#5B6B73]">Modular extraction systems bypass massive pond earthworks and high-energy crushing circuits.</span>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-2.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78] shrink-0 mt-1.5" />
+                        <div>
+                          <span className="text-[#0B1F2A] font-semibold block">Environmental Footprint:</span>
+                          <span className="text-[#5B6B73]">Up to 90% water reinjection preserves delicate Andean salar water balances while accelerating cycle times.</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                  <span>Battery-Grade Extraction</span>
+                  <span className="font-heading font-medium text-xs text-[#1F6F78]">Direct Lithium Extraction (DLE)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* =========================================================
+          6. EXPLORATION TIMELINE & OFFICIAL DOCUMENTS
+         ========================================================= */}
+      <section className="py-8 sm:py-12">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* LEFT CARD: EXPLORATION & REGULATORY HISTORY */}
+            <div data-reveal="card" className="lg:col-span-7 min-w-0 flex flex-col">
+              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between gap-4 mb-2">
+                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                      Chronological Advancement
+                    </span>
+                    <span className="font-heading text-xs text-[#5B6B73]">
+                      Ministry of Mining (Chile)
+                    </span>
+                  </div>
+
+                  <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] mb-2">
+                    Exploration &amp; regulatory history
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#5B6B73] mb-8 leading-relaxed max-w-xl">
+                    Milestones tracking the property from surface sampling programs through formal governmental RFI submissions.
                   </p>
 
-                  {/* 3 Document Links */}
-                  <div className="space-y-3">
+                  {/* Architectural Timeline Rail */}
+                  <div className="relative pt-2">
+                    <div className="hidden sm:block absolute top-[15px] left-3 right-3 h-[1px] bg-[#DDE3E3] z-0" />
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 relative z-10">
+                      {/* Milestone 1 */}
+                      <div className="flex flex-col">
+                        <div className="hidden sm:flex items-center mb-3">
+                          <span className="w-3.5 h-3.5 rounded-full bg-white border-2 border-[#1F6F78] flex items-center justify-center shrink-0 shadow-xs">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78]" />
+                          </span>
+                        </div>
+
+                        <span className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] block mb-0.5">
+                          2022
+                        </span>
+                        <span className="font-heading font-semibold uppercase tracking-[0.12em] text-[11px] text-[#1F6F78] mb-2 block">
+                          Surface Exploration
+                        </span>
+                        <h4 className="font-heading font-semibold text-xs sm:text-sm text-[#0B1F2A] mb-1.5 leading-snug">
+                          Geochemical sampling
+                        </h4>
+                        <p className="text-xs text-[#5B6B73] leading-relaxed">
+                          Initial field program completed across salar concessions, confirming anomalous lithium and cesium in surface sediments.
+                        </p>
+                      </div>
+
+                      {/* Milestone 2 */}
+                      <div className="flex flex-col">
+                        <div className="hidden sm:flex items-center mb-3">
+                          <span className="w-3.5 h-3.5 rounded-full bg-white border-2 border-[#1F6F78] flex items-center justify-center shrink-0 shadow-xs">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78]" />
+                          </span>
+                        </div>
+
+                        <span className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] block mb-0.5">
+                          June 2024
+                        </span>
+                        <span className="font-heading font-semibold uppercase tracking-[0.12em] text-[11px] text-[#1F6F78] mb-2 block">
+                          Regulatory Filing
+                        </span>
+                        <h4 className="font-heading font-semibold text-xs sm:text-sm text-[#0B1F2A] mb-1.5 leading-snug">
+                          Joint RFI submission
+                        </h4>
+                        <p className="text-xs text-[#5B6B73] leading-relaxed">
+                          Application for a joint Request for Information (RFI) submitted with a third party under Chile’s national lithium policy.
+                        </p>
+                      </div>
+
+                      {/* Milestone 3 */}
+                      <div className="flex flex-col">
+                        <div className="hidden sm:flex items-center mb-3">
+                          <span className="relative w-3.5 h-3.5 rounded-full bg-white border-2 border-[#1F6F78] flex items-center justify-center shrink-0 shadow-xs">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78]" />
+                            <span className="absolute -inset-1 rounded-full border border-[#1F6F78] animate-ping opacity-40" />
+                          </span>
+                        </div>
+
+                        <span className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] block mb-0.5">
+                          Current status
+                        </span>
+                        <span className="font-heading font-semibold uppercase tracking-[0.12em] text-[11px] text-[#0B1F2A] mb-2 flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78]" />
+                          Active Review
+                        </span>
+                        <h4 className="font-heading font-semibold text-xs sm:text-sm text-[#0B1F2A] mb-1.5 leading-snug">
+                          Ministry evaluation
+                        </h4>
+                        <p className="text-xs text-[#5B6B73] leading-relaxed mb-3">
+                          Advancing through formal government evaluation under the exclusive private development regime. Regular news releases on next steps.
+                        </p>
+                        <Link
+                          href="/news"
+                          className="text-xs font-semibold text-[#1F6F78] hover:text-[#0B1F2A] inline-flex items-center gap-1 mt-auto transition-colors group/link"
+                        >
+                          <span>View news releases</span>
+                          <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8 pt-4 border-t border-[#E8EDE9] flex flex-wrap items-center justify-between gap-3 text-xs text-[#5B6B73]">
+                  <span>Exploration Pathway: Surface sampling to drill target definition</span>
+                  <span className="font-heading font-medium text-xs text-[#1F6F78]">Ministry of Mining (Chile)</span>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT CARD: PROJECT DOCUMENTS */}
+            <div data-reveal="card" className="lg:col-span-5 min-w-0 flex flex-col">
+              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between gap-4 mb-2">
+                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                      Investor Resources
+                    </span>
+                    <span className="font-heading text-xs text-[#5B6B73]">
+                      TSX-V: MNRG
+                    </span>
+                  </div>
+
+                  <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] mb-2">
+                    Project documents
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#5B6B73] mb-8 leading-relaxed">
+                    Access official technical presentations, news releases, and securities regulatory filings for Laguna Blanca.
+                  </p>
+
+                  {/* Clean Editorial Document List */}
+                  <div className="divide-y divide-[#E8EDE9] border-t border-b border-[#E8EDE9]">
                     {/* Doc 1 */}
                     <Link
                       href="/investors/presentation"
-                      className="group flex items-center justify-between p-3.5 rounded-xl border border-[#E8EDE9] hover:border-[#1F6F78]/50 hover:bg-[#FAFBF9] transition-all"
+                      className="group py-4 flex items-center justify-between gap-4 hover:bg-[#FAFBF9] -mx-2.5 px-2.5 rounded-lg transition-colors"
                     >
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-9 h-9 rounded-lg bg-[#EDF3F1] flex items-center justify-center text-[#1F6F78] shrink-0">
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        <div className="w-9 h-9 rounded-lg bg-[#EDF3F1] flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:bg-[#1F6F78] group-hover:text-white transition-colors">
                           <FileText className="w-4 h-4" />
                         </div>
                         <div className="min-w-0">
                           <span className="font-heading font-bold text-xs sm:text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors block leading-tight">
-                            Technical updates
+                            Corporate Presentation
                           </span>
-                          <span className="text-[11px] text-[#5B6B73] block mt-0.5 leading-snug">
-                            Reports and presentations related to Laguna Blanca.
+                          <span className="text-[11px] sm:text-xs text-[#5B6B73] block mt-0.5 truncate">
+                            Laguna Blanca geological model &amp; technical data
                           </span>
                         </div>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-[#5B6B73] group-hover:text-[#1F6F78] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="hidden sm:inline font-mono text-[11px] text-[#5B6B73]">PDF</span>
+                        <ArrowRight className="w-4 h-4 text-[#5B6B73] group-hover:text-[#1F6F78] group-hover:translate-x-1 transition-all" />
+                      </div>
                     </Link>
 
                     {/* Doc 2 */}
                     <Link
                       href="/news"
-                      className="group flex items-center justify-between p-3.5 rounded-xl border border-[#E8EDE9] hover:border-[#1F6F78]/50 hover:bg-[#FAFBF9] transition-all"
+                      className="group py-4 flex items-center justify-between gap-4 hover:bg-[#FAFBF9] -mx-2.5 px-2.5 rounded-lg transition-colors"
                     >
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-9 h-9 rounded-lg bg-[#EDF3F1] flex items-center justify-center text-[#1F6F78] shrink-0">
-                          <FileText className="w-4 h-4" />
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        <div className="w-9 h-9 rounded-lg bg-[#EDF3F1] flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:bg-[#1F6F78] group-hover:text-white transition-colors">
+                          <Newspaper className="w-4 h-4" />
                         </div>
                         <div className="min-w-0">
                           <span className="font-heading font-bold text-xs sm:text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors block leading-tight">
-                            Official announcements
+                            Official Announcements
                           </span>
-                          <span className="text-[11px] text-[#5B6B73] block mt-0.5 leading-snug">
-                            News releases and updates from the company.
+                          <span className="text-[11px] sm:text-xs text-[#5B6B73] block mt-0.5 truncate">
+                            Regulatory updates and RFI progress releases
                           </span>
                         </div>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-[#5B6B73] group-hover:text-[#1F6F78] group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="hidden sm:inline font-mono text-[11px] text-[#5B6B73]">News</span>
+                        <ArrowRight className="w-4 h-4 text-[#5B6B73] group-hover:text-[#1F6F78] group-hover:translate-x-1 transition-all" />
+                      </div>
                     </Link>
 
                     {/* Doc 3 */}
@@ -350,24 +614,32 @@ export default function LagunaBlancaProjectPage() {
                       href="https://www.sedarplus.ca"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group flex items-center justify-between p-3.5 rounded-xl border border-[#E8EDE9] hover:border-[#1F6F78]/50 hover:bg-[#FAFBF9] transition-all"
+                      className="group py-4 flex items-center justify-between gap-4 hover:bg-[#FAFBF9] -mx-2.5 px-2.5 rounded-lg transition-colors"
                     >
-                      <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-9 h-9 rounded-lg bg-[#EDF3F1] flex items-center justify-center text-[#1F6F78] shrink-0">
-                          <FileText className="w-4 h-4" />
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        <div className="w-9 h-9 rounded-lg bg-[#EDF3F1] flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:bg-[#0B1F2A] group-hover:text-white transition-colors">
+                          <ExternalLink className="w-4 h-4" />
                         </div>
                         <div className="min-w-0">
                           <span className="font-heading font-bold text-xs sm:text-sm text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors block leading-tight">
-                            Investor disclosures
+                            Investor Disclosures
                           </span>
-                          <span className="text-[11px] text-[#5B6B73] block mt-0.5 leading-snug">
-                            View filings on SEDAR+.
+                          <span className="text-[11px] sm:text-xs text-[#5B6B73] block mt-0.5 truncate">
+                            Canadian securities continuous disclosure records
                           </span>
                         </div>
                       </div>
-                      <ExternalLink className="w-4 h-4 text-[#5B6B73] group-hover:text-[#1F6F78] group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className="hidden sm:inline font-mono text-[11px] text-[#1F6F78] font-semibold">sedarplus.ca</span>
+                        <ExternalLink className="w-4 h-4 text-[#5B6B73] group-hover:text-[#1F6F78] group-hover:translate-x-0.5 transition-all" />
+                      </div>
                     </a>
                   </div>
+                </div>
+
+                <div className="mt-8 pt-4 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                  <span>Publicly filed on SEDAR+</span>
+                  <span className="font-heading font-medium text-xs text-[#1F6F78]">TSX-V: MNRG</span>
                 </div>
               </div>
             </div>
@@ -376,10 +648,9 @@ export default function LagunaBlancaProjectPage() {
       </section>
 
       {/* =========================================================
-          5. BOTTOM CALL-TO-ACTION BANNER
+          7. BOTTOM CALL-TO-ACTION BANNER
          ========================================================= */}
-      <section aria-labelledby="laguna-cta-heading" className="section-y relative overflow-hidden bg-[#0B1F2A] text-white border-t border-[#1D3B4C] mt-4">
-        {/* Mountain Background Photo */}
+      <section aria-labelledby="laguna-cta-heading" className="section-y relative overflow-hidden bg-[#0B1F2A] text-white border-t border-[#1D3B4C] mt-8">
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/salar-turi-sunset-banner.jpg"
@@ -388,7 +659,6 @@ export default function LagunaBlancaProjectPage() {
             sizes="100vw"
             className="object-cover object-center opacity-45 brightness-90 contrast-115"
           />
-          {/* Multi-stop Cinematic Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#07161F]/95 via-[#0B1F2A]/80 to-[#07161F]/90" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#07161F]/80 via-transparent to-[#07161F]/40" />
         </div>
@@ -396,9 +666,7 @@ export default function LagunaBlancaProjectPage() {
         <Container className="relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8">
             <div data-reveal="fade" className="min-w-0 max-w-2xl">
-              <span className="text-[11px] font-mono font-bold tracking-widest text-[#2DD4BF] uppercase block mb-2">
-                STAY INFORMED
-              </span>
+              <Eyebrow dark>STAY INFORMED</Eyebrow>
               <h2 id="laguna-cta-heading" className="font-heading font-bold text-2xl sm:text-3xl text-white mb-2">
                 Follow the project&apos;s next milestones
               </h2>

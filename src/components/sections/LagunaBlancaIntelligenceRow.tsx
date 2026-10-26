@@ -32,34 +32,34 @@ const GLANCE_ITEMS: GlanceItem[] = [
   {
     id: 'location',
     icon: MapPin,
-    title: 'Location',
-    subtitle: 'Arica y Parinacota Region, Chile',
+    title: 'Regional Logistics & Infrastructure',
+    subtitle: 'Route 27CH international paved transport corridor',
     details:
-      'Laguna Blanca is located in the Arica y Parinacota Region of northern Chile, with access to established regional infrastructure and proximity to key transport routes.',
+      'Situated 80 km east of San Pedro de Atacama via the paved Route 27CH international highway. The property benefits from established regional mining logistics, proximity to the Argentine border crossing, and year-round heavy truck access.',
   },
   {
     id: 'mineral',
     icon: Gem,
-    title: 'Mineral focus',
-    subtitle: 'Lithium brine and cesium-bearing sediments.',
+    title: 'Basin Hydrology & Genesis',
+    subtitle: 'Closed evaporite catchment with volcanic ash leaching',
     details:
-      'The project hosts prospective lithium-rich brines and cesium-bearing evaporite sediments in an active closed hydrological basin in the Central Andes.',
+      'An internally drained hydrological basin with no surface outlet. Subterranean aquifers continuously leach soluble mineral ions from thick surrounding Andean volcanic sequences, concentrating them in evaporite salt beds under intense solar radiation.',
   },
   {
     id: 'stage',
     icon: Mountain,
-    title: 'Project stage',
-    subtitle: 'Early exploration stage.',
+    title: 'Target Geochemistry',
+    subtitle: 'Coincident lithium brine & cesium sediment anomalies',
     details:
-      'Initial surface exploration and sampling campaigns have confirmed anomalous lithium and cesium concentrations across the extensive concession package.',
+      'Reconnaissance field programs and surface sampling confirmed coincident anomalous concentrations of both lithium and cesium in near-surface brines and salar sediments, indicating high prospects for dual-commodity extraction.',
   },
   {
     id: 'steps',
     icon: FileText,
-    title: 'Next steps',
-    subtitle: 'Ongoing exploration and advancement through the regulatory pathway.',
+    title: 'Development Architecture',
+    subtitle: 'Direct Lithium Extraction (DLE) & commercial off-take',
     details:
-      'Advancing through the Chilean Ministry of Mining formal RFI regulatory process while evaluating joint technical partnerships for exploration.',
+      'Positioned to deploy modern DLE processing technologies that minimize freshwater consumption, lower lifecycle footprint, and accelerate production timelines without reliance on multi-year evaporation pond construction.',
   },
 ];
 

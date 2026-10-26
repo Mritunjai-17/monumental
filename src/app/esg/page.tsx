@@ -17,6 +17,7 @@ import {
   FileText,
   ArrowRight,
 } from 'lucide-react';
+import { EsgPledgeSection } from '@/components/sections/EsgPledgeSection';
 
 export const metadata = constructMetadata({
   title: 'ESG & Sustainability',
@@ -380,7 +381,12 @@ export default function EsgPage() {
       </section>
 
       {/* =========================================================
-          4. POLICIES & DISCLOSURES: Key documents
+          4. INSTITUTIONAL CHARTER: UN & ILO COMMITMENTS (Bilingual)
+         ========================================================= */}
+      <EsgPledgeSection />
+
+      {/* =========================================================
+          5. POLICIES & DISCLOSURES: Key documents
          ========================================================= */}
       <section className="relative section-y">
         <Container>

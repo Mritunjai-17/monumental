@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { KineticHeading } from '@/components/ui/KineticHeading';
@@ -9,16 +10,29 @@ import { MediaReveal } from '@/components/ui/MediaReveal';
 import { constructMetadata } from '@/lib/seo';
 import { cn } from '@/lib/utils';
 import { type, tone } from '@/lib/typography';
-import { ArrowRight, MapPin, BarChart3, Settings } from 'lucide-react';
+import {
+  ArrowRight,
+  MapPin,
+  BarChart3,
+  Settings,
+  Layers,
+  Flame,
+  FileText,
+  TrendingUp,
+  CheckCircle2,
+  ExternalLink,
+  ShieldCheck,
+  Building,
+} from 'lucide-react';
 
 export const metadata = constructMetadata({
   title: 'New Zealand Energy Projects | Taranaki Basin Oil & Gas',
   description:
-    'Monumental Energy’s oil-and-gas interests in the Taranaki Basin, New Zealand, offer exposure to established energy infrastructure and near-term development opportunities.',
+    'Monumental Energy is the 3rd largest shareholder of New Zealand Energy Corp. (NZEC) with 1.2M shares. 50% joint-venture interest in the Waihapa Production Station, a 45 mmcf/d TAWN gas facility, and pipeline networks in the Taranaki Basin.',
   path: '/projects/new-zealand',
 });
 
-/** Oil barrel / storage vessel icon (no lucide equivalent). */
+/** Oil barrel / storage vessel icon */
 const BarrelIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
     <ellipse cx="12" cy="5" rx="9" ry="3" />
@@ -34,7 +48,7 @@ export default function NewZealandProjectPage() {
           1. HERO SECTION (Split Left Content & Right Photograph)
          ========================================================= */}
       <section className="page-intro-y relative overflow-hidden">
-        {/* Subtle Topographical Elevation Contour Background (Top Left) */}
+        {/* Subtle Topographical Elevation Contour Background */}
         <div
           className="absolute top-0 left-0 w-[550px] sm:w-[650px] lg:w-[750px] h-[550px] pointer-events-none opacity-[0.07] select-none z-0 overflow-hidden"
           aria-hidden="true"
@@ -45,10 +59,6 @@ export default function NewZealandProjectPage() {
             <path d="M260 0 C 330 120, 400 200, 560 230 C 630 245, 670 360, 700 420" />
             <path d="M300 0 C 370 140, 440 220, 590 250 C 650 270, 680 400, 700 470" />
             <path d="M340 0 C 410 160, 480 240, 620 270 C 670 290, 700 440, 700 520" />
-            <path d="M380 0 C 450 180, 520 260, 650 290" />
-            <path d="M140 30 C 220 110, 280 190, 460 210 C 560 220, 600 290, 650 330" />
-            <path d="M100 70 C 180 150, 240 230, 420 250 C 520 260, 560 330, 610 380" />
-            <path d="M60 120 C 140 200, 200 280, 380 300 C 480 310, 520 380, 570 430" />
           </svg>
         </div>
 
@@ -62,7 +72,6 @@ export default function NewZealandProjectPage() {
             className="object-cover object-center"
             priority
           />
-          {/* Seamless dual gradient fade (left into copy, bottom into page background) */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#F5F6F1] via-[#F5F6F1]/40 to-transparent w-full h-full" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#F5F6F1] via-[#F5F6F1]/30 to-transparent w-full h-full" />
         </div>
@@ -80,7 +89,7 @@ export default function NewZealandProjectPage() {
               />
 
               <p className={cn('hero-copy max-w-xl', type.lead, tone.mutedLight)}>
-                Monumental Energy&apos;s oil-and-gas interests in the Taranaki Basin, New Zealand, offer exposure to established energy infrastructure and near-term development opportunities.
+                Monumental Energy holds a substantial strategic position in New Zealand Energy Corp. (NZEC) and associated joint-venture assets in the Taranaki Basin, offering direct exposure to established processing infrastructure and near-term production.
               </p>
             </div>
 
@@ -101,61 +110,79 @@ export default function NewZealandProjectPage() {
       </section>
 
       {/* =========================================================
-          2. 3-METRIC STAT STRIP (REGION, FOCUS, OPPORTUNITY)
+          2. 4-METRIC EXECUTIVE STAT STRIP (HOLDING, INFRASTRUCTURE, VALUATION, BASIN)
          ========================================================= */}
       <section className="section-y-compact bg-white border-y border-[#DDE3E3]">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#DDE3E3]">
-            {/* Metric 1: REGION */}
-            <div className="flex items-center gap-4 min-w-0 pb-5 md:pb-0 md:pr-6 lg:pr-8">
-              <div className="w-12 h-12 rounded-full border border-[#CBD5D2] bg-[#F5F6F1] flex items-center justify-center shrink-0 text-[#1F6F78]">
-                <MapPin className="w-5 h-5 stroke-[1.75]" aria-hidden="true" />
-              </div>
-              <div className="min-w-0">
-                <span className="text-xs font-heading font-semibold tracking-[0.12em] text-[#1F6F78] uppercase block">
-                  REGION
-                </span>
-                <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight mt-1">
-                  Taranaki Basin
-                </span>
-                <span className="text-sm text-[#5B6B73] block mt-0.5">
-                  New Zealand
-                </span>
-              </div>
-            </div>
-
-            {/* Metric 2: FOCUS */}
-            <div className="flex items-center gap-4 min-w-0 py-5 md:py-0 md:px-6 lg:px-8">
-              <div className="w-12 h-12 rounded-full border border-[#CBD5D2] bg-[#F5F6F1] flex items-center justify-center shrink-0 text-[#1F6F78]">
-                <BarrelIcon className="w-5 h-5 stroke-[1.75]" />
-              </div>
-              <div className="min-w-0">
-                <span className="text-xs font-heading font-semibold tracking-[0.12em] text-[#1F6F78] uppercase block">
-                  FOCUS
-                </span>
-                <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight mt-1">
-                  Oil &amp; Gas
-                </span>
-                <span className="text-sm text-[#5B6B73] block mt-0.5">
-                  Conventional energy
-                </span>
-              </div>
-            </div>
-
-            {/* Metric 3: OPPORTUNITY */}
-            <div className="flex items-center gap-4 min-w-0 pt-5 md:pt-0 md:pl-6 lg:pl-8">
-              <div className="w-12 h-12 rounded-full border border-[#CBD5D2] bg-[#F5F6F1] flex items-center justify-center shrink-0 text-[#1F6F78]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-[#DDE3E3]">
+            {/* Metric 1: EQUITY POSITION */}
+            <div className="flex items-center gap-4 min-w-0 pb-4 sm:pb-0 sm:pr-5">
+              <div className="w-11 h-11 rounded-xl border border-[#CBD5D2] bg-[#F5F6F1] flex items-center justify-center shrink-0 text-[#1F6F78]">
                 <BarChart3 className="w-5 h-5 stroke-[1.75]" aria-hidden="true" />
               </div>
               <div className="min-w-0">
-                <span className="text-xs font-heading font-semibold tracking-[0.12em] text-[#1F6F78] uppercase block">
-                  OPPORTUNITY
+                <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78] block">
+                  EQUITY HOLDING
                 </span>
-                <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight mt-1">
-                  Production &amp; Development
+                <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight mt-0.5">
+                  1.2M Shares
                 </span>
-                <span className="text-sm text-[#5B6B73] block mt-0.5">
-                  Leveraging existing infrastructure
+                <span className="text-xs text-[#5B6B73] block mt-0.5">
+                  3rd largest shareholder ($0.46 cost base)
+                </span>
+              </div>
+            </div>
+
+            {/* Metric 2: ASSET INTEREST */}
+            <div className="flex items-center gap-4 min-w-0 py-4 sm:py-0 sm:px-5">
+              <div className="w-11 h-11 rounded-xl border border-[#CBD5D2] bg-[#F5F6F1] flex items-center justify-center shrink-0 text-[#1F6F78]">
+                <Settings className="w-5 h-5 stroke-[1.75]" />
+              </div>
+              <div className="min-w-0">
+                <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78] block">
+                  PRODUCTION HUB
+                </span>
+                <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight mt-0.5">
+                  50% Joint Venture
+                </span>
+                <span className="text-xs text-[#5B6B73] block mt-0.5">
+                  Waihapa Production Station (TAWN)
+                </span>
+              </div>
+            </div>
+
+            {/* Metric 3: REPLACEMENT VALUE */}
+            <div className="flex items-center gap-4 min-w-0 py-4 sm:py-0 sm:px-5">
+              <div className="w-11 h-11 rounded-xl border border-[#CBD5D2] bg-[#F5F6F1] flex items-center justify-center shrink-0 text-[#1F6F78]">
+                <Layers className="w-5 h-5 stroke-[1.75]" aria-hidden="true" />
+              </div>
+              <div className="min-w-0">
+                <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78] block">
+                  ASSET VALUATION
+                </span>
+                <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight mt-0.5">
+                  &gt;$50M Replacement
+                </span>
+                <span className="text-xs text-[#5B6B73] block mt-0.5">
+                  Installed plant &amp; connected pipeline grid
+                </span>
+              </div>
+            </div>
+
+            {/* Metric 4: SEDIMENTARY BASIN */}
+            <div className="flex items-center gap-4 min-w-0 pt-4 sm:pt-0 sm:pl-5">
+              <div className="w-11 h-11 rounded-xl border border-[#CBD5D2] bg-[#F5F6F1] flex items-center justify-center shrink-0 text-[#1F6F78]">
+                <MapPin className="w-5 h-5 stroke-[1.75]" aria-hidden="true" />
+              </div>
+              <div className="min-w-0">
+                <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78] block">
+                  BASIN LOCATION
+                </span>
+                <span className="font-heading font-bold text-base sm:text-lg text-[#0B1F2A] block leading-tight mt-0.5">
+                  Taranaki Basin
+                </span>
+                <span className="text-xs text-[#5B6B73] block mt-0.5">
+                  New Zealand&apos;s sole producing hydrocarbon basin
                 </span>
               </div>
             </div>
@@ -164,13 +191,14 @@ export default function NewZealandProjectPage() {
       </section>
 
       {/* =========================================================
-          3. TWO-COLUMN SECTION (A regional energy opportunity & Dark Card)
+          3. REGIONAL ENERGY OPPORTUNITY & STRATEGIC POSITION
          ========================================================= */}
       <section className="section-y">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
             {/* Left: Headline & Narrative Copy */}
             <div className="lg:col-span-7 min-w-0">
+              <Eyebrow>Strategic Investment &amp; Partnership</Eyebrow>
               <KineticHeading
                 as="h2"
                 text="A regional energy opportunity"
@@ -179,15 +207,18 @@ export default function NewZealandProjectPage() {
 
               <div data-reveal className="space-y-4 text-base sm:text-lg leading-[1.6] text-[#5B6B73] max-w-2xl">
                 <p>
-                  The Taranaki Basin is one of New Zealand&apos;s most established oil and gas regions, with a history of production and existing infrastructure that supports future development.
+                  Monumental Energy is the <strong>3rd largest shareholder of New Zealand Energy Corp. (NZEC)</strong>, holding <strong>1,200,000 common shares</strong> acquired at a <strong>$0.46 CAD cost base</strong>.
                 </p>
                 <p>
-                  Monumental Energy is focused on evaluating and advancing its interests in New Zealand Energy Corp. and associated joint-venture assets, targeting low-risk recompletion and near-term production opportunities.
+                  New Zealand Energy Corp. is an onshore hydrocarbon producer controlling substantial permitted acreage across the Taranaki Basin—New Zealand’s only commercial petroleum and gas producing sedimentary basin.
+                </p>
+                <p>
+                  With a <strong>50% joint-venture ownership stake in the Waihapa Production Station</strong>, the partnership can rapidly tie in near-term well workovers and sell natural gas and oil directly into active domestic industrial grids without constructing costly greenfield treatment systems.
                 </p>
               </div>
             </div>
 
-            {/* Right: Dark Card "Project at a glance" */}
+            {/* Right: Dark Card "Asset & Holding Overview" */}
             <div className="lg:col-span-5 min-w-0" data-reveal="card">
               <div className="relative rounded-[20px] lg:rounded-[24px] bg-[#07161F] text-white p-6 sm:p-8 border border-[#1D3B4C] shadow-[0_16px_36px_-6px_rgba(7,22,31,0.35)] overflow-hidden">
                 {/* Subtle Topographical watermark inside card */}
@@ -205,58 +236,67 @@ export default function NewZealandProjectPage() {
                 </div>
 
                 {/* Card Title */}
-                <div className="relative z-10 pb-5 border-b border-white/10">
-                  <h3 className={cn(type.h4, tone.headingDark)}>Project at a glance</h3>
+                <div className="relative z-10 pb-4 border-b border-white/10 mb-2">
+                  <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#2DD4BF] block mb-1">
+                    PORTFOLIO OVERVIEW
+                  </span>
+                  <h3 className={cn(type.h4, tone.headingDark)}>Asset &amp; Holding Snapshot</h3>
                 </div>
 
-                {/* 3 Detail Rows */}
+                {/* Detail Rows */}
                 <div className="relative z-10 divide-y divide-white/10">
-                  {/* Row 1: Location */}
-                  <div className="py-4 flex items-center justify-between gap-4 group">
-                    <div className="flex items-center gap-3.5 min-w-0">
-                      <MapPin className="w-5 h-5 text-[#2DD4BF] shrink-0" aria-hidden="true" />
-                      <div className="min-w-0">
-                        <span className="text-xs font-heading font-semibold tracking-[0.12em] text-[#2DD4BF] uppercase block">
-                          LOCATION
-                        </span>
-                        <span className="text-white font-medium text-sm sm:text-base leading-snug mt-0.5 block">
-                          Taranaki Basin, New Zealand
-                        </span>
-                      </div>
+                  {/* Row 1: Equity Stake */}
+                  <div className="py-3.5 flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <span className="text-xs text-[#DDE3E3]/70 uppercase font-heading font-semibold tracking-wider block">
+                        EQUITY HOLDING
+                      </span>
+                      <span className="text-white font-medium text-sm sm:text-base leading-snug mt-0.5 block">
+                        1.2M Shares (3rd Largest Holder)
+                      </span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-[#2DD4BF] transition-transform group-hover:translate-x-1 shrink-0" aria-hidden="true" />
+                    <span className="text-xs font-semibold px-2.5 py-1 rounded bg-[#1F6F78]/40 border border-[#2DD4BF]/30 text-[#2DD4BF]">
+                      $0.46 Cost Base
+                    </span>
                   </div>
 
-                  {/* Row 2: Sector */}
-                  <div className="py-4 flex items-center justify-between gap-4 group">
-                    <div className="flex items-center gap-3.5 min-w-0">
-                      <BarrelIcon className="w-5 h-5 text-[#2DD4BF] shrink-0 stroke-[1.75]" />
-                      <div className="min-w-0">
-                        <span className="text-xs font-heading font-semibold tracking-[0.12em] text-[#2DD4BF] uppercase block">
-                          SECTOR
-                        </span>
-                        <span className="text-white font-medium text-sm sm:text-base leading-snug mt-0.5 block">
-                          Oil &amp; Gas
-                        </span>
-                      </div>
+                  {/* Row 2: Production Station */}
+                  <div className="py-3.5 flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <span className="text-xs text-[#DDE3E3]/70 uppercase font-heading font-semibold tracking-wider block">
+                        FACILITY OWNERSHIP
+                      </span>
+                      <span className="text-white font-medium text-sm sm:text-base leading-snug mt-0.5 block">
+                        Waihapa Station (50% JV Interest)
+                      </span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-[#2DD4BF] transition-transform group-hover:translate-x-1 shrink-0" aria-hidden="true" />
+                    <span className="text-xs text-[#DDE3E3]/80">TAWN Plant</span>
                   </div>
 
-                  {/* Row 3: Approach */}
-                  <div className="pt-4 flex items-center justify-between gap-4 group">
-                    <div className="flex items-center gap-3.5 min-w-0">
-                      <Settings className="w-5 h-5 text-[#2DD4BF] shrink-0" aria-hidden="true" />
-                      <div className="min-w-0">
-                        <span className="text-xs font-heading font-semibold tracking-[0.12em] text-[#2DD4BF] uppercase block">
-                          APPROACH
-                        </span>
-                        <span className="text-white font-medium text-sm sm:text-base leading-snug mt-0.5 block">
-                          Asset development and exploration
-                        </span>
-                      </div>
+                  {/* Row 3: Active Campaigns */}
+                  <div className="py-3.5 flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <span className="text-xs text-[#DDE3E3]/70 uppercase font-heading font-semibold tracking-wider block">
+                        KEY CATALYST
+                      </span>
+                      <span className="text-white font-medium text-sm sm:text-base leading-snug mt-0.5 block">
+                        Tariki-5 Well Drilling Campaign
+                      </span>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-[#2DD4BF] transition-transform group-hover:translate-x-1 shrink-0" aria-hidden="true" />
+                    <span className="text-xs text-[#B7E34A]">High Impact</span>
+                  </div>
+
+                  {/* Row 4: Research Report */}
+                  <div className="pt-3.5 flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <span className="text-xs text-[#DDE3E3]/70 uppercase font-heading font-semibold tracking-wider block">
+                        ANALYST COVERAGE
+                      </span>
+                      <span className="text-white font-medium text-sm sm:text-base leading-snug mt-0.5 block">
+                        Auctus Advisors Research Report
+                      </span>
+                    </div>
+                    <span className="text-xs text-[#DDE3E3]/80">Initiated June 2024</span>
                   </div>
                 </div>
               </div>
@@ -266,7 +306,265 @@ export default function NewZealandProjectPage() {
       </section>
 
       {/* =========================================================
-          4. PANORAMIC WIDE LANDSCAPE BANNER (TARANAKI BASIN)
+          4. WAIHAPA PRODUCTION STATION: TECHNICAL INFRASTRUCTURE SPECS
+         ========================================================= */}
+      <section className="section-y bg-white border-y border-[#DDE3E3]">
+        <Container>
+          <div className="mb-10">
+            <Eyebrow>Processing Infrastructure &amp; Logistics</Eyebrow>
+            <h2 className={cn(type.h2, tone.headingLight, 'mb-3')}>
+              Waihapa Production Station Architecture
+            </h2>
+            <p className="text-sm sm:text-base text-[#5B6B73] max-w-2xl leading-relaxed">
+              New Zealand Energy Corp.’s 50% interest in the Waihapa complex encompasses fully permitted gas processing, deep oil pipeline export links, and regional gathering lines valued at over $50M in replacement cost.
+            </p>
+          </div>
+
+          {/* 6 Technical Infrastructure Specification Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Spec 1: TAWN Facility */}
+            <div data-reveal="card" className="p-6 rounded-[20px] bg-[#FAFBF9] border border-[#E8EDE9] shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                    GAS PROCESSING
+                  </span>
+                  <span className="font-heading text-xs text-[#5B6B73]">TAWN Facility</span>
+                </div>
+                <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-2">
+                  45 mmcf/d Gas Capacity
+                </h3>
+                <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed">
+                  Full gas processing, high-pressure gas compression, and LPG extraction facility capable of conditioning raw field gas for direct sales delivery.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                <span>50% JV Interest</span>
+                <span className="font-heading font-medium text-xs text-[#1F6F78]">Stratford Tied</span>
+              </div>
+            </div>
+
+            {/* Spec 2: Stratford Sales Pipeline */}
+            <div data-reveal="card" className="p-6 rounded-[20px] bg-[#FAFBF9] border border-[#E8EDE9] shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                    GAS SALES LINE
+                  </span>
+                  <span className="font-heading text-xs text-[#5B6B73]">8-inch High-Pressure</span>
+                </div>
+                <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-2">
+                  51-km Sales Pipeline
+                </h3>
+                <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed">
+                  Connects the Waihapa Production Station directly to the Stratford Gas Power Generation Plant and terminates in the deepwater port city of New Plymouth.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                <span>Transmission</span>
+                <span className="font-heading font-medium text-xs text-[#1F6F78]">Direct Industrial Delivery</span>
+              </div>
+            </div>
+
+            {/* Spec 3: Oil Sales Pipeline to Omata */}
+            <div data-reveal="card" className="p-6 rounded-[20px] bg-[#FAFBF9] border border-[#E8EDE9] shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                    CRUDE EXPORT
+                  </span>
+                  <span className="font-heading text-xs text-[#5B6B73]">Omata Tank Farm</span>
+                </div>
+                <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-2">
+                  49-km Oil Export Line
+                </h3>
+                <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed">
+                  Dedicated trunkline capable of transporting up to 15,500 barrels per day from Waihapa Station directly to the regional coastal Omata storage facility.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                <span>Throughput</span>
+                <span className="font-heading font-medium text-xs text-[#1F6F78]">15,500 bbl/d Flow</span>
+              </div>
+            </div>
+
+            {/* Spec 4: Processing Capacity */}
+            <div data-reveal="card" className="p-6 rounded-[20px] bg-[#FAFBF9] border border-[#E8EDE9] shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                    TREATMENT TRAIN
+                  </span>
+                  <span className="font-heading text-xs text-[#5B6B73]">Liquid Handling</span>
+                </div>
+                <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-2">
+                  25,000 bbl/d Oil Capacity
+                </h3>
+                <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed">
+                  Substantial installed oil processing throughput supported by 70 tonne/day liquid extraction equipment, enabling immediate scaling upon new well tie-ins.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                <span>Separation</span>
+                <span className="font-heading font-medium text-xs text-[#1F6F78]">70 t/d Liquid Recovery</span>
+              </div>
+            </div>
+
+            {/* Spec 5: Gathering Grid & Gas Lift */}
+            <div data-reveal="card" className="p-6 rounded-[20px] bg-[#FAFBF9] border border-[#E8EDE9] shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                    FIELD CONNECTIONS
+                  </span>
+                  <span className="font-heading text-xs text-[#5B6B73]">Gas Lift Lines</span>
+                </div>
+                <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-2">
+                  59 km Gathering Lines
+                </h3>
+                <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed">
+                  Extensive intra-field mixed oil and gas pipelines with integrated gas-lift supply lines to optimize production pressure in low-pressure reservoir intervals.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                <span>Network</span>
+                <span className="font-heading font-medium text-xs text-[#1F6F78]">Continuous Grid</span>
+              </div>
+            </div>
+
+            {/* Spec 6: Water Disposal & Replacement Value */}
+            <div data-reveal="card" className="p-6 rounded-[20px] bg-[#FAFBF9] border border-[#E8EDE9] shadow-xs flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                    ENVIRONMENTAL COMPLIANCE
+                  </span>
+                  <span className="font-heading text-xs text-[#5B6B73]">Subsurface Injection</span>
+                </div>
+                <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-2">
+                  18,000 bbl/d Water Disposal
+                </h3>
+                <p className="text-xs sm:text-sm text-[#5B6B73] leading-relaxed">
+                  Permitted deepwater disposal injection infrastructure ensuring environmentally sound operations. Overall complex replacement value exceeds $50M NZD.
+                </p>
+              </div>
+              <div className="pt-4 mt-4 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                <span>Valuation</span>
+                <span className="font-heading font-medium text-xs text-[#1F6F78]">&gt;$50M Replacement</span>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* =========================================================
+          5. COMMERCIAL DRIVERS: DOMESTIC PRICING & TARIKI-5 CAMPAIGN
+         ========================================================= */}
+      <section className="section-y">
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* PILLAR 1: DOMESTIC GAS PRICING ADVANTAGE */}
+            <div data-reveal="card" className="lg:col-span-6 min-w-0 flex flex-col">
+              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between gap-3 mb-3">
+                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                      COMMERCIAL DRIVER 01
+                    </span>
+                    <span className="font-heading text-xs text-[#5B6B73]">Domestic NZ Market</span>
+                  </div>
+
+                  <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] mb-3">
+                    Over 5x North American Gas Realization
+                  </h3>
+
+                  <div className="space-y-3.5 text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-6">
+                    <p>
+                      <strong>Structural Island Supply Deficit:</strong> Unlike North American producers impacted by regional pipeline bottlenecks, New Zealand operates an isolated domestic energy market experiencing severe gas supply contraction.
+                    </p>
+                    <p>
+                      <strong>Immediate Local Offtake:</strong> Natural gas produced in Taranaki is fed directly into local power generation and heavy industrial manufacturing, commanding spot domestic realizations <strong>up to 5x higher</strong> than North American Henry Hub benchmarks.
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-[#E8EDE9] bg-[#FAFBF9] p-4 sm:p-5">
+                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-[11px] text-[#1F6F78] block mb-2">
+                      Key Economic Differentiators
+                    </span>
+                    <ul className="space-y-2 text-xs text-[#5B6B73]">
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-[#1F6F78] shrink-0 mt-0.5" />
+                        <span>Immediate local cash settlement without long LNG transport corridors.</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-[#1F6F78] shrink-0 mt-0.5" />
+                        <span>Direct pipeline tie-in eliminates multi-million-dollar compression investments.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="pt-4 mt-6 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                  <span>Offtake: Local Industrial &amp; Power Generation</span>
+                  <span className="font-heading font-medium text-xs text-[#1F6F78]">Zero LNG Freight Discount</span>
+                </div>
+              </div>
+            </div>
+
+            {/* PILLAR 2: DRILLING & WELL WORKOVER CATALYSTS */}
+            <div data-reveal="card" className="lg:col-span-6 min-w-0 flex flex-col">
+              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between gap-3 mb-3">
+                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
+                      COMMERCIAL DRIVER 02
+                    </span>
+                    <span className="font-heading text-xs text-[#5B6B73]">Development Pipeline</span>
+                  </div>
+
+                  <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] mb-3">
+                    Tariki-5 Well Campaign &amp; Recompletions
+                  </h3>
+
+                  <div className="space-y-3.5 text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-6">
+                    <p>
+                      <strong>Tariki-5 Well Target:</strong> New Zealand Energy Corp. plans to drill the high-impact Tariki-5 well (subject to financing), targeting substantial gas and condensate reserves within proven structures.
+                    </p>
+                    <p>
+                      <strong>Active Well Reworking:</strong> Field teams are systematically diagnostic logging, pressure testing, and perforating candidate production intervals across previously producing wells to achieve immediate flush production.
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border border-[#E8EDE9] bg-[#FAFBF9] p-4 sm:p-5">
+                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-[11px] text-[#1F6F78] block mb-2">
+                      Independent Analyst Verification
+                    </span>
+                    <div className="flex items-start gap-3">
+                      <FileText className="w-5 h-5 text-[#1F6F78] shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-heading font-bold text-xs text-[#0B1F2A] block">
+                          Auctus Advisors Research Coverage
+                        </span>
+                        <p className="text-xs text-[#5B6B73] mt-0.5">
+                          Initiated independent capital research on New Zealand Energy Corp. on June 12, 2024, examining Taranaki field economics and Tariki-5 target potential.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 mt-6 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                  <span>Operational Program: Recompletions + Drilling</span>
+                  <span className="font-heading font-medium text-xs text-[#1F6F78]">Auctus Advisors (June 2024)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* =========================================================
+          6. PANORAMIC WIDE LANDSCAPE BANNER (TARANAKI BASIN)
          ========================================================= */}
       <section className="section-y pt-0">
         <Container>
@@ -286,14 +584,14 @@ export default function NewZealandProjectPage() {
             <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-10">
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B7E34A] text-[#0B1F2A] font-heading font-bold text-[10px] sm:text-[11px] uppercase tracking-wider shadow-md">
                 <span className="w-2.5 h-[2px] bg-[#0B1F2A] rounded-full inline-block" aria-hidden="true" />
-                <span>TARANAKI BASIN</span>
+                <span>TARANAKI BASIN · NEW ZEALAND</span>
               </span>
             </div>
 
             {/* Bottom-Right Frosted Glass Card */}
             <div className="absolute bottom-4 right-4 left-4 sm:left-auto sm:bottom-6 sm:right-6 z-10 sm:max-w-xs p-4 sm:p-5 rounded-xl bg-[#07161F]/80 backdrop-blur-md border border-white/10 text-white shadow-2xl">
               <p className="text-sm text-[#DDE3E3] leading-relaxed">
-                Established energy region with existing infrastructure and access to key markets.
+                Established hydrocarbon province connected directly to power utilities and industrial manufacturing off-takers.
               </p>
             </div>
           </div>
@@ -301,78 +599,7 @@ export default function NewZealandProjectPage() {
       </section>
 
       {/* =========================================================
-          5. "Our focus" / 3-STEP PROCESS STRIP (Assess, Develop, Advance)
-         ========================================================= */}
-      <section className="section-y bg-white border-t border-[#DDE3E3]">
-        <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            {/* Left title & summary */}
-            <div className="lg:col-span-4 lg:pr-8 lg:border-r border-[#DDE3E3] min-w-0">
-              <SectionHeading
-                size="compact"
-                title="Our focus"
-                description={
-                  <span className="block text-sm sm:text-base">
-                    A disciplined approach to unlocking value from our New Zealand oil and gas assets, supported by existing infrastructure and a proven operating environment.
-                  </span>
-                }
-                className="mb-0"
-              />
-            </div>
-
-            {/* Right 3 connected steps */}
-            <div className="lg:col-span-8 min-w-0">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-5 items-start">
-                {/* Step 01: Assess */}
-                <div data-reveal="card" className="relative flex items-start gap-3.5 md:pr-2 min-w-0">
-                  <div className="w-11 h-11 rounded-full border border-[#CBD5D2] bg-[#F5F6F1] flex items-center justify-center shrink-0 text-xs font-heading font-bold text-[#0B1F2A]">
-                    01
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className={cn(type.h4, tone.headingLight, 'mb-1')}>Assess</h3>
-                    <p className="text-sm text-[#5B6B73] leading-relaxed">
-                      Evaluate opportunities across existing assets and work programmes.
-                    </p>
-                  </div>
-                  {/* Subtle dotted connector to next step on desktop */}
-                  <div className="hidden md:block absolute -right-2.5 top-5 w-4 border-t border-dashed border-[#CBD5D2]" aria-hidden="true" />
-                </div>
-
-                {/* Step 02: Develop */}
-                <div data-reveal="card" className="relative flex items-start gap-3.5 md:pr-2 min-w-0">
-                  <div className="w-11 h-11 rounded-full border border-[#CBD5D2] bg-[#F5F6F1] flex items-center justify-center shrink-0 text-xs font-heading font-bold text-[#0B1F2A]">
-                    02
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className={cn(type.h4, tone.headingLight, 'mb-1')}>Develop</h3>
-                    <p className="text-sm text-[#5B6B73] leading-relaxed">
-                      Advance priority opportunities through technical work and planning.
-                    </p>
-                  </div>
-                  {/* Subtle dotted connector to next step on desktop */}
-                  <div className="hidden md:block absolute -right-2.5 top-5 w-4 border-t border-dashed border-[#CBD5D2]" aria-hidden="true" />
-                </div>
-
-                {/* Step 03: Advance */}
-                <div data-reveal="card" className="flex items-start gap-3.5 min-w-0">
-                  <div className="w-11 h-11 rounded-full border border-[#CBD5D2] bg-[#F5F6F1] flex items-center justify-center shrink-0 text-xs font-heading font-bold text-[#0B1F2A]">
-                    03
-                  </div>
-                  <div className="min-w-0">
-                    <h3 className={cn(type.h4, tone.headingLight, 'mb-1')}>Advance</h3>
-                    <p className="text-sm text-[#5B6B73] leading-relaxed">
-                      Target near-term production opportunities where appropriate.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* =========================================================
-          6. BOTTOM CALL-TO-ACTION BAND
+          7. BOTTOM CALL-TO-ACTION BAND
          ========================================================= */}
       <section className="section-y relative overflow-hidden bg-[#0B1F2A] text-white border-t border-[#1D3B4C]">
         {/* Golden Sunset Panoramic Photo */}
@@ -384,24 +611,32 @@ export default function NewZealandProjectPage() {
             sizes="100vw"
             className="object-cover object-[center_40%] opacity-65 brightness-95 contrast-110"
           />
-          {/* Multi-stop Cinematic Overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#07161F]/95 via-[#0B1F2A]/75 to-[#07161F]/80" />
         </div>
 
         <Container className="relative z-10">
-          <SectionHeading
-            dark
-            size="compact"
-            eyebrow="NEW ZEALAND PORTFOLIO"
-            title="Explore our New Zealand portfolio"
-            description="Learn more about our oil and gas assets and investment strategy."
-            className="mb-8"
-          />
-          <div data-reveal>
-            <Button href="/projects" variant="primary" size="md">
-              View All Projects
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-            </Button>
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 sm:gap-8">
+            <div data-reveal="fade" className="min-w-0 max-w-2xl">
+              <Eyebrow dark>STAY INFORMED</Eyebrow>
+              <h2 className="font-heading font-bold text-2xl sm:text-3xl text-white mb-2">
+                Follow New Zealand operational milestones
+              </h2>
+              <p className="text-sm text-[#DDE3E3]/80">
+                Receive the latest engineering updates, production news releases, and regulatory filings for our Taranaki Basin assets.
+              </p>
+            </div>
+
+            <div data-reveal className="flex flex-wrap items-center gap-3 sm:gap-4 shrink-0">
+              <Button href="/news" variant="primary" size="md">
+                View latest news
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Button>
+
+              <Button href="/investors" variant="secondary-dark" size="md">
+                Visit investor centre
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Button>
+            </div>
           </div>
         </Container>
       </section>
