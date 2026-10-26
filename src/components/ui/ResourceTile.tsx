@@ -119,7 +119,7 @@ export const ResourceTile: React.FC<ResourceTileProps> = ({
 
       {/* Action Button Top Right */}
       <div
-        className="absolute top-3.5 right-3.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#EBF2EE] text-[#1F6F78] flex items-center justify-center transition-all duration-300 group-hover:bg-[#1F6F78] group-hover:text-white group-hover:scale-105"
+        className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#EBF2EE] text-[#1F6F78] flex items-center justify-center transition-all duration-300 group-hover:bg-[#1F6F78] group-hover:text-white group-hover:scale-105 shrink-0"
         aria-hidden="true"
       >
         {isLinkExternal ? (

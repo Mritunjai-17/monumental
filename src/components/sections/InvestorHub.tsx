@@ -2,7 +2,7 @@ import React from 'react';
 import { Container } from '@/components/ui/Container';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { ResourceTile } from '@/components/ui/ResourceTile';
-import { Calendar, FileSpreadsheet, Bell } from 'lucide-react';
+import { FileText, Calendar, FileSpreadsheet, Bell } from 'lucide-react';
 
 export const InvestorHub: React.FC = () => {
   return (
@@ -15,10 +15,11 @@ export const InvestorHub: React.FC = () => {
           action={{ label: 'View investor centre', shortLabel: 'View all', href: '/investors' }}
         />
 
-        {/* 4 Horizontal Resource Cards Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-5">
+        {/* 4 Uniform Horizontal Resource Cards Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 lg:gap-5 items-stretch">
           <ResourceTile
-            variant="teal-panel"
+            variant="mint-icon"
+            icon={FileText}
             eyebrow="PDF Document"
             title="Corporate Presentation"
             description="Comprehensive 2026 corporate overview and asset development roadmap."
@@ -35,7 +36,7 @@ export const InvestorHub: React.FC = () => {
           />
 
           <ResourceTile
-            variant="ice-icon"
+            variant="mint-icon"
             icon={FileSpreadsheet}
             eyebrow="External"
             title="Securities Filings"
@@ -45,7 +46,7 @@ export const InvestorHub: React.FC = () => {
           />
 
           <ResourceTile
-            variant="dark-alert"
+            variant="mint-icon"
             icon={Bell}
             eyebrow="Stay Informed"
             title="News Alerts"
