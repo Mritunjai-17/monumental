@@ -3,11 +3,30 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { siteConfig } from '@/data/site';
+import { getMarketQuote } from '@/lib/api';
 import { TrendingUp, ExternalLink, Download, FileText, ChevronDown, X, ShieldCheck } from 'lucide-react';
 
 export const TickerChip: React.FC<{ className?: string }> = ({ className = '' }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [quote, setQuote] = useState<{ price: number; change: number; changePercent: number } | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Fetch live market quote on mount
+  useEffect(() => {
+    let isMounted = true;
+    getMarketQuote().then((q) => {
+      if (isMounted && q && typeof q.price === 'number') {
+        setQuote({
+          price: q.price,
+          change: q.change,
+          changePercent: q.changePercent,
+        });
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Close when clicking outside or pressing Escape
   useEffect(() => {
@@ -44,6 +63,7 @@ export const TickerChip: React.FC<{ className?: string }> = ({ className = '' })
         <span className="w-1.5 h-1.5 rounded-full bg-[#B7E34A] animate-pulse shrink-0" />
         <span className="font-semibold tracking-wider whitespace-nowrap">
           {siteConfig.exchange}: {siteConfig.ticker}
+          {quote ? ` • $${quote.price.toFixed(2)}` : ''}
         </span>
         <TrendingUp className="w-3.5 h-3.5 shrink-0 text-[#1F6F78] group-hover:text-[#B7E34A] transition-colors" />
         <ChevronDown

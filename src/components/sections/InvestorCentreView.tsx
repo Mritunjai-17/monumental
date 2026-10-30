@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
@@ -10,12 +10,13 @@ import { KineticHeading } from '@/components/ui/KineticHeading';
 import { cn } from '@/lib/utils';
 import { type, tone } from '@/lib/typography';
 import {
-  investorCapitalData,
+  investorCapitalData as initialCapitalData,
   corporateDeck,
   lifeOfferingDoc,
   sedarFilings,
   professionalAdvisory,
 } from '@/data/investors';
+import { getCapitalStructure, subscribeNewsletter } from '@/lib/api';
 import { MarketPerformanceCard } from '@/components/ui/MarketPerformanceCard';
 import {
   Download,
@@ -90,13 +91,44 @@ const FLOAT_SEGMENTS = [
 ];
 
 export function InvestorCentreView() {
+  const [capitalData, setCapitalData] = useState(initialCapitalData);
   const [activeTab, setActiveTab] = useState<TabId>('overview');
   const [emailInput, setEmailInput] = useState('');
   const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  // Synchronize corporate capital structure from backend API
+  useEffect(() => {
+    let isMounted = true;
+    getCapitalStructure().then((res) => {
+      if (isMounted && res) {
+        setCapitalData(res);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const dynamicMetrics = useMemo(() => {
+    if (capitalData.overviewStats && capitalData.overviewStats.length >= 4) {
+      return capitalData.overviewStats.map((s) => ({
+        label: s.label,
+        value: s.value,
+        note: s.subtext || '',
+      }));
+    }
+    return METRICS;
+  }, [capitalData]);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (emailInput.trim()) {
+    if (!emailInput.trim()) return;
+
+    try {
+      await subscribeNewsletter(emailInput.trim(), 'Investor Centre Page');
+      setSubscribed(true);
+      setEmailInput('');
+    } catch {
       setSubscribed(true);
       setEmailInput('');
     }
@@ -222,7 +254,7 @@ export function InvestorCentreView() {
                   <span>TSX-V: MNRG</span>
                 </span>
 
-                {investorCapitalData.crossListings.map((cross) => (
+                {capitalData.crossListings.map((cross) => (
                   <span
                     key={cross.exchange}
                     className="px-2.5 py-1 rounded-full bg-white/10 text-[#DDE3E3] text-xs font-heading font-medium"
@@ -288,7 +320,7 @@ export function InvestorCentreView() {
             <div role="tabpanel" className="space-y-6 lg:space-y-8">
               {/* 4 Metric Tiles */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
-                {METRICS.map((metric) => (
+                {dynamicMetrics.map((metric) => (
                   <div key={metric.label} className={cn(darkPanel, darkPanelHover, 'p-4 sm:p-6 min-w-0')}>
                     <span className="text-xs text-[#DDE3E3]/75 font-heading font-semibold uppercase tracking-wider block mb-2">
                       {metric.label}
@@ -365,7 +397,7 @@ export function InvestorCentreView() {
                     Outstanding Warrants Schedule
                   </h3>
                   <span className="text-xs font-semibold text-[#B7E34A] bg-[#B7E34A]/10 px-2.5 py-1 rounded-full">
-                    Total: {investorCapitalData.totalWarrants}
+                    Total: {capitalData.totalWarrants}
                   </span>
                 </div>
 
@@ -380,7 +412,7 @@ export function InvestorCentreView() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
-                      {investorCapitalData.warrants.map((w) => (
+                      {capitalData.warrants.map((w) => (
                         <tr key={w.tranche} className="hover:bg-white/5">
                           <td className="py-3 pr-4 font-semibold text-white">{w.tranche}</td>
                           <td className="py-3 px-2 text-right font-mono text-[#DDE3E3] whitespace-nowrap">{w.quantity}</td>
@@ -401,7 +433,7 @@ export function InvestorCentreView() {
                     Stock Incentive Options
                   </h3>
                   <span className="text-xs font-semibold text-[#2DD4BF] bg-[#1F6F78]/20 px-2.5 py-1 rounded-full">
-                    Total: {investorCapitalData.totalOptions}
+                    Total: {capitalData.totalOptions}
                   </span>
                 </div>
 
@@ -416,7 +448,7 @@ export function InvestorCentreView() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-white/5">
-                      {investorCapitalData.options.map((opt) => (
+                      {capitalData.options.map((opt) => (
                         <tr key={opt.tranche} className="hover:bg-white/5">
                           <td className="py-3 pr-4 font-semibold text-white">{opt.tranche}</td>
                           <td className="py-3 px-2 text-right font-mono text-[#DDE3E3] whitespace-nowrap">{opt.quantity}</td>
@@ -437,7 +469,7 @@ export function InvestorCentreView() {
           {activeTab === 'shareholders' && (
             <div role="tabpanel" className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-5">
-                {investorCapitalData.significantShareholders.map((holder) => (
+                {capitalData.significantShareholders.map((holder) => (
                   <div key={holder.name} className={cn(darkPanel, darkPanelHover, 'p-5 sm:p-6 min-w-0')}>
                     <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 mb-2">
                       <span className="text-xs uppercase tracking-wider text-[#B7E34A] font-heading font-semibold">
@@ -463,7 +495,7 @@ export function InvestorCentreView() {
                   <ShieldCheck className="w-4 h-4 text-[#B7E34A] shrink-0" aria-hidden="true" />
                   <span>Statutory Escrow &amp; Voluntary Lock-Up Notice</span>
                 </div>
-                <p>{investorCapitalData.escrowNotice}</p>
+                <p>{capitalData.escrowNotice}</p>
               </div>
             </div>
           )}
@@ -475,7 +507,7 @@ export function InvestorCentreView() {
               <span>Data Source: TMX Group (TSX Venture Exchange) • Delayed 15 minutes</span>
             </div>
             <div className="break-words">
-              <span>Securities Identifiers: CUSIP {investorCapitalData.identifiers.cusip} • ISIN {investorCapitalData.identifiers.isin}</span>
+              <span>Securities Identifiers: CUSIP {capitalData.identifiers.cusip} • ISIN {capitalData.identifiers.isin}</span>
             </div>
           </div>
         </Container>

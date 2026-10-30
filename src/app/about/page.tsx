@@ -420,20 +420,20 @@ export default function AboutPage() {
          ========================================================= */}
       <section className="relative section-y pt-0">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
             {/* Left Column (Headline) */}
-            <div className="lg:col-span-4 min-w-0">
+            <div className="lg:col-span-5 xl:col-span-5 min-w-0 max-w-[440px]">
               <SectionHeading
-                size="compact"
                 eyebrow="LEADERSHIP & GOVERNANCE"
-                title={'Experienced leadership\nand a strong governance foundation'}
+                title="Experienced leadership and a strong governance foundation"
+                titleClassName="text-balance [text-wrap:balance] leading-[1.12] lg:text-[40px] xl:text-[42px] tracking-[-0.02em] pb-1"
                 className="mb-0 sm:mb-0"
               />
             </div>
 
             {/* Right Column: 3 Resource Cards */}
-            <div className="lg:col-span-8 min-w-0">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
+            <div className="lg:col-span-7 xl:col-span-7 min-w-0">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-4 xl:gap-5">
                 {/* Card 1: Our Team */}
                 <div data-reveal="card" className="h-full">
                   <TeamCardWithModal />

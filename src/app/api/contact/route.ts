@@ -50,6 +50,43 @@ export async function POST(request: Request) {
     // Formally log the verified investor submission for corporate delivery audit
     console.info(`[IR Inquiry Dispatch] Destination: ${destination} | Role: ${role} | Name: ${name?.trim()} | Email: ${email?.trim()} | Phone: ${phone?.trim() || 'N/A'} | Timestamp: ${timestamp}`);
 
+    // Forward to Backend Database & CMS API
+    const isProduction = process.env.NODE_ENV === 'production';
+    const defaultBackendOrigin = isProduction
+      ? 'https://monumentalbackend.vercel.app'
+      : 'http://localhost:5001';
+
+    const rawBackendUrl =
+      process.env.BACKEND_INTERNAL_URL ||
+      process.env.NEXT_PUBLIC_API_URL ||
+      defaultBackendOrigin;
+    const backendOrigin = rawBackendUrl.replace(/\/api\/v1\/?$/, '').replace(/\/+$/, '');
+
+    try {
+      const backendRes = await fetch(`${backendOrigin}/api/v1/enquiries`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          role,
+          name: (name || '').trim(),
+          email: (email || '').trim(),
+          phone: phone?.trim() || '',
+          message: (message || '').trim(),
+          source: 'Investor Contact Form',
+        }),
+      });
+
+      if (!backendRes.ok) {
+        const errorData = await backendRes.json().catch(() => ({}));
+        console.warn('[IR Inquiry Backend Warning]', errorData);
+      }
+    } catch (backendErr) {
+      console.warn('[IR Inquiry Backend Unavailable - Running Offline Safe]', backendErr);
+    }
+
     return NextResponse.json(
       {
         success: true,

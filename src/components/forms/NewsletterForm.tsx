@@ -2,20 +2,29 @@
 
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { subscribeNewsletter } from '@/lib/api';
 
 export const NewsletterForm: React.FC<{ dark?: boolean }> = ({ dark = false }) => {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
     setStatus('loading');
-    await new Promise((resolve) => setTimeout(resolve, 600));
-    setStatus('success');
-    setEmail('');
+    setErrorMessage('');
+
+    try {
+      await subscribeNewsletter(email, 'Website Newsletter Alerts');
+      setStatus('success');
+      setEmail('');
+    } catch (err: any) {
+      setStatus('error');
+      setErrorMessage(err.message || 'Subscription failed. Please try again.');
+    }
   };
 
   if (status === 'success') {
@@ -28,30 +37,38 @@ export const NewsletterForm: React.FC<{ dark?: boolean }> = ({ dark = false }) =
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
-      <input
-        type="email"
-        required
-        aria-label="Email address for news alerts"
-        autoComplete="email"
-        placeholder="Enter your email for news alerts"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className={`min-w-0 px-4 py-3 rounded-[10px] text-base flex-1 border transition-all focus:outline-none focus:ring-2 focus:ring-[#1F6F78] ${
-          dark
-            ? 'bg-[#0E2836] border-[#1D3B4C] text-white placeholder-white/50 focus:border-[#1F6F78]'
-            : 'bg-white border-[#DDE3E3] text-[#16232B] placeholder-[#5B6B73]/70 focus:border-[#1F6F78]'
-        }`}
-      />
-      <Button
-        type="submit"
-        variant="primary"
-        size="sm"
-        disabled={status === 'loading'}
-        className="shrink-0 min-h-[44px]"
-      >
-        {status === 'loading' ? 'Joining...' : 'Subscribe'}
-      </Button>
-    </form>
+    <div className="w-full max-w-md">
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full">
+        <input
+          type="email"
+          required
+          aria-label="Email address for news alerts"
+          autoComplete="email"
+          placeholder="Enter your email for news alerts"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className={`min-w-0 px-4 py-3 rounded-[10px] text-base flex-1 border transition-all focus:outline-none focus:ring-2 focus:ring-[#1F6F78] ${
+            dark
+              ? 'bg-[#0E2836] border-[#1D3B4C] text-white placeholder-white/50 focus:border-[#1F6F78]'
+              : 'bg-white border-[#DDE3E3] text-[#16232B] placeholder-[#5B6B73]/70 focus:border-[#1F6F78]'
+          }`}
+        />
+        <Button
+          type="submit"
+          variant="primary"
+          size="sm"
+          disabled={status === 'loading'}
+          className="shrink-0 min-h-[44px]"
+        >
+          {status === 'loading' ? 'Joining...' : 'Subscribe'}
+        </Button>
+      </form>
+      {status === 'error' && (
+        <div className="flex items-center gap-1.5 text-xs text-red-500 mt-2">
+          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+          <span>{errorMessage}</span>
+        </div>
+      )}
+    </div>
   );
 };

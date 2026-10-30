@@ -46,6 +46,8 @@ export interface NewsItem {
   source?: string;
   /** Link to original filing / depository if applicable. */
   sourceUrl?: string;
+  /** Downloadable regulatory PDF URL if available. */
+  pdfUrl?: string;
 }
 
 export interface StatItem {

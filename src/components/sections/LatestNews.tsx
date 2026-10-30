@@ -1,14 +1,32 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { NewsThumbnail } from '@/components/ui/NewsThumbnail';
-import { newsArticles } from '@/data/news';
+import { newsArticles as fallbackNewsArticles } from '@/data/news';
+import { NewsItem } from '@/types';
+import { getNewsArticles } from '@/lib/api';
 import { ArrowRight, Calendar } from 'lucide-react';
 
 export const LatestNews: React.FC = () => {
-  const recentNews = newsArticles.slice(0, 3);
+  const [articles, setArticles] = useState<NewsItem[]>(fallbackNewsArticles);
+
+  useEffect(() => {
+    let isMounted = true;
+    getNewsArticles().then((fetched) => {
+      if (isMounted && fetched && fetched.length > 0) {
+        setArticles(fetched);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const recentNews = articles.slice(0, 3);
   const hasNews = recentNews.length > 0;
 
   return (

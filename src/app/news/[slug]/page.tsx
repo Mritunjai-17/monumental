@@ -7,6 +7,7 @@ import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { newsArticles } from '@/data/news';
+import { getNewsArticleBySlug } from '@/lib/api';
 import { constructMetadata } from '@/lib/seo';
 import { cn } from '@/lib/utils';
 import { type, tone } from '@/lib/typography';
@@ -24,8 +25,8 @@ export function generateStaticParams() {
   }));
 }
 
-export function generateMetadata({ params }: NewsDetailProps) {
-  const article = newsArticles.find((a) => a.slug === params.slug);
+export async function generateMetadata({ params }: NewsDetailProps) {
+  const article = await getNewsArticleBySlug(params.slug);
   if (!article) return { title: 'News Not Found' };
 
   return constructMetadata({
@@ -36,8 +37,8 @@ export function generateMetadata({ params }: NewsDetailProps) {
   });
 }
 
-export default function NewsArticlePage({ params }: NewsDetailProps) {
-  const article = newsArticles.find((a) => a.slug === params.slug);
+export default async function NewsArticlePage({ params }: NewsDetailProps) {
+  const article = await getNewsArticleBySlug(params.slug);
 
   if (!article) {
     notFound();

@@ -14,6 +14,7 @@ interface SectionHeadingProps {
   align?: 'left' | 'center';
   dark?: boolean;
   className?: string;
+  titleClassName?: string;
   /** Heading level. Default h2. */
   as?: 'h1' | 'h2' | 'h3';
   /** "compact" for narrow columns and CTA bands. */
@@ -30,6 +31,7 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
   align = 'left',
   dark = false,
   className,
+  titleClassName,
   as = 'h2',
   size = 'default',
   id,
@@ -45,7 +47,8 @@ export const SectionHeading: React.FC<SectionHeadingProps> = ({
         className={cn(
           size === 'compact' ? type.h2Compact : type.h2,
           description && 'mb-4',
-          dark ? tone.headingDark : tone.headingLight
+          dark ? tone.headingDark : tone.headingLight,
+          titleClassName
         )}
       />
       {description && (

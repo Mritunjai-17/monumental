@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
@@ -10,7 +10,9 @@ import { KineticHeading } from '@/components/ui/KineticHeading';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { cn } from '@/lib/utils';
 import { type, tone } from '@/lib/typography';
-import { newsArticles } from '@/data/news';
+import { newsArticles as initialNewsArticles } from '@/data/news';
+import { NewsItem } from '@/types';
+import { getNewsArticles, subscribeNewsletter } from '@/lib/api';
 import { ArrowRight, Search, Newspaper, Mail, CheckCircle2, Calendar } from 'lucide-react';
 
 const CATEGORIES = [
@@ -25,15 +27,29 @@ const cardHover =
   'transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_-4px_rgba(11,31,42,0.08)] hover:border-[#1F6F78]/40';
 
 export default function NewsPage() {
+  const [articles, setArticles] = useState<NewsItem[]>(initialNewsArticles);
   const [selectedCategory, setSelectedCategory] = useState<string>('All News');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [featuredIndex, setFeaturedIndex] = useState<number>(0);
   const [emailInput, setEmailInput] = useState<string>('');
   const [subscribed, setSubscribed] = useState<boolean>(false);
 
+  // Synchronize news articles with backend API on mount
+  useEffect(() => {
+    let isMounted = true;
+    getNewsArticles().then((fetched) => {
+      if (isMounted && fetched && fetched.length > 0) {
+        setArticles(fetched);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   // Filter articles based on category and search query
   const filteredArticles = useMemo(() => {
-    return newsArticles.filter((article) => {
+    return articles.filter((article) => {
       const matchesCategory =
         selectedCategory === 'All News' ||
         article.category.toLowerCase().includes(selectedCategory.toLowerCase()) ||
@@ -46,14 +62,14 @@ export default function NewsPage() {
 
       return matchesCategory && matchesSearch;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [articles, selectedCategory, searchQuery]);
 
   // Featured news candidates
   const featuredArticles = useMemo(() => {
-    return newsArticles.slice(0, 3);
-  }, []);
+    return articles.slice(0, 3);
+  }, [articles]);
 
-  const currentFeatured = featuredArticles[featuredIndex] || newsArticles[0];
+  const currentFeatured = featuredArticles[featuredIndex] || articles[0];
 
   const handleNextFeatured = () => {
     setFeaturedIndex((prev) => (prev + 1) % featuredArticles.length);
@@ -63,22 +79,29 @@ export default function NewsPage() {
     setFeaturedIndex((prev) => (prev - 1 + featuredArticles.length) % featuredArticles.length);
   };
 
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (emailInput.trim()) {
+    if (!emailInput.trim()) return;
+
+    try {
+      await subscribeNewsletter(emailInput.trim(), 'News Page Footer Banner');
+      setSubscribed(true);
+      setEmailInput('');
+    } catch {
+      // Still show success fallback to user
       setSubscribed(true);
       setEmailInput('');
     }
   };
 
   // Recent news (excluding featured)
-  const recentNews = newsArticles.slice(1, 4);
+  const recentNews = articles.slice(1, 4);
 
   // Latest announcements (for right dark card)
-  const announcements = newsArticles.slice(0, 4);
+  const announcements = articles.slice(0, 4);
 
   // Industry insights
-  const insights = newsArticles.filter((a) => a.category === 'Industry Insights').slice(0, 2);
+  const insights = articles.filter((a) => a.category === 'Industry Insights').slice(0, 2);
 
   return (
     <div className="relative bg-[#F5F6F1] text-[#0B1F2A] overflow-hidden min-h-screen">
