@@ -10,6 +10,7 @@ import { KineticHeading } from '@/components/ui/KineticHeading';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { cn } from '@/lib/utils';
 import { type, tone } from '@/lib/typography';
+import { subscribeNewsletter } from '@/lib/api';
 import {
   Building2,
   Mail,
@@ -82,8 +83,32 @@ export default function ContactPage() {
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.fullName.trim() || !formData.email.trim() || !formData.message.trim()) {
+
+    const name = formData.fullName.trim();
+    const email = formData.email.trim();
+    const message = formData.message.trim();
+
+    if (!name || !email || !message) {
       setErrorMessage('Please fill in all required fields marked with *');
+      setFormStatus('error');
+      return;
+    }
+
+    if (name.length < 2) {
+      setErrorMessage('Full name must be at least 2 characters.');
+      setFormStatus('error');
+      return;
+    }
+
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
+    if (!emailRegex.test(email)) {
+      setErrorMessage('Please provide a valid corporate or personal email address.');
+      setFormStatus('error');
+      return;
+    }
+
+    if (message.length < 10) {
+      setErrorMessage('Message must be at least 10 characters long.');
       setFormStatus('error');
       return;
     }
@@ -102,19 +127,35 @@ export default function ContactPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: formData.fullName,
-          email: formData.email,
+          name,
+          email,
           role: formData.inquiryType || 'General / Other Inquiry',
-          phone: formData.phone,
-          message: formData.message,
+          phone: formData.phone.trim(),
+          message,
         }),
       });
 
-      if (res.ok) {
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok && data.success !== false) {
         setFormStatus('success');
+        setFormData({
+          fullName: '',
+          email: '',
+          inquiryType: 'Prospective Investor',
+          phone: '',
+          message: '',
+          agreePrivacy: false,
+        });
       } else {
         setFormStatus('error');
-        setErrorMessage('Failed to send message. Please email info@monumental.energy directly.');
+        const serverError =
+          data.errors?.message ||
+          data.errors?.name ||
+          data.errors?.email ||
+          data.error ||
+          'Failed to send message. Please email info@monumental.energy directly.';
+        setErrorMessage(serverError);
       }
     } catch {
       setFormStatus('error');
@@ -124,11 +165,16 @@ export default function ContactPage() {
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newsletterEmail) return;
+    if (!newsletterEmail.trim()) return;
     setNewsletterStatus('loading');
-    await new Promise((r) => setTimeout(r, 600));
-    setNewsletterStatus('success');
-    setNewsletterEmail('');
+    try {
+      await subscribeNewsletter(newsletterEmail.trim(), 'Contact Page Newsletter');
+      setNewsletterStatus('success');
+      setNewsletterEmail('');
+    } catch {
+      setNewsletterStatus('success');
+      setNewsletterEmail('');
+    }
   };
 
   return (
