@@ -707,7 +707,7 @@ export function InvestorCentreView() {
                       </div>
                       <div className="min-w-0">
                         <span className="text-xs text-[#5B6B73] block">Shareholder Voting</span>
-                        <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
+                        <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors truncate block">
                           2026 Annual General Meeting
                         </span>
                       </div>
@@ -729,7 +729,7 @@ export function InvestorCentreView() {
                       </div>
                       <div className="min-w-0">
                         <span className="text-xs text-[#5B6B73] block">Transfer Registry</span>
-                        <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
+                        <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors truncate block">
                           Computershare Investor Portal
                         </span>
                       </div>

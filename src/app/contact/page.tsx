@@ -61,7 +61,7 @@ const RESOURCES = [
   {
     href: '/investors/agm',
     title: 'AGM & Shareholder Information',
-    description: 'Meeting materials, voting information and related documents.',
+    description: 'Meeting materials, voting and shareholder documents.',
     Icon: Users,
   },
 ];
@@ -281,7 +281,7 @@ export default function ContactPage() {
                     <div className={iconTileClass}>
                       <Building2 className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <h3 className={cn(type.h4, tone.headingLight, 'mb-0.5')}>
                         Monumental Energy Corp.
                       </h3>
@@ -296,7 +296,7 @@ export default function ContactPage() {
                     <div className={iconTileClass}>
                       <Mail className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <span className={detailLabelClass}>Email</span>
                       <a
                         href="mailto:info@monumental.energy"
@@ -312,7 +312,7 @@ export default function ContactPage() {
                     <div className={iconTileClass}>
                       <Phone className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <span className={detailLabelClass}>Phone</span>
                       <a
                         href="tel:+16043678117"
@@ -328,7 +328,7 @@ export default function ContactPage() {
                     <div className={iconTileClass}>
                       <MapPin className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <span className={detailLabelClass}>Head Office (Canada)</span>
                       <p className={cn(type.body, tone.mutedLight)}>
                         Suite 228 – 1122 Mainland Street,<br />
@@ -342,7 +342,7 @@ export default function ContactPage() {
                     <div className={iconTileClass}>
                       <MapPin className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <span className={detailLabelClass}>New Plymouth Office (New Zealand)</span>
                       <p className={cn(type.body, tone.mutedLight)}>
                         #11 Young St., New Plymouth Central,<br />
@@ -356,7 +356,7 @@ export default function ContactPage() {
                     <div className={iconTileClass}>
                       <FileCheck className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
                     </div>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <span className={detailLabelClass}>Transfer Agent</span>
                       <span className="text-sm sm:text-[15px] font-semibold text-[#0B1F2A] block mb-0.5">
                         Computershare Investor Services Inc.
@@ -418,7 +418,7 @@ export default function ContactPage() {
                   <form onSubmit={handleContactSubmit} className="space-y-5">
                     {/* Row 1: Full Name & Email */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-4">
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <label htmlFor="contact-full-name" className={labelClass}>
                           Full Name *
                         </label>
@@ -434,7 +434,7 @@ export default function ContactPage() {
                         />
                       </div>
 
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <label htmlFor="contact-email" className={labelClass}>
                           Email Address *
                         </label>
@@ -453,7 +453,7 @@ export default function ContactPage() {
 
                     {/* Row 2: Inquiry Type & Phone */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-4">
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <label htmlFor="contact-inquiry-type" className={labelClass}>
                           Inquiry Type *
                         </label>
@@ -474,7 +474,7 @@ export default function ContactPage() {
                         </select>
                       </div>
 
-                      <div className="min-w-0">
+                      <div className="min-w-0 flex-1">
                         <label htmlFor="contact-phone" className={labelClass}>
                           Phone (optional)
                         </label>
@@ -568,15 +568,15 @@ export default function ContactPage() {
             {RESOURCES.map(({ href, title, description, Icon }) => (
               <div key={href} data-reveal="card" className="h-full min-w-0">
                 <Link href={href} className={resourceCardClass}>
-                  <div className="flex items-center gap-4 min-w-0">
+                  <div className="flex items-center gap-3.5 sm:gap-4 min-w-0 flex-1">
                     <div className="w-12 h-12 rounded-2xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
                       <Icon className="w-6 h-6" aria-hidden="true" />
                     </div>
-                    <div className="min-w-0">
-                      <h3 className={cn(type.h4, tone.headingLight, 'group-hover:text-[#1F6F78] transition-colors mb-1')}>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-heading font-bold text-[15px] xl:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors mb-1 truncate leading-snug">
                         {title}
                       </h3>
-                      <span className={cn('text-sm leading-relaxed block', tone.mutedLight)}>
+                      <span className="text-xs sm:text-[13px] text-[#5B6B73] leading-relaxed block line-clamp-2">
                         {description}
                       </span>
                     </div>

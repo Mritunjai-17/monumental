@@ -558,10 +558,10 @@ export function CorporatePresentationView() {
                       <Icon className="w-5 h-5" aria-hidden="true" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className={cn(type.h4, tone.headingLight, 'group-hover:text-[#1F6F78] transition-colors mb-0.5')}>
+                      <h3 className="font-heading font-bold text-[14px] sm:text-[15px] text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors mb-0.5 truncate leading-snug">
                         {res.title}
                       </h3>
-                      <span className="text-sm text-[#5B6B73] block leading-snug">
+                      <span className="text-xs text-[#5B6B73] block leading-snug line-clamp-2">
                         {res.description}
                       </span>
                     </div>

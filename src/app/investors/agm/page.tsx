@@ -458,15 +458,15 @@ export default function AgmPage() {
                     cardHover
                   )}
                 >
-                  <div className="flex items-center gap-4 min-w-0">
+                  <div className="flex items-center gap-3.5 sm:gap-4 min-w-0 flex-1">
                     <div className="w-12 h-12 rounded-2xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
                       <Icon className="w-6 h-6" aria-hidden="true" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className={cn(type.h4, tone.headingLight, 'group-hover:text-[#1F6F78] transition-colors mb-1')}>
+                      <h3 className="font-heading font-bold text-[15px] xl:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors mb-1 truncate leading-snug">
                         {title}
                       </h3>
-                      <span className={cn('text-sm leading-relaxed block', tone.mutedLight)}>
+                      <span className="text-xs sm:text-[13px] text-[#5B6B73] leading-relaxed block line-clamp-2">
                         {description}
                       </span>
                     </div>
