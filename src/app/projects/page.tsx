@@ -295,118 +295,204 @@ export default function LagunaBlancaProjectPage() {
       {/* =========================================================
           5. COMMERCIAL & MARKET FUNDAMENTALS: CESIUM & LITHIUM
          ========================================================= */}
-      <section className="py-8 sm:py-12">
+      <section className="py-10 sm:py-16">
         <Container>
-          <div className="mb-8">
+          <div className="mb-10 sm:mb-12">
             <Eyebrow>Market Drivers &amp; Industrial Demand</Eyebrow>
-            <h2 className="font-heading font-bold text-2xl sm:text-3xl text-[#0B1F2A] mb-2">
+            <h2 className="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-[#0B1F2A] mb-3">
               Critical Minerals Economics
             </h2>
             <p className="text-sm sm:text-base text-[#5B6B73] max-w-2xl leading-relaxed">
-              Laguna Blanca targets two distinct critical commodities: rare, high-margin cesium for deepwater drilling fluids, and low-cost lithium brine for the energy transition.
+              Laguna Blanca targets two distinct critical commodities: rare, high-margin cesium for deepwater drilling fluids, and low-cost lithium brine for the global energy transition.
             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* PILLAR 1: CESIUM (High-Value Rare Mineral) */}
+            {/* =========================================================
+                PILLAR 1: CESIUM (Cs 55) - High-Value Industrial Rarity
+               ========================================================= */}
             <div data-reveal="card" className="lg:col-span-6 min-w-0 flex flex-col">
-              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between gap-3 mb-3">
-                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
-                      Commodity 01 · Cesium (Cs)
+              <div className="h-full rounded-[24px] bg-[#0B1F2A] text-white border border-[#1D3B4C] p-6 sm:p-8 lg:p-9 shadow-xl relative overflow-hidden flex flex-col justify-between">
+                {/* Subtle Ambient Glow */}
+                <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#1F6F78]/25 rounded-full blur-3xl pointer-events-none" />
+
+                <div className="relative z-10">
+                  {/* Header: Element Badge & Status Tag */}
+                  <div className="flex items-center justify-between gap-3 mb-4">
+                    <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                      <span className="font-mono text-xs font-bold text-[#B7E34A] border-r border-white/15 pr-2.5">
+                        55 · Cs
+                      </span>
+                      <span className="text-[11px] font-heading font-semibold uppercase tracking-wider text-[#DDE3E3]/90">
+                        Critical Mineral · Cesium
+                      </span>
+                    </div>
+
+                    <span className="text-[10px] font-mono font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#B7E34A]/10 text-[#B7E34A] border border-[#B7E34A]/25">
+                      Global Monopoly Risk
                     </span>
-                    <span className="font-heading text-xs text-[#5B6B73]">Global Scarcity</span>
                   </div>
 
-                  <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-3">
-                    Cesium: Oilfield Formate &amp; Monopoly Supply Risk
+                  <h3 className="font-heading font-bold text-xl sm:text-2xl text-white tracking-[-0.01em] mb-4">
+                    Cesium: Oilfield Formate &amp; Supply Security
                   </h3>
 
-                  <div className="space-y-3.5 text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-6">
-                    <p>
-                      <strong>High-Density Drilling Formate:</strong> Cesium is one of the rarest high-value critical minerals in industrial use. Deepwater oil and gas operators lease cesium formate brine as an ultra-dense, non-damaging drilling fluid for high-pressure/high-temperature (HPHT) wells. Because approximately 85% of the fluid is recovered and recycled, it commands premium leasing revenues.
-                    </p>
-                    <p>
-                      <strong>Single-Source Geopolitical Vulnerability:</strong> Virtually the entire global commercial cesium supply originates from a single pegmatite deposit—the Tanco mine in Manitoba, Canada. With 100% of raw concentrate shipped to China for refining, Western industrial supply remains vulnerable to trade restrictions.
-                    </p>
+                  {/* 2 Big Stat Metrics */}
+                  <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-white/5 border border-white/10 mb-5">
+                    <div>
+                      <span className="font-mono font-bold text-2xl sm:text-3xl text-white block">
+                        100%
+                      </span>
+                      <span className="text-[11px] text-[#DDE3E3]/75 block leading-tight mt-1">
+                        Concentrate refined via China (Single source: Tanco Mine)
+                      </span>
+                    </div>
+                    <div>
+                      <span className="font-mono font-bold text-2xl sm:text-3xl text-[#B7E34A] block">
+                        85%
+                      </span>
+                      <span className="text-[11px] text-[#DDE3E3]/75 block leading-tight mt-1">
+                        Fluid recycled &amp; re-leased in deepwater HPHT wells
+                      </span>
+                    </div>
                   </div>
 
-                  {/* USGS Price Benchmarks */}
-                  <div className="rounded-xl border border-[#E8EDE9] bg-[#FAFBF9] p-4 sm:p-5 mb-4">
-                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-[11px] text-[#1F6F78] block mb-2.5">
-                      USGS Benchmark Pricing (Mineral Commodity Summaries)
-                    </span>
+                  {/* Context Narrative */}
+                  <p className="text-xs sm:text-[13px] text-[#DDE3E3]/80 leading-relaxed mb-6">
+                    Cesium is one of the rarest high-value critical minerals in industrial use. Deepwater operators lease cesium formate brine as an ultra-dense, non-damaging fluid. With Western industrial supply acutely exposed to single-source trade restrictions, new sources represent high-priority strategic assets.
+                  </p>
+
+                  {/* USGS Price Benchmarks - Financial Terminal View */}
+                  <div className="rounded-xl border border-white/10 bg-[#07161F] p-4 sm:p-5 mb-4 shadow-inner">
+                    <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-white/10">
+                      <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#2DD4BF] flex items-center gap-1.5">
+                        <TrendingUp className="w-3.5 h-3.5" />
+                        USGS Benchmark Pricing
+                      </span>
+                      <span className="text-[10px] font-mono text-[#DDE3E3]/60">
+                        Mineral Commodity Summaries
+                      </span>
+                    </div>
+
                     <div className="space-y-2 text-xs">
-                      <div className="flex justify-between items-center py-1.5 border-b border-[#E8EDE9]">
-                        <span className="text-[#0B1F2A] font-medium">99.8% Pure Metal (1g ampoule)</span>
-                        <span className="font-mono font-bold text-[#0B1F2A]">$63.00 – $81.00 / g</span>
+                      <div className="flex justify-between items-center py-1.5 border-b border-white/10">
+                        <span className="text-white font-medium text-xs">99.8% Pure Metal (1g ampoule)</span>
+                        <span className="font-mono font-bold text-[#B7E34A] bg-[#B7E34A]/10 px-2.5 py-0.5 rounded text-xs">
+                          $63.00 – $81.00 / g
+                        </span>
                       </div>
-                      <div className="flex justify-between items-center py-1.5 border-b border-[#E8EDE9]">
-                        <span className="text-[#5B6B73]">Cesium Acetate (99.9%, 50g)</span>
-                        <span className="font-mono font-semibold text-[#0B1F2A]">$118.20</span>
+                      <div className="flex justify-between items-center py-1.5 border-b border-white/10">
+                        <span className="text-[#DDE3E3]/80">Cesium Acetate (99.9%, 50g)</span>
+                        <span className="font-mono font-semibold text-white">$118.20</span>
                       </div>
-                      <div className="flex justify-between items-center py-1.5 border-b border-[#E8EDE9]">
-                        <span className="text-[#5B6B73]">Cesium Iodide (99.9%, 50g)</span>
-                        <span className="font-mono font-semibold text-[#0B1F2A]">$117.00</span>
+                      <div className="flex justify-between items-center py-1.5 border-b border-white/10">
+                        <span className="text-[#DDE3E3]/80">Cesium Iodide (99.9%, 50g)</span>
+                        <span className="font-mono font-semibold text-white">$117.00</span>
                       </div>
                       <div className="flex justify-between items-center py-1.5">
-                        <span className="text-[#5B6B73]">Cesium Carbonate / Chloride (99.9%, 50g)</span>
-                        <span className="font-mono font-semibold text-[#0B1F2A]">$101.80 / $103.60</span>
+                        <span className="text-[#DDE3E3]/80">Cesium Carbonate / Chloride (50g)</span>
+                        <span className="font-mono font-semibold text-white">$101.80 / $103.60</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-[#E8EDE9] flex items-center justify-between text-xs text-[#5B6B73]">
+                <div className="relative z-10 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-[#DDE3E3]/70">
                   <span>HPHT Drilling Formate Application</span>
-                  <span className="font-heading font-medium text-xs text-[#1F6F78]">85% Fluid Recovery Rate</span>
+                  <span className="font-heading font-medium text-xs text-[#B7E34A]">Premium Recurring Lease Model</span>
                 </div>
               </div>
             </div>
 
-            {/* PILLAR 2: LITHIUM (Energy Transition & DLE Advantage) */}
+            {/* =========================================================
+                PILLAR 2: LITHIUM (Li 3) - Energy Transition & DLE Economics
+               ========================================================= */}
             <div data-reveal="card" className="lg:col-span-6 min-w-0 flex flex-col">
-              <div className="h-full rounded-[20px] bg-white border border-[#DDE3E3] p-7 sm:p-9 shadow-sm flex flex-col justify-between">
+              <div className="h-full rounded-[24px] bg-white border border-[#DDE3E3] p-6 sm:p-8 lg:p-9 shadow-md hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between gap-3 mb-3">
-                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-xs text-[#1F6F78]">
-                      Commodity 02 · Lithium (Li)
+                  {/* Header: Element Badge & Status Tag */}
+                  <div className="flex items-center justify-between gap-3 mb-4">
+                    <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3]">
+                      <span className="font-mono text-xs font-bold text-[#1F6F78] border-r border-[#DDE3E3] pr-2.5">
+                        3 · Li
+                      </span>
+                      <span className="text-[11px] font-heading font-semibold uppercase tracking-wider text-[#0B1F2A]">
+                        Energy Transition · Lithium
+                      </span>
+                    </div>
+
+                    <span className="text-[10px] font-mono font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full bg-[#EDF3F1] text-[#1F6F78] border border-[#1F6F78]/25">
+                      2027+ Structural Deficit
                     </span>
-                    <span className="font-heading text-xs text-[#5B6B73]">Structural Deficit</span>
                   </div>
 
-                  <h3 className="font-heading font-bold text-xl text-[#0B1F2A] mb-3">
-                    Lithium: Global Supply Shortfall &amp; DLE Advantage
+                  <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#0B1F2A] tracking-[-0.01em] mb-4">
+                    Lithium: Supply Deficit &amp; DLE Advantage
                   </h3>
 
-                  <div className="space-y-3.5 text-xs sm:text-sm text-[#5B6B73] leading-relaxed mb-6">
-                    <p>
-                      <strong>Structural Market Deficit:</strong> Global demand for battery-grade lithium continues to outpace long-term supply expansion. Consensus commodity forecasts project a widening supply deficit beginning in 2027, driven by electric vehicle adoption and grid-scale storage deployment.
-                    </p>
-                    <p>
-                      <strong>Direct Lithium Extraction (DLE) Economics:</strong> Salar brine projects offer superior unit economics and lower lifecycle carbon emissions compared to energy-intensive hardrock pegmatite (spodumene) mining. Modern DLE technologies compress processing cycles from 18 months to hours, avoiding multi-year solar evaporation ponds and preserving local hydrology.
-                    </p>
+                  {/* 2 Big Stat Metrics */}
+                  <div className="grid grid-cols-2 gap-4 p-4 rounded-xl bg-[#F5F6F1] border border-[#DDE3E3] mb-5">
+                    <div>
+                      <span className="font-mono font-bold text-2xl sm:text-3xl text-[#1F6F78] block">
+                        18 Mo → Hours
+                      </span>
+                      <span className="text-[11px] text-[#5B6B73] block leading-tight mt-1">
+                        Cycle time compression vs multi-year evaporation ponds
+                      </span>
+                    </div>
+                    <div>
+                      <span className="font-mono font-bold text-2xl sm:text-3xl text-[#0B1F2A] block">
+                        Up to 90%
+                      </span>
+                      <span className="text-[11px] text-[#5B6B73] block leading-tight mt-1">
+                        Brine reinjection rate preserving Andean hydrology
+                      </span>
+                    </div>
                   </div>
 
-                  {/* DLE vs Hardrock Comparison */}
-                  <div className="rounded-xl border border-[#E8EDE9] bg-[#FAFBF9] p-4 sm:p-5 mb-4">
-                    <span className="font-heading font-semibold uppercase tracking-[0.12em] text-[11px] text-[#1F6F78] block mb-2.5">
-                      DLE Brine vs. Hardrock Spodumene Advantages
-                    </span>
-                    <div className="space-y-2.5 text-xs">
-                      <div className="flex items-start gap-2.5 pb-2 border-b border-[#E8EDE9]">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78] shrink-0 mt-1.5" />
+                  {/* Context Narrative */}
+                  <p className="text-xs sm:text-[13px] text-[#5B6B73] leading-relaxed mb-6">
+                    Global battery demand continues to outpace long-term supply expansion. Direct Lithium Extraction (DLE) bypasses multi-year solar evaporation ponds and intensive hardrock crushing, delivering lower unit production costs and accelerating commercial timelines.
+                  </p>
+
+                  {/* DLE vs Hardrock Modern Technology Matrix */}
+                  <div className="rounded-xl border border-[#DDE3E3] bg-[#F5F6F1] p-4 sm:p-5 mb-4">
+                    <div className="flex items-center justify-between pb-2.5 mb-3 border-b border-[#DDE3E3]">
+                      <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#1F6F78] flex items-center gap-1.5">
+                        <Zap className="w-3.5 h-3.5" />
+                        DLE Technology vs. Traditional Methods
+                      </span>
+                      <span className="text-[10px] font-heading font-bold uppercase tracking-wider text-[#1F6F78]">
+                        Clean Tech
+                      </span>
+                    </div>
+
+                    <div className="space-y-3 text-xs">
+                      <div className="flex items-start gap-3 pb-2.5 border-b border-[#DDE3E3]/70">
+                        <div className="w-5 h-5 rounded-md bg-white border border-[#DDE3E3] flex items-center justify-center text-[#1F6F78] shrink-0 mt-0.5 shadow-xs">
+                          <Zap className="w-3 h-3" />
+                        </div>
                         <div>
-                          <span className="text-[#0B1F2A] font-semibold block">Lower CAPEX &amp; Operating Cost:</span>
-                          <span className="text-[#5B6B73]">Modular extraction systems bypass massive pond earthworks and high-energy crushing circuits.</span>
+                          <span className="font-heading font-bold text-xs text-[#0B1F2A] block leading-tight">
+                            Lower CAPEX &amp; Rapid Scalability
+                          </span>
+                          <span className="text-[11px] text-[#5B6B73] block leading-snug mt-0.5">
+                            Modular extraction units bypass massive pond earthworks and energy-intensive ore crushing circuits.
+                          </span>
                         </div>
                       </div>
-                      <div className="flex items-start gap-2.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#1F6F78] shrink-0 mt-1.5" />
+
+                      <div className="flex items-start gap-3">
+                        <div className="w-5 h-5 rounded-md bg-white border border-[#DDE3E3] flex items-center justify-center text-[#1F6F78] shrink-0 mt-0.5 shadow-xs">
+                          <Layers className="w-3 h-3" />
+                        </div>
                         <div>
-                          <span className="text-[#0B1F2A] font-semibold block">Environmental Footprint:</span>
-                          <span className="text-[#5B6B73]">Up to 90% water reinjection preserves delicate Andean salar water balances while accelerating cycle times.</span>
+                          <span className="font-heading font-bold text-xs text-[#0B1F2A] block leading-tight">
+                            Hydrological Preservation
+                          </span>
+                          <span className="text-[11px] text-[#5B6B73] block leading-snug mt-0.5">
+                            Spent brine is reinjected back to preserve delicate Andean salar water balances while accelerating cycle times.
+                          </span>
                         </div>
                       </div>
                     </div>
