@@ -10,10 +10,10 @@ import { KineticHeading } from '@/components/ui/KineticHeading';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { cn } from '@/lib/utils';
 import { type, tone } from '@/lib/typography';
-import { newsArticles as initialNewsArticles } from '@/data/news';
+import { newsArticles as initialNewsArticles, getNewsItemTimestamp } from '@/data/news';
 import { NewsItem } from '@/types';
 import { getNewsArticles, subscribeNewsletter } from '@/lib/api';
-import { ArrowRight, Search, Newspaper, Mail, CheckCircle2, Calendar } from 'lucide-react';
+import { ArrowRight, Search, Newspaper, Mail, CheckCircle2, Calendar, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const CATEGORIES = [
   'All News',
@@ -26,11 +26,14 @@ const CATEGORIES = [
 const cardHover =
   'transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_-4px_rgba(11,31,42,0.08)] hover:border-[#1F6F78]/40';
 
+const ITEMS_PER_PAGE = 9;
+
 export default function NewsPage() {
   const [articles, setArticles] = useState<NewsItem[]>(initialNewsArticles);
   const [selectedCategory, setSelectedCategory] = useState<string>('All News');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [featuredIndex, setFeaturedIndex] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [emailInput, setEmailInput] = useState<string>('');
   const [subscribed, setSubscribed] = useState<boolean>(false);
 
@@ -47,9 +50,19 @@ export default function NewsPage() {
     };
   }, []);
 
+  // Guarantee strictly date-descending sorted master list
+  const sortedArticles = useMemo(() => {
+    return [...articles].sort((a, b) => getNewsItemTimestamp(b) - getNewsItemTimestamp(a));
+  }, [articles]);
+
+  // Reset pagination to first page whenever filter or search query updates
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchQuery]);
+
   // Filter articles based on category and search query
   const filteredArticles = useMemo(() => {
-    return articles.filter((article) => {
+    return sortedArticles.filter((article) => {
       const matchesCategory =
         selectedCategory === 'All News' ||
         article.category.toLowerCase().includes(selectedCategory.toLowerCase()) ||
@@ -62,14 +75,21 @@ export default function NewsPage() {
 
       return matchesCategory && matchesSearch;
     });
-  }, [articles, selectedCategory, searchQuery]);
+  }, [sortedArticles, selectedCategory, searchQuery]);
 
-  // Featured news candidates
+  // Paginated articles for the archive grid
+  const totalPages = Math.max(1, Math.ceil(filteredArticles.length / ITEMS_PER_PAGE));
+  const paginatedArticles = useMemo(() => {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredArticles.slice(start, start + ITEMS_PER_PAGE);
+  }, [filteredArticles, currentPage]);
+
+  // Featured news candidates (strictly latest 3 articles)
   const featuredArticles = useMemo(() => {
-    return articles.slice(0, 3);
-  }, [articles]);
+    return sortedArticles.slice(0, 3);
+  }, [sortedArticles]);
 
-  const currentFeatured = featuredArticles[featuredIndex] || articles[0];
+  const currentFeatured = featuredArticles[featuredIndex] || sortedArticles[0];
 
   const handleNextFeatured = () => {
     setFeaturedIndex((prev) => (prev + 1) % featuredArticles.length);
@@ -94,14 +114,20 @@ export default function NewsPage() {
     }
   };
 
-  // Recent news (excluding featured)
-  const recentNews = articles.slice(1, 4);
+  // Recent news (excluding featured #0; strictly chronological items 1 to 3)
+  const recentNews = useMemo(() => {
+    return sortedArticles.slice(1, 4);
+  }, [sortedArticles]);
 
-  // Latest announcements (for right dark card)
-  const announcements = articles.slice(0, 4);
+  // Latest announcements (for right dark card: top 4 newest)
+  const announcements = useMemo(() => {
+    return sortedArticles.slice(0, 4);
+  }, [sortedArticles]);
 
   // Industry insights
-  const insights = articles.filter((a) => a.category === 'Industry Insights').slice(0, 2);
+  const insights = useMemo(() => {
+    return sortedArticles.filter((a) => a.category === 'Industry Insights').slice(0, 2);
+  }, [sortedArticles]);
 
   return (
     <div className="relative bg-[#F5F6F1] text-[#0B1F2A] overflow-hidden min-h-screen">
@@ -289,7 +315,7 @@ export default function NewsPage() {
             <div className="lg:col-span-5 flex flex-col justify-center min-w-0">
               <Eyebrow>{currentFeatured.date}</Eyebrow>
 
-              <h2 className={cn(type.h2Compact, tone.headingLight, 'mb-4')}>
+              <h2 className={cn(type.h2Compact, tone.headingLight, 'mb-4 break-words [overflow-wrap:anywhere]')}>
                 <Link
                   href={`/news/${currentFeatured.slug}`}
                   className="hover:text-[#1F6F78] transition-colors"
@@ -298,7 +324,7 @@ export default function NewsPage() {
                 </Link>
               </h2>
 
-              <p className={cn(type.lead, tone.mutedLight, 'mb-8')}>
+              <p className={cn(type.lead, tone.mutedLight, 'mb-8 break-words [overflow-wrap:anywhere]')}>
                 {currentFeatured.excerpt}
               </p>
 
@@ -379,11 +405,11 @@ export default function NewsPage() {
                           </span>
                         </div>
 
-                        <h3 className={cn(type.h4, tone.headingLight, 'mb-3 line-clamp-3 group-hover:text-[#1F6F78] transition-colors')}>
+                        <h3 className={cn(type.h4, tone.headingLight, 'mb-3 line-clamp-3 group-hover:text-[#1F6F78] transition-colors break-words [overflow-wrap:anywhere]')}>
                           <Link href={`/news/${article.slug}`}>{article.title}</Link>
                         </h3>
 
-                        <p className="text-sm text-[#5B6B73] leading-relaxed line-clamp-3 mb-6">
+                        <p className="text-sm text-[#5B6B73] leading-relaxed line-clamp-3 mb-6 break-words [overflow-wrap:anywhere]">
                           {article.excerpt}
                         </p>
 
@@ -449,6 +475,216 @@ export default function NewsPage() {
       </section>
 
       {/* =========================================================
+          4.5 ALL NEWS & PRESS RELEASES (Strictly Date-Ordered Archive)
+         ========================================================= */}
+      <section id="all-news" className="section-y bg-[#F5F6F1] scroll-mt-20 border-t border-[#DDE3E3]/70">
+        <Container>
+          {/* Section Header */}
+          <div className="mb-10 sm:mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <Eyebrow>OFFICIAL ARCHIVE</Eyebrow>
+              <KineticHeading
+                as="h2"
+                text="All News & Releases"
+                className={cn(type.h2, tone.headingLight)}
+              />
+              <p className="text-sm text-[#5B6B73] mt-2">
+                Showing {filteredArticles.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1}–{Math.min(currentPage * ITEMS_PER_PAGE, filteredArticles.length)} of {filteredArticles.length} {filteredArticles.length === 1 ? 'release' : 'releases'}
+                {selectedCategory !== 'All News' && (
+                  <span className="ml-1.5 font-medium text-[#1F6F78]">in &ldquo;{selectedCategory}&rdquo;</span>
+                )}
+                {searchQuery.trim() !== '' && (
+                  <span className="ml-1.5 font-medium text-[#1F6F78]">matching &ldquo;{searchQuery}&rdquo;</span>
+                )}
+              </p>
+            </div>
+
+            {/* Clear Filters Reset Pill */}
+            {(selectedCategory !== 'All News' || searchQuery.trim() !== '') && (
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedCategory('All News');
+                  setSearchQuery('');
+                }}
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-[#DDE3E3] text-xs font-heading font-semibold text-[#5B6B73] hover:text-[#0B1F2A] hover:border-[#0B1F2A] transition-colors shadow-sm self-start md:self-auto"
+              >
+                <X className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Reset filters</span>
+              </button>
+            )}
+          </div>
+
+          {/* Grid or Empty State */}
+          {paginatedArticles.length === 0 ? (
+            <div className="bg-white rounded-[20px] border border-[#DDE3E3] p-12 text-center max-w-xl mx-auto shadow-sm">
+              <Newspaper className="w-12 h-12 text-[#5B6B73]/50 mx-auto mb-4" aria-hidden="true" />
+              <h3 className="text-xl font-bold font-heading text-[#0B1F2A] mb-2">No announcements found</h3>
+              <p className="text-sm text-[#5B6B73] mb-6">
+                No articles matched your selected criteria. Try adjusting your keyword or clearing the active category filter.
+              </p>
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => {
+                  setSelectedCategory('All News');
+                  setSearchQuery('');
+                }}
+              >
+                Clear all filters
+              </Button>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                {paginatedArticles.map((article) => (
+                  <div key={article.id} className="h-full min-w-0">
+                    <article
+                      className={cn(
+                        'group flex flex-col h-full bg-white rounded-[16px] border border-[#DDE3E3] overflow-hidden',
+                        cardHover
+                      )}
+                    >
+                      <div className="relative overflow-hidden aspect-[16/10] bg-[#07161F]">
+                        <Image
+                          src={article.image || '/images/about-hero-taranaki.jpg'}
+                          alt={article.title}
+                          fill
+                          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                        />
+                        <div className="absolute top-3 left-3">
+                          <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-[#07161F]/85 backdrop-blur-md text-[10px] font-heading font-semibold text-[#B7E34A] border border-white/10 uppercase tracking-wider">
+                            {article.category}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="p-6 flex flex-col flex-1">
+                        <div className="flex items-center gap-1.5 text-xs text-[#5B6B73] mb-2.5 font-medium">
+                          <Calendar className="w-3.5 h-3.5 text-[#1F6F78]" aria-hidden="true" />
+                          <span>{article.date}</span>
+                        </div>
+
+                        <h3 className={cn(type.h4, tone.headingLight, 'mb-3 line-clamp-2 group-hover:text-[#1F6F78] transition-colors break-words [overflow-wrap:anywhere]')}>
+                          <Link href={`/news/${article.slug}`}>{article.title}</Link>
+                        </h3>
+
+                        <p className="text-sm text-[#5B6B73] leading-relaxed line-clamp-3 mb-6 break-words [overflow-wrap:anywhere]">
+                          {article.excerpt}
+                        </p>
+
+                        <div className="mt-auto pt-3 border-t border-[#DDE3E3]/60 flex items-center justify-between">
+                          <Link
+                            href={`/news/${article.slug}`}
+                            className="text-link text-sm font-semibold inline-flex items-center gap-1 text-[#1F6F78] group-hover:text-[#0B1F2A]"
+                          >
+                            <span>Read release</span>
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                          </Link>
+                          {article.pdfUrl && (
+                            <a
+                              href={article.pdfUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs text-[#5B6B73] hover:text-[#0B1F2A] font-semibold underline"
+                            >
+                              PDF
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                ))}
+              </div>
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="mt-12 sm:mt-16 flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-[#DDE3E3]">
+                  <p className="text-xs text-[#5B6B73] order-2 sm:order-1">
+                    Page <span className="font-semibold text-[#0B1F2A]">{currentPage}</span> of{' '}
+                    <span className="font-semibold text-[#0B1F2A]">{totalPages}</span>
+                  </p>
+
+                  <div className="flex items-center gap-2 order-1 sm:order-2">
+                    <button
+                      type="button"
+                      disabled={currentPage <= 1}
+                      onClick={() => {
+                        setCurrentPage((p) => Math.max(1, p - 1));
+                        const el = document.getElementById('all-news');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className={cn(
+                        'min-h-[44px] px-4 rounded-full border text-xs font-heading font-semibold inline-flex items-center gap-1.5 transition-colors',
+                        currentPage <= 1
+                          ? 'bg-transparent border-[#DDE3E3] text-[#5B6B73]/40 cursor-not-allowed'
+                          : 'bg-white border-[#DDE3E3] text-[#0B1F2A] hover:border-[#0B1F2A] shadow-sm'
+                      )}
+                    >
+                      <ChevronLeft className="w-4 h-4" aria-hidden="true" />
+                      <span>Previous</span>
+                    </button>
+
+                    {/* Page Numbers */}
+                    <div className="hidden sm:flex items-center gap-1">
+                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                        let pageNum = i + 1;
+                        if (totalPages > 5 && currentPage > 3) {
+                          pageNum = currentPage - 2 + i;
+                          if (pageNum > totalPages) pageNum = totalPages - (4 - i);
+                        }
+                        const isCurrent = pageNum === currentPage;
+                        return (
+                          <button
+                            key={pageNum}
+                            type="button"
+                            onClick={() => {
+                              setCurrentPage(pageNum);
+                              const el = document.getElementById('all-news');
+                              if (el) el.scrollIntoView({ behavior: 'smooth' });
+                            }}
+                            className={cn(
+                              'w-10 h-10 rounded-full text-xs font-heading font-semibold transition-colors',
+                              isCurrent
+                                ? 'bg-[#0B1F2A] text-white shadow-sm'
+                                : 'bg-white border border-[#DDE3E3] text-[#5B6B73] hover:text-[#0B1F2A] hover:border-[#0B1F2A]'
+                            )}
+                          >
+                            {pageNum}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <button
+                      type="button"
+                      disabled={currentPage >= totalPages}
+                      onClick={() => {
+                        setCurrentPage((p) => Math.min(totalPages, p + 1));
+                        const el = document.getElementById('all-news');
+                        if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      }}
+                      className={cn(
+                        'min-h-[44px] px-4 rounded-full border text-xs font-heading font-semibold inline-flex items-center gap-1.5 transition-colors',
+                        currentPage >= totalPages
+                          ? 'bg-transparent border-[#DDE3E3] text-[#5B6B73]/40 cursor-not-allowed'
+                          : 'bg-white border-[#DDE3E3] text-[#0B1F2A] hover:border-[#0B1F2A] shadow-sm'
+                      )}
+                    >
+                      <span>Next</span>
+                      <ChevronRight className="w-4 h-4" aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </Container>
+      </section>
+
+      {/* =========================================================
           5. INSIGHTS & PERSPECTIVES
          ========================================================= */}
       <section className="section-y">
@@ -502,7 +738,7 @@ export default function NewsPage() {
                         <span className="text-[11px] uppercase font-heading font-semibold text-[#1F6F78] tracking-wider mb-1.5 block">
                           INDUSTRY INSIGHTS
                         </span>
-                        <h3 className={cn(type.h4, tone.headingLight, 'mb-2 line-clamp-2 group-hover:text-[#1F6F78] transition-colors')}>
+                        <h3 className={cn(type.h4, tone.headingLight, 'mb-2 line-clamp-2 group-hover:text-[#1F6F78] transition-colors break-words [overflow-wrap:anywhere]')}>
                           <Link href={`/news/${article.slug}`}>{article.title}</Link>
                         </h3>
                         <Link

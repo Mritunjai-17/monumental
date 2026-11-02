@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
+import { CookieConsentBanner } from '@/components/layout/CookieConsentBanner';
 import { RevealObserver } from '@/components/layout/RevealObserver';
 import { ScrollProgress } from '@/components/layout/ScrollProgress';
 import { ParallaxController } from '@/components/layout/ParallaxController';
@@ -46,6 +47,7 @@ export default function RootLayout({
         <Header />
         <main className="flex-grow">{children}</main>
         <Footer />
+        <CookieConsentBanner />
         <RevealObserver />
         <ParallaxController />
         <script dangerouslySetInnerHTML={{ __html: heroLineIndexScript }} />

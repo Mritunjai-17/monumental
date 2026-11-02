@@ -1,6 +1,7 @@
 import { NewsItem } from '@/types';
 import {
   newsArticles as fallbackNewsArticles,
+  getNewsItemTimestamp,
 } from '@/data/news';
 import {
   marketQuoteData as fallbackMarketQuote,
@@ -46,22 +47,24 @@ export function normalizeNewsItem(raw: any): NewsItem {
   let contentParagraphs: string[] = [];
 
   if (Array.isArray(raw.content)) {
-    contentParagraphs = raw.content.map(String);
+    contentParagraphs = raw.content.map(String).filter((s: string) => s.trim().length > 0);
   } else if (typeof raw.content === 'string') {
     const rawContent = raw.content.trim();
     if (rawContent.includes('<p') || rawContent.includes('<div') || rawContent.includes('<br')) {
       contentParagraphs = rawContent
         .replace(/<\/p>/gi, '\n\n')
+        .replace(/<\/div>/gi, '\n\n')
         .replace(/<br\s*[\/]?>/gi, '\n')
-        .replace(/<[^>]+>/g, '')
-        .split('\n\n')
+        .split(/\n{2,}/)
         .map((p: string) => p.trim())
         .filter(Boolean);
     } else {
-      contentParagraphs = rawContent
-        .split(/\n\s*\n/)
-        .map((p: string) => p.trim())
-        .filter(Boolean);
+      const normalized = rawContent.replace(/\r\n/g, '\n');
+      let paragraphs = normalized.split(/\n{2,}/).map((p: string) => p.trim()).filter(Boolean);
+      if (paragraphs.length <= 1 && normalized.includes('\n')) {
+        paragraphs = normalized.split(/\n+/).map((p: string) => p.trim()).filter(Boolean);
+      }
+      contentParagraphs = paragraphs;
     }
   }
 
@@ -74,6 +77,8 @@ export function normalizeNewsItem(raw: any): NewsItem {
     slug: raw.slug,
     title: raw.title,
     date: raw.date || (raw.publishedAt ? new Date(raw.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'October 2026'),
+    publishedAt: raw.publishedAt ? new Date(raw.publishedAt).toISOString() : undefined,
+    createdAt: raw.createdAt ? new Date(raw.createdAt).toISOString() : undefined,
     category: raw.category || 'Press Releases',
     excerpt: raw.excerpt || '',
     content: contentParagraphs,
@@ -89,6 +94,7 @@ export function normalizeNewsItem(raw: any): NewsItem {
 
 /**
  * Fetches published news articles with graceful static fallback.
+ * Strictly guarantees latest-first chronological ordering.
  */
 export async function getNewsArticles(category?: string): Promise<NewsItem[]> {
   try {
@@ -107,21 +113,25 @@ export async function getNewsArticles(category?: string): Promise<NewsItem[]> {
     const articles = json.data || json;
 
     if (Array.isArray(articles) && articles.length > 0) {
-      return articles.map(normalizeNewsItem);
+      return articles
+        .map(normalizeNewsItem)
+        .sort((a, b) => getNewsItemTimestamp(b) - getNewsItemTimestamp(a));
     }
   } catch (err) {
     console.warn('[API Client] Backend news unavailable, using verified local fallback data.', err);
   }
 
-  // Graceful fallback
+  // Graceful fallback with strict latest-first date sorting
   if (category && category !== 'All News') {
-    return fallbackNewsArticles.filter(
-      (a) =>
-        a.category.toLowerCase().includes(category.toLowerCase()) ||
-        Boolean(a.releaseType?.toLowerCase().includes(category.toLowerCase()))
-    );
+    return fallbackNewsArticles
+      .filter(
+        (a) =>
+          a.category.toLowerCase().includes(category.toLowerCase()) ||
+          Boolean(a.releaseType?.toLowerCase().includes(category.toLowerCase()))
+      )
+      .sort((a, b) => getNewsItemTimestamp(b) - getNewsItemTimestamp(a));
   }
-  return fallbackNewsArticles;
+  return [...fallbackNewsArticles].sort((a, b) => getNewsItemTimestamp(b) - getNewsItemTimestamp(a));
 }
 
 /**

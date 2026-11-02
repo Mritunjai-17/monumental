@@ -6,6 +6,28 @@ const nextConfig = {
   optimizeFonts: false,
   images: {
     formats: ['image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'monumental.energy',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.monumental.energy',
+      },
+      {
+        protocol: 'https',
+        hostname: 'monumentalbackend.vercel.app',
+      },
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
   },
   // Belt-and-braces noindex for staging: also covers PDFs and images.
   async headers() {

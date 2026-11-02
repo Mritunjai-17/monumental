@@ -6,7 +6,7 @@ import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { NewsThumbnail } from '@/components/ui/NewsThumbnail';
-import { newsArticles as fallbackNewsArticles } from '@/data/news';
+import { newsArticles as fallbackNewsArticles, getNewsItemTimestamp } from '@/data/news';
 import { NewsItem } from '@/types';
 import { getNewsArticles } from '@/lib/api';
 import { ArrowRight, Calendar } from 'lucide-react';
@@ -26,7 +26,8 @@ export const LatestNews: React.FC = () => {
     };
   }, []);
 
-  const recentNews = articles.slice(0, 3);
+  const sortedArticles = [...articles].sort((a, b) => getNewsItemTimestamp(b) - getNewsItemTimestamp(a));
+  const recentNews = sortedArticles.slice(0, 3);
   const hasNews = recentNews.length > 0;
 
   return (
@@ -74,12 +75,12 @@ export const LatestNews: React.FC = () => {
                     </div>
 
                     <div>
-                      <h3 className="text-xl font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.18] mb-3 group-hover:text-[#1F6F78] transition-colors">
+                      <h3 className="text-xl font-bold font-heading text-[#0B1F2A] tracking-[-0.02em] leading-[1.18] mb-3 group-hover:text-[#1F6F78] transition-colors break-words [overflow-wrap:anywhere]">
                         <Link href={`/news/${news.slug}`}>{news.title}</Link>
                       </h3>
                     </div>
 
-                    <p className="text-sm text-[#5B6B73] leading-relaxed line-clamp-3 mb-6">
+                    <p className="text-sm text-[#5B6B73] leading-relaxed line-clamp-3 mb-6 break-words [overflow-wrap:anywhere]">
                       {news.excerpt}
                     </p>
 

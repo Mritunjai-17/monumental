@@ -25,6 +25,8 @@ export interface NewsItem {
   slug: string;
   title: string;
   date: string;
+  publishedAt?: string;
+  createdAt?: string;
   category: string;
   excerpt: string;
   content: string[];

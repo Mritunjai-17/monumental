@@ -1,251 +1,78 @@
 import { NewsItem } from '@/types';
+import rawNewsData from './monumental-news.json';
+
+function parseRawNews(raw: any): NewsItem {
+  let contentArr: string[] = [];
+  if (Array.isArray(raw.content)) {
+    contentArr = raw.content;
+  } else if (typeof raw.content === 'string') {
+    const rawContent = raw.content.trim();
+    if (rawContent.includes('<p') || rawContent.includes('<div') || rawContent.includes('<br')) {
+      contentArr = rawContent
+        .replace(/<\/p>/gi, '\n\n')
+        .replace(/<\/div>/gi, '\n\n')
+        .replace(/<br\s*[\/]?>/gi, '\n')
+        .split(/\n{2,}/)
+        .map((p: string) => p.trim())
+        .filter(Boolean);
+    } else {
+      const normalized = rawContent.replace(/\r\n/g, '\n');
+      let paragraphs = normalized.split(/\n{2,}/).map((p: string) => p.trim()).filter(Boolean);
+      if (paragraphs.length <= 1 && normalized.includes('\n')) {
+        paragraphs = normalized.split(/\n+/).map((p: string) => p.trim()).filter(Boolean);
+      }
+      contentArr = paragraphs;
+    }
+  }
+
+  if (contentArr.length === 0 && raw.excerpt) {
+    contentArr = [raw.excerpt];
+  }
+
+  return {
+    id: raw.id || `news-${raw.slug}`,
+    slug: raw.slug,
+    title: raw.title,
+    date: raw.date,
+    publishedAt: raw.publishedAt || (raw.date ? new Date(raw.date).toISOString() : undefined),
+    createdAt: raw.createdAt,
+    category: raw.category || 'Press Releases',
+    excerpt: raw.excerpt,
+    content: contentArr,
+    readTime: raw.readTime || '3 min read',
+    image: raw.image || '/images/about-hero-taranaki.jpg',
+    verified: raw.verified ?? true,
+    releaseType: raw.releaseType || 'Official Press Release',
+    source: raw.source || 'TSX-V / Newsfile Distribution',
+    sourceUrl: raw.sourceUrl || 'https://www.sedarplus.ca',
+    pdfUrl: raw.pdfUrl || '',
+  };
+}
 
 /**
- * Verified company announcements, regulatory notices, and strategic briefings
- * for Monumental Energy Corp. (TSX-V: MNRG).
+ * Robust timestamp calculator for sorting news items strictly by date descending.
  */
-export const newsArticles: NewsItem[] = [
-  {
-    id: 'news-maata',
-    slug: 'monumental-energy-to-partner-on-maata-oil-field-taranaki',
-    title: 'Monumental Energy to Partner on the Maata Oil Field in Taranaki Region',
-    date: 'October 14, 2026',
-    category: 'Press Releases',
-    image: '/images/about-hero-taranaki.jpg',
-    excerpt:
-      'Partnership secures strategic participation on the onshore Maata oil field in the Taranaki region in close proximity to two major regional production stations.',
-    content: [
-      'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) is pleased to announce a strategic partnership agreement to participate in the commercial development of the onshore Maata oil field, located in the prolific Taranaki Basin of New Zealand.',
-      'The Maata permit acreage sits in close proximity to two major regional production facilities, offering an immediate pathway for rapid pipeline tie-in and processing without extensive surface facility construction.',
-      '"The Maata oil field partnership aligns with our disciplined strategy of focusing on low-capex, infrastructure-connected production opportunities in New Zealand," stated Maximilian Sali, CEO. Technical logging and reservoir evaluations are underway.',
-    ],
-    readTime: '3 min read',
-    verified: true,
-    releaseType: 'Official Press Release',
-    source: 'TSX-V / Newsfile Distribution',
-    sourceUrl: 'https://www.sedarplus.ca',
-  },
-  {
-    id: 'news-mauku',
-    slug: 'monumental-energy-discusses-onshore-mauku-block-target',
-    title: 'Monumental Energy Outlines Onshore Mauku Block Target in Tirua Point Acreage',
-    date: 'September 29, 2026',
-    category: 'Press Releases',
-    image: '/images/project-new-zealand.jpg',
-    excerpt:
-      'Technical assessment confirms multi-zone hydrocarbon prospectivity across the onshore Mauku Block structure inside the Tirua Point permit area.',
-    content: [
-      'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) provides a technical briefing regarding the onshore Mauku Block target located within the newly acquired Tirua Point application acreage.',
-      'Comprehensive reprocessing of regional seismic data and historical well logs indicates strong structural trapping and prospective reservoir horizons within proven hydrocarbon-bearing sandstone formations.',
-      'Work programs are being formulated to prioritize potential drilling and recompletion locations, capitalizing on existing transportation corridors across Taranaki.',
-    ],
-    readTime: '4 min read',
-    verified: true,
-    releaseType: 'Official Press Release',
-    source: 'TSX-V / Newsfile Distribution',
-    sourceUrl: 'https://www.sedarplus.ca',
-  },
-  {
-    id: 'news-tirua',
-    slug: 'monumental-energy-announces-accepted-bid-tirua-point',
-    title: 'Monumental Energy Announces Accepted Bid for the Tirua Point Application Area',
-    date: 'August 18, 2026',
-    category: 'Press Releases',
-    image: '/images/taranaki-panoramic-coast.jpg',
-    excerpt:
-      'New Zealand petroleum regulators accept joint bid for the highly prospective Tirua Point permit acreage in the northern Taranaki Basin.',
-    content: [
-      'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) announces that its joint application bid for the Tirua Point acreage has been accepted by New Zealand petroleum regulatory authorities.',
-      'The Tirua Point permit area encompasses substantial onshore prospective acreage with identified structural leads adjacent to historic discoveries.',
-      'This successful bid expands Monumental’s footprint in New Zealand’s primary hydrocarbon basin, complementing existing joint-venture holdings at Waihapa.',
-    ],
-    readTime: '3 min read',
-    verified: true,
-    releaseType: 'Official Press Release',
-    source: 'TSX-V / Newsfile Distribution',
-    sourceUrl: 'https://www.sedarplus.ca',
-  },
-  {
-    id: 'news-chemicals',
-    slug: 'proprietary-chemical-development-increased-oil-flow-stability',
-    title: 'Successful Proprietary Chemical Development for Increased Oil Production and Flow Stability',
-    date: 'June 25, 2026',
-    category: 'Corporate Updates',
-    image: '/images/about-hero-taranaki.jpg',
-    excerpt:
-      'Proprietary chemical treatment formulation achieves measurable flow stability and enhanced oil recovery in Taranaki Basin wells.',
-    content: [
-      'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) announces the successful formulation and field application of a proprietary chemical treatment designed to stabilize wellhead flow rates and mitigate wax deposition in Taranaki crude.',
-      'Field trials conducted in joint-venture wells demonstrated improved flow regimes and sustained production rates without requiring continuous mechanical interventions.',
-      'The proprietary chemical process will be deployed across future well workovers to maximize recovery efficiency and minimize operating expenditures.',
-    ],
-    readTime: '3 min read',
-    verified: true,
-    releaseType: 'Corporate Update',
-    source: 'Management Release',
-    sourceUrl: 'https://www.sedarplus.ca',
-  },
-  {
-    id: 'news-flush-flow',
-    slug: 'monumental-reports-initial-flush-production-waihapa-h1',
-    title: 'Initial Flush Production of 3,000 Barrels and Stable Unstimulated Flow Rate of 568 bbl/d at Waihapa H1',
-    date: 'March 19, 2026',
-    category: 'Press Releases',
-    image: '/images/project-new-zealand.jpg',
-    excerpt:
-      'Waihapa H1 well achieves 3,000 barrels of initial flush production with a stable unstimulated flow rate of 568 barrels per day directly tied to processing infrastructure.',
-    content: [
-      'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) reports that production testing at the Waihapa H1 well has achieved 3,000 barrels of cumulative flush production, establishing a stable unstimulated flow rate of 568 barrels per day.',
-      'Hydrocarbons produced from the well are routed directly to the Waihapa Production Station (TAWN facility) via connected flowlines, confirming immediate commercial monetization capability.',
-      'Downhole pressure diagnostics confirm excellent reservoir permeability and energy in the target formation. Joint-venture teams are now evaluating additional uphole recompletions across the field.',
-    ],
-    readTime: '4 min read',
-    verified: true,
-    releaseType: 'Official Press Release',
-    source: 'TSX-V / Newsfile Distribution',
-    sourceUrl: 'https://www.sedarplus.ca',
-  },
-  {
-    id: 'news-commercial-prod',
-    slug: 'monumental-announces-commercial-production-waihapa-h1',
-    title: 'Monumental Energy Announces Commercial Hydrocarbon Production at Waihapa H1',
-    date: 'March 16, 2026',
-    category: 'Press Releases',
-    image: '/images/about-hero-taranaki.jpg',
-    excerpt:
-      'Commercial oil and gas production officially commences from the Waihapa H1 well following successful perforation and wellhead tie-in.',
-    content: [
-      'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) is pleased to confirm that commercial hydrocarbon production has officially commenced at the Waihapa H1 well in the Taranaki Basin.',
-      'Well perforations and initial cleanup operations were executed safely without incident, and crude oil sales into the Waihapa gathering system have commenced.',
-      'This milestone marks the transition into operational cash generation from the company’s joint-venture infrastructure investment in New Zealand.',
-    ],
-    readTime: '3 min read',
-    verified: true,
-    releaseType: 'Official Press Release',
-    source: 'TSX-V / Regulatory Notice',
-    sourceUrl: 'https://www.sedarplus.ca',
-  },
-  {
-    id: 'news-1',
-    slug: 'monumental-advances-taranaki-workover-program',
-    title: 'Monumental Energy Advances Its New Zealand Portfolio',
-    date: 'February 12, 2026',
-    category: 'Press Releases',
-    image: '/images/about-hero-taranaki.jpg',
-    excerpt:
-      'Monumental Energy and NZEC advance Phase 1 recompletion program in Taranaki Basin, with field crews mobilized to initiate pressure testing and workovers.',
-    content: [
-      'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) is pleased to announce progress on its investment and joint-venture partnership with New Zealand Energy Corp. (NZEC) in the Taranaki Basin.',
-      'Technical engineering teams have mobilized field crews to initiate pressure testing, diagnostic logging, and targeted recompletion workovers across prioritized uphole zones.',
-      'The initial campaign prioritizes low-risk recompletions targeting near-term production that leverage existing processing infrastructure and connected pipeline capacity in Taranaki.',
-      '"This workover program reflects our low-capex approach to commercializing proven conventional hydrocarbon resources in New Zealand," stated corporate leadership. Further production data will be published upon test completion.',
-    ],
-    readTime: '3 min read',
-    verified: true,
-    releaseType: 'Official Press Release',
-    source: 'TSX-V / Newsfile Distribution',
-    sourceUrl: 'https://www.sedarplus.ca',
-  },
-  {
-    id: 'news-2',
-    slug: 'strategic-update-salar-de-turi-royalty',
-    title: 'Strategic Update on 2% NSR Royalty at Salar de Turi',
-    date: 'January 28, 2026',
-    category: 'Corporate Updates',
-    image: '/images/project-salar-de-turi.jpg',
-    excerpt:
-      'Monumental Energy outlines the strategic value of its 2% NSR royalty at Salar de Turi, located in Chile’s Lithium Triangle.',
-    content: [
-      'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) has issued a corporate update outlining the long-term strategic leverage of its 2.0% Net Smelter Return (NSR) royalty on the Salar de Turi lithium project in Antofagasta, Chile.',
-      'Covering 8,500 hectares of claims situated in the world-renowned Lithium Triangle, the asset benefits from existing road infrastructure, nearby high-voltage transmission lines, and high-purity brine potential.',
-      'Under the option agreement with Summit Nanotech, Monumental holds zero ongoing exploration liability or capex calls while maintaining direct participation in future commercial extraction milestones.',
-      'Monumental continues to track ongoing technical evaluations and regional lithium sector developments across northern Chile.',
-    ],
-    readTime: '4 min read',
-    verified: true,
-    releaseType: 'Corporate Update',
-    source: 'Management Release',
-    sourceUrl: 'https://www.sedarplus.ca',
-  },
-  {
-    id: 'news-3',
-    slug: 'q4-corporate-presentation-released',
-    title: 'Monumental Energy Releases Updated 2026 Corporate Investor Presentation',
-    date: 'January 14, 2026',
-    category: 'Investor Relations',
-    image: '/images/news-investor-deck.jpg',
-    excerpt:
-      'Updated deck articulates the dual-pillar strategy: near-term conventional energy production combined with critical minerals royalty exposure.',
-    content: [
-      'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) announces the publication of its updated 2026 Corporate Investor Presentation, now accessible for download on the company’s investor portal.',
-      'The presentation details the company’s dual-pillar investment model: low-capex oil and gas recompletions in New Zealand alongside high-upside critical minerals royalty participation in Chile.',
-      'Key slides cover joint-venture asset economics, concession maps, capital structure, and projected catalysts across the 2026 operating year.',
-      'Institutional and retail investors may review the deck online or schedule briefings with the executive team.',
-    ],
-    readTime: '2 min read',
-    verified: true,
-    releaseType: 'Investor Relations',
-    source: 'Management Presentation',
-    sourceUrl: '/investors/presentation',
-  },
-  {
-    id: 'news-4',
-    slug: 'field-program-progress-taranaki-basin',
-    title: 'Field Program Progress at Taranaki Basin',
-    date: 'December 10, 2025',
-    category: 'Press Releases',
-    image: '/images/project-new-zealand.jpg',
-    excerpt:
-      'Field crews continue to advance planned work programmes, targeting near-term production opportunities.',
-    content: [
-      'VANCOUVER, BC — Monumental Energy Corp. (TSX-V: MNRG) reports steady progress on field operations and facility integrity testing throughout the Taranaki Basin permit areas.',
-      'Routine diagnostic inspections and downhole pressure surveys have confirmed reservoir integrity across candidate recompletion intervals.',
-      'Planning for upcoming workover phases remains on schedule, adhering to strict environmental, safety, and regulatory guidelines enforced by New Zealand Petroleum & Minerals (NZP&M).',
-    ],
-    readTime: '3 min read',
-    verified: true,
-    releaseType: 'Official Press Release',
-    source: 'TSX-V / Regulatory Notice',
-    sourceUrl: 'https://www.sedarplus.ca',
-  },
-  {
-    id: 'news-5',
-    slug: 'role-of-critical-minerals-in-energy-transition',
-    title: 'The Role of Critical Minerals in the Energy Transition',
-    date: 'December 02, 2025',
-    category: 'Industry Insights',
-    image: '/images/news-lithium-survey.jpg',
-    excerpt:
-      'An analysis of global lithium demand, brine extraction economics, and the geopolitical significance of the South American Lithium Triangle.',
-    content: [
-      'As electric vehicle adoption expands and grid-scale battery storage capacity scales worldwide, lithium has solidified its position as an indispensable energy transition commodity.',
-      'South America’s Lithium Triangle—spanning Chile, Argentina, and Bolivia—hosts more than half of the planet’s known brine resources, which offer substantial operating cost advantages over hard-rock spodumene mining.',
-      'Monumental Energy’s 2% NSR royalty on 8,500 hectares at Salar de Turi provides unhedged upside to long-term lithium pricing without capital call exposure.',
-    ],
-    readTime: '5 min read',
-    verified: true,
-    releaseType: 'Industry Insight',
-    source: 'Market Perspectives',
-    sourceUrl: '/news',
-  },
-  {
-    id: 'news-6',
-    slug: 'new-zealands-energy-outlook-opportunities-and-challenges',
-    title: "New Zealand's Energy Outlook: Opportunities and Challenges",
-    date: 'November 22, 2025',
-    category: 'Industry Insights',
-    image: '/images/taranaki-panoramic-coast.jpg',
-    excerpt:
-      'Exploring domestic gas supply dynamics in New Zealand and the vital role of low-capex recompletion campaigns.',
-    content: [
-      'New Zealand’s industrial and manufacturing economy continues to rely on dependable domestic natural gas and oil supplies from the Taranaki Basin.',
-      'Recent policy shifts favoring energy security and infrastructure utilization have created favorable operating conditions for prudent operators targeting existing drilled wellbores.',
-      'By prioritizing low-risk workovers and tie-ins to established processing infrastructure, joint ventures can rapidly deliver hydrocarbons to domestic markets with minimal environmental footprint.',
-    ],
-    readTime: '4 min read',
-    verified: true,
-    releaseType: 'Industry Insight',
-    source: 'Market Perspectives',
-    sourceUrl: '/news',
-  },
-];
+export function getNewsItemTimestamp(item: Partial<NewsItem> | any): number {
+  if (!item) return 0;
+  if (item.publishedAt) {
+    const t = new Date(item.publishedAt).getTime();
+    if (!isNaN(t) && t > 0) return t;
+  }
+  if (item.date) {
+    const t = new Date(item.date).getTime();
+    if (!isNaN(t) && t > 0) return t;
+  }
+  if (item.createdAt) {
+    const t = new Date(item.createdAt).getTime();
+    if (!isNaN(t) && t > 0) return t;
+  }
+  return 0;
+}
+
+/**
+ * 125 Verified company announcements, regulatory filings, and press releases
+ * for Monumental Energy Corp. (TSX-V: MNRG), strictly sorted newest first.
+ */
+export const newsArticles: NewsItem[] = (rawNewsData as any[])
+  .map(parseRawNews)
+  .sort((a, b) => getNewsItemTimestamp(b) - getNewsItemTimestamp(a));
