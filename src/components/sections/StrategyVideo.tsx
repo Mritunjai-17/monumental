@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { KineticHeading } from '@/components/ui/KineticHeading';
-import { Play, Pause, CheckCircle2 } from 'lucide-react';
+import { Play, CheckCircle2, X } from 'lucide-react';
 
 export const StrategyVideo: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -69,22 +69,25 @@ export const StrategyVideo: React.FC = () => {
           <div className="lg:col-span-6" data-reveal="card">
             <div className="relative aspect-video rounded-[16px] overflow-hidden border border-[#1D3B4C] bg-[#07151D] shadow-2xl">
               {isPlaying ? (
-                <div className="relative w-full h-full flex flex-col items-center justify-center bg-[#07151D] p-6 text-center">
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F2A] via-[#123040] to-[#07151D] opacity-95" />
-                  
-                  <p className="relative z-10 font-heading font-semibold text-lg text-white mb-2">
-                    Monumental Energy Corporate Overview
-                  </p>
-                  <p className="relative z-10 text-xs text-[#94A3B8] max-w-sm mb-6">
-                    Corporate presentation video stream
-                  </p>
-
+                <div className="relative w-full h-full bg-black flex items-center justify-center">
+                  <video
+                    src="/videos/Monumental-Video-Small-Size.mp4"
+                    controls
+                    autoPlay
+                    playsInline
+                    poster="/images/video-poster.jpg"
+                    className="w-full h-full object-cover"
+                  >
+                    <source src="/videos/Monumental-Video-Small-Size.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                   <button
                     onClick={() => setIsPlaying(false)}
-                    className="relative z-10 inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#0E2836] border border-[#1D3B4C] text-xs font-semibold text-white hover:text-[#B7E34A] transition-colors"
+                    aria-label="Close Video"
+                    title="Close Video"
+                    className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/70 hover:bg-black text-white/80 hover:text-white flex items-center justify-center transition-colors border border-white/20"
                   >
-                    <Pause className="w-4 h-4 text-[#B7E34A]" />
-                    <span>Pause Video</span>
+                    <X className="w-4 h-4" />
                   </button>
                 </div>
               ) : (
