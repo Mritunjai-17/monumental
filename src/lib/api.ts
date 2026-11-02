@@ -83,7 +83,7 @@ export function normalizeNewsItem(raw: any): NewsItem {
     excerpt: raw.excerpt || '',
     content: contentParagraphs,
     readTime: raw.readTime || '3 min read',
-    image: raw.image || '/images/about-hero-taranaki.jpg',
+    image: '/images/about-hero-taranaki.jpg',
     verified: raw.verified !== undefined ? Boolean(raw.verified) : true,
     releaseType: raw.releaseType || 'Official Press Release',
     source: raw.source || 'TSX-V / Newsfile Distribution',

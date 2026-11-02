@@ -279,7 +279,7 @@ export default function NewsPage() {
               <div className="lg:col-span-7 min-w-0">
                 <div className="group relative rounded-[20px] lg:rounded-[24px] overflow-hidden aspect-[16/10.5] shadow-[0_12px_36px_-6px_rgba(11,31,42,0.14)] bg-[#07161F] border border-[#DDE3E3]/80">
                   <Image
-                    src={currentFeatured.image || '/images/about-hero-taranaki.jpg'}
+                    src="/images/about-hero-taranaki.jpg"
                     alt={currentFeatured.title}
                     fill
                     sizes="(min-width: 1024px) 58vw, 100vw"
@@ -420,7 +420,7 @@ export default function NewsPage() {
                       >
                         <div className="relative overflow-hidden aspect-[16/10] bg-[#07161F]">
                           <Image
-                            src={article.image || '/images/about-hero-taranaki.jpg'}
+                            src="/images/about-hero-taranaki.jpg"
                             alt={article.title}
                             fill
                             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
@@ -607,7 +607,7 @@ export default function NewsPage() {
                     >
                       <div className="relative overflow-hidden aspect-[16/10] bg-[#07161F]">
                         <Image
-                          src={article.image || '/images/about-hero-taranaki.jpg'}
+                          src="/images/about-hero-taranaki.jpg"
                           alt={article.title}
                           fill
                           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"

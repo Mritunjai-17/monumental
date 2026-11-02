@@ -29,27 +29,13 @@ export const NewsThumbnail: React.FC<NewsThumbnailProps> = ({ article, sizes, cl
         className
       )}
     >
-      {article.image ? (
-        <Image
-          src={article.image}
-          alt={article.title}
-          fill
-          sizes={sizes}
-          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-        />
-      ) : (
-        <div className="absolute inset-0 flex flex-col justify-end p-5" aria-hidden="true">
-          <div
-            className="absolute inset-0 opacity-20 transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-            style={{
-              backgroundImage: 'radial-gradient(#FFFFFF 1px, transparent 1px)',
-              backgroundSize: '20px 20px',
-            }}
-          />
-          <Newspaper className="relative w-7 h-7 text-white/70 mb-2" />
-          <span className="relative eyebrow text-white/90 text-xs">{article.category}</span>
-        </div>
-      )}
+      <Image
+        src="/images/about-hero-taranaki.jpg"
+        alt={article.title}
+        fill
+        sizes={sizes}
+        className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+      />
 
       {!article.verified && (
         <div className="absolute top-3 left-3 z-10">
