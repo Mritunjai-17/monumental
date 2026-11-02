@@ -1,15 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React from 'react';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { KineticHeading } from '@/components/ui/KineticHeading';
-import { Play, CheckCircle2, X } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 export const StrategyVideo: React.FC = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-
   return (
     <section className="section-y bg-[#0B1F2A] text-white relative overflow-hidden border-y border-[#1D3B4C]/60">
       {/* Background glow */}
@@ -65,58 +62,22 @@ export const StrategyVideo: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Video Column: Poster Image with Lime Play Button (No fake metadata) */}
+          {/* Right Video Column: Direct video player without static poster image */}
           <div className="lg:col-span-6" data-reveal="card">
-            <div className="relative aspect-video rounded-[16px] overflow-hidden border border-[#1D3B4C] bg-[#07151D] shadow-2xl">
-              {isPlaying ? (
-                <div className="relative w-full h-full bg-black flex items-center justify-center">
-                  <video
-                    src="/videos/Monumental-Video-Small-Size.mp4"
-                    controls
-                    autoPlay
-                    playsInline
-                    poster="/images/video-poster.jpg"
-                    className="w-full h-full object-cover"
-                  >
-                    <source src="/videos/Monumental-Video-Small-Size.mp4" type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-                  <button
-                    onClick={() => setIsPlaying(false)}
-                    aria-label="Close Video"
-                    title="Close Video"
-                    className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-black/70 hover:bg-black text-white/80 hover:text-white flex items-center justify-center transition-colors border border-white/20"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ) : (
-                <div className="relative w-full h-full flex items-center justify-center bg-[#07151D]">
-                  {/* 16:9 poster photo slot (lazy-loaded) */}
-                  <Image
-                    src="/images/video-poster.jpg"
-                    alt="Monumental Energy corporate strategy video poster"
-                    fill
-                    sizes="(min-width: 1024px) 560px, 100vw"
-                    className="object-cover object-center"
-                  />
-                  <div className="absolute inset-0 bg-[#0B1F2A]/40" />
-
-                  {/* Lime Play Button */}
-                  <button
-                    onClick={() => setIsPlaying(true)}
-                    aria-label="Play Corporate Strategy Video"
-                    className="relative z-10 w-20 h-20 rounded-full bg-[#B7E34A] text-[#0B1F2A] flex items-center justify-center shadow-xl shadow-[#0B1F2A]/60 transition-transform duration-200 hover:scale-110 hover:bg-[#A3CF36] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#B7E34A]"
-                  >
-                    <Play className="w-8 h-8 ml-1 fill-[#0B1F2A]" />
-                  </button>
-
-                  {/* Clean Bottom Label without fake duration/resolution metadata */}
-                  <div className="absolute bottom-4 left-4 right-4 text-xs text-white/90 bg-[#0B1F2A]/85 backdrop-blur-md px-4 py-2.5 rounded-lg border border-white/10">
-                    <span className="font-heading font-medium">Monumental Energy — Corporate Presentation</span>
-                  </div>
-                </div>
-              )}
+            <div className="relative aspect-video rounded-[16px] overflow-hidden border border-[#1D3B4C] bg-black shadow-2xl">
+              <video
+                src="/videos/Monumental-Video-Small-Size.mp4"
+                controls
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover"
+              >
+                <source src="/videos/Monumental-Video-Small-Size.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
         </div>
