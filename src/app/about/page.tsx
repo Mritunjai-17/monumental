@@ -304,9 +304,9 @@ export default function AboutPage() {
         </div>
 
         <Container className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             {/* Left Column (Headline) */}
-            <div className="lg:col-span-4 min-w-0">
+            <div className="lg:col-span-5 min-w-0 max-w-[440px]">
               <SectionHeading
                 dark
                 size="compact"
@@ -317,8 +317,8 @@ export default function AboutPage() {
             </div>
 
             {/* Right Column: 4 Strategic Pillars (2x2 so copy keeps a readable measure) */}
-            <div className="lg:col-span-8 min-w-0">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-x-10">
+            <div className="lg:col-span-7 min-w-0">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-x-10 lg:gap-y-10">
                 {/* Pillar 1 */}
                 <div data-reveal="card" className="flex flex-col min-w-0">
                   <BarChart3 className="w-7 h-7 text-[#2DD4BF] mb-3.5 stroke-[1.6]" aria-hidden="true" />
