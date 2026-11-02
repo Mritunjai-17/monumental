@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PageHero } from '@/components/layout/PageHero';
@@ -60,7 +59,7 @@ export default async function NewsArticlePage({ params }: NewsDetailProps) {
           { label: 'News', href: '/news' },
           { label: 'Press Release' },
         ]}
-        backgroundImage={article.image || '/images/news-lithium-survey.jpg'}
+        backgroundImage="/images/about-hero-taranaki.jpg"
         titleSize="compact"
       />
 
@@ -110,19 +109,6 @@ export default async function NewsArticlePage({ params }: NewsDetailProps) {
                 </div>
               )}
             </div>
-
-            {article.image && (
-              <div className="relative w-full aspect-[16/9] rounded-[16px] overflow-hidden mb-8 sm:mb-10 bg-[#0B1F2A] border border-[#DDE3E3]">
-                <Image
-                  src={article.image}
-                  alt={article.title}
-                  fill
-                  priority
-                  sizes="(min-width: 896px) 800px, 100vw"
-                  className="object-cover object-center"
-                />
-              </div>
-            )}
 
             {article.verified ? (
               <div className="mb-8 sm:mb-10 p-4 sm:p-5 rounded-[16px] bg-[#F5F6F1] border border-[#DDE3E3] flex flex-wrap items-center justify-between gap-3 text-sm min-w-0">
