@@ -203,7 +203,7 @@ export const Footer: React.FC = () => {
 
         {/* Forward-Looking Statements Disclaimer */}
         <div className="border-t border-[#162F3F] pt-6 pb-6">
-          <div className="max-w-4xl">
+          <div className="max-w-4xl mx-auto text-center">
             <h4 className="font-heading font-semibold text-[11px] uppercase tracking-wider text-white/70 mb-2">
               Forward-Looking Statements &amp; Regulatory Disclaimer
             </h4>
