@@ -93,8 +93,8 @@ export function normalizeNewsItem(raw: any): NewsItem {
 }
 
 /**
- * Fetches published news articles with graceful static fallback.
- * Strictly guarantees latest-first chronological ordering.
+ * Fetches published news articles directly from MongoDB Atlas backend API.
+ * Strictly guarantees latest-first chronological ordering with 0 hardcoded fallback mock data.
  */
 export async function getNewsArticles(category?: string): Promise<NewsItem[]> {
   try {
@@ -118,24 +118,14 @@ export async function getNewsArticles(category?: string): Promise<NewsItem[]> {
         .sort((a, b) => getNewsItemTimestamp(b) - getNewsItemTimestamp(a));
     }
   } catch (err) {
-    console.warn('[API Client] Backend news unavailable, using verified local fallback data.', err);
+    console.warn('[API Client] Backend news unavailable:', err);
   }
 
-  // Graceful fallback with strict latest-first date sorting
-  if (category && category !== 'All News') {
-    return fallbackNewsArticles
-      .filter(
-        (a) =>
-          a.category.toLowerCase().includes(category.toLowerCase()) ||
-          Boolean(a.releaseType?.toLowerCase().includes(category.toLowerCase()))
-      )
-      .sort((a, b) => getNewsItemTimestamp(b) - getNewsItemTimestamp(a));
-  }
-  return [...fallbackNewsArticles].sort((a, b) => getNewsItemTimestamp(b) - getNewsItemTimestamp(a));
+  return [];
 }
 
 /**
- * Fetches a single news article by slug with fallback.
+ * Fetches a single news article by slug dynamically from backend API.
  */
 export async function getNewsArticleBySlug(slug: string): Promise<NewsItem | null> {
   try {
@@ -153,11 +143,10 @@ export async function getNewsArticleBySlug(slug: string): Promise<NewsItem | nul
       }
     }
   } catch (err) {
-    console.warn(`[API Client] News for slug "${slug}" unavailable from backend, using local fallback.`, err);
+    console.warn(`[API Client] News for slug "${slug}" unavailable from backend:`, err);
   }
 
-  const found = fallbackNewsArticles.find((a) => a.slug === slug);
-  return found || null;
+  return null;
 }
 
 /**

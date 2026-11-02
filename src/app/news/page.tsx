@@ -29,7 +29,8 @@ const cardHover =
 const ITEMS_PER_PAGE = 9;
 
 export default function NewsPage() {
-  const [articles, setArticles] = useState<NewsItem[]>(initialNewsArticles);
+  const [articles, setArticles] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('All News');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [featuredIndex, setFeaturedIndex] = useState<number>(0);
@@ -37,12 +38,16 @@ export default function NewsPage() {
   const [emailInput, setEmailInput] = useState<string>('');
   const [subscribed, setSubscribed] = useState<boolean>(false);
 
-  // Synchronize news articles with backend API on mount
+  // Synchronize news articles directly from backend API on mount
   useEffect(() => {
     let isMounted = true;
+    setLoading(true);
     getNewsArticles().then((fetched) => {
-      if (isMounted && fetched && fetched.length > 0) {
-        setArticles(fetched);
+      if (isMounted) {
+        if (Array.isArray(fetched) && fetched.length > 0) {
+          setArticles(fetched);
+        }
+        setLoading(false);
       }
     });
     return () => {
@@ -258,91 +263,105 @@ export default function NewsPage() {
          ========================================================= */}
       <section className="section-y pt-0">
         <Container>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Left: Featured Image */}
-            <div className="lg:col-span-7 min-w-0">
-              <div className="group relative rounded-[20px] lg:rounded-[24px] overflow-hidden aspect-[16/10.5] shadow-[0_12px_36px_-6px_rgba(11,31,42,0.14)] bg-[#07161F] border border-[#DDE3E3]/80">
-                <Image
-                  src={currentFeatured.image || '/images/about-hero-taranaki.jpg'}
-                  alt={currentFeatured.title}
-                  fill
-                  sizes="(min-width: 1024px) 58vw, 100vw"
-                  className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                  priority
-                />
+          {loading ? (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center animate-pulse">
+              <div className="lg:col-span-7 aspect-[16/10.5] rounded-[24px] bg-[#DDE3E3]/70" />
+              <div className="lg:col-span-5 space-y-4">
+                <div className="h-4 w-28 bg-[#DDE3E3]/70 rounded-full" />
+                <div className="h-8 w-4/5 bg-[#DDE3E3]/70 rounded-lg" />
+                <div className="h-20 w-full bg-[#DDE3E3]/70 rounded-lg" />
+                <div className="h-10 w-44 bg-[#DDE3E3]/70 rounded-full" />
+              </div>
+            </div>
+          ) : currentFeatured ? (
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* Left: Featured Image */}
+              <div className="lg:col-span-7 min-w-0">
+                <div className="group relative rounded-[20px] lg:rounded-[24px] overflow-hidden aspect-[16/10.5] shadow-[0_12px_36px_-6px_rgba(11,31,42,0.14)] bg-[#07161F] border border-[#DDE3E3]/80">
+                  <Image
+                    src={currentFeatured.image || '/images/about-hero-taranaki.jpg'}
+                    alt={currentFeatured.title}
+                    fill
+                    sizes="(min-width: 1024px) 58vw, 100vw"
+                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                    priority
+                  />
 
-                {/* Subtle dark gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#07161F]/70 via-transparent to-[#07161F]/20 pointer-events-none" />
+                  {/* Subtle dark gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#07161F]/70 via-transparent to-[#07161F]/20 pointer-events-none" />
 
-                {/* Top-Left Pill Badge: FEATURED */}
-                <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-10">
-                  <span className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#B7E34A] text-[#0B1F2A] font-heading font-bold text-[10px] sm:text-[11px] uppercase tracking-wider shadow-sm">
-                    FEATURED
-                  </span>
-                </div>
-
-                {/* Bottom Bar: Press Release Tag & Pagination Arrows */}
-                <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5 z-10 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2 text-white/90 text-xs font-heading font-medium min-w-0">
-                    <Newspaper className="w-4 h-4 text-[#B7E34A] shrink-0" aria-hidden="true" />
-                    <span className="truncate">{currentFeatured.releaseType}</span>
+                  {/* Top-Left Pill Badge: FEATURED */}
+                  <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-10">
+                    <span className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-[#B7E34A] text-[#0B1F2A] font-heading font-bold text-[10px] sm:text-[11px] uppercase tracking-wider shadow-sm">
+                      FEATURED
+                    </span>
                   </div>
 
-                  {/* Carousel Prev/Next */}
-                  <div className="flex items-center gap-2 shrink-0">
-                    <button
-                      type="button"
-                      onClick={handlePrevFeatured}
-                      aria-label="Previous featured story"
-                      className="w-11 h-11 rounded-full bg-black/50 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
-                    >
-                      &larr;
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleNextFeatured}
-                      aria-label="Next featured story"
-                      className="w-11 h-11 rounded-full bg-black/50 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
-                    >
-                      &rarr;
-                    </button>
+                  {/* Bottom Bar: Press Release Tag & Pagination Arrows */}
+                  <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-5 z-10 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-white/90 text-xs font-heading font-medium min-w-0">
+                      <Newspaper className="w-4 h-4 text-[#B7E34A] shrink-0" aria-hidden="true" />
+                      <span className="truncate">{currentFeatured.releaseType}</span>
+                    </div>
+
+                    {/* Carousel Prev/Next */}
+                    {featuredArticles.length > 1 && (
+                      <div className="flex items-center gap-2 shrink-0">
+                        <button
+                          type="button"
+                          onClick={handlePrevFeatured}
+                          aria-label="Previous featured story"
+                          className="w-11 h-11 rounded-full bg-black/50 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
+                        >
+                          &larr;
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleNextFeatured}
+                          aria-label="Next featured story"
+                          className="w-11 h-11 rounded-full bg-black/50 hover:bg-[#B7E34A] hover:text-[#0B1F2A] text-white flex items-center justify-center transition-all duration-200 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#B7E34A]"
+                        >
+                          &rarr;
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
-            </div>
 
-            {/* Right: Featured Copy */}
-            <div className="lg:col-span-5 flex flex-col justify-center min-w-0">
-              <Eyebrow>{currentFeatured.date}</Eyebrow>
+              {/* Right: Featured Copy */}
+              <div className="lg:col-span-5 flex flex-col justify-center min-w-0">
+                <Eyebrow>{currentFeatured.date}</Eyebrow>
 
-              <h2 className={cn(type.h2Compact, tone.headingLight, 'mb-4 break-words [overflow-wrap:anywhere]')}>
-                <Link
-                  href={`/news/${currentFeatured.slug}`}
-                  className="hover:text-[#1F6F78] transition-colors"
-                >
-                  {currentFeatured.title}
-                </Link>
-              </h2>
+                <h2 className={cn(type.h2Compact, tone.headingLight, 'mb-4 break-words [overflow-wrap:anywhere]')}>
+                  <Link
+                    href={`/news/${currentFeatured.slug}`}
+                    className="hover:text-[#1F6F78] transition-colors"
+                  >
+                    {currentFeatured.title}
+                  </Link>
+                </h2>
 
-              <p className={cn(type.lead, tone.mutedLight, 'mb-8 break-words [overflow-wrap:anywhere]')}>
-                {currentFeatured.excerpt}
-              </p>
+                <p className={cn(type.lead, tone.mutedLight, 'mb-8 break-words [overflow-wrap:anywhere]')}>
+                  {currentFeatured.excerpt}
+                </p>
 
-              <div>
-                <Link
-                  href={`/news/${currentFeatured.slug}`}
-                  className="inline-flex items-center gap-3 group"
-                >
-                  <span className="w-11 h-11 rounded-full bg-[#B7E34A] group-hover:bg-[#A3CF36] flex items-center justify-center text-[#0B1F2A] shadow-sm transition-all duration-200 group-hover:scale-105">
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-                  </span>
-                  <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
-                    Read full announcement
-                  </span>
-                </Link>
+                <div>
+                  <Link
+                    href={`/news/${currentFeatured.slug}`}
+                    className="inline-flex items-center gap-3 group"
+                  >
+                    <span className="w-11 h-11 rounded-full bg-[#B7E34A] group-hover:bg-[#A3CF36] flex items-center justify-center text-[#0B1F2A] shadow-sm transition-all duration-200 group-hover:scale-105">
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                    </span>
+                    <span className="font-heading font-bold text-sm sm:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors">
+                      Read full announcement
+                    </span>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
         </Container>
       </section>
 
@@ -374,59 +393,76 @@ export default function NewsPage() {
               </div>
 
               {/* 3-Card Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-                {recentNews.map((article) => (
-                  <div key={article.id} data-reveal="card" className="h-full min-w-0">
-                    <article
-                      className={cn(
-                        'group flex flex-col h-full bg-[#F5F6F1] rounded-[16px] border border-[#DDE3E3] overflow-hidden',
-                        cardHover
-                      )}
-                    >
-                      <div className="relative overflow-hidden aspect-[16/10] bg-[#07161F]">
-                        <Image
-                          src={article.image || '/images/about-hero-taranaki.jpg'}
-                          alt={article.title}
-                          fill
-                          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
-                          className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-                        />
-                      </div>
-
-                      {/* Narrower padding at md-xl, where three cards share the 8-column track */}
-                      <div className="p-6 md:p-5 xl:p-6 flex flex-col flex-1">
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#5B6B73] mb-3">
-                          <span className="flex items-center gap-1.5 font-medium">
-                            <Calendar className="w-3.5 h-3.5 text-[#1F6F78]" aria-hidden="true" />
-                            {article.date}
-                          </span>
-                          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#1F6F78] truncate">
-                            {article.category}
-                          </span>
+              {loading ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                  {[1, 2, 3].map((n) => (
+                    <div key={n} className="bg-[#F5F6F1] rounded-[16px] border border-[#DDE3E3] p-5 animate-pulse">
+                      <div className="aspect-[16/10] bg-[#DDE3E3]/80 rounded-lg mb-3" />
+                      <div className="h-4 w-20 bg-[#DDE3E3]/80 rounded mb-2" />
+                      <div className="h-6 w-3/4 bg-[#DDE3E3]/80 rounded mb-2" />
+                      <div className="h-12 w-full bg-[#DDE3E3]/80 rounded" />
+                    </div>
+                  ))}
+                </div>
+              ) : recentNews.length === 0 ? (
+                <div className="p-8 text-center bg-[#F5F6F1] rounded-[16px] border border-[#DDE3E3] text-[#5B6B73] text-sm">
+                  No additional recent news available.
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                  {recentNews.map((article) => (
+                    <div key={article.id} data-reveal="card" className="h-full min-w-0">
+                      <article
+                        className={cn(
+                          'group flex flex-col h-full bg-[#F5F6F1] rounded-[16px] border border-[#DDE3E3] overflow-hidden',
+                          cardHover
+                        )}
+                      >
+                        <div className="relative overflow-hidden aspect-[16/10] bg-[#07161F]">
+                          <Image
+                            src={article.image || '/images/about-hero-taranaki.jpg'}
+                            alt={article.title}
+                            fill
+                            sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw"
+                            className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                          />
                         </div>
 
-                        <h3 className={cn(type.h4, tone.headingLight, 'mb-3 line-clamp-3 group-hover:text-[#1F6F78] transition-colors break-words [overflow-wrap:anywhere]')}>
-                          <Link href={`/news/${article.slug}`}>{article.title}</Link>
-                        </h3>
+                        {/* Narrower padding at md-xl, where three cards share the 8-column track */}
+                        <div className="p-6 md:p-5 xl:p-6 flex flex-col flex-1">
+                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[#5B6B73] mb-3">
+                            <span className="flex items-center gap-1.5 font-medium">
+                              <Calendar className="w-3.5 h-3.5 text-[#1F6F78]" aria-hidden="true" />
+                              {article.date}
+                            </span>
+                            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#1F6F78] truncate">
+                              {article.category}
+                            </span>
+                          </div>
 
-                        <p className="text-sm text-[#5B6B73] leading-relaxed line-clamp-3 mb-6 break-words [overflow-wrap:anywhere]">
-                          {article.excerpt}
-                        </p>
+                          <h3 className={cn(type.h4, tone.headingLight, 'mb-3 line-clamp-3 group-hover:text-[#1F6F78] transition-colors break-words [overflow-wrap:anywhere]')}>
+                            <Link href={`/news/${article.slug}`}>{article.title}</Link>
+                          </h3>
 
-                        <div className="mt-auto pt-3 border-t border-[#DDE3E3]/60">
-                          <Link
-                            href={`/news/${article.slug}`}
-                            className="text-link text-sm font-semibold inline-flex items-center gap-1 text-[#1F6F78]"
-                          >
-                            <span>Read more</span>
-                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                          </Link>
+                          <p className="text-sm text-[#5B6B73] leading-relaxed line-clamp-3 mb-6 break-words [overflow-wrap:anywhere]">
+                            {article.excerpt}
+                          </p>
+
+                          <div className="mt-auto pt-3 border-t border-[#DDE3E3]/60">
+                            <Link
+                              href={`/news/${article.slug}`}
+                              className="text-link text-sm font-semibold inline-flex items-center gap-1 text-[#1F6F78]"
+                            >
+                              <span>Read more</span>
+                              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                    </article>
-                  </div>
-                ))}
-              </div>
+                      </article>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Right 4 Cols: Latest Announcements (Dark Card) */}
@@ -438,25 +474,38 @@ export default function NewsPage() {
                 </h3>
 
                 {/* Announcement List */}
-                <div className="divide-y divide-white/10">
-                  {announcements.map((item) => (
-                    <Link
-                      key={item.id}
-                      href={`/news/${item.slug}`}
-                      className="py-4 flex items-start justify-between gap-3 group transition-colors"
-                    >
-                      <div className="min-w-0">
-                        <span className="text-xs text-[#DDE3E3]/75 uppercase tracking-wider block mb-1">
-                          {item.date}
-                        </span>
-                        <span className="text-sm font-medium text-white group-hover:text-[#B7E34A] transition-colors leading-snug line-clamp-2 block">
-                          {item.title}
-                        </span>
+                {loading ? (
+                  <div className="divide-y divide-white/10 animate-pulse">
+                    {[1, 2, 3, 4].map((n) => (
+                      <div key={n} className="py-4 space-y-2">
+                        <div className="h-3 w-20 bg-white/20 rounded" />
+                        <div className="h-4 w-full bg-white/20 rounded" />
                       </div>
-                      <ArrowRight className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-2 transition-transform group-hover:translate-x-1" aria-hidden="true" />
-                    </Link>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : announcements.length === 0 ? (
+                  <p className="text-sm text-white/60 py-4">No announcements available.</p>
+                ) : (
+                  <div className="divide-y divide-white/10">
+                    {announcements.map((item) => (
+                      <Link
+                        key={item.id}
+                        href={`/news/${item.slug}`}
+                        className="py-4 flex items-start justify-between gap-3 group transition-colors"
+                      >
+                        <div className="min-w-0">
+                          <span className="text-xs text-[#DDE3E3]/75 uppercase tracking-wider block mb-1">
+                            {item.date}
+                          </span>
+                          <span className="text-sm font-medium text-white group-hover:text-[#B7E34A] transition-colors leading-snug line-clamp-2 block">
+                            {item.title}
+                          </span>
+                        </div>
+                        <ArrowRight className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-2 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                      </Link>
+                    ))}
+                  </div>
+                )}
 
                 {/* View All Button */}
                 <div className="pt-5 mt-2 border-t border-white/10">
@@ -515,8 +564,19 @@ export default function NewsPage() {
             )}
           </div>
 
-          {/* Grid or Empty State */}
-          {paginatedArticles.length === 0 ? (
+          {/* Grid, Skeleton Loading or Empty State */}
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {[1, 2, 3, 4, 5, 6].map((n) => (
+                <div key={n} className="bg-white rounded-[16px] border border-[#DDE3E3] p-6 animate-pulse">
+                  <div className="aspect-[16/10] bg-[#DDE3E3]/80 rounded-lg mb-4" />
+                  <div className="h-4 w-24 bg-[#DDE3E3]/80 rounded mb-2.5" />
+                  <div className="h-6 w-3/4 bg-[#DDE3E3]/80 rounded mb-3" />
+                  <div className="h-12 w-full bg-[#DDE3E3]/80 rounded" />
+                </div>
+              ))}
+            </div>
+          ) : paginatedArticles.length === 0 ? (
             <div className="bg-white rounded-[20px] border border-[#DDE3E3] p-12 text-center max-w-xl mx-auto shadow-sm">
               <Newspaper className="w-12 h-12 text-[#5B6B73]/50 mx-auto mb-4" aria-hidden="true" />
               <h3 className="text-xl font-bold font-heading text-[#0B1F2A] mb-2">No announcements found</h3>

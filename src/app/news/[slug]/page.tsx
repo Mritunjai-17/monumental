@@ -6,12 +6,14 @@ import { PageHero } from '@/components/layout/PageHero';
 import { Container } from '@/components/ui/Container';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { newsArticles } from '@/data/news';
-import { getNewsArticleBySlug } from '@/lib/api';
+import { getNewsArticleBySlug, getNewsArticles } from '@/lib/api';
 import { constructMetadata } from '@/lib/seo';
 import { cn } from '@/lib/utils';
 import { type, tone } from '@/lib/typography';
 import { Calendar, Tag, ArrowLeft, CheckCircle2, ExternalLink } from 'lucide-react';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 interface NewsDetailProps {
   params: {
@@ -19,10 +21,15 @@ interface NewsDetailProps {
   };
 }
 
-export function generateStaticParams() {
-  return newsArticles.map((article) => ({
-    slug: article.slug,
-  }));
+export async function generateStaticParams() {
+  try {
+    const articles = await getNewsArticles();
+    return articles.map((article) => ({
+      slug: article.slug,
+    }));
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: NewsDetailProps) {

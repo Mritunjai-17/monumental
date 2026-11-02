@@ -12,13 +12,18 @@ import { getNewsArticles } from '@/lib/api';
 import { ArrowRight, Calendar } from 'lucide-react';
 
 export const LatestNews: React.FC = () => {
-  const [articles, setArticles] = useState<NewsItem[]>(fallbackNewsArticles);
+  const [articles, setArticles] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     let isMounted = true;
+    setLoading(true);
     getNewsArticles().then((fetched) => {
-      if (isMounted && fetched && fetched.length > 0) {
-        setArticles(fetched);
+      if (isMounted) {
+        if (Array.isArray(fetched) && fetched.length > 0) {
+          setArticles(fetched);
+        }
+        setLoading(false);
       }
     });
     return () => {
@@ -39,7 +44,18 @@ export const LatestNews: React.FC = () => {
           action={hasNews ? { label: 'View all news', shortLabel: 'View all', href: '/news' } : undefined}
         />
 
-        {!hasNews ? (
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="bg-[#F5F6F1] rounded-[16px] border border-[#DDE3E3] overflow-hidden p-6 animate-pulse">
+                <div className="aspect-[16/10] bg-[#DDE3E3]/80 rounded-lg mb-4" />
+                <div className="h-4 w-28 bg-[#DDE3E3]/80 rounded mb-3" />
+                <div className="h-6 w-4/5 bg-[#DDE3E3]/80 rounded mb-3" />
+                <div className="h-12 w-full bg-[#DDE3E3]/80 rounded" />
+              </div>
+            ))}
+          </div>
+        ) : !hasNews ? (
           <div className="bg-[#F5F6F1] rounded-[16px] border border-[#DDE3E3] p-10 sm:p-14 text-center max-w-xl mx-auto">
             <h3 className="text-2xl font-bold font-heading text-[#0B1F2A] mb-3">
               News coming soon
