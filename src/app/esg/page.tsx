@@ -423,21 +423,21 @@ export default function EsgPage() {
                         cardHover
                       )}
                     >
-                      <div className="flex items-start gap-3.5 min-w-0 pr-3">
-                        <div className="w-10 h-10 rounded-xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0">
-                          <FileText className="w-5 h-5 stroke-[1.8]" aria-hidden="true" />
+                      <div className="flex items-center gap-3.5 sm:gap-4 min-w-0 flex-1">
+                        <div className="w-12 h-12 rounded-2xl bg-[#1F6F78]/10 flex items-center justify-center text-[#1F6F78] shrink-0 group-hover:scale-105 transition-transform">
+                          <FileText className="w-6 h-6 stroke-[1.8]" aria-hidden="true" />
                         </div>
-                        <div className="min-w-0">
-                          <h3 className={cn(type.h4, tone.headingLight, 'group-hover:text-[#1F6F78] transition-colors mb-1')}>
+                        <div className="min-w-0 flex-1">
+                          <h3 className="font-heading font-bold text-[15px] xl:text-base text-[#0B1F2A] group-hover:text-[#1F6F78] transition-colors mb-1 truncate leading-snug">
                             {doc.title}
                           </h3>
-                          <p className={cn(type.body, tone.mutedLight)}>
+                          <span className="text-xs sm:text-[13px] text-[#5B6B73] leading-relaxed block line-clamp-2">
                             {doc.description}
-                          </p>
+                          </span>
                         </div>
                       </div>
 
-                      <ArrowRight className="w-4 h-4 text-[#5B6B73] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0" aria-hidden="true" />
+                      <ArrowRight className="w-4 h-4 text-[#5B6B73] group-hover:text-[#0B1F2A] group-hover:translate-x-1 transition-all shrink-0 ml-1" aria-hidden="true" />
                     </Link>
                   </div>
                 ))}

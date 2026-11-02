@@ -109,7 +109,7 @@ export const ResourceTile: React.FC<ResourceTileProps> = ({
         <span className="text-[10px] font-heading font-bold uppercase tracking-[0.14em] text-[#1F6F78] block mb-0.5">
           {eyebrow}
         </span>
-        <h3 className="font-heading font-bold text-[14px] sm:text-[15px] text-[#0B1F2A] leading-snug mb-1 group-hover:text-[#1F6F78] transition-colors">
+        <h3 className="font-heading font-bold text-[14px] sm:text-[15px] text-[#0B1F2A] leading-snug mb-1 group-hover:text-[#1F6F78] transition-colors truncate">
           {title}
         </h3>
         <p className="text-[11px] sm:text-xs text-[#5B6B73] leading-snug line-clamp-2">
@@ -183,7 +183,7 @@ export const ResourceTile: React.FC<ResourceTileProps> = ({
           <span className="text-[10px] font-heading font-bold uppercase tracking-[0.14em] text-[#1F6F78] block mb-0.5">
             {eyebrow}
           </span>
-          <h3 className="font-heading font-bold text-[14px] sm:text-[15px] text-[#0B1F2A] leading-snug mb-1 group-hover:text-[#1F6F78] transition-colors">
+          <h3 className="font-heading font-bold text-[14px] sm:text-[15px] text-[#0B1F2A] leading-snug mb-1 group-hover:text-[#1F6F78] transition-colors truncate">
             {title}
           </h3>
           <p className="text-[11px] sm:text-xs text-[#5B6B73] leading-snug line-clamp-2">
