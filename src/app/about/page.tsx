@@ -7,7 +7,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { KineticHeading } from '@/components/ui/KineticHeading';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { constructMetadata } from '@/lib/seo';
-import { TeamCardWithModal } from '@/components/sections/TeamCardWithModal';
+import { TeamSection } from '@/components/sections/TeamSection';
 import { cn } from '@/lib/utils';
 import { type, tone } from '@/lib/typography';
 import {
@@ -416,44 +416,45 @@ export default function AboutPage() {
       </section>
 
       {/* =========================================================
-          5. LEADERSHIP & GOVERNANCE: 3-Card Row
+          5. OUR TEAM & ADVISORY BOARD (Dedicated Section)
          ========================================================= */}
-      <section className="relative section-y pt-0">
+      <TeamSection />
+
+      {/* =========================================================
+          6. CORPORATE GOVERNANCE & CHARTERS
+         ========================================================= */}
+      <section className="relative section-y bg-white border-t border-[#DDE3E3]/80">
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 xl:gap-10 items-center">
             {/* Left Column (Headline) */}
             <div className="lg:col-span-5 xl:col-span-5 min-w-0 max-w-[440px]">
               <SectionHeading
-                eyebrow="LEADERSHIP & GOVERNANCE"
-                title="Experienced leadership and a strong governance foundation"
+                eyebrow="CORPORATE GOVERNANCE"
+                title="A strong governance foundation"
                 titleClassName="text-balance [text-wrap:balance] leading-[1.12] lg:text-[40px] xl:text-[42px] tracking-[-0.02em] pb-1"
+                description="Monumental Energy is committed to high standards of corporate governance, accountability, and regular shareholder communication."
                 className="mb-0 sm:mb-0"
               />
             </div>
 
-            {/* Right Column: 3 Resource Cards */}
+            {/* Right Column: 2 Governance Resource Cards */}
             <div className="lg:col-span-7 xl:col-span-7 min-w-0">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-4 xl:gap-5">
-                {/* Card 1: Our Team */}
-                <div data-reveal="card" className="h-full">
-                  <TeamCardWithModal />
-                </div>
-
-                {/* Card 2: Governance */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-5">
+                {/* Card 1: Shareholder AGM */}
                 <div data-reveal="card" className="h-full">
                   <Link
                     href="/investors/agm"
-                    className={cn('h-full bg-white rounded-[16px] border border-[#DDE3E3] p-5 sm:p-6 shadow-sm flex flex-col justify-between group', cardHover)}
+                    className={cn('h-full bg-[#F5F6F1] rounded-[16px] border border-[#DDE3E3] p-5 sm:p-6 shadow-sm flex flex-col justify-between group', cardHover)}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3">
                         <ShieldCheck className="w-7 h-7 text-[#1F6F78] stroke-[1.6]" aria-hidden="true" />
                       </div>
                       <h3 className={cn(type.h4, tone.headingLight, 'mb-1.5')}>
-                        Governance
+                        Shareholder AGM
                       </h3>
                       <p className={cn(type.body, tone.mutedLight, 'mb-4')}>
-                        Committed to high standards of corporate governance and accountability.
+                        Meeting materials, notice of AGM, proxy voting information, and shareholder resources.
                       </p>
                     </div>
                     <div className="flex justify-end">
@@ -462,11 +463,11 @@ export default function AboutPage() {
                   </Link>
                 </div>
 
-                {/* Card 3: Policies & Charters */}
+                {/* Card 2: Policies & Charters */}
                 <div data-reveal="card" className="h-full">
                   <Link
                     href="/investors"
-                    className={cn('h-full bg-white rounded-[16px] border border-[#DDE3E3] p-5 sm:p-6 shadow-sm flex flex-col justify-between group', cardHover)}
+                    className={cn('h-full bg-[#F5F6F1] rounded-[16px] border border-[#DDE3E3] p-5 sm:p-6 shadow-sm flex flex-col justify-between group', cardHover)}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3">
@@ -476,7 +477,7 @@ export default function AboutPage() {
                         Policies &amp; Charters
                       </h3>
                       <p className={cn(type.body, tone.mutedLight, 'mb-4')}>
-                        Our policies and charters support transparent and responsible business.
+                        Our formal corporate policies and committee charters support responsible business.
                       </p>
                     </div>
                     <div className="flex justify-end">
@@ -491,7 +492,7 @@ export default function AboutPage() {
       </section>
 
       {/* =========================================================
-          6. BOTTOM CTA BANNER
+          7. BOTTOM CTA BANNER
          ========================================================= */}
       <section className="relative overflow-hidden bg-[#0B1F2A] text-white section-y-compact">
         {/* Background photo with overlay and topography */}
